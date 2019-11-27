@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Demo</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: #ffffff;
+            font-size: 0.14rem;
+
+        }
+        html,body{
+            position: relative;
+            font-size: calc(100vw * 100 / 1920 );
+            background-color: rgb(0,0,30);
+        }
+        header{
+            width: 100%;
+            height: 0.5rem;
+            text-align: center;
+            font-size: 0.24rem;
+            line-height: 0.5rem;
+            background-color: rgb(23,35,77);
+            color: white;
+            font-weight: bold;
+        }
+        .title{
+            width: 100%;
+            height: 0.5rem;
+            line-height: 0.5rem;
+            text-align: center;
+            font-size: 0.20rem;
+            letter-spacing: 2px;
+            background-color: rgb(23,25,77);
+        }
+        .leftBox{
+            overflow: hidden;
+            margin-top: 0.05rem;
+            width: 2.6rem;
+            height: 10.25rem;
+            background-color: rgb(19,29,64);
+        }
+
+        .leftBox ul{
+            margin-top: 0.2rem;
+            width: 100%;
+            list-style: none;
+            height: 93%;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+        .leftBox ul::-webkit-scrollbar {
+            display: none;
+        }
+        .leftBox  ul li{
+            margin: 0.1rem 0;
+            width: 100%;
+            text-align: center;
+            padding: 0.05rem 0;
+        }
+        .leftBox ul li img{
+            cursor: pointer;
+            width: 1.94rem;
+            height: 1.11rem;
+            border-radius: 0.05rem;
+        }
+        .leftBox ul li .imgName{
+            font-size: 0.18rem;
+        }
+        .rightBox{
+            overflow: hidden;
+            position: absolute;
+            top: 0.5rem;
+            right: 0;
+            margin-top: 0.05rem;
+            width: 2.6rem;
+            height: 10.25rem;
+            background-color: rgb(19,29,64);
+        }
+
+        .rightBox ul{
+            width: 100%;
+            list-style: none;
+            height: 90%;
+            overflow-x: hidden;
+            overflow-y: scroll;
+            border: 1px solid red;
+        }
+        .rightBox ul::-webkit-scrollbar {
+            display: none;
+        }
+        .rightBox ul li{
+            padding: 0 0.1rem;
+            width: 100%;
+            height: 0.41rem;
+            line-height: 0.41rem;
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            position: relative;
+            background: rgb(17,21,48);
+            margin-bottom: 0.01rem;
+        }
+        .rightBox ul li .checkInput + label{
+            background-color: white;
+            /*border: 1px solid #d3d3d3;*/
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            text-align: center;
+            vertical-align: bottom;
+            line-height: 20px;
+            border-radius: 0.03rem;
+        }
+        .rightBox ul li .checkInput{
+            display: none;
+        }
+        .rightBox ul li .checkInput:hover{
+            cursor: pointer;
+            border: 1px solid #2783FB;
+        }
+        .rightBox ul li .checkInput:checked+label {
+            background: #2783FB;
+        }
+
+        .rightBox ul li .checkInput:checked+label:after {
+            content: "\2714";
+            color: white;
+            border: none;
+        }
+        .rightBox ul li .saveBtn{
+            background-color: #2783FB;
+            border: none;
+            font-size: 0.14rem;
+            padding:0.02rem 0.03rem;
+            border-radius: 0.03rem;
+            font-weight: bold;
+            /*display: none;*/
+            position: absolute;
+            top: 0.1rem;
+            right: 0.2rem;
+        }
+        .rightBox ul li .inputBox{
+            width: 1.2rem;
+            height: 0.24rem;
+            line-height: 0.24rem;
+            font-size: 0.16rem;
+            background: none;
+            margin-left: 0.1rem;
+            border: none;
+            outline: none;
+            overflow: hidden;
+            text-overflow:ellipsis;
+            white-space: nowrap;
+        }
+        .rightBox ul li img{
+            width: 0.13rem;
+            height: 0.17rem;
+            margin-left: 0.48rem;
+            cursor: pointer;
+        }
+
+
+        .rightBox .rightBottomBox{
+            position: absolute;
+            background-color: rgb(23,25,77);
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0.53rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 2px 2px rgba(0,0,0,0.2);
+        }
+        .rightBox .rightBottomBox .imgBox{
+            width: 0.7rem;
+            height: 0.25rem;
+            display: flex;
+            margin: 0 0.05rem;
+            background-color: #697195;
+            justify-content: center;
+            border-radius: 0.03rem;
+            align-items: center;
+            cursor: pointer;
+        }
+        .rightBox .rightBottomBox .imgBox img{
+            width: 0.12rem;
+            height: 0.13rem;
+        }
+        .rightBox .rightBottomBox .imgBox .imgTitle{
+            font-size: 0.12rem;
+            line-height: 0.27rem;
+            color: #dcdef4;
+            margin-left: 0.05rem;
+        }
+    </style>
+</head>
+<body>
+<header>中国工业互联网研究院展厅</header>
+<!-- 左边盒子 -->
+<div class="leftBox">
+    <div class="title">应用程序</div>
+    <ul>
+        <li>
+            <img src="img/001.png" alt="">
+            <p class="imgName">OA系统</p>
+        </li>
+        <li>
+            <img src="img/001.png" alt="">
+            <p class="imgName">OA系统</p>
+        </li>
+        <li>
+            <img src="img/001.png" alt="">
+            <p class="imgName">OA系统</p>
+        </li>
+        <li>
+            <img src="img/001.png" alt="">
+            <p class="imgName">OA系统</p>
+        </li>
+        <li>
+            <img src="img/001.png" alt="">
+            <p class="imgName">OA系统</p>
+        </li>
+        <li>
+            <img src="img/001.png" alt="">
+            <p class="imgName">OA系统</p>
+        </li>
+        <li>
+            <img src="img/001.png" alt="">
+            <p class="imgName">OA系统</p>
+        </li>
+        <li>
+            <img src="img/001.png" alt="">
+            <p class="imgName">OA系统</p>
+        </li>
+        <li>
+            <img src="img/001.png" alt="">
+            <p class="imgName">OA系统</p>
+        </li>
+        <li>
+            <img src="img/001.png" alt="">
+            <p class="imgName">OA系统</p>
+        </li>
+    </ul>
+</div>
+<!-- 右边盒子 -->
+<div class="rightBox">
+    <div class="title">页面</div>
+    <ul>
+        <li>
+            <input id="001" class="checkInput" type="checkbox">
+            <label for="001"></label>
+            <input class="inputBox" type="text" value="测试数据001">
+            <button class="saveBtn">保存</button>
+            <img src="img/303.png" alt="">
+        </li>
+        <li>
+            <input id="002" class="checkInput" type="checkbox">
+            <label for="002"></label>
+            <input class="inputBox" type="text" value="测试数据001">
+            <button class="saveBtn">保存</button>
+            <img src="img/303.png" alt="">
+        </li>
+    </ul>
+    <div class="rightBottomBox">
+        <span class="imgBox">
+            <img src="img/101.png" alt="">
+            <span class="imgTitle">预览</span>
+        </span>
+        <span class="imgBox">
+            <img src="img/202.png" alt="">
+            <span class="imgTitle">输出</span>
+        </span>
+    </div>
+</div>
+</body>
+</html>
