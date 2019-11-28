@@ -116,7 +116,6 @@
             height: 90%;
             overflow-x: hidden;
             overflow-y: scroll;
-            border: 1px solid red;
         }
 
         .rightBox ul::-webkit-scrollbar {
@@ -259,10 +258,9 @@
 
 
         <script>
-            
-            
-            $(".centerBox").load("centerHtml.html");
-            
+            $(function () {
+                $(".centerBox").load("centerHtml.html");
+            });
         </script>
         
     </div>
