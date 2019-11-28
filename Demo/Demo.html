@@ -196,7 +196,7 @@
         .rightBox ul li img {
             width: 0.13rem;
             height: 0.17rem;
-            margin-left: 0.48rem;
+            margin-left: 0.35rem;
             cursor: pointer;
         }
 
@@ -238,6 +238,7 @@
             margin-left: 0.05rem;
         }
     </style>
+    <link rel="stylesheet" href="css/centerHtml.css">
 </head>
 <body>
 <header>中国工业互联网研究院展厅</header>
@@ -255,14 +256,11 @@
 
     
     <div class="centerBox">
-
-
         <script>
             $(function () {
                 $(".centerBox").load("centerHtml.html");
             });
         </script>
-        
     </div>
 
 
@@ -295,7 +293,6 @@
     $(function () {
         //修改title
         $('body').on("click",".updateImg",function () {
-            console.log(11111);
             $(this).siblings(".saveBtn").css({
                 "display":"block"
             });
@@ -309,24 +306,24 @@
         $('body').on("click",".saveBtn",function () {
 
             let text = $(this).siblings(".inputBox").val();
-            console.log(text);
             $(this).siblings(".inputBox").attr("readOnly",true);
             $(this).siblings(".inputBox").css({
                 "border":"none",
             });
             $(".inputBox").text(text);
             let xx = $(this).attr("value");
-            // console.log();
             one.secondData[xx].name = text;
             $(this).css({
                 "display":"none"
             });
         });
         //选择时间
-        $('body').on("click",".checkInput",function () {
-            let mm = $(this).attr("value");
-            one.secondData[mm].isCheck = !one.secondData[mm].isCheck;
-        });
+        function bb(){
+            $('body').on("click",".checkInput",function () {
+                let mm = $(this).attr("value");
+                one.secondData[mm].isCheck = !one.secondData[mm].isCheck;
+            });
+        }
     });
 </script>
 <script>
@@ -343,56 +340,56 @@
                     dataList:[
                         {
                             code:"101",
-                            icon:"img/404.png",
+                            icon:"img/navLeft/nav_1.png",
                             name:"首页",
                             isCheck:true,
-                            iframeUrl:"xxxx.html"
+                            iframeUrl:"bbbbb.html"
                         },
                         {
                             code:"102",
-                            icon:"img/404.png",
+                            icon:"img/navLeft/nav_2.png",
                             name:"设备控制",
                             isCheck:false,
-                            iframeUrl:"xxxx.html"
+                            iframeUrl:"index.html"
                         },
                         {
                             code:"103",
-                            icon:"img/404.png",
+                            icon:"img/navLeft/nav_3.png",
                             name:"会议室管理",
                             isCheck:false,
-                            iframeUrl:"xxxx.html"
+                            iframeUrl:"bbbbb.html"
                         },
                         {
                             code:"104",
-                            icon:"img/404.png",
+                            icon:"img/navLeft/nav_4.png",
                             name:"视频管理",
                             isCheck:false,
-                            iframeUrl:"xxxx.html"
+                            iframeUrl:"index.html"
                         },
                         {
                             code:"105",
-                            icon:"img/404.png",
+                            icon:"img/navLeft/nav_5.png",
                             name:"考勤管理",
                             isCheck:false,
-                            iframeUrl:"xxxx.html"
+                            iframeUrl:"bbbbb.html"
                         },
                         {
                             code:"106",
-                            icon:"img/404.png",
+                            icon:"img/navLeft/nav_6.png",
                             name:"设备管理",
                             isCheck:false,
                             iframeUrl:"xxxx.html"
                         },
                         {
                             code:"107",
-                            icon:"img/404.png",
+                            icon:"img/navLeft/nav_7.png",
                             name:"执行计划",
                             isCheck:false,
                             iframeUrl:"xxxx.html"
                         },
                         {
                             code:"108",
-                            icon:"img/404.png",
+                            icon:"img/navLeft/nav_8.png",
                             name:"系统管理",
                             isCheck:false,
                             iframeUrl:"xxxx.html"
@@ -406,56 +403,56 @@
                     dataList:[
                         {
                             code:"201",
-                            icon:"img/404.png",
+                            icon:"img/navLeft/nav_1.png",
                             name:"首页",
                             isCheck:true,
-                            iframeUrl:"xxxx.html"
+                            iframeUrl:"index.html"
                         },
                         {
                             code:"202",
-                            icon:"img/404.png",
+                            icon:"img/navLeft/nav_2.png",
                             name:"设备控制11",
                             isCheck:false,
-                            iframeUrl:"xxxx.html"
+                            iframeUrl:"bbbbb.html"
                         },
                         {
                             code:"203",
-                            icon:"img/404.png",
+                            icon:"img/navLeft/nav_3.png",
                             name:"会议室管理22",
                             isCheck:false,
-                            iframeUrl:"xxxx.html"
+                            iframeUrl:"index.html"
                         },
                         {
                             code:"204",
-                            icon:"img/404.png",
+                            icon:"img/navLeft/nav_4.png",
                             name:"视频管理33",
                             isCheck:true,
-                            iframeUrl:"xxxx.html"
+                            iframeUrl:"bbbbb.html"
                         },
                         {
                             code:"205",
-                            icon:"img/404.png",
+                            icon:"img/navLeft/nav_5.png",
                             name:"考勤管理44",
                             isCheck:false,
-                            iframeUrl:"xxxx.html"
+                            iframeUrl:"index.html"
                         },
                         {
                             code:"206",
-                            icon:"img/404.png",
+                            icon:"img/navLeft/nav_6.png",
                             name:"设备管理55",
                             isCheck:true,
-                            iframeUrl:"xxxx.html"
+                            iframeUrl:"bbbbb.html"
                         },
                         {
                             code:"207",
-                            icon:"img/404.png",
+                            icon:"img/navLeft/nav_7.png",
                             name:"执行计划66",
                             isCheck:false,
                             iframeUrl:"xxxx.html"
                         },
                         {
                             code:"208",
-                            icon:"img/404.png",
+                            icon:"img/navLeft/nav_8.png",
                             name:"系统管理77",
                             isCheck:true,
                             iframeUrl:"xxxx.html"
@@ -465,11 +462,19 @@
             ],
             //二级数据
             secondData:[],
+            //子页面数据包、
+            number:null,
+            xxData : []
         },
         methods: {
             imgBtn: function (index) {
                 this.value = index;
                 this.secondData = this.sysList[index].dataList;
+                for(let i = 0; i < this.secondData.length; i++){
+                    if(this.secondData[i].isCheck === true){
+                        this.xxData.push(this.secondData[i]);
+                    }
+                }
             }
         }
     });

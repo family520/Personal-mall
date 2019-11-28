@@ -1,76 +1,44 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/centerHtml.css">
-</head>
-<body>
-
-    <div id="pagName">OA系统</div>
-
-    <div class="contextBox">
-
-
-
-        <!-- 左边导航栏-->
-        <div class="navLeft">
-
-            <p>台迪智慧办公</p>
-
-            <ul>
-
-                <li>
-                    <span><img src="img/navLeft/nav_1.png" alt=""></span>
-                    <span>首页</span>
-                </li>
-
-                <li>
-                    <span><img src="img/navLeft/nav_2.png" alt=""></span>
-                    <span>设备控制</span>
-                </li>
-
-                <li>
-                    <span><img src="img/navLeft/nav_3.png" alt=""></span>
-                    <span>会议室管理</span>
-                </li>
-
-                <li>
-                    <span><img src="img/navLeft/nav_4.png" alt=""></span>
-                    <span>视频管理</span>
-                </li>
-
-                <li>
-                    <span><img src="img/navLeft/nav_5.png" alt=""></span>
-                    <span>考勤管理</span>
-                </li>
-
-                <li>
-                    <span><img src="img/navLeft/nav_6.png" alt=""></span>
-                    <span>设备管理</span>
-                </li>
-
-                <li>
-                    <span><img src="img/navLeft/nav_7.png" alt=""></span>
-                    <span>执行计划</span>
-                </li>
-
-                <li>
-                    <span><img src="img/navLeft/nav_8.png" alt=""></span>
-                    <span>系统管理</span>
-                </li>
-
-
-            </ul>
-
-
-        </div>
-
-
+<div id="pagName">OA系统</div>
+<div class="contextBox" id="xxxx" style="position: relative">
+    <!-- 左边导航栏-->
+    <div class="navLeft">
+        <p>台迪智慧办公</p>
+        <ul>
+            <li v-for="(item,index) in mmm" :key="index" class="liClick" :@click="jj(index)">
+                <span>
+                    <img :src="item.icon" alt="">
+                </span>
+                <span>{{item.name}}</span>
+            </li>
+        </ul>
     </div>
+    <div class="rnBox" style="width: 82.5%;height: 100%;padding:0.05rem;position: absolute;top:0;right: 0">
+<!--        <script>-->
+<!--            $(function () {-->
+<!--                $(".rnBox").load("\""+one.xxData[0].iframeUrl+"\"");-->
+<!--            });-->
+<!--        </script>-->
+        <iframe class="kkkk" :src='src' frameborder="0" style="width: 100%;height: 100%;background-color: aquamarine;"></iframe>
+    </div>
+</div>
+<script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+<script>
 
-</body>
-</html>
+    let xxxx = new Vue({
+        el:"#xxxx",
+        data:{
+            mmm:one.xxData,
+            src : "",
+        },
+        methods:{
+            jj:function (index) {
+                // console.log(index);
+                // this.src = this.mmm[index].iframeUrl;
+            }
+        },
+        updated:function () {
+            this.src = this.mmm[0].iframeUrl;
+        }
+    });
+</script>
+
