@@ -91,7 +91,6 @@
             height: 90%;
             overflow-x: hidden;
             overflow-y: scroll;
-            border: 1px solid red;
         }
         .rightBox ul::-webkit-scrollbar {
             display: none;
@@ -111,12 +110,12 @@
         .rightBox ul li .checkInput + label{
             background-color: white;
             /*border: 1px solid #d3d3d3;*/
-            width: 20px;
-            height: 20px;
+            width: 0.16rem;
+            height: 0.16rem;
             display: inline-block;
             text-align: center;
             vertical-align: bottom;
-            line-height: 20px;
+            line-height: 0.16rem;
             border-radius: 0.03rem;
         }
         .rightBox ul li .checkInput{
@@ -142,7 +141,7 @@
             padding:0.02rem 0.03rem;
             border-radius: 0.03rem;
             font-weight: bold;
-            /*display: none;*/
+            display: none;
             position: absolute;
             top: 0.1rem;
             right: 0.2rem;
@@ -205,69 +204,27 @@
 </head>
 <body>
 <header>中国工业互联网研究院展厅</header>
-<!-- 左边盒子 -->
-<div class="leftBox">
-    <div class="title">应用程序</div>
-    <ul>
-        <li>
-            <img src="img/001.png" alt="">
-            <p class="imgName">OA系统</p>
-        </li>
-        <li>
-            <img src="img/001.png" alt="">
-            <p class="imgName">OA系统</p>
-        </li>
-        <li>
-            <img src="img/001.png" alt="">
-            <p class="imgName">OA系统</p>
-        </li>
-        <li>
-            <img src="img/001.png" alt="">
-            <p class="imgName">OA系统</p>
-        </li>
-        <li>
-            <img src="img/001.png" alt="">
-            <p class="imgName">OA系统</p>
-        </li>
-        <li>
-            <img src="img/001.png" alt="">
-            <p class="imgName">OA系统</p>
-        </li>
-        <li>
-            <img src="img/001.png" alt="">
-            <p class="imgName">OA系统</p>
-        </li>
-        <li>
-            <img src="img/001.png" alt="">
-            <p class="imgName">OA系统</p>
-        </li>
-        <li>
-            <img src="img/001.png" alt="">
-            <p class="imgName">OA系统</p>
-        </li>
-        <li>
-            <img src="img/001.png" alt="">
-            <p class="imgName">OA系统</p>
-        </li>
-    </ul>
-</div>
-<!-- 右边盒子 -->
-<div class="rightBox">
+<div id="one">
+    <!-- 左边盒子 -->
+    <div class="leftBox">
+        <div class="title">应用程序</div>
+        <ul>
+            <li v-for="(item,index) in sysList" :key="index">
+                <img @click="imgBtn(index)"  :src="item.imgUrl" alt="">
+                <p class="imgName">{{item.name}}</p>
+            </li>
+        </ul>
+    </div>
+    <!-- 右边盒子 -->
+    <div class="rightBox">
     <div class="title">页面</div>
-    <ul>
-        <li>
-            <input id="001" class="checkInput" type="checkbox">
-            <label for="001"></label>
-            <input class="inputBox" type="text" value="测试数据001">
-            <button class="saveBtn">保存</button>
-            <img src="img/303.png" alt="">
-        </li>
-        <li>
-            <input id="002" class="checkInput" type="checkbox">
-            <label for="002"></label>
-            <input class="inputBox" type="text" value="测试数据001">
-            <button class="saveBtn">保存</button>
-            <img src="img/303.png" alt="">
+    <ul id="app">
+        <li v-for="(item,index) in secondData" :key="index">
+            <input :id="index" class="checkInput" :value="index"  :checked="item.isCheck" type="checkbox">
+            <label :for="index"></label>
+            <input class="inputBox" readonly type="text" :value="item.name">
+            <button class="saveBtn" :value="index">保存</button>
+            <img  class="updateImg" src="img/303.png" alt="">
         </li>
     </ul>
     <div class="rightBottomBox">
@@ -281,5 +238,190 @@
         </span>
     </div>
 </div>
+</div>
+<script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+<script>
+    $(function () {
+        //修改title
+        $('body').on("click",".updateImg",function () {
+            console.log(11111);
+            $(this).siblings(".saveBtn").css({
+                "display":"block"
+            });
+            $(this).siblings(".inputBox").attr("readOnly",false);
+            $(this).siblings(".inputBox").focus();
+            $(this).siblings(".inputBox").css({
+                "border":"1px solid #cccccc",
+            });
+        });
+        //点击保存
+        $('body').on("click",".saveBtn",function () {
+
+            let text = $(this).siblings(".inputBox").val();
+            console.log(text);
+            $(this).siblings(".inputBox").attr("readOnly",true);
+            $(this).siblings(".inputBox").css({
+                "border":"none",
+            });
+            $(".inputBox").text(text);
+            let xx = $(this).attr("value");
+            // console.log();
+            one.secondData[xx].name = text;
+            $(this).css({
+                "display":"none"
+            });
+        });
+        //选择时间
+        $('body').on("click",".checkInput",function () {
+            let mm = $(this).attr("value");
+            one.secondData[mm].isCheck = !one.secondData[mm].isCheck;
+        });
+    });
+</script>
+<script>
+    let one = new Vue({
+        el:"#one",
+        data:{
+            value:null,
+            // 系统列表
+            sysList:[
+                {
+                    ids:"001",
+                    name:"OA系统",
+                    imgUrl:"img/001.png",
+                    dataList:[
+                        {
+                            code:"101",
+                            icon:"img/404.png",
+                            name:"首页",
+                            isCheck:true,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"102",
+                            icon:"img/404.png",
+                            name:"设备控制",
+                            isCheck:false,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"103",
+                            icon:"img/404.png",
+                            name:"会议室管理",
+                            isCheck:false,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"104",
+                            icon:"img/404.png",
+                            name:"视频管理",
+                            isCheck:false,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"105",
+                            icon:"img/404.png",
+                            name:"考勤管理",
+                            isCheck:false,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"106",
+                            icon:"img/404.png",
+                            name:"设备管理",
+                            isCheck:false,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"107",
+                            icon:"img/404.png",
+                            name:"执行计划",
+                            isCheck:false,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"108",
+                            icon:"img/404.png",
+                            name:"系统管理",
+                            isCheck:false,
+                            iframeUrl:"xxxx.html"
+                        }
+                    ],
+                },
+                {
+                    ids:"002",
+                    name:"OB系统",
+                    imgUrl:"img/001.png",
+                    dataList:[
+                        {
+                            code:"201",
+                            icon:"img/404.png",
+                            name:"首页",
+                            isCheck:true,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"202",
+                            icon:"img/404.png",
+                            name:"设备控制11",
+                            isCheck:false,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"203",
+                            icon:"img/404.png",
+                            name:"会议室管理22",
+                            isCheck:false,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"204",
+                            icon:"img/404.png",
+                            name:"视频管理33",
+                            isCheck:true,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"205",
+                            icon:"img/404.png",
+                            name:"考勤管理44",
+                            isCheck:false,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"206",
+                            icon:"img/404.png",
+                            name:"设备管理55",
+                            isCheck:true,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"207",
+                            icon:"img/404.png",
+                            name:"执行计划66",
+                            isCheck:false,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"208",
+                            icon:"img/404.png",
+                            name:"系统管理77",
+                            isCheck:true,
+                            iframeUrl:"xxxx.html"
+                        }
+                    ],
+                },
+            ],
+            //二级数据
+            secondData:[],
+        },
+        methods: {
+            imgBtn: function (index) {
+                this.value = index;
+                this.secondData = this.sysList[index].dataList;
+            }
+        }
+    });
+</script>
 </body>
 </html>
