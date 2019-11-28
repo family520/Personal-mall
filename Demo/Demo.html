@@ -8,7 +8,7 @@
     <title>Demo</title>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <style>
-        * {
+        *{
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -16,47 +16,39 @@
             font-size: 0.14rem;
 
         }
-
-        html, body {
+        html,body{
             position: relative;
-            font-size: calc(100vw * 100 / 1920);
-            background-color: rgb(0, 0, 30);
+            font-size: calc(100vw * 100 / 1920 );
+            background-color: rgb(0,0,30);
         }
-
-        header {
+        header{
             width: 100%;
             height: 0.5rem;
             text-align: center;
             font-size: 0.24rem;
             line-height: 0.5rem;
-            background-color: rgb(23, 35, 77);
+            background-color: rgb(23,35,77);
             color: white;
             font-weight: bold;
         }
-
-        .title {
+        .title{
             width: 100%;
             height: 0.5rem;
             line-height: 0.5rem;
             text-align: center;
             font-size: 0.20rem;
             letter-spacing: 2px;
-            background-color: rgb(23, 25, 77);
+            background-color: rgb(23,25,77);
         }
-
-        .leftBox {
+        .leftBox{
             overflow: hidden;
             margin-top: 0.05rem;
-            width: 2.4rem;
+            width: 2.6rem;
             height: 10.25rem;
-            background-color: rgb(19, 29, 64);
-            position: absolute;
-            left: 0;
-            top: 0.5rem;
-
+            background-color: rgb(19,29,64);
         }
 
-        .leftBox ul {
+        .leftBox ul{
             margin-top: 0.2rem;
             width: 100%;
             list-style: none;
@@ -64,66 +56,46 @@
             overflow-x: hidden;
             overflow-y: scroll;
         }
-
         .leftBox ul::-webkit-scrollbar {
             display: none;
         }
-
-        .leftBox ul li {
+        .leftBox  ul li{
             margin: 0.1rem 0;
             width: 100%;
             text-align: center;
             padding: 0.05rem 0;
         }
-
-        .leftBox ul li img {
+        .leftBox ul li img{
             cursor: pointer;
             width: 1.94rem;
             height: 1.11rem;
             border-radius: 0.05rem;
         }
-
-        .leftBox ul li .imgName {
+        .leftBox ul li .imgName{
             font-size: 0.18rem;
         }
-
-        /*中间盒子*/
-        .centerBox {
-            /*background: red;*/
-            width: 14.09rem;
-            height: 10.25rem;
-            margin: 0.05rem auto 0;
-            /*padding-top: 1.34rem;*/
-        }
-
-
-
-
-        .rightBox {
+        .rightBox{
             overflow: hidden;
             position: absolute;
             top: 0.5rem;
             right: 0;
             margin-top: 0.05rem;
-            width: 2.4rem;
+            width: 2.6rem;
             height: 10.25rem;
-            background-color: rgb(19, 29, 64);
+            background-color: rgb(19,29,64);
         }
 
-        .rightBox ul {
+        .rightBox ul{
             width: 100%;
             list-style: none;
             height: 90%;
             overflow-x: hidden;
             overflow-y: scroll;
-            border: 1px solid red;
         }
-
         .rightBox ul::-webkit-scrollbar {
             display: none;
         }
-
-        .rightBox ul li {
+        .rightBox ul li{
             padding: 0 0.1rem;
             width: 100%;
             height: 0.41rem;
@@ -132,55 +104,49 @@
             justify-content: left;
             align-items: center;
             position: relative;
-            background: rgb(17, 21, 48);
+            background: rgb(17,21,48);
             margin-bottom: 0.01rem;
         }
-
-        .rightBox ul li .checkInput + label {
+        .rightBox ul li .checkInput + label{
             background-color: white;
             /*border: 1px solid #d3d3d3;*/
-            width: 20px;
-            height: 20px;
+            width: 0.16rem;
+            height: 0.16rem;
             display: inline-block;
             text-align: center;
             vertical-align: bottom;
-            line-height: 20px;
+            line-height: 0.16rem;
             border-radius: 0.03rem;
         }
-
-        .rightBox ul li .checkInput {
+        .rightBox ul li .checkInput{
             display: none;
         }
-
-        .rightBox ul li .checkInput:hover {
+        .rightBox ul li .checkInput:hover{
             cursor: pointer;
             border: 1px solid #2783FB;
         }
-
-        .rightBox ul li .checkInput:checked + label {
+        .rightBox ul li .checkInput:checked+label {
             background: #2783FB;
         }
 
-        .rightBox ul li .checkInput:checked + label:after {
+        .rightBox ul li .checkInput:checked+label:after {
             content: "\2714";
             color: white;
             border: none;
         }
-
-        .rightBox ul li .saveBtn {
+        .rightBox ul li .saveBtn{
             background-color: #2783FB;
             border: none;
             font-size: 0.14rem;
-            padding: 0.02rem 0.03rem;
+            padding:0.02rem 0.03rem;
             border-radius: 0.03rem;
             font-weight: bold;
-            /*display: none;*/
+            display: none;
             position: absolute;
             top: 0.1rem;
             right: 0.2rem;
         }
-
-        .rightBox ul li .inputBox {
+        .rightBox ul li .inputBox{
             width: 1.2rem;
             height: 0.24rem;
             line-height: 0.24rem;
@@ -190,11 +156,10 @@
             border: none;
             outline: none;
             overflow: hidden;
-            text-overflow: ellipsis;
+            text-overflow:ellipsis;
             white-space: nowrap;
         }
-
-        .rightBox ul li img {
+        .rightBox ul li img{
             width: 0.13rem;
             height: 0.17rem;
             margin-left: 0.48rem;
@@ -202,9 +167,9 @@
         }
 
 
-        .rightBox .rightBottomBox {
+        .rightBox .rightBottomBox{
             position: absolute;
-            background-color: rgb(23, 25, 77);
+            background-color: rgb(23,25,77);
             bottom: 0;
             left: 0;
             width: 100%;
@@ -212,10 +177,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 2px 2px rgba(0,0,0,0.2);
         }
-
-        .rightBox .rightBottomBox .imgBox {
+        .rightBox .rightBottomBox .imgBox{
             width: 0.7rem;
             height: 0.25rem;
             display: flex;
@@ -226,13 +190,11 @@
             align-items: center;
             cursor: pointer;
         }
-
-        .rightBox .rightBottomBox .imgBox img {
+        .rightBox .rightBottomBox .imgBox img{
             width: 0.12rem;
             height: 0.13rem;
         }
-
-        .rightBox .rightBottomBox .imgBox .imgTitle {
+        .rightBox .rightBottomBox .imgBox .imgTitle{
             font-size: 0.12rem;
             line-height: 0.27rem;
             color: #dcdef4;
@@ -242,84 +204,27 @@
 </head>
 <body>
 <header>中国工业互联网研究院展厅</header>
-<!-- 左边盒子 -->
-<div class="leftBox">
-    <div class="title">应用程序</div>
-    <ul>
-        <li>
-            <img src="img/001.png" alt="">
-            <p class="imgName">OA系统</p>
-        </li>
-        <li>
-            <img src="img/001.png" alt="">
-            <p class="imgName">OA系统</p>
-        </li>
-        <li>
-            <img src="img/001.png" alt="">
-            <p class="imgName">OA系统</p>
-        </li>
-        <li>
-            <img src="img/001.png" alt="">
-            <p class="imgName">OA系统</p>
-        </li>
-        <li>
-            <img src="img/001.png" alt="">
-            <p class="imgName">OA系统</p>
-        </li>
-        <li>
-            <img src="img/001.png" alt="">
-            <p class="imgName">OA系统</p>
-        </li>
-        <li>
-            <img src="img/001.png" alt="">
-            <p class="imgName">OA系统</p>
-        </li>
-        <li>
-            <img src="img/001.png" alt="">
-            <p class="imgName">OA系统</p>
-        </li>
-        <li>
-            <img src="img/001.png" alt="">
-            <p class="imgName">OA系统</p>
-        </li>
-        <li>
-            <img src="img/001.png" alt="">
-            <p class="imgName">OA系统</p>
-        </li>
-    </ul>
-</div>
-
-<!--中间盒子-->
-<div class="centerBox">
-
-
-
-    <script>
-
-        $(".centerBox").load("centerHtml.html");
-
-    </script>
-
-</div>
-
-
-<!-- 右边盒子 -->
-<div class="rightBox">
+<div id="one">
+    <!-- 左边盒子 -->
+    <div class="leftBox">
+        <div class="title">应用程序</div>
+        <ul>
+            <li v-for="(item,index) in sysList" :key="index">
+                <img @click="imgBtn(index)"  :src="item.imgUrl" alt="">
+                <p class="imgName">{{item.name}}</p>
+            </li>
+        </ul>
+    </div>
+    <!-- 右边盒子 -->
+    <div class="rightBox">
     <div class="title">页面</div>
-    <ul>
-        <li>
-            <input id="001" class="checkInput" type="checkbox">
-            <label for="001"></label>
-            <input class="inputBox" type="text" value="测试数据001">
-            <button class="saveBtn">保存</button>
-            <img src="img/303.png" alt="">
-        </li>
-        <li>
-            <input id="002" class="checkInput" type="checkbox">
-            <label for="002"></label>
-            <input class="inputBox" type="text" value="测试数据001">
-            <button class="saveBtn">保存</button>
-            <img src="img/303.png" alt="">
+    <ul id="app">
+        <li v-for="(item,index) in secondData" :key="index">
+            <input :id="index" class="checkInput" :value="index"  :checked="item.isCheck" type="checkbox">
+            <label :for="index"></label>
+            <input class="inputBox" readonly type="text" :value="item.name">
+            <button class="saveBtn" :value="index">保存</button>
+            <img  class="updateImg" src="img/303.png" alt="">
         </li>
     </ul>
     <div class="rightBottomBox">
@@ -333,5 +238,190 @@
         </span>
     </div>
 </div>
+</div>
+<script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+<script>
+    $(function () {
+        //修改title
+        $('body').on("click",".updateImg",function () {
+            console.log(11111);
+            $(this).siblings(".saveBtn").css({
+                "display":"block"
+            });
+            $(this).siblings(".inputBox").attr("readOnly",false);
+            $(this).siblings(".inputBox").focus();
+            $(this).siblings(".inputBox").css({
+                "border":"1px solid #cccccc",
+            });
+        });
+        //点击保存
+        $('body').on("click",".saveBtn",function () {
+
+            let text = $(this).siblings(".inputBox").val();
+            console.log(text);
+            $(this).siblings(".inputBox").attr("readOnly",true);
+            $(this).siblings(".inputBox").css({
+                "border":"none",
+            });
+            $(".inputBox").text(text);
+            let xx = $(this).attr("value");
+            // console.log();
+            one.secondData[xx].name = text;
+            $(this).css({
+                "display":"none"
+            });
+        });
+        //选择时间
+        $('body').on("click",".checkInput",function () {
+            let mm = $(this).attr("value");
+            one.secondData[mm].isCheck = !one.secondData[mm].isCheck;
+        });
+    });
+</script>
+<script>
+    let one = new Vue({
+        el:"#one",
+        data:{
+            value:null,
+            // 系统列表
+            sysList:[
+                {
+                    ids:"001",
+                    name:"OA系统",
+                    imgUrl:"img/001.png",
+                    dataList:[
+                        {
+                            code:"101",
+                            icon:"img/404.png",
+                            name:"首页",
+                            isCheck:true,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"102",
+                            icon:"img/404.png",
+                            name:"设备控制",
+                            isCheck:false,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"103",
+                            icon:"img/404.png",
+                            name:"会议室管理",
+                            isCheck:false,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"104",
+                            icon:"img/404.png",
+                            name:"视频管理",
+                            isCheck:false,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"105",
+                            icon:"img/404.png",
+                            name:"考勤管理",
+                            isCheck:false,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"106",
+                            icon:"img/404.png",
+                            name:"设备管理",
+                            isCheck:false,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"107",
+                            icon:"img/404.png",
+                            name:"执行计划",
+                            isCheck:false,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"108",
+                            icon:"img/404.png",
+                            name:"系统管理",
+                            isCheck:false,
+                            iframeUrl:"xxxx.html"
+                        }
+                    ],
+                },
+                {
+                    ids:"002",
+                    name:"OB系统",
+                    imgUrl:"img/001.png",
+                    dataList:[
+                        {
+                            code:"201",
+                            icon:"img/404.png",
+                            name:"首页",
+                            isCheck:true,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"202",
+                            icon:"img/404.png",
+                            name:"设备控制11",
+                            isCheck:false,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"203",
+                            icon:"img/404.png",
+                            name:"会议室管理22",
+                            isCheck:false,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"204",
+                            icon:"img/404.png",
+                            name:"视频管理33",
+                            isCheck:true,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"205",
+                            icon:"img/404.png",
+                            name:"考勤管理44",
+                            isCheck:false,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"206",
+                            icon:"img/404.png",
+                            name:"设备管理55",
+                            isCheck:true,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"207",
+                            icon:"img/404.png",
+                            name:"执行计划66",
+                            isCheck:false,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"208",
+                            icon:"img/404.png",
+                            name:"系统管理77",
+                            isCheck:true,
+                            iframeUrl:"xxxx.html"
+                        }
+                    ],
+                },
+            ],
+            //二级数据
+            secondData:[],
+        },
+        methods: {
+            imgBtn: function (index) {
+                this.value = index;
+                this.secondData = this.sysList[index].dataList;
+            }
+        }
+    });
+</script>
 </body>
 </html>
