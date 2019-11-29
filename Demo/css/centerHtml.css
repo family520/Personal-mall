@@ -20,6 +20,11 @@
 .navLeft{
     width: 2.43rem;
     height: 7.93rem;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+.navLeft::-webkit-scrollbar {
+    display: none;
 }
 
 .navLeft>p{
