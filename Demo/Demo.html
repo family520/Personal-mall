@@ -96,7 +96,7 @@
         .centerBox {
             /*background: red;*/
             width: 14.09rem;
-            height: 10.25rem;
+            /*height: 10.25rem;*/
             margin: 0.05rem auto 0;
             /*padding-top: 1.34rem;*/
         }
@@ -280,7 +280,6 @@
             border:1px solid red;
         }
     </style>
-    <link rel="stylesheet" href="css/centerHtml.css">
 </head>
 <body>
 <header>
@@ -299,6 +298,7 @@
         </ul>
     </div>
     <!-- 中间盒子 -->
+    <div id="pagName">OA系统</div>
     <div class="centerBox">
         <script>
             $(function () {
@@ -311,7 +311,7 @@
     <div class="title">页面</div>
     <ul id="app">
         <li v-for="(item,index) in secondData" :key="index">
-            <input :id="index" class="checkInput" :value="index"  :checked="item.isCheck" type="checkbox">
+            <input :id="index" class="checkInput" @click="addNavData(index)" :checked="item.isCheck" type="checkbox">
             <label :for="index"></label>
             <input class="inputBox" readonly type="text" :value="item.name">
             <button class="saveBtn" :value="index">保存</button>
@@ -383,17 +383,18 @@
             $(".inputBox").text(text);
             let xx = $(this).attr("value");
             one.secondData[xx].name = text;
+            one.addNavData(xx,"changeName");
             $(this).css({
                 "display":"none"
             });
         });
-        //选择时间
-        function bb(){
-            $('body').on("click",".checkInput",function () {
-                let mm = $(this).attr("value");
-                one.secondData[mm].isCheck = !one.secondData[mm].isCheck;
-            });
-        }
+        // //选择时间
+        // function bb(){
+        //     $('body').on("click",".checkInput",function () {
+        //         let mm = $(this).attr("value");
+        //         one.secondData[mm].isCheck = !one.secondData[mm].isCheck;
+        //     });
+        // }
     });
 </script>
 <script>
@@ -403,6 +404,7 @@
             value:null,
             // 系统列表
             sysList:[
+
                 {
                     ids:"001",
                     name:"OA系统",
@@ -413,59 +415,67 @@
                             icon:"img/navLeft/nav_1.png",
                             name:"首页",
                             isCheck:true,
-                            iframeUrl:"bbbbb.html"
+                            iframeUrl:"htmls/oa/index.html"
                         },
                         {
                             code:"102",
                             icon:"img/navLeft/nav_2.png",
                             name:"设备控制",
-                            isCheck:false,
-                            iframeUrl:"index.html"
+                            isCheck:true,
+                            iframeUrl:"htmls/oa/deviceContorl.html"
                         },
                         {
                             code:"103",
                             icon:"img/navLeft/nav_3.png",
                             name:"会议室管理",
-                            isCheck:false,
-                            iframeUrl:"bbbbb.html"
+                            isCheck:true,
+                            iframeUrl:"htmls/oa/meetingManage.html"
                         },
                         {
                             code:"104",
                             icon:"img/navLeft/nav_4.png",
                             name:"视频管理",
-                            isCheck:false,
-                            iframeUrl:"index.html"
+                            isCheck:true,
+                            iframeUrl:"htmls/oa/videoManage.html"
                         },
                         {
                             code:"105",
                             icon:"img/navLeft/nav_5.png",
                             name:"考勤管理",
-                            isCheck:false,
-                            iframeUrl:"bbbbb.html"
+                            isCheck:true,
+                            iframeUrl:"htmls/oa/attendanceManage.html"
                         },
                         {
                             code:"106",
                             icon:"img/navLeft/nav_6.png",
                             name:"设备管理",
-                            isCheck:false,
-                            iframeUrl:"xxxx.html"
+                            isCheck:true,
+                            iframeUrl:"htmls/oa/devieceManage.html"
                         },
                         {
                             code:"107",
                             icon:"img/navLeft/nav_7.png",
                             name:"执行计划",
-                            isCheck:false,
-                            iframeUrl:"xxxx.html"
+                            isCheck:true,
+                            iframeUrl:"htmls/oa/deliveryProgram.html"
                         },
                         {
                             code:"108",
                             icon:"img/navLeft/nav_8.png",
                             name:"系统管理",
-                            isCheck:false,
-                            iframeUrl:"xxxx.html"
+                            isCheck:true,
+                            iframeUrl:"htmls/oa/sysManage.html"
+                        },
+                        {
+                            code:"109",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"报交警系统",
+                            isCheck:true,
+                            iframeUrl:"htmls/warningstystem/header.html"
                         }
                     ],
                 },
+
                 {
                     ids:"002",
                     name:"OB系统",
@@ -482,14 +492,14 @@
                             code:"202",
                             icon:"img/navLeft/nav_2.png",
                             name:"设备控制11",
-                            isCheck:false,
+                            isCheck:true,
                             iframeUrl:"bbbbb.html"
                         },
                         {
                             code:"203",
                             icon:"img/navLeft/nav_3.png",
                             name:"会议室管理22",
-                            isCheck:false,
+                            isCheck:true,
                             iframeUrl:"index.html"
                         },
                         {
@@ -503,7 +513,7 @@
                             code:"205",
                             icon:"img/navLeft/nav_5.png",
                             name:"考勤管理44",
-                            isCheck:false,
+                            isCheck:true,
                             iframeUrl:"index.html"
                         },
                         {
@@ -517,7 +527,7 @@
                             code:"207",
                             icon:"img/navLeft/nav_7.png",
                             name:"执行计划66",
-                            isCheck:false,
+                            isCheck:true,
                             iframeUrl:"xxxx.html"
                         },
                         {
@@ -529,24 +539,56 @@
                         }
                     ],
                 },
+
             ],
             //二级数据
             secondData:[],
             //子页面数据包、
             number:null,
-            xxData : []
+            xxData : [] //选中的数据包
+        },
+        mounted(){
+            this.imgBtn(0);
         },
         methods: {
+
+            //点击左侧
             imgBtn: function (index) {
+                this.xxData = [];
                 this.value = index;
                 this.secondData = this.sysList[index].dataList;
                 for(let i = 0; i < this.secondData.length; i++){
                     if(this.secondData[i].isCheck === true){
                         this.xxData.push(this.secondData[i]);
                     }
+                };
+
+            },
+
+
+            //点击右侧
+            addNavData(index,changeName){
+                if(!changeName){
+                    this.secondData[index].isCheck = !this.secondData[index].isCheck;
                 }
+                this.xxData = [];
+                for(let i = 0; i < this.secondData.length; i++){
+                    if(this.secondData[i].isCheck === true){
+                        this.xxData.push(this.secondData[i]);
+                    }
+                };
+                // console.log(this.xxData);
             }
-        }
+
+        },
+
+        watch:{
+            xxData(){
+                var storage = window.localStorage;
+                var xxData = JSON.stringify(this.xxData);
+                storage.setItem('xxData',xxData);
+            },
+        },
     });
 </script>
 </body>
