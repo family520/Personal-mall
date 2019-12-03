@@ -26,7 +26,7 @@
 		<script src="../js/bootstrap-treeview.js"></script>
 
 <!--		<script src="../js/httpUtils.js"></script>-->
-		<script src="../js/Md5.js"></script>
+<!--		<script src="../js/Md5.js"></script>-->
 		<style>
 			.bootstrap-table .fixed-table-container .fixed-table-body .fixed-table-loading {
 				display: none;
@@ -117,13 +117,13 @@
 	</body>
 
 	<script>
-		var html;
+		// var html;
 		var rdata = {};
-		$("#loadDiv").html(loadHtml);
+		// $("#loadDiv").html(loadHtml);
 		$(function() {
-			$.show_overall_loding();
+			// $.show_overall_loding();
 			$('#myTable').bootstrapTable({
-				url: userServiceUrl + "/user/list", //请求后台的URL（*）
+				url: '../../json/test006.json', //请求后台的URL（*）
 				//data: data1, //本地数据
 				method: 'get', //请求方式（*）
 				contentType: "application/x-www-form-urlencoded",
@@ -162,16 +162,6 @@
 						});
 						return res[0];
 					}
-				},
-				onDblClickRow: function(row) {
-					console.info(row);
-				},
-				onLoadSuccess: function() {
-					//					$('.dropdown-toggle').on("click", function() {
-					//						// $('.dropdown-toggle').parent().toggleClass("open");
-					//					});
-
-					$.hide_overall_loding();
 				},
 				columns: [{
                     checkbox: true
@@ -231,9 +221,8 @@
 			});
 
 			function queryParams(params) {
-				$.show_overall_loding();
 				return {
-					token: $.getToken(),
+					// token: $.getToken(),
 					pageSize: params.pageSize,
 					pageNum: params.pageNumber,
 					isScreenOrganization: 1,
