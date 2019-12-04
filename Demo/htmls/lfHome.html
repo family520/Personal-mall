@@ -272,6 +272,7 @@
                 <img src="../img/icon/icon05.png" alt="">
                 <span style="color: black;font-weight: bold">能耗数据</span>
             </div>
+            <div id="mian02" style="width: 100%;height:500px;"></div>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -440,6 +441,144 @@
             ]
         }
         myChart.setOption(option);
+    </script>
+    <script>
+        // 基于准备好的dom，初始化echarts实例
+        var myChart02 = echarts.init(document.getElementById('mian02'));
+
+        // 指定图表的配置项和数据
+        option = {
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                color: [ "#47D8BE", "#F9A589"],
+                data: ['预计能耗', '实际能耗'],
+                left: 'center',
+                bottom: 'bottom'
+            },
+            grid: {
+                top: 'middle',
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                height: '80%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],
+                axisLine: {
+                    lineStyle: {
+                        color: "#999"
+                    }
+                }
+            },
+            yAxis: {
+                type: 'value',
+                splitLine: {
+                    lineStyle: {
+                        type: 'dashed',
+                        color: '#DDD'
+                    }
+                },
+                axisLine: {
+                    show: false,
+                    lineStyle: {
+                        color: "#333"
+                    },
+                },
+                nameTextStyle: {
+                    color: "#999"
+                },
+                splitArea: {
+                    show: false
+                }
+            },
+            series: [{
+                    name: '流失',
+                    type: 'line',
+                    data: [123,568,111,222,123,56,123,568,111,222,123,56],
+                    lineStyle: {
+                        normal: {
+                            width: 5,
+                            color: {
+                                type: 'linear',
+
+                                colorStops: [{
+                                    offset: 0,
+                                    color: '#AAF487' // 0% 处的颜色
+                                },
+                                    {
+                                        offset: 0.4,
+                                        color: '#47D8BE' // 100% 处的颜色
+                                    }, {
+                                        offset: 1,
+                                        color: '#47D8BE' // 100% 处的颜色
+                                    }
+                                ],
+                                globalCoord: false // 缺省为 false
+                            },
+                            shadowColor: 'rgba(71,216,190, 0.5)',
+                            shadowBlur: 10,
+                            shadowOffsetY: 7
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: '#AAF487',
+                            borderWidth: 10,
+                            /*shadowColor: 'rgba(72,216,191, 0.3)',
+                             shadowBlur: 100,*/
+                            borderColor: "#AAF487"
+                        }
+                    },
+                    smooth: true
+                },
+                {
+                    name: '续费',
+                    type: 'line',
+                    data: [125,568,25,36,784,56,125,568,25,36,784,56],
+                    lineStyle: {
+                        normal: {
+                            width: 5,
+                            color: {
+                                type: 'linear',
+
+                                colorStops: [{
+                                    offset: 0,
+                                    color: '#F6D06F' // 0% 处的颜色
+                                },
+                                    {
+                                        offset: 0.4,
+                                        color: '#F9A589' // 100% 处的颜色
+                                    }, {
+                                        offset: 1,
+                                        color: '#F9A589' // 100% 处的颜色
+                                    }
+                                ],
+                                globalCoord: false // 缺省为 false
+                            },
+                            shadowColor: 'rgba(249,165,137, 0.5)',
+                            shadowBlur: 10,
+                            shadowOffsetY: 7
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: '#F6D06F',
+                            borderWidth: 10,
+                            /*shadowColor: 'rgba(72,216,191, 0.3)',
+                             shadowBlur: 100,*/
+                            borderColor: "#F6D06F"
+                        }
+                    },
+                    smooth: true
+                }
+            ]
+        };
+
+        myChart02.setOption(option);
     </script>
 
 </body>
