@@ -363,7 +363,7 @@
         </ul>
     </div>
     <!-- 中间盒子 -->
-    <div id="pagName">{{name}}</div>
+    <div id="pagName">{{name || 台迪智慧办公}}</div>
     <div class="centerBox">
         <script>
             $(function () {
@@ -425,57 +425,7 @@
     </div>
 </div>
 <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
-<script>
-    $(function () {
-        //修改title
-        $('body').on("click",".updateImg",function () {
-            $(this).siblings(".saveBtn").css({
-                "display":"block"
-            });
-            $(this).siblings(".inputBox").attr("readOnly",false);
-            $(this).siblings(".inputBox").focus();
-            $(this).siblings(".inputBox").css({
-                "border":"1px solid #cccccc",
-            });
-        });
-        //点击保存
-        $('body').on("click",".saveBtn",function () {
 
-            let text = $(this).siblings(".inputBox").val();
-            $(this).siblings(".inputBox").attr("readOnly",true);
-            $(this).siblings(".inputBox").css({
-                "border":"none",
-            });
-            $(".inputBox").text(text);
-            let xx = $(this).attr("value");
-            one.secondData[xx].name = text;
-            one.addNavData(xx,"changeName");
-            $(this).css({
-                "display":"none"
-            });
-        });
-        //获取当前时间
-        let date = new Date();
-        let time = date.toLocaleDateString(); //获取日期与时间
-        $(".nowTime").text(time);
-        console.log(time);
-
-        //弹出模板
-        $(".scBtn").on("click",function () {
-            $(".scBox").show();
-        });
-        $(".outImg").on("click",function () {
-            $(".scBox").hide();
-        });
-
-        //预览
-        $(".ylBtn").on("click",function () {
-            // window.location.href="centerHtml.html";
-            window.open('centerHtml.html')
-        });
-
-    });
-</script>
 <script>
     let one = new Vue({
         el:"#one",
@@ -491,6 +441,7 @@
                     dataList:[
                         {
                             code:"101",
+                            parentsName:"台迪智慧办公",
                             icon:"img/navLeft/nav_1.png",
                             name:"首页",
                             isCheck:true,
@@ -848,10 +799,10 @@
             //点击左侧
             imgBtn: function (index) {
                 this.name = this.sysList[index].name;
+                $("body .name").text(one.name);
                 this.xxData = [];
                 this.value = index;
                 this.secondData = this.sysList[index].dataList;
-                // xxxx.name = this.name;
                 for(let i = 0; i < this.secondData.length; i++){
                     if(this.secondData[i].isCheck === true){
                         this.xxData.push(this.secondData[i]);
@@ -883,6 +834,60 @@
             },
         },
     });
+</script>
+<script>
+    $(function () {
+        //修改title
+        $('body').on("click",".updateImg",function () {
+            $(this).siblings(".saveBtn").css({
+                "display":"block"
+            });
+            $(this).siblings(".inputBox").attr("readOnly",false);
+            $(this).siblings(".inputBox").focus();
+            $(this).siblings(".inputBox").css({
+                "border":"1px solid #cccccc",
+            });
+        });
+        //点击保存
+        $('body').on("click",".saveBtn",function () {
+
+            let text = $(this).siblings(".inputBox").val();
+            $(this).siblings(".inputBox").attr("readOnly",true);
+            $(this).siblings(".inputBox").css({
+                "border":"none",
+            });
+            $(".inputBox").text(text);
+            let xx = $(this).attr("value");
+            one.secondData[xx].name = text;
+            one.addNavData(xx,"changeName");
+            $(this).css({
+                "display":"none"
+            });
+        });
+        //获取当前时间
+        let date = new Date();
+        let time = date.toLocaleDateString(); //获取日期与时间
+        $(".nowTime").text(time);
+        console.log(time);
+
+        //弹出模板
+        $(".scBtn").on("click",function () {
+            $(".scBox").show();
+        });
+        $(".outImg").on("click",function () {
+            $(".scBox").hide();
+        });
+
+        //预览
+        $(".ylBtn").on("click",function () {
+            // window.location.href="centerHtml.html";
+            window.open('centerHtml.html')
+        });
+        window.onload = function () {
+            document.cookie = $("body .name").text();
+        }
+    });
+
 </script>
 </body>
 </html>

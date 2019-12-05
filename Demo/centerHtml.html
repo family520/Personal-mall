@@ -14,7 +14,7 @@
     <div class="contextBox" id="xxxx" style="position: relative">
         <!-- 左边导航栏-->
         <div class="navLeft">
-            <p>{{name}}</p>
+            <p class="name">{{name}}定制系统</p>
             <ul>
                 <li v-for="(item,index) in mmm" :key="index" class="liClick" @click="jj(index)">
                     <span>
@@ -35,7 +35,7 @@
             el:"#xxxx",
             data:{
                 mmm:null,
-                name:one.name,
+                name:"",
                 src : "office-ui/html/home.html",
             },
             methods:{
@@ -55,9 +55,7 @@
 
             }
         },500);
-        $(function () {
-            console.log(xxxx.mmm);
-        });
+
     </script>
 
 </body>
