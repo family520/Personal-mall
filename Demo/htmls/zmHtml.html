@@ -139,10 +139,10 @@
         }
         .threeBox{
             width: 100%;
-            border: 1px solid red;
             background-color: white;
             margin-top: 0.3rem;
             height: 6rem;
+            position: relative;
         }
     </style>
 </head>
@@ -239,7 +239,11 @@
     </div>
 </div>
 <div class="threeBox">
-    <div id="main02" style="width: 100%;height: 360px;border: 1px solid red;"></div>
+    <div class="title" style="position: absolute;top:0;left: 0;">
+        <img src="../img/zm/zm05.png" alt="">
+        <span>运行统计</span>
+    </div>
+    <div id="main02" style="width: 100%;height: 360px;"></div>
 </div>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://cdn.bootcss.com/echarts/4.4.0-rc.1/echarts.min.js"></script>
@@ -290,38 +294,125 @@
 
     // 指定图表的配置项和数据
     option = {
-        title: {
-            text: '设备故障 '
-        },
-        tooltip: {
-            trigger: 'axis'
-        },
-        legend: {
-            data:['今天']
-        },
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-        },
-        xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
-        },
-        yAxis: {
-            type: 'value'
-        },
+        xAxis: [{
+            data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+            axisLabel: {
+                interval: 0,
+                show: false
+            },
+        },{
+            data: ['00:00', '02:00', '04:00', '06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00', '24:00'],
+            axisLabel: {
+                interval: 0,
+                show: true
+            },
+            axisLine: {
+                show: false
+            },
+            axisTick: {
+                show: false
+            },
+            gridIndex: 1
+        }],
+        yAxis: [{
+            type: 'value',
+            show: true
+        },{
+            gridIndex: 1,
+            show: false,
+        }],
+        grid: [{
+            width: '80%',
+            left: '10%'
+        },{
+            left: '13.3%',
+            width: '80%'
+        }],
         series: [
             {
-                name:'',
-                type:'line',
-                stack: '总量',
-                data:[12, 13, 10, 13, 9, 23, 21,12, 13, 10, 13, 9, 23, 21,10]
-            }
+                type: 'bar',
+                barWidth: 10,
+                data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120],
+                itemStyle: {
+                    barBorderRadius: 10,
+                    color: {
+                        type: 'linear',
+                        x: 0,
+                        y: 0,
+                        x2: 0,
+                        y2: 1,
+                        colorStops: [{
+                            offset: 0, color: '#37FFF9' // 0% 处的颜色
+                        }, {
+                            offset: 1, color: 'rgba(0, 222, 215, 0.2)' // 100% 处的颜色
+                        }],
+                    }
+                }
+
+            },
+            {
+                type: 'bar',
+                barWidth: 10,
+                data: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60],
+                itemStyle: {
+                    barBorderRadius: 10,
+                    color: {
+                        type: 'linear',
+                        x: 0,
+                        y: 0,
+                        x2: 0,
+                        y2: 1,
+                        colorStops: [{
+                            offset: 0, color: '#FF5624' // 0% 处的颜色
+                        }, {
+                            offset: 1, color: 'rgba(255, 86, 36, 0.2)' // 100% 处的颜色
+                        }],
+                    }
+                }
+            },
+            {
+                type: 'bar',
+                barWidth: 10,
+                data: [10, 15, 30, 20, 35, 40, 35, 50, 45, 60, 55,30],
+                itemStyle: {
+                    barBorderRadius: 10,
+                    color: {
+                        type: 'linear',
+                        x: 0,
+                        y: 0,
+                        x2: 0,
+                        y2: 1,
+                        colorStops: [{
+                            offset: 0, color: '#ff38ab' // 0% 处的颜色
+                        }, {
+                            offset: 1, color: 'rgba(255, 86, 36, 0.2)' // 100% 处的颜色
+                        }],
+                    }
+                }
+            },
+            {
+                type: 'bar',
+                barWidth: 10,
+                data: [5, 10, 15, 40, 25, 20, 30, 40, 15, 50, 25, 20],
+                itemStyle: {
+                    barBorderRadius: 10,
+                    color: {
+                        type: 'linear',
+                        x: 0,
+                        y: 0,
+                        x2: 0,
+                        y2: 1,
+                        colorStops: [{
+                            offset: 0, color: '#2ac9ff' // 0% 处的颜色
+                        }, {
+                            offset: 1, color: 'rgba(255, 86, 36, 0.2)' // 100% 处的颜色
+                        }],
+                    }
+                }
+            },
         ]
     };
+
 
     myChart02.setOption(option);
 </script>

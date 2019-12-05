@@ -14,7 +14,7 @@
     <div class="contextBox" id="xxxx" style="position: relative">
         <!-- 左边导航栏-->
         <div class="navLeft">
-            <p>台迪智慧办公</p>
+            <p>{{name}}</p>
             <ul>
                 <li v-for="(item,index) in mmm" :key="index" class="liClick" @click="jj(index)">
                     <span>
@@ -35,13 +35,12 @@
             el:"#xxxx",
             data:{
                 mmm:null,
-                src : "",
+                name:one.name,
+                src : "office-ui/html/home.html",
             },
             methods:{
                 jj:function (index) {
-
                     this.src = this.mmm[index].iframeUrl;
-
                 }
             },
         });
@@ -55,8 +54,10 @@
                 xxxx.mmm = xxData;
 
             }
-        },500)
-
+        },500);
+        $(function () {
+            console.log(xxxx.mmm);
+        });
     </script>
 
 </body>

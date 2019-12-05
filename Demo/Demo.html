@@ -363,7 +363,7 @@
         </ul>
     </div>
     <!-- 中间盒子 -->
-    <div id="pagName">OA系统</div>
+    <div id="pagName">{{name}}</div>
     <div class="centerBox">
         <script>
             $(function () {
@@ -481,12 +481,12 @@
         el:"#one",
         data:{
             value:null,
+            name:"",
             // 系统列表
             sysList:[
-
                 {
                     ids:"001",
-                    name:"OA系统",
+                    name:"台迪智慧办公",
                     imgUrl:"img/001.png",
                     dataList:[
                         {
@@ -572,10 +572,16 @@
                             name:"照明",
                             isCheck:true,
                             iframeUrl:"htmls/zmHtml.html"
+                        },
+                        {
+                            code:"113",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"停车系统",
+                            isCheck:true,
+                            iframeUrl:"htmls/tcxt.html"
                         }
                     ],
                 },
-
                 {
                     ids:"002",
                     name:"XXX系统",
@@ -639,11 +645,199 @@
                         }
                     ],
                 },
-
+                {
+                    ids:"002",
+                    name:"XXX系统",
+                    imgUrl:"img/001.png",
+                    dataList:[
+                        {
+                            code:"201",
+                            icon:"img/navLeft/nav_1.png",
+                            name:"首页",
+                            isCheck:true,
+                            iframeUrl:"office-ui/html/home.html"
+                        },
+                        {
+                            code:"202",
+                            icon:"img/navLeft/nav_2.png",
+                            name:"设备控制11",
+                            isCheck:true,
+                            iframeUrl:"bbbbb.html"
+                        },
+                        {
+                            code:"203",
+                            icon:"img/navLeft/nav_3.png",
+                            name:"会议室管理22",
+                            isCheck:true,
+                            iframeUrl:"index.html"
+                        },
+                        {
+                            code:"204",
+                            icon:"img/navLeft/nav_4.png",
+                            name:"视频管理33",
+                            isCheck:true,
+                            iframeUrl:"bbbbb.html"
+                        },
+                        {
+                            code:"205",
+                            icon:"img/navLeft/nav_5.png",
+                            name:"考勤管理44",
+                            isCheck:true,
+                            iframeUrl:"index.html"
+                        },
+                        {
+                            code:"206",
+                            icon:"img/navLeft/nav_6.png",
+                            name:"设备管理55",
+                            isCheck:true,
+                            iframeUrl:"bbbbb.html"
+                        },
+                        {
+                            code:"207",
+                            icon:"img/navLeft/nav_7.png",
+                            name:"执行计划66",
+                            isCheck:true,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"208",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"系统管理77",
+                            isCheck:true,
+                            iframeUrl:"xxxx.html"
+                        }
+                    ],
+                },
+                {
+                    ids:"002",
+                    name:"XXX系统",
+                    imgUrl:"img/001.png",
+                    dataList:[
+                        {
+                            code:"201",
+                            icon:"img/navLeft/nav_1.png",
+                            name:"首页",
+                            isCheck:true,
+                            iframeUrl:"office-ui/html/home.html"
+                        },
+                        {
+                            code:"202",
+                            icon:"img/navLeft/nav_2.png",
+                            name:"设备控制11",
+                            isCheck:true,
+                            iframeUrl:"bbbbb.html"
+                        },
+                        {
+                            code:"203",
+                            icon:"img/navLeft/nav_3.png",
+                            name:"会议室管理22",
+                            isCheck:true,
+                            iframeUrl:"index.html"
+                        },
+                        {
+                            code:"204",
+                            icon:"img/navLeft/nav_4.png",
+                            name:"视频管理33",
+                            isCheck:true,
+                            iframeUrl:"bbbbb.html"
+                        },
+                        {
+                            code:"205",
+                            icon:"img/navLeft/nav_5.png",
+                            name:"考勤管理44",
+                            isCheck:true,
+                            iframeUrl:"index.html"
+                        },
+                        {
+                            code:"206",
+                            icon:"img/navLeft/nav_6.png",
+                            name:"设备管理55",
+                            isCheck:true,
+                            iframeUrl:"bbbbb.html"
+                        },
+                        {
+                            code:"207",
+                            icon:"img/navLeft/nav_7.png",
+                            name:"执行计划66",
+                            isCheck:true,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"208",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"系统管理77",
+                            isCheck:true,
+                            iframeUrl:"xxxx.html"
+                        }
+                    ],
+                },
+                {
+                    ids:"002",
+                    name:"XXX系统",
+                    imgUrl:"img/001.png",
+                    dataList:[
+                        {
+                            code:"201",
+                            icon:"img/navLeft/nav_1.png",
+                            name:"首页",
+                            isCheck:true,
+                            iframeUrl:"office-ui/html/home.html"
+                        },
+                        {
+                            code:"202",
+                            icon:"img/navLeft/nav_2.png",
+                            name:"设备控制11",
+                            isCheck:true,
+                            iframeUrl:"bbbbb.html"
+                        },
+                        {
+                            code:"203",
+                            icon:"img/navLeft/nav_3.png",
+                            name:"会议室管理22",
+                            isCheck:true,
+                            iframeUrl:"index.html"
+                        },
+                        {
+                            code:"204",
+                            icon:"img/navLeft/nav_4.png",
+                            name:"视频管理33",
+                            isCheck:true,
+                            iframeUrl:"bbbbb.html"
+                        },
+                        {
+                            code:"205",
+                            icon:"img/navLeft/nav_5.png",
+                            name:"考勤管理44",
+                            isCheck:true,
+                            iframeUrl:"index.html"
+                        },
+                        {
+                            code:"206",
+                            icon:"img/navLeft/nav_6.png",
+                            name:"设备管理55",
+                            isCheck:true,
+                            iframeUrl:"bbbbb.html"
+                        },
+                        {
+                            code:"207",
+                            icon:"img/navLeft/nav_7.png",
+                            name:"执行计划66",
+                            isCheck:true,
+                            iframeUrl:"xxxx.html"
+                        },
+                        {
+                            code:"208",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"系统管理77",
+                            isCheck:true,
+                            iframeUrl:"xxxx.html"
+                        }
+                    ],
+                }
             ],
             //二级数据
             secondData:[],
-            //子页面数据包、
+            //子页面数据包
             number:null,
             xxData : [] //选中的数据包
         },
@@ -651,18 +845,18 @@
             this.imgBtn(0);
         },
         methods: {
-
             //点击左侧
             imgBtn: function (index) {
+                this.name = this.sysList[index].name;
                 this.xxData = [];
                 this.value = index;
                 this.secondData = this.sysList[index].dataList;
+                // xxxx.name = this.name;
                 for(let i = 0; i < this.secondData.length; i++){
                     if(this.secondData[i].isCheck === true){
                         this.xxData.push(this.secondData[i]);
                     }
                 };
-
             },
 
 
@@ -677,7 +871,6 @@
                         this.xxData.push(this.secondData[i]);
                     }
                 };
-                // console.log(this.xxData);
             }
 
         },
