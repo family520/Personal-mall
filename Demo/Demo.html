@@ -385,7 +385,7 @@
 <!--            });-->
 <!--        </script>-->
 
-        <iframe src="centerHtml.html" frameborder="0" style="width: 14.09rem;height: 7.93rem; "></iframe>
+        <iframe id="childframe" src="centerHtml.html" frameborder="0" style="width: 14.09rem;height: 7.93rem; "></iframe>
     </div>
     <!-- 右边盒子 -->
     <div class="rightBox">
@@ -905,7 +905,15 @@
         window.onload = function () {
             document.cookie = $("body .name").text();
         }
+
+        $(".leftBox>ul>li").click(function () {
+            $("#childframe")[0].contentWindow.changeName(one.name);
+            // document.getElementById("childframe").contentWindow.changeName();
+        })
+
     });
+
+
 
 </script>
 </body>

@@ -15,7 +15,7 @@
     <div class="contextBox" id="xxxx" style="position: relative">
         <!-- 左边导航栏-->
         <div class="navLeft">
-            <p class="name">{{name || '台迪智慧办公' }}</p>
+            <p class="name" id="name">{{name || '台迪智慧办公'}}</p>
             <ul>
                 <li v-for="(item,index) in mmm" :key="index" class="liClick" @click="jj(index)">
                     <span>
@@ -60,6 +60,13 @@
         var Ohref=decodeURI(window.location.href);//译码
         var OhrefIndex=Ohref.split('?name=');
         xxxx.name = OhrefIndex[1];
+        $("#name").text(OhrefIndex[1]);
+
+
+        function changeName(name){
+            xxxx.name = name;
+        }
+
 
     </script>
 

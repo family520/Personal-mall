@@ -590,6 +590,17 @@
     let myChart2;
 
 
+    //echarts 图表字体大小自适应
+    function fontSize(res) {
+        console.log(111);
+        let docEl = document.documentElement,
+            clientWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        if(!clientWidth) return;
+        let fontSize = 100 * (clientWidth / 1920);
+        return res * fontSize;
+
+    }
+
     function chart1() {
 
         // 基于准备好的dom，初始化echarts实例
@@ -602,7 +613,7 @@
                 text: '92.5%',
                 textStyle :{
                     color:"#333399",
-                    fontSize : 30
+                    fontSize : fontSize(0.3)
                 },
                 left:"20%",
                 top:"5%"
@@ -690,11 +701,11 @@
                 subtext: '75%',
                 textStyle: {
                     color: '#9F9F9F',
-                    fontSize: 20,
+                    fontSize: fontSize(0.2),
                     // align: 'center'
                 },
                 subtextStyle: {
-                    fontSize: 20,
+                    fontSize: fontSize(0.2),
                     color: ['#9F9F9F']
                 },
                 x: 'center',
@@ -748,6 +759,7 @@
 
 
             setTimeout(()=>{
+
 
                 myChart1.resize();
                 myChart2.resize();
