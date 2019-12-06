@@ -13,7 +13,6 @@
             box-sizing: border-box;
             color: #ffffff;
             font-size: 0.14rem;
-
         }
 
         html, body {
@@ -28,7 +27,6 @@
             width: 100%;
             height: 0.5rem;
             text-align: center;
-            font-size: 0.24rem;
             line-height: 0.5rem;
             background-color: rgb(23, 35, 77);
             color: white;
@@ -36,6 +34,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
+        }
+        header img{
+            height: 77%;
+            margin: 0.05rem;
+            padding-right: 0.1rem;
+            border-right: 3px solid white;
         }
 
         .title {
@@ -354,11 +358,12 @@
         }
     </style>
     <script src="js/jquery.min.js"></script>
+    <script src="js/vue.min.js"></script>
 </head>
 <body>
 <header>
-    <img src="" alt="">
-    <span>S-API应用输出</span>
+    <img src="img/logo.png" alt="">
+    <span style="font-size: 0.24rem !important;">S-API应用输出</span>
 </header>
 <div id="one">
     <!-- 左边盒子 -->
@@ -380,7 +385,7 @@
 <!--            });-->
 <!--        </script>-->
 
-        <iframe src="centerHtml.html" style="width: 14.09rem;height: 7.93rem; "></iframe>
+        <iframe src="centerHtml.html" frameborder="0" style="width: 14.09rem;height: 7.93rem; "></iframe>
     </div>
     <!-- 右边盒子 -->
     <div class="rightBox">
@@ -435,8 +440,8 @@
         </div>
     </div>
 </div>
-<script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
-
+<!--<script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>-->
+<script src="js/vue.min.js"></script>
 <script>
     let one = new Vue({
         el:"#one",
@@ -510,14 +515,14 @@
                         {
                             code:"109",
                             icon:"img/navLeft/nav_8.png",
-                            name:"交警系统",
+                            name:"报警系统",
                             isCheck:true,
                             iframeUrl:"htmls/warningstystem/header.html"
                         },
                         {
                             code:"110",
                             icon:"img/navLeft/nav_8.png",
-                            name:"冷风",
+                            name:"冷风系统",
                             isCheck:true,
                             iframeUrl:"htmls/lfHome.html"
                         },
@@ -531,7 +536,7 @@
                         {
                             code:"112",
                             icon:"img/navLeft/nav_8.png",
-                            name:"照明",
+                            name:"照明系统",
                             isCheck:true,
                             iframeUrl:"htmls/zmHtml.html"
                         },
@@ -547,7 +552,7 @@
                 {
                     ids:"002",
                     name:"XXX系统",
-                    imgUrl:"img/001.png",
+                    imgUrl:"img/111.jpg",
                     dataList:[
                         {
                             code:"201",

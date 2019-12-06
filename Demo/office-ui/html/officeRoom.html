@@ -110,9 +110,9 @@
 	</body>
 	<script src="../../js/data.js"></script>
 	<script type="text/javascript">
-		let html;
+		// let html;
 		let url = "";
-		$(".selectpickers").selectpicker('refresh');
+		// $(".selectpickers").selectpicker('refresh');
 		$(function() {
 			$('#myTable').bootstrapTable({
 				url: '../../json/test.json', //请求后台的URL（*）
@@ -131,7 +131,7 @@
 				queryParamsType: '',
 				queryParams: queryParams, //传递参数（*）
 				strictSearch: true,
-				// height: 500,                            //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+				// height: 500,  //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
 				uniqueId: "id", //每一行的唯一标识，一般为主键列
 				cardView: false, //是否显示详细视图
 				detailView: false, //是否显示父子表
@@ -145,12 +145,6 @@
 						rows: result.list
 					});
 					return res[0];
-				},
-				onDblClickRow: function(row) {
-					console.info(row);
-				},
-				onLoadSuccess: function() {
-					// $.hide_overall_loding();
 				},
 				columns: [{
 					checkbox: true

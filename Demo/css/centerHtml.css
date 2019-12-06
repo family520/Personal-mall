@@ -44,6 +44,7 @@ body,html{
     height: 100%;
     overflow-x: hidden;
     overflow-y: scroll;
+    background-color: white;
 }
 .navLeft::-webkit-scrollbar {
     display: none;
@@ -52,7 +53,7 @@ body,html{
 .navLeft>p{
     width: 100%;
     height: 0.88rem;
-    font-size: 0.264rem;
+    font-size: 0.4rem;
     color: #0492f2;
     text-align: center;
     line-height: 0.88rem;
@@ -90,7 +91,7 @@ body,html{
 }
 
 .navLeft > ul>li >span:nth-child(2){
-    font-size: 0.176rem;
+    font-size: 0.24rem;
     color: #868daa;
 }
 
