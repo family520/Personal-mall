@@ -363,7 +363,7 @@
         </ul>
     </div>
     <!-- 中间盒子 -->
-    <div id="pagName">{{name || 台迪智慧办公}}</div>
+    <div id="pagName">{{name}}</div>
     <div class="centerBox">
         <script>
             $(function () {
@@ -431,7 +431,7 @@
         el:"#one",
         data:{
             value:null,
-            name:"",
+            name:"台迪智慧办公",
             // 系统列表
             sysList:[
                 {
@@ -799,7 +799,7 @@
             //点击左侧
             imgBtn: function (index) {
                 this.name = this.sysList[index].name;
-                $("body .name").text(one.name);
+                $("body .name").text(this.name);
                 this.xxData = [];
                 this.value = index;
                 this.secondData = this.sysList[index].dataList;
@@ -880,8 +880,11 @@
 
         //预览
         $(".ylBtn").on("click",function () {
+            // console.log(one.name);
             // window.location.href="centerHtml.html";
-            window.open('centerHtml.html')
+            var url=encodeURI('centerHtml.html?name=' + one.name);
+            // window.location.href=url;
+            window.open(url);
         });
         window.onload = function () {
             document.cookie = $("body .name").text();
