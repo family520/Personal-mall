@@ -36,7 +36,7 @@
             el:"#xxxx",
             data:{
                 mmm:null,
-                name:"台迪智慧办公",
+                name:"智慧办公",
                 src : "htmls/ggHome.html",
             },
             methods:{
@@ -57,8 +57,9 @@
             }
         },500);
 
-        var Ohref=decodeURI(window.location.href);//译码
-        var OhrefIndex=Ohref.split('?name=');
+        let Ohref=decodeURI(window.location.href);//译码
+        let OhrefIndex=Ohref.split('?name=');
+        console.log(Ohref);
         xxxx.name = OhrefIndex[1];
         $("#name").text(OhrefIndex[1]);
 
