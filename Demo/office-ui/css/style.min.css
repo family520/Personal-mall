@@ -3276,7 +3276,7 @@ dt {
 	right: 0;
 	left: 0;
 	z-index: 4;
-	padding-left: 240px;
+	/*padding-left: 240px;*/
 	background-color: #E1EEF6;
 	-webkit-transition: padding 0.3s;
 	transition: padding 0.3s;
@@ -3391,8 +3391,8 @@ dt {
 .lyear-layout-content {
 	height: 100%;
 	width: 100%;
-	padding-top: 68px;
-	padding-left: 240px;
+	/*padding-top: 68px;*/
+	/*padding-left: 240px;*/
 	-webkit-transition: padding 0.3s;
 	transition: padding 0.3s;
 }

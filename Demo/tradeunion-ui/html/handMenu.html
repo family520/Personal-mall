@@ -123,128 +123,128 @@
 <script type="text/javascript" src="../js/main.min.js"></script>
 
 <script>
-    $("#toInfo").click(function () {
-        isHeadOffice = $.getCookie("isHeadOffice");
-        if (isHeadOffice == 1) {
-            window.location.href = "head-office.html";
-        } else {
-            window.location.href = "branch.html";
-        }
-    })
+    // $("#toInfo").click(function () {
+    //     isHeadOffice = $.getCookie("isHeadOffice");
+    //     if (isHeadOffice == 1) {
+    //         window.location.href = "head-office.html";
+    //     } else {
+    //         window.location.href = "branch.html";
+    //     }
+    // })
 
     
-
-    $('.lyear-layout-content').show();
-
-    //退出登录
-    $('.loginOut').on('click', function () {
-        var conlayer = layer.confirm("确定退出？", {
-            btn: ['确定', '取消']
-        }, function () {
-            $.delCookie("organizationId");
-            $.delCookie("userName");
-            $.delCookie("isHeadOffice");
-            $.delCookie("token");
-            $.delCookie("menuList");
-            window.location.href = 'Login/login.html'
-        }, function () {
-            layer.close(conlayer);
-        });
-    });
+    //
+    // $('.lyear-layout-content').show();
+    //
+    // //退出登录
+    // $('.loginOut').on('click', function () {
+    //     var conlayer = layer.confirm("确定退出？", {
+    //         btn: ['确定', '取消']
+    //     }, function () {
+    //         $.delCookie("organizationId");
+    //         $.delCookie("userName");
+    //         $.delCookie("isHeadOffice");
+    //         $.delCookie("token");
+    //         $.delCookie("menuList");
+    //         window.location.href = 'Login/login.html'
+    //     }, function () {
+    //         layer.close(conlayer);
+    //     });
+    // });
 
     //跳转到前台页面
-    function hrefHtml() {
-        // let isHeadOffice = $.getCookie("isHeadOffice");
-        let lv = $.getCookie("orgLv");
-        if (lv == "0") {
-            window.location.href = "./../tradeunion-web/index_all.html";
-        } else if (lv == "1") {
-            window.location.href = "./../tradeunion-web/exhibitionManagement.html?z_orgId=" + $.getCookie("userOrg");
-        } else if (lv == "2") {
-            window.location.href = "./../tradeunion-web/enterpriseIndex.html";
-        } else {
-            window.location.href = "Login/login.html";
-        }
-    }
+    // function hrefHtml() {
+    //     // let isHeadOffice = $.getCookie("isHeadOffice");
+    //     let lv = $.getCookie("orgLv");
+    //     if (lv == "0") {
+    //         window.location.href = "./../tradeunion-web/index_all.html";
+    //     } else if (lv == "1") {
+    //         window.location.href = "./../tradeunion-web/exhibitionManagement.html?z_orgId=" + $.getCookie("userOrg");
+    //     } else if (lv == "2") {
+    //         window.location.href = "./../tradeunion-web/enterpriseIndex.html";
+    //     } else {
+    //         window.location.href = "Login/login.html";
+    //     }
+    // }
 
-    //修改密码
-    function showUpdatePwd(title, flag) {
-        html = template("updatePwd", {
-            title: "123"
-        });
-
-        flag = 1;
-        var myLayer = layer.open({
-            skin: 'card',
-            type: 1,
-            title: [title, ''],
-            area: ['450px', 'auto'],
-            resize: true,
-            offset: 'auto',
-            content: html,
-            btn: ['提交', '取消'],
-            yes: function (index, layero) {
-
-                //旧密码
-                var oldPwd = $('#oldPwd').val();
-                //新密码
-                var newPwd = $('#newPwd').val();
-                var truePwd = $('#truePwd').val();
-                console.log(oldPwd, newPwd, truePwd);
-                if (newPwd != truePwd) {
-                    layer.msg("两次密码不一样,请重新输入", {
-                        icon: 5
-                    });
-                    return;
-                }
-                /*$.ajax({
-                    url: userServiceUrl + "/user/updatePassword2",
-                    type: 'put',
-                    data: {
-                        oldUserPassword: oldPwd,
-                        userPassword: truePwd,
-                        token:$.getToken()
-                    },
-                    dataType: 'json',
-                    success: function(data) {
-                        console.log(data);
-                    }
-                })*/
-                let formData = {};
-                formData.oldUserPassword = MD5(oldPwd);
-                formData.userPassword = MD5(truePwd);
-                $.show_overall_loding();
-                $.putJSON(userServiceUrl + "/user/updatePassword", formData, function (res) {
-                    $.hide_overall_loding();
-                    if (res.code == 0) {
-                        layer.msg("密码修改成功", {icon: 1});
-                        layer.close(myLayer);
-                    } else {
-                        layer.msg("密码修改失败", {icon: 2});
-                    }
-                })
-            },
-            success: function (layero) {
-                $(".layui-layer-title").addClass("card-header");
-                var data = null;
-                if (data != null) {
-                    $("#oldPwd").val(data.oldPwd);
-                    $("#newPwd").val(data.newPwd);
-                    $("#truePwd").val(data.truePwd);
-                    $("#updatePwdForm").setForm(data);
-                }
-            }
-        });
-    }
-
-    //添加事件
-    $("#Update").on("click", function () {
-        url = "";
-        showUpdatePwd("修改密码", 1);
-
-    });
-
-    $(".userName").html($.getCookie("userName"));
+    // //修改密码
+    // function showUpdatePwd(title, flag) {
+    //     html = template("updatePwd", {
+    //         title: "123"
+    //     });
+    //
+    //     flag = 1;
+    //     var myLayer = layer.open({
+    //         skin: 'card',
+    //         type: 1,
+    //         title: [title, ''],
+    //         area: ['450px', 'auto'],
+    //         resize: true,
+    //         offset: 'auto',
+    //         content: html,
+    //         btn: ['提交', '取消'],
+    //         yes: function (index, layero) {
+    //
+    //             //旧密码
+    //             var oldPwd = $('#oldPwd').val();
+    //             //新密码
+    //             var newPwd = $('#newPwd').val();
+    //             var truePwd = $('#truePwd').val();
+    //             console.log(oldPwd, newPwd, truePwd);
+    //             if (newPwd != truePwd) {
+    //                 layer.msg("两次密码不一样,请重新输入", {
+    //                     icon: 5
+    //                 });
+    //                 return;
+    //             }
+    //             /*$.ajax({
+    //                 url: userServiceUrl + "/user/updatePassword2",
+    //                 type: 'put',
+    //                 data: {
+    //                     oldUserPassword: oldPwd,
+    //                     userPassword: truePwd,
+    //                     token:$.getToken()
+    //                 },
+    //                 dataType: 'json',
+    //                 success: function(data) {
+    //                     console.log(data);
+    //                 }
+    //             })*/
+    //             let formData = {};
+    //             formData.oldUserPassword = MD5(oldPwd);
+    //             formData.userPassword = MD5(truePwd);
+    //             $.show_overall_loding();
+    //             $.putJSON(userServiceUrl + "/user/updatePassword", formData, function (res) {
+    //                 $.hide_overall_loding();
+    //                 if (res.code == 0) {
+    //                     layer.msg("密码修改成功", {icon: 1});
+    //                     layer.close(myLayer);
+    //                 } else {
+    //                     layer.msg("密码修改失败", {icon: 2});
+    //                 }
+    //             })
+    //         },
+    //         success: function (layero) {
+    //             $(".layui-layer-title").addClass("card-header");
+    //             var data = null;
+    //             if (data != null) {
+    //                 $("#oldPwd").val(data.oldPwd);
+    //                 $("#newPwd").val(data.newPwd);
+    //                 $("#truePwd").val(data.truePwd);
+    //                 $("#updatePwdForm").setForm(data);
+    //             }
+    //         }
+    //     });
+    // }
+    //
+    // //添加事件
+    // $("#Update").on("click", function () {
+    //     url = "";
+    //     showUpdatePwd("修改密码", 1);
+    //
+    // });
+    //
+    // $(".userName").html($.getCookie("userName"));
 </script>
 
 <!--修改密码-->
