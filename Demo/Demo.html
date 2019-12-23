@@ -21,13 +21,15 @@
         <div class="title">应用程序</div>
         <ul>
             <li v-for="(item,index) in sysList" :key="index">
-                <img @click="imgBtn(index)"  :src="item.imgUrl" alt="">
+                <div class="boxImg">
+                    <img @click="imgBtn(index)"  :src="item.imgUrl" alt="">
+                </div>
                 <p class="imgName">{{item.name}}</p>
             </li>
         </ul>
     </div>
     <!-- 中间盒子 -->
-    <div id="pagName">{{name}}</div>
+    <div id="pagName"><span class="mmmm" contenteditable="true">{{name}}</span></div>
     <div class="centerBox">
         <iframe id="childframe" src="centerHtml.html" frameborder="0" style="width: 14.09rem;height: 7.93rem; "></iframe>
     </div>
@@ -69,14 +71,13 @@
                 <img src="img/666.png" alt="">
             </div>
             <div class="scRight">
+                <p>项目名称:<span class="scName">XXXXXX</span></p>
                 <p>
                     创建时间:<span class="nowTime" style="margin-left: 0.05rem"></span>
                 </p>
-                <p class="bofore">扫码下载</p>
-                <img class="smImg" src="img/123.png" alt="">
                 <p class="bofore">链接分享</p>
                 <p>
-                    <input type="text" placeholder="www.apcos.com">
+                    <input type="text" placeholder="www.demo.com">
                     <button>复制</button>
                 </p>
                 <button>预览</button>
@@ -90,104 +91,104 @@
         el:"#one",
         data:{
             value:null,
-            name:"台迪智慧办公",
+            name:"智慧办公",
             // 系统列表
             sysList:[
                 {
                     ids:"001",
                     name:"智慧办公",
-                    imgUrl:"img/001.png",
+                    imgUrl:"img/zhimg/zhbg.jpg",
                     dataList:[
                         {
                             code:"101",
                             parentsName:"智慧办公",
                             icon:"img/navLeft/nav_1.png",
                             name:"首页",
-                            isCheck:true,
+                            isCheck:false,
                             iframeUrl:"htmls/ggHome.html"
                         },
                         {
                             code:"102",
                             icon:"img/navLeft/nav_2.png",
                             name:"会议室管理",
-                            isCheck:true,
+                            isCheck:false,
                             iframeUrl:"office-ui/html/officeRoom.html"
                         },
                         {
                             code:"103",
                             icon:"img/navLeft/nav_3.png",
                             name:"摄像头管理",
-                            isCheck:true,
+                            isCheck:false,
                             iframeUrl:"office-ui/html/cameraGl.html"
                         },
                         {
                             code:"104",
                             icon:"img/navLeft/nav_4.png",
                             name:"考勤管理",
-                            isCheck:true,
+                            isCheck:false,
                             iframeUrl:"office-ui/html/attInfo.html"
                         },
                         {
                             code:"105",
                             icon:"img/navLeft/nav_5.png",
                             name:"设备模式管理",
-                            isCheck:true,
+                            isCheck:false,
                             iframeUrl:"office-ui/html/modeManage.html"
                         },
                         {
                             code:"106",
                             icon:"img/navLeft/nav_6.png",
                             name:"平台设备管理",
-                            isCheck:true,
+                            isCheck:false,
                             iframeUrl:"office-ui/html/equipmentInfo.html"
                         },
                         {
                             code:"107",
                             icon:"img/navLeft/nav_7.png",
                             name:"用户管理",
-                            isCheck:true,
+                            isCheck:false,
                             iframeUrl:"office-ui/html/user.html"
                         },
                         {
                             code:"108",
                             icon:"img/navLeft/nav_8.png",
                             name:"登陆日志管理",
-                            isCheck:true,
+                            isCheck:false,
                             iframeUrl:"office-ui/html/loginLog.html"
                         },
                         {
                             code:"109",
                             icon:"img/navLeft/nav_8.png",
                             name:"报警系统",
-                            isCheck:true,
+                            isCheck:false,
                             iframeUrl:"htmls/warningstystem/header.html"
                         },
                         {
                             code:"110",
                             icon:"img/navLeft/nav_8.png",
-                            name:"冷风系统",
-                            isCheck:true,
+                            name:"新风系统",
+                            isCheck:false,
                             iframeUrl:"htmls/lfHome.html"
                         },
                         {
                             code:"111",
                             icon:"img/navLeft/nav_8.png",
                             name:"能源概况",
-                            isCheck:true,
+                            isCheck:false,
                             iframeUrl:"htmls/nygk.html"
                         },
                         {
                             code:"112",
                             icon:"img/navLeft/nav_8.png",
                             name:"照明系统",
-                            isCheck:true,
+                            isCheck:false,
                             iframeUrl:"htmls/zmHtml.html"
                         },
                         {
                             code:"113",
                             icon:"img/navLeft/nav_8.png",
                             name:"停车系统",
-                            isCheck:true,
+                            isCheck:false,
                             iframeUrl:"htmls/tcxt.html"
                         }
                     ],
@@ -195,819 +196,922 @@
                 {
                     ids:"002",
                     name:"智慧养老",
-                    imgUrl:"img/111.jpg",
+                    imgUrl:"img/zhimg/zhyl.jpg",
                     dataList:[
                         {
-                            code:"201",
+                            code:"101",
+                            parentsName:"智慧办公",
                             icon:"img/navLeft/nav_1.png",
                             name:"首页",
-                            isCheck:true,
-                            iframeUrl:"htmls/one/001.html"
+                            isCheck:false,
+                            iframeUrl:"htmls/ggHome.html"
                         },
                         {
-                            code:"202",
-                            icon:"img/navLeft/nav_2.png",
-                            name:"设备控制11",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
-                        },
-                        {
-                            code:"203",
+                            code:"103",
                             icon:"img/navLeft/nav_3.png",
-                            name:"会议室管理22",
-                            isCheck:true,
-                            iframeUrl:"index.html"
+                            name:"摄像头管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/cameraGl.html"
                         },
                         {
-                            code:"204",
-                            icon:"img/navLeft/nav_4.png",
-                            name:"视频管理33",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
-                        },
-                        {
-                            code:"205",
+                            code:"105",
                             icon:"img/navLeft/nav_5.png",
-                            name:"考勤管理44",
-                            isCheck:true,
-                            iframeUrl:"index.html"
+                            name:"设备模式管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/modeManage.html"
                         },
                         {
-                            code:"206",
+                            code:"106",
                             icon:"img/navLeft/nav_6.png",
-                            name:"设备管理55",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
+                            name:"平台设备管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/equipmentInfo.html"
                         },
                         {
-                            code:"207",
+                            code:"107",
                             icon:"img/navLeft/nav_7.png",
-                            name:"执行计划66",
-                            isCheck:true,
-                            iframeUrl:"xxxx.html"
+                            name:"用户管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/user.html"
                         },
                         {
-                            code:"208",
+                            code:"108",
                             icon:"img/navLeft/nav_8.png",
-                            name:"系统管理77",
-                            isCheck:true,
-                            iframeUrl:"xxxx.html"
+                            name:"登陆日志管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/loginLog.html"
+                        },
+                        {
+                            code:"109",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"报警系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/warningstystem/header.html"
+                        },
+                        {
+                            code:"110",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"新风系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/lfHome.html"
+                        },
+                        {
+                            code:"111",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"能源概况",
+                            isCheck:false,
+                            iframeUrl:"htmls/nygk.html"
+                        },
+                        {
+                            code:"112",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"照明系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/zmHtml.html"
                         }
                     ],
                 },
                 {
-                    ids:"002",
-                    name:"智慧医疗",
-                    imgUrl:"img/001.png",
+                    ids:"003",
+                    name:"智慧医院",
+                    imgUrl:"img/zhimg/zhyy.jpg",
                     dataList:[
                         {
-                            code:"201",
+                            code:"101",
+                            parentsName:"智慧办公",
                             icon:"img/navLeft/nav_1.png",
                             name:"首页",
-                            isCheck:true,
-                            iframeUrl:"office-ui/html/home.html"
+                            isCheck:false,
+                            iframeUrl:"htmls/ggHome.html"
                         },
                         {
-                            code:"202",
-                            icon:"img/navLeft/nav_2.png",
-                            name:"设备控制11",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
-                        },
-                        {
-                            code:"203",
+                            code:"103",
                             icon:"img/navLeft/nav_3.png",
-                            name:"会议室管理22",
-                            isCheck:true,
-                            iframeUrl:"index.html"
+                            name:"摄像头管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/cameraGl.html"
                         },
                         {
-                            code:"204",
-                            icon:"img/navLeft/nav_4.png",
-                            name:"视频管理33",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
-                        },
-                        {
-                            code:"205",
+                            code:"105",
                             icon:"img/navLeft/nav_5.png",
-                            name:"考勤管理44",
-                            isCheck:true,
-                            iframeUrl:"index.html"
+                            name:"设备模式管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/modeManage.html"
                         },
                         {
-                            code:"206",
+                            code:"106",
                             icon:"img/navLeft/nav_6.png",
-                            name:"设备管理55",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
+                            name:"平台设备管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/equipmentInfo.html"
                         },
                         {
-                            code:"207",
+                            code:"107",
                             icon:"img/navLeft/nav_7.png",
-                            name:"执行计划66",
-                            isCheck:true,
-                            iframeUrl:"xxxx.html"
+                            name:"用户管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/user.html"
                         },
                         {
-                            code:"208",
+                            code:"108",
                             icon:"img/navLeft/nav_8.png",
-                            name:"系统管理77",
-                            isCheck:true,
-                            iframeUrl:"xxxx.html"
+                            name:"登陆日志管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/loginLog.html"
+                        },
+                        {
+                            code:"109",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"报警系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/warningstystem/header.html"
+                        },
+                        {
+                            code:"110",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"新风系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/lfHome.html"
+                        },
+                        {
+                            code:"111",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"能源概况",
+                            isCheck:false,
+                            iframeUrl:"htmls/nygk.html"
+                        },
+                        {
+                            code:"112",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"照明系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/zmHtml.html"
+                        },
+                        {
+                            code:"113",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"停车系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/tcxt.html"
                         }
                     ],
                 },
                 {
-                    ids:"002",
+                    ids:"004",
                     name:"智慧楼宇",
-                    imgUrl:"img/001.png",
+                    imgUrl:"img/zhimg/zhly.jpg",
                     dataList:[
                         {
-                            code:"201",
+                            code:"101",
+                            parentsName:"智慧办公",
                             icon:"img/navLeft/nav_1.png",
                             name:"首页",
-                            isCheck:true,
-                            iframeUrl:"office-ui/html/home.html"
+                            isCheck:false,
+                            iframeUrl:"htmls/ggHome.html"
                         },
                         {
-                            code:"202",
+                            code:"102",
                             icon:"img/navLeft/nav_2.png",
-                            name:"设备控制11",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
+                            name:"会议室管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/officeRoom.html"
                         },
                         {
-                            code:"203",
+                            code:"103",
                             icon:"img/navLeft/nav_3.png",
-                            name:"会议室管理22",
-                            isCheck:true,
-                            iframeUrl:"index.html"
+                            name:"摄像头管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/cameraGl.html"
                         },
                         {
-                            code:"204",
+                            code:"104",
                             icon:"img/navLeft/nav_4.png",
-                            name:"视频管理33",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
+                            name:"考勤管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/attInfo.html"
                         },
                         {
-                            code:"205",
+                            code:"105",
                             icon:"img/navLeft/nav_5.png",
-                            name:"考勤管理44",
-                            isCheck:true,
-                            iframeUrl:"index.html"
+                            name:"设备模式管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/modeManage.html"
                         },
                         {
-                            code:"206",
+                            code:"106",
                             icon:"img/navLeft/nav_6.png",
-                            name:"设备管理55",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
+                            name:"平台设备管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/equipmentInfo.html"
                         },
                         {
-                            code:"207",
+                            code:"107",
                             icon:"img/navLeft/nav_7.png",
-                            name:"执行计划66",
-                            isCheck:true,
-                            iframeUrl:"xxxx.html"
+                            name:"用户管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/user.html"
                         },
                         {
-                            code:"208",
+                            code:"108",
                             icon:"img/navLeft/nav_8.png",
-                            name:"系统管理77",
-                            isCheck:true,
-                            iframeUrl:"xxxx.html"
+                            name:"登陆日志管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/loginLog.html"
+                        },
+                        {
+                            code:"109",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"报警系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/warningstystem/header.html"
+                        },
+                        {
+                            code:"110",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"新风系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/lfHome.html"
+                        },
+                        {
+                            code:"111",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"能源概况",
+                            isCheck:false,
+                            iframeUrl:"htmls/nygk.html"
+                        },
+                        {
+                            code:"112",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"照明系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/zmHtml.html"
+                        },
+                        {
+                            code:"113",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"停车系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/tcxt.html"
                         }
                     ],
                 },
                 {
-                    ids:"002",
+                    ids:"005",
                     name:"智慧社区",
-                    imgUrl:"img/001.png",
+                    imgUrl:"img/zhimg/zhsq.jpg",
                     dataList:[
                         {
-                            code:"201",
+                            code:"101",
+                            parentsName:"智慧办公",
                             icon:"img/navLeft/nav_1.png",
                             name:"首页",
-                            isCheck:true,
-                            iframeUrl:"office-ui/html/home.html"
+                            isCheck:false,
+                            iframeUrl:"htmls/ggHome.html"
                         },
                         {
-                            code:"202",
-                            icon:"img/navLeft/nav_2.png",
-                            name:"设备控制11",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
-                        },
-                        {
-                            code:"203",
+                            code:"103",
                             icon:"img/navLeft/nav_3.png",
-                            name:"会议室管理22",
-                            isCheck:true,
-                            iframeUrl:"index.html"
+                            name:"摄像头管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/cameraGl.html"
                         },
                         {
-                            code:"204",
-                            icon:"img/navLeft/nav_4.png",
-                            name:"视频管理33",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
-                        },
-                        {
-                            code:"205",
+                            code:"105",
                             icon:"img/navLeft/nav_5.png",
-                            name:"考勤管理44",
-                            isCheck:true,
-                            iframeUrl:"index.html"
+                            name:"设备模式管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/modeManage.html"
                         },
                         {
-                            code:"206",
+                            code:"106",
                             icon:"img/navLeft/nav_6.png",
-                            name:"设备管理55",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
+                            name:"平台设备管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/equipmentInfo.html"
                         },
                         {
-                            code:"207",
+                            code:"107",
                             icon:"img/navLeft/nav_7.png",
-                            name:"执行计划66",
-                            isCheck:true,
-                            iframeUrl:"xxxx.html"
+                            name:"用户管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/user.html"
                         },
                         {
-                            code:"208",
+                            code:"108",
                             icon:"img/navLeft/nav_8.png",
-                            name:"系统管理77",
-                            isCheck:true,
-                            iframeUrl:"xxxx.html"
+                            name:"登陆日志管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/loginLog.html"
+                        },
+                        {
+                            code:"109",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"报警系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/warningstystem/header.html"
+                        },
+                        {
+                            code:"111",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"能源概况",
+                            isCheck:false,
+                            iframeUrl:"htmls/nygk.html"
+                        },
+                        {
+                            code:"112",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"照明系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/zmHtml.html"
+                        },
+                        {
+                            code:"113",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"停车系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/tcxt.html"
                         }
                     ],
                 },
                 {
-                    ids:"002",
+                    ids:"006",
                     name:"智慧酒店",
-                    imgUrl:"img/001.png",
+                    imgUrl:"img/zhimg/zhjd.jpg",
                     dataList:[
                         {
-                            code:"201",
+                            code:"101",
+                            parentsName:"智慧办公",
                             icon:"img/navLeft/nav_1.png",
                             name:"首页",
-                            isCheck:true,
-                            iframeUrl:"office-ui/html/home.html"
+                            isCheck:false,
+                            iframeUrl:"htmls/ggHome.html"
                         },
                         {
-                            code:"202",
-                            icon:"img/navLeft/nav_2.png",
-                            name:"设备控制11",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
-                        },
-                        {
-                            code:"203",
+                            code:"103",
                             icon:"img/navLeft/nav_3.png",
-                            name:"会议室管理22",
-                            isCheck:true,
-                            iframeUrl:"index.html"
+                            name:"摄像头管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/cameraGl.html"
                         },
                         {
-                            code:"204",
-                            icon:"img/navLeft/nav_4.png",
-                            name:"视频管理33",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
-                        },
-                        {
-                            code:"205",
+                            code:"105",
                             icon:"img/navLeft/nav_5.png",
-                            name:"考勤管理44",
-                            isCheck:true,
-                            iframeUrl:"index.html"
+                            name:"设备模式管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/modeManage.html"
                         },
                         {
-                            code:"206",
+                            code:"106",
                             icon:"img/navLeft/nav_6.png",
-                            name:"设备管理55",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
+                            name:"平台设备管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/equipmentInfo.html"
                         },
                         {
-                            code:"207",
+                            code:"107",
                             icon:"img/navLeft/nav_7.png",
-                            name:"执行计划66",
-                            isCheck:true,
-                            iframeUrl:"xxxx.html"
+                            name:"用户管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/user.html"
                         },
                         {
-                            code:"208",
+                            code:"108",
                             icon:"img/navLeft/nav_8.png",
-                            name:"系统管理77",
-                            isCheck:true,
-                            iframeUrl:"xxxx.html"
+                            name:"登陆日志管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/loginLog.html"
+                        },
+                        {
+                            code:"110",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"新风系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/lfHome.html"
+                        },
+                        {
+                            code:"111",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"能源概况",
+                            isCheck:false,
+                            iframeUrl:"htmls/nygk.html"
+                        },
+                        {
+                            code:"112",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"照明系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/zmHtml.html"
+                        },
+                        {
+                            code:"113",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"停车系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/tcxt.html"
                         }
                     ],
                 },
                 {
-                    ids:"002",
-                    name:"智慧家居",
-                    imgUrl:"img/001.png",
-                    dataList:[
-                        {
-                            code:"201",
-                            icon:"img/navLeft/nav_1.png",
-                            name:"首页",
-                            isCheck:true,
-                            iframeUrl:"office-ui/html/home.html"
-                        },
-                        {
-                            code:"202",
-                            icon:"img/navLeft/nav_2.png",
-                            name:"设备控制11",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
-                        },
-                        {
-                            code:"203",
-                            icon:"img/navLeft/nav_3.png",
-                            name:"会议室管理22",
-                            isCheck:true,
-                            iframeUrl:"index.html"
-                        },
-                        {
-                            code:"204",
-                            icon:"img/navLeft/nav_4.png",
-                            name:"视频管理33",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
-                        },
-                        {
-                            code:"205",
-                            icon:"img/navLeft/nav_5.png",
-                            name:"考勤管理44",
-                            isCheck:true,
-                            iframeUrl:"index.html"
-                        },
-                        {
-                            code:"206",
-                            icon:"img/navLeft/nav_6.png",
-                            name:"设备管理55",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
-                        },
-                        {
-                            code:"207",
-                            icon:"img/navLeft/nav_7.png",
-                            name:"执行计划66",
-                            isCheck:true,
-                            iframeUrl:"xxxx.html"
-                        },
-                        {
-                            code:"208",
-                            icon:"img/navLeft/nav_8.png",
-                            name:"系统管理77",
-                            isCheck:true,
-                            iframeUrl:"xxxx.html"
-                        }
-                    ],
-                },
-                {
-                    ids:"002",
+                    ids:"007",
                     name:"智慧安防",
-                    imgUrl:"img/001.png",
+                    imgUrl:"img/zhimg/zhaf.jpg",
                     dataList:[
                         {
-                            code:"201",
+                            code:"101",
+                            parentsName:"智慧办公",
                             icon:"img/navLeft/nav_1.png",
                             name:"首页",
-                            isCheck:true,
-                            iframeUrl:"office-ui/html/home.html"
+                            isCheck:false,
+                            iframeUrl:"htmls/ggHome.html"
                         },
                         {
-                            code:"202",
-                            icon:"img/navLeft/nav_2.png",
-                            name:"设备控制11",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
-                        },
-                        {
-                            code:"203",
+                            code:"103",
                             icon:"img/navLeft/nav_3.png",
-                            name:"会议室管理22",
-                            isCheck:true,
-                            iframeUrl:"index.html"
+                            name:"摄像头管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/cameraGl.html"
                         },
                         {
-                            code:"204",
-                            icon:"img/navLeft/nav_4.png",
-                            name:"视频管理33",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
-                        },
-                        {
-                            code:"205",
-                            icon:"img/navLeft/nav_5.png",
-                            name:"考勤管理44",
-                            isCheck:true,
-                            iframeUrl:"index.html"
-                        },
-                        {
-                            code:"206",
+                            code:"106",
                             icon:"img/navLeft/nav_6.png",
-                            name:"设备管理55",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
+                            name:"平台设备管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/equipmentInfo.html"
                         },
                         {
-                            code:"207",
+                            code:"107",
                             icon:"img/navLeft/nav_7.png",
-                            name:"执行计划66",
-                            isCheck:true,
-                            iframeUrl:"xxxx.html"
+                            name:"用户管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/user.html"
                         },
                         {
-                            code:"208",
+                            code:"108",
                             icon:"img/navLeft/nav_8.png",
-                            name:"系统管理77",
-                            isCheck:true,
-                            iframeUrl:"xxxx.html"
+                            name:"登陆日志管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/loginLog.html"
+                        },
+                        {
+                            code:"109",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"报警系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/warningstystem/header.html"
                         }
                     ],
                 },
                 {
-                    ids:"002",
+                    ids:"008",
                     name:"智慧政务",
-                    imgUrl:"img/001.png",
+                    imgUrl:"img/zhimg/zhzw.jpg",
                     dataList:[
                         {
-                            code:"201",
+                            code:"101",
+                            parentsName:"智慧办公",
                             icon:"img/navLeft/nav_1.png",
                             name:"首页",
-                            isCheck:true,
-                            iframeUrl:"office-ui/html/home.html"
+                            isCheck:false,
+                            iframeUrl:"htmls/ggHome.html"
                         },
                         {
-                            code:"202",
+                            code:"102",
                             icon:"img/navLeft/nav_2.png",
-                            name:"设备控制11",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
+                            name:"会议室管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/officeRoom.html"
                         },
                         {
-                            code:"203",
-                            icon:"img/navLeft/nav_3.png",
-                            name:"会议室管理22",
-                            isCheck:true,
-                            iframeUrl:"index.html"
-                        },
-                        {
-                            code:"204",
-                            icon:"img/navLeft/nav_4.png",
-                            name:"视频管理33",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
-                        },
-                        {
-                            code:"205",
-                            icon:"img/navLeft/nav_5.png",
-                            name:"考勤管理44",
-                            isCheck:true,
-                            iframeUrl:"index.html"
-                        },
-                        {
-                            code:"206",
-                            icon:"img/navLeft/nav_6.png",
-                            name:"设备管理55",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
-                        },
-                        {
-                            code:"207",
+                            code:"107",
                             icon:"img/navLeft/nav_7.png",
-                            name:"执行计划66",
-                            isCheck:true,
-                            iframeUrl:"xxxx.html"
+                            name:"用户管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/user.html"
                         },
                         {
-                            code:"208",
+                            code:"108",
                             icon:"img/navLeft/nav_8.png",
-                            name:"系统管理77",
-                            isCheck:true,
-                            iframeUrl:"xxxx.html"
+                            name:"登陆日志管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/loginLog.html"
+                        },
+                        {
+                            code:"110",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"新风系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/lfHome.html"
+                        },
+                        {
+                            code:"111",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"能源概况",
+                            isCheck:false,
+                            iframeUrl:"htmls/nygk.html"
+                        },
+                        {
+                            code:"112",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"照明系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/zmHtml.html"
                         }
                     ],
                 },
                 {
-                    ids:"002",
+                    ids:"009",
                     name:"智慧物业",
-                    imgUrl:"img/001.png",
+                    imgUrl:"img/zhimg/zhwy.jpg",
                     dataList:[
                         {
-                            code:"201",
+                            code:"101",
+                            parentsName:"智慧办公",
                             icon:"img/navLeft/nav_1.png",
                             name:"首页",
-                            isCheck:true,
-                            iframeUrl:"office-ui/html/home.html"
+                            isCheck:false,
+                            iframeUrl:"htmls/ggHome.html"
                         },
                         {
-                            code:"202",
-                            icon:"img/navLeft/nav_2.png",
-                            name:"设备控制11",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
-                        },
-                        {
-                            code:"203",
+                            code:"103",
                             icon:"img/navLeft/nav_3.png",
-                            name:"会议室管理22",
-                            isCheck:true,
-                            iframeUrl:"index.html"
+                            name:"摄像头管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/cameraGl.html"
                         },
                         {
-                            code:"204",
+                            code:"104",
                             icon:"img/navLeft/nav_4.png",
-                            name:"视频管理33",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
+                            name:"考勤管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/attInfo.html"
                         },
                         {
-                            code:"205",
-                            icon:"img/navLeft/nav_5.png",
-                            name:"考勤管理44",
-                            isCheck:true,
-                            iframeUrl:"index.html"
-                        },
-                        {
-                            code:"206",
+                            code:"106",
                             icon:"img/navLeft/nav_6.png",
-                            name:"设备管理55",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
+                            name:"平台设备管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/equipmentInfo.html"
                         },
                         {
-                            code:"207",
+                            code:"107",
                             icon:"img/navLeft/nav_7.png",
-                            name:"执行计划66",
-                            isCheck:true,
-                            iframeUrl:"xxxx.html"
+                            name:"用户管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/user.html"
                         },
                         {
-                            code:"208",
+                            code:"108",
                             icon:"img/navLeft/nav_8.png",
-                            name:"系统管理77",
-                            isCheck:true,
-                            iframeUrl:"xxxx.html"
-                        }
+                            name:"登陆日志管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/loginLog.html"
+                        },
+                        {
+                            code:"109",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"报警系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/warningstystem/header.html"
+                        },
+                        {
+                            code:"110",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"新风系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/lfHome.html"
+                        },
+                        {
+                            code:"111",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"能源概况",
+                            isCheck:false,
+                            iframeUrl:"htmls/nygk.html"
+                        },
+                        {
+                            code:"112",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"照明系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/zmHtml.html"
+                        },
                     ],
                 },
                 {
-                    ids:"002",
+                    ids:"010",
                     name:"智慧园区",
-                    imgUrl:"img/001.png",
+                    imgUrl:"img/zhimg/zhyq.jpeg",
                     dataList:[
                         {
-                            code:"201",
+                            code:"101",
+                            parentsName:"智慧办公",
                             icon:"img/navLeft/nav_1.png",
                             name:"首页",
-                            isCheck:true,
-                            iframeUrl:"office-ui/html/home.html"
+                            isCheck:false,
+                            iframeUrl:"htmls/ggHome.html"
                         },
                         {
-                            code:"202",
-                            icon:"img/navLeft/nav_2.png",
-                            name:"设备控制11",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
-                        },
-                        {
-                            code:"203",
+                            code:"103",
                             icon:"img/navLeft/nav_3.png",
-                            name:"会议室管理22",
-                            isCheck:true,
-                            iframeUrl:"index.html"
+                            name:"摄像头管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/cameraGl.html"
                         },
                         {
-                            code:"204",
-                            icon:"img/navLeft/nav_4.png",
-                            name:"视频管理33",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
-                        },
-                        {
-                            code:"205",
+                            code:"105",
                             icon:"img/navLeft/nav_5.png",
-                            name:"考勤管理44",
-                            isCheck:true,
-                            iframeUrl:"index.html"
+                            name:"设备模式管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/modeManage.html"
                         },
                         {
-                            code:"206",
+                            code:"106",
                             icon:"img/navLeft/nav_6.png",
-                            name:"设备管理55",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
+                            name:"平台设备管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/equipmentInfo.html"
                         },
                         {
-                            code:"207",
+                            code:"107",
                             icon:"img/navLeft/nav_7.png",
-                            name:"执行计划66",
-                            isCheck:true,
-                            iframeUrl:"xxxx.html"
+                            name:"用户管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/user.html"
                         },
                         {
-                            code:"208",
+                            code:"108",
                             icon:"img/navLeft/nav_8.png",
-                            name:"系统管理77",
-                            isCheck:true,
-                            iframeUrl:"xxxx.html"
+                            name:"登陆日志管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/loginLog.html"
+                        },
+                        {
+                            code:"109",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"报警系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/warningstystem/header.html"
+                        },
+                        {
+                            code:"110",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"新风系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/lfHome.html"
+                        },
+                        {
+                            code:"111",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"能源概况",
+                            isCheck:false,
+                            iframeUrl:"htmls/nygk.html"
+                        },
+                        {
+                            code:"112",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"照明系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/zmHtml.html"
+                        },
+                        {
+                            code:"113",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"停车系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/tcxt.html"
                         }
                     ],
                 },
                 {
-                    ids:"002",
+                    ids:"011",
                     name:"智慧旅游",
-                    imgUrl:"img/001.png",
+                    imgUrl:"img/zhimg/zhny.jpg",
                     dataList:[
                         {
-                            code:"201",
+                            code:"101",
+                            parentsName:"智慧办公",
                             icon:"img/navLeft/nav_1.png",
                             name:"首页",
-                            isCheck:true,
-                            iframeUrl:"office-ui/html/home.html"
+                            isCheck:false,
+                            iframeUrl:"htmls/ggHome.html"
                         },
                         {
-                            code:"202",
-                            icon:"img/navLeft/nav_2.png",
-                            name:"设备控制11",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
-                        },
-                        {
-                            code:"203",
+                            code:"103",
                             icon:"img/navLeft/nav_3.png",
-                            name:"会议室管理22",
-                            isCheck:true,
-                            iframeUrl:"index.html"
+                            name:"摄像头管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/cameraGl.html"
                         },
                         {
-                            code:"204",
-                            icon:"img/navLeft/nav_4.png",
-                            name:"视频管理33",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
-                        },
-                        {
-                            code:"205",
+                            code:"105",
                             icon:"img/navLeft/nav_5.png",
-                            name:"考勤管理44",
-                            isCheck:true,
-                            iframeUrl:"index.html"
+                            name:"设备模式管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/modeManage.html"
                         },
                         {
-                            code:"206",
+                            code:"106",
                             icon:"img/navLeft/nav_6.png",
-                            name:"设备管理55",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
+                            name:"平台设备管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/equipmentInfo.html"
                         },
                         {
-                            code:"207",
+                            code:"107",
                             icon:"img/navLeft/nav_7.png",
-                            name:"执行计划66",
-                            isCheck:true,
-                            iframeUrl:"xxxx.html"
+                            name:"用户管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/user.html"
                         },
                         {
-                            code:"208",
+                            code:"108",
                             icon:"img/navLeft/nav_8.png",
-                            name:"系统管理77",
-                            isCheck:true,
-                            iframeUrl:"xxxx.html"
+                            name:"登陆日志管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/loginLog.html"
+                        },
+                        {
+                            code:"109",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"报警系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/warningstystem/header.html"
+                        },
+                        {
+                            code:"113",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"停车系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/tcxt.html"
                         }
                     ],
                 },
                 {
-                    ids:"002",
+                    ids:"012",
                     name:"智慧商超",
-                    imgUrl:"img/001.png",
+                    imgUrl:"img/zhimg/zhcs.jpg",
                     dataList:[
                         {
-                            code:"201",
+                            code:"101",
+                            parentsName:"智慧办公",
                             icon:"img/navLeft/nav_1.png",
                             name:"首页",
-                            isCheck:true,
-                            iframeUrl:"office-ui/html/home.html"
+                            isCheck:false,
+                            iframeUrl:"htmls/ggHome.html"
                         },
                         {
-                            code:"202",
-                            icon:"img/navLeft/nav_2.png",
-                            name:"设备控制11",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
-                        },
-                        {
-                            code:"203",
+                            code:"103",
                             icon:"img/navLeft/nav_3.png",
-                            name:"会议室管理22",
-                            isCheck:true,
-                            iframeUrl:"index.html"
+                            name:"摄像头管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/cameraGl.html"
                         },
                         {
-                            code:"204",
-                            icon:"img/navLeft/nav_4.png",
-                            name:"视频管理33",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
-                        },
-                        {
-                            code:"205",
+                            code:"105",
                             icon:"img/navLeft/nav_5.png",
-                            name:"考勤管理44",
-                            isCheck:true,
-                            iframeUrl:"index.html"
+                            name:"设备模式管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/modeManage.html"
                         },
                         {
-                            code:"206",
+                            code:"106",
                             icon:"img/navLeft/nav_6.png",
-                            name:"设备管理55",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
+                            name:"平台设备管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/equipmentInfo.html"
                         },
                         {
-                            code:"207",
+                            code:"107",
                             icon:"img/navLeft/nav_7.png",
-                            name:"执行计划66",
-                            isCheck:true,
-                            iframeUrl:"xxxx.html"
+                            name:"用户管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/user.html"
                         },
                         {
-                            code:"208",
+                            code:"108",
                             icon:"img/navLeft/nav_8.png",
-                            name:"系统管理77",
-                            isCheck:true,
-                            iframeUrl:"xxxx.html"
+                            name:"登陆日志管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/loginLog.html"
+                        },
+                        {
+                            code:"109",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"报警系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/warningstystem/header.html"
+                        },
+                        {
+                            code:"110",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"新风系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/lfHome.html"
+                        },
+                        {
+                            code:"111",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"能源概况",
+                            isCheck:false,
+                            iframeUrl:"htmls/nygk.html"
+                        },
+                        {
+                            code:"112",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"照明系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/zmHtml.html"
+                        },
+                        {
+                            code:"113",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"停车系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/tcxt.html"
                         }
                     ],
                 },
                 {
-                    ids:"002",
+                    ids:"013",
                     name:"智慧校园",
-                    imgUrl:"img/001.png",
+                    imgUrl:"img/zhimg/zhxy.jpg",
                     dataList:[
                         {
-                            code:"201",
+                            code:"101",
+                            parentsName:"智慧办公",
                             icon:"img/navLeft/nav_1.png",
                             name:"首页",
-                            isCheck:true,
-                            iframeUrl:"office-ui/html/home.html"
+                            isCheck:false,
+                            iframeUrl:"htmls/ggHome.html"
                         },
                         {
-                            code:"202",
-                            icon:"img/navLeft/nav_2.png",
-                            name:"设备控制11",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
-                        },
-                        {
-                            code:"203",
+                            code:"103",
                             icon:"img/navLeft/nav_3.png",
-                            name:"会议室管理22",
-                            isCheck:true,
-                            iframeUrl:"index.html"
+                            name:"摄像头管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/cameraGl.html"
                         },
                         {
-                            code:"204",
-                            icon:"img/navLeft/nav_4.png",
-                            name:"视频管理33",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
-                        },
-                        {
-                            code:"205",
+                            code:"105",
                             icon:"img/navLeft/nav_5.png",
-                            name:"考勤管理44",
-                            isCheck:true,
-                            iframeUrl:"index.html"
+                            name:"设备模式管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/modeManage.html"
                         },
                         {
-                            code:"206",
+                            code:"106",
                             icon:"img/navLeft/nav_6.png",
-                            name:"设备管理55",
-                            isCheck:true,
-                            iframeUrl:"bbbbb.html"
+                            name:"平台设备管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/equipmentInfo.html"
                         },
                         {
-                            code:"207",
+                            code:"107",
                             icon:"img/navLeft/nav_7.png",
-                            name:"执行计划66",
-                            isCheck:true,
-                            iframeUrl:"xxxx.html"
+                            name:"用户管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/user.html"
                         },
                         {
-                            code:"208",
+                            code:"108",
                             icon:"img/navLeft/nav_8.png",
-                            name:"系统管理77",
-                            isCheck:true,
-                            iframeUrl:"xxxx.html"
+                            name:"登陆日志管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/loginLog.html"
+                        },
+                        {
+                            code:"109",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"报警系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/warningstystem/header.html"
+                        },
+                        {
+                            code:"110",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"新风系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/lfHome.html"
+                        },
+                        {
+                            code:"111",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"能源概况",
+                            isCheck:false,
+                            iframeUrl:"htmls/nygk.html"
+                        },
+                        {
+                            code:"112",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"照明系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/zmHtml.html"
+                        },
+                        {
+                            code:"113",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"停车系统",
+                            isCheck:false,
+                            iframeUrl:"htmls/tcxt.html"
                         }
                     ],
                 }
@@ -1063,6 +1167,11 @@
 </script>
 <script>
     $(function () {
+        //123
+        $(".mmmm").blur(function () {
+            one.name = $(".mmmm").text();
+        });
+
         //修改title
         $('body').on("click",".updateImg",function () {
             $(this).siblings(".saveBtn").css({
@@ -1098,6 +1207,8 @@
 
         //弹出模板
         $(".scBtn").on("click",function () {
+            console.log($(".scName").text());
+            $(".scName").text(one.name);
             $(".scBox").show();
         });
         $(".outImg").on("click",function () {
