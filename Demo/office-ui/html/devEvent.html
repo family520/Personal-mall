@@ -25,8 +25,8 @@
 	<script src="../plus/validate/messages_zh.min.js"></script>
 	<script src="../js/bootstrap-treeview.js"></script>
 
-	<script src="../js/httpUtils.js"></script>
-	<script src="../js/Md5.js"></script>
+	<!--		<script src="../js/httpUtils.js"></script>-->
+	<!--<script src="../js/Md5.js"></script>-->
 	<style>
 		.col-lg-3{
 			float: left;
@@ -114,13 +114,13 @@
 
 <script>
     var html;
-    var userIdd = $.getCookie("userId");
-    var url = "";
-    $("#loadDiv").html(loadHtml);
+    // var userIdd = $.getCookie("userId");
+    // var url = "";
+    // $("#loadDiv").html(loadHtml);
     $(function() {
-        $.show_overall_loding();
+        // $.show_overall_loding();
         $('#myTable').bootstrapTable({
-            url: deviceServiceUrl + "/eventGl/list", //请求后台的URL（*）
+            url: "../../json/devEvent.json", //请求后台的URL（*）
             //data: data1,                            //本地数据
             method: 'get', //请求方式（*）
             contentType: "application/x-www-form-urlencoded",
@@ -162,7 +162,7 @@
                 console.info(row);
             },
             onLoadSuccess: function() {
-                $.hide_overall_loding();
+                // $.hide_overall_loding();
             },
             columns: [{
                 checkbox: true
@@ -225,12 +225,12 @@
         });
 
         function queryParams(params) {
-            $.show_overall_loding();
+            // $.show_overall_loding();
             return {
-                token: $.getToken(),
+                // token: $.getToken(),
                 pageSize: params.pageSize,
                 pageNum: params.pageNumber,
-                loginUserId: userIdd,
+                // loginUserId: userIdd,
                 selectType: 1,
                 eventState: $("#s_eventState").val(),
                 deviceAlias: $("#s_deviceAlias").val(),
@@ -240,544 +240,544 @@
             };
         }
 
-        $("#search").click(function() {
-            $.show_overall_loding();
-            $('#myTable').bootstrapTable('refresh');
-        });
-
-        $("#clean").click(function() {
-            $("#s_eventState").val(""),
-            $("#s_deviceAlias").val(""),
-            $("#s_userName").val(""),
-            $("#s_eventName").val(""),
-            $("#search").trigger("click");
-        });
+        // $("#search").click(function() {
+        //     $.show_overall_loding();
+        //     $('#myTable').bootstrapTable('refresh');
+        // });
+        //
+        // $("#clean").click(function() {
+        //     $("#s_eventState").val(""),
+        //     $("#s_deviceAlias").val(""),
+        //     $("#s_userName").val(""),
+        //     $("#s_eventName").val(""),
+        //     $("#search").trigger("click");
+        // });
     });
 
-
-    /*批量配置处理*/
-    $("#edit").on("click", function () {
-        var data = $("#myTable").bootstrapTable('getSelections');
-        var ids = [];
-        for (var i = 0; i < data.length; i++) {
-            var one = data[i];
-            ids.push(one.id);
-        }
-        if (ids.length == 0) {
-            layer.msg('请选择需处理的事件', {icon: 5});
-            return;
-        }
-        var myLayer = layer.open({
-            skin: 'card', //自定义样式winning-class
-            title: "处理事件",
-            area: ['500px', '350px'],
-            resize: true, //是否拉升
-            offset: 'auto', //居中
-            content: template("modelbatch", {
-                title: "123"
-            }),
-            btn: ['提交', '取消'],
-            yes: function(index, layero) {
-                var userId = $("#userId").val();
-                $.show_overall_loding();
-                $.putJSON(deviceServiceUrl + "/eventGl/batchset", {
-                    'userId': userId,
-                    'eventGlIds': ids
-                }, function(data) {
-                    $.hide_overall_loding();
-                    if(data.code == 0) {
-                        layer.close(myLayer);
-                        layer.msg("成功", {
-                            icon: 1
-                        });
-                        $('#myTable').bootstrapTable('refresh');
-                        return true;
-                    } else {
-                        layer.close(myLayer);
-                        $('#myTable').bootstrapTable('refresh');
-                        if (data.code == 401000) {
-                            parent.layer.msg(data.message, {
-                                icon: 5
-                            });
-                        } else if (data.messages != null) {
-                            parent.layer.msg(data.messages[0].error, {
-                                icon: 5
-                            });
-                        } else {
-                            parent.layer.msg(data.message, {
-                                icon: 5
-                            });
-                        }
-                    }
-                });
-            },
-            success: function(layero) {
-                $("#selectUser").click(function () {
-                    var modeLayer = layer.open({
-                        skin: 'card', //自定义样式winning-class
-                        type: 1,
-                        title: ["选择用户", ""],
-                        area: ['650px', '500px'], //宽高
-                        resize: true, //是否拉升
-                        offset: 'auto', //居中
-                        content: template("userList", {
-                            title: "123"
-                        }),
-                        btn: ['设置', '取消'],
-                        yes: function (index, layero) {
-                            var list = $("#userTable").bootstrapTable('getSelections');
-                            if (list.length < 1) {
-                                layer.msg("请选择用户", {
-                                    icon: 2
-                                });
-                                return;
-                            }
-                            $("#userIds").val(ids.toString());
-                            layer.close(modeLayer);
-
-                            var list = $("#userTable").bootstrapTable('getSelections');
-                            if (list.length < 1) {
-                                layer.msg("请选择用户", {
-                                    icon: 2
-                                });
-                                return;
-                            }
-                            var one = list[0];
-                            $("#userId").val(one.id);
-                            $("#userName1").val(one.userName);
-                            $("#userMobile1").val(one.userMobile);
-                            layer.close(modeLayer);
-                        },
-                        success: function (layero) {
-                            mModeUserId = $("#userId").val();
-                            getUserTable();
-                        }
-                    });
-                })
-            }
-    	});
-    });
-
-    /*批量删除*/
-    $("#remove").on("click", function () {
-        var data = $("#myTable").bootstrapTable('getSelections');
-        var ids = [];
-        for (var i = 0; i < data.length; i++) {
-            var one = data[i];
-            ids.push(one.id);
-        }
-        if (ids.length == 0) {
-            layer.msg('请选择需删除的事件', {icon: 5});
-            return;
-        }
-        var conlayer = layer.confirm("确定删除选中数据？", {
-            btn: ['确定', '取消']
-        }, function () {
-            $.show_overall_loding();
-            $.deleteJSON(deviceServiceUrl + "/eventGl?eventGlIds=" + ids, {}, function (data) {
-                if (data.code == 0) {
-                    layer.close(conlayer);
-                    layer.msg("成功", {
-                        icon: 1
-                    });
-                    $.show_overall_loding();
-                    $('#myTable').bootstrapTable('refresh');
-                    return true;
-                } else {
-                    layer.close(conlayer);
-                    $('#myTable').bootstrapTable('refresh');
-                    if (data.code == 401000) {
-                        parent.layer.msg(data.message, {
-                            icon: 5
-                        });
-                    } else if (data.messages != null) {
-                        parent.layer.msg(data.messages[0].error, {
-                            icon: 5
-                        });
-                    } else {
-                        parent.layer.msg(data.message, {
-                            icon: 5
-                        });
-                    }
-                }
-            })
-        }, function () {
-            layer.close(conlayer);
-        });
-    });
-
-    /*修改*/
-    function updata(obj) {
-        showModel("修改消息", 2, obj);
-    }
-
-    function detail(obj){
-        url = "";
-        showModelDetails("事件详情", obj);
-	}
-
-    function showModelDetails(title, index) {
-        var html = template("modelEvnetDetails", {
-            title: "123"
-        });
-        var myLayer = layer.open({
-            skin: 'card',
-            type: 1,
-            title: '事件详情',
-            area: ['700px', '443px'], //宽高
-            resize: true, //是否拉升
-            offset: 'auto', //居中
-            content: html,
-            btn: ['关闭'],
-            yes: function (index, layero) {
-                layer.close(myLayer);
-            },
-            success: function (layero) {
-                var data = $("#myTable").bootstrapTable('getData')[index];
-                ;
-                if (data != null) {
-                    $("#eventDetailsForm").setForm(data);
-                }
-                $(".eventDisabled").attr("disabled", "disabled");
-            }
-        });
-    }
-
-    /*增加消息*/
-    $("#addMsg").click(function() {
-        showModel("添加消息", 1);
-    });
-
-    var isAdd = true;
-    function showModel(title, flag, index) {
-        if (flag == 1) {
-            isAdd = true;
-        } else {
-            isAdd = false;
-        }
-        var myLayer = layer.open({
-            skin: 'card',
-            type: 1,
-            title: title,
-            area: ['600px', '300px'],	//宽高
-            resize: true,				//是否拉升
-            offset: 'auto',				//居中
-            content: template("modelEvnet", {
-                title: "123"
-            }),
-            btn: ['提交', '取消'],
-            yes: function (index, layero) {
-                $("#modelEvnetForm").submit();
-            },
-            success: function (layero) {
-                var data = null;
-                if (flag == 2) {
-                    data = $("#myTable").bootstrapTable('getData')[index];
-                    $(".hide1").hide();
-                }
-                if (data != null) {
-                    $("#modelEvnetForm").setForm(data)
-                }
-                $("#selectDev").click(function () {
-                    var modeLayer = layer.open({
-                        skin: 'card', //自定义样式winning-class
-                        type: 1,
-                        title: ["选中设备", ""],
-                        area: ['550px', '450px'], //宽高
-                        resize: true, //是否拉升
-                        offset: 'auto', //居中
-                        content: template("deviceList", {
-                            title: "123"
-                        }),
-                        btn: ['设置', '取消'],
-                        yes: function (index, layero) {
-                            var list = $("#deviceTable").bootstrapTable('getSelections');
-                            if (list.length < 1) {
-                                layer.msg("请先选择设备", {
-                                    icon: 2
-                                });
-                                return;
-                            }
-                            var one = list[0];
-                            $("#deviceId").val(one.id);
-                            $("#deviceAlias").val(one.deviceAlias);
-                            layer.close(modeLayer);
-                        },
-                        success: function (layero) {
-                            mModeId = $("#deviceId").val();
-                            getTable();
-                        }
-                    });
-                })
-            }
-        });
-        var validate = $("#modelEvnetForm").validate({
-            rules: {
-                eventName: {
-                    required: true
-                }
-            },
-            messages: {
-                eventName: {
-                    required: "请输入事件名称"
-                }
-            },
-            submitHandler: function (form) {
-                var data = $("#modelEvnetForm").serializeJson();
-                var deviceAlias = $("#deviceAlias").val();
-                if (deviceAlias == "") {
-                    layer.msg('请选择设备', {icon: 5});
-                    return;
-                }
-                $.show_overall_loding();
-                if(isAdd) {
-                    $.postJSON(deviceServiceUrl + "/eventGl", data, function(data) {
-                        $.hide_overall_loding();
-                        if(data.code == 0) {
-                            layer.close(myLayer);
-                            layer.msg("成功", {
-                                icon: 1
-                            });
-                            $('#myTable').bootstrapTable('refresh');
-                            return true;
-                        } else {
-                            $('#myTable').bootstrapTable('refresh');
-                            if (data.code == 401000) {
-                                parent.layer.msg(data.message, {
-                                    icon: 5
-                                });
-                            } else if (data.messages != null) {
-                                parent.layer.msg(data.messages[0].error, {
-                                    icon: 5
-                                });
-                            } else {
-                                parent.layer.msg(data.message, {
-                                    icon: 5
-                                });
-                            }
-                        }
-                    });
-                } else {
-                    $.putJSON(deviceServiceUrl + "/eventGl", data, function(data) {
-                        $.hide_overall_loding();
-                        if(data.code == 0) {
-                            layer.close(myLayer);
-                            layer.msg("成功", {
-                                icon: 1
-                            });
-                            $('#myTable').bootstrapTable('refresh');
-                            return true;
-                        } else {
-                            $('#myTable').bootstrapTable('refresh');
-                            if (data.code == 401000) {
-                                parent.layer.msg(data.message, {
-                                    icon: 5
-                                });
-                            } else if (data.messages != null) {
-                                parent.layer.msg(data.messages[0].error, {
-                                    icon: 5
-                                });
-                            } else {
-                                parent.layer.msg(data.message, {
-                                    icon: 5
-                                });
-                            }
-                        }
-                    });
-                }
-            }
-        });
-    }
-
-    /*设备列表*/
-    var mModeId = "";
-    function getTable() {
-        $.show_overall_loding();
-        $('#deviceTable').bootstrapTable({
-            url: deviceServiceUrl + "/device/list", //请求后台的URL（*）
-            method: 'get', //请求方式（*）
-            contentType: "application/x-www-form-urlencoded",
-            toolbar: '', //工具按钮用哪个容器
-            striped: true, //是否显示行间隔色
-            cache: true, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
-            pagination: true, //是否显示分页（*）
-            sortable: false, //是否启用排序
-            sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
-            pageNumber: 1, //初始化加载第一页，默认第一页
-            pageSize: 10, //每页的记录行数（*）
-            pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
-            queryParamsType: '',
-            queryParams: queryParams, //传递参数（*）
-            strictSearch: true,
-            singleSelect: true,
-            // height: 500,                            //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
-            uniqueId: "id", //每一行的唯一标识，一般为主键列
-            cardView: false, //是否显示详细视图
-            detailView: false, //是否显示父子表
-            clickToSelect: true, //点击行是否选中
-            responseHandler: function (data) {
-                var result = data.data;
-                rdata = result.list;
-                var res = [];
-                res.push({
-                    total: result.total,
-                    rows: result.list
-                });
-                return res[0];
-            },
-            //单击行选中的操作
-            onClickRow: function (row) {
-                mModeId = row.id;
-            },
-            //双击行选中的操作
-            onDblClickRow: function (row) {
-                mModeId = row.id;
-            },
-            onLoadSuccess: function () {
-                $.hide_overall_loding();
-            },
-            columns: [{
-                checkbox: true,
-                formatter: function (i, row) { // 每次加载 checkbox 时判断当前 row 的 id 是否已经存在全局 Set() 里
-                    if (row.id == mModeId) { // 因为 判断数组里有没有这个 id
-                        // 存在则选中
-                        return {
-                            checked: true
-                        };
-                    }
-                }
-            }, {
-                width: 50,
-                title: '序号',
-                formatter: function (value, row, index) {
-                    return index + 1;
-                }
-            }, {
-                field: 'deviceAlias',
-                title: '设备名称',
-                width: 200
-            }, {
-                field: 'productCode',
-                title: '设备类型码',
-                width: 400
-            }]
-        });
-
-        function queryParams(params) {
-            return {
-                token: $.getToken(),
-                pageSize: params.pageSize,
-                pageNum: params.pageNumber,
-                deviceAlias: $("#ss_deviceAlias").val()
-            };
-        }
-
-        var serchaData = {};
-        $("#search1").on("click", function () {
-            $.show_overall_loding();
-            $('#deviceTable').bootstrapTable('refresh');
-        });
-
-        $("#clean1").click(function () {
-            $("#ss_deviceAlias").val("");
-            $("#search1").trigger("click");
-        });
-	}
-
-	/*用户列表*/
-    var mModeUserId = "";
-    function getUserTable() {
-        $.show_overall_loding();
-        $('#userTable').bootstrapTable({
-            url: userServiceUrl + "/user/list", //请求后台的URL（*）
-            method: 'get', //请求方式（*）
-            contentType: "application/x-www-form-urlencoded",
-            toolbar: '', //工具按钮用哪个容器
-            striped: true, //是否显示行间隔色
-            cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
-            pagination: true, //是否显示分页（*）
-            sortable: false, //是否启用排序
-            sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
-            pageNumber: 1, //初始化加载第一页，默认第一页
-            pageSize: 10, //每页的记录行数（*）
-            pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
-            queryParamsType: '',
-            queryParams: queryParams, //传递参数（*）
-            strictSearch: true,
-            singleSelect: true,
-            // height: 500,                            //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
-            uniqueId: "id", //每一行的唯一标识，一般为主键列
-            cardView: false, //是否显示详细视图
-            detailView: false, //是否显示父子表
-            clickToSelect: true, //点击行是否选中
-            responseHandler: function (data) {
-                var result = data.data;
-                rdata = result.list;
-                var res = [];
-                res.push({
-                    total: result.total,
-                    rows: result.list
-                });
-                return res[0];
-            },
-            //单击行选中的操作
-            onClickRow: function (row) {
-                mModeUserId = row.id;
-            },
-            //双击行选中的操作
-            onDblClickRow: function (row) {
-                mModeUserId = row.id;
-            },
-            onLoadSuccess: function () {
-                $.hide_overall_loding();
-            },
-            columns: [{
-                checkbox: true,
-                formatter: function (i, row) { // 每次加载 checkbox 时判断当前 row 的 id 是否已经存在全局 Set() 里
-                    if (row.id == mModeUserId) { // 因为 判断数组里有没有这个 id
-                        // 存在则选中
-                        return {
-                            checked: true
-                        };
-                    }
-                }
-            }, {
-                width: 50,
-                title: '序号',
-                formatter: function (value, row, index) {
-                    return index + 1;
-                }
-            }, {
-                field: 'userName',
-                title: '用户名称',
-                width: 200
-            }, {
-                field: 'organizationName',
-                title: '组织机构',
-                width: 400
-            }]
-        });
-
-        function queryParams(params) {
-            return {
-                token: $.getToken(),
-                pageSize: params.pageSize,
-                pageNum: params.pageNumber,
-                userName: $("#ss_userName").val()
-            };
-        }
-
-        var serchaData = {};
-        $("#search2").on("click", function () {
-            $.show_overall_loding();
-            $('#userTable').bootstrapTable('refresh');
-        });
-
-        $("#clean2").click(function () {
-            $("#ss_userName").val("");
-            $("#search1").trigger("click");
-        });
-    }
+    //
+    // /*批量配置处理*/
+    // $("#edit").on("click", function () {
+    //     var data = $("#myTable").bootstrapTable('getSelections');
+    //     var ids = [];
+    //     for (var i = 0; i < data.length; i++) {
+    //         var one = data[i];
+    //         ids.push(one.id);
+    //     }
+    //     if (ids.length == 0) {
+    //         layer.msg('请选择需处理的事件', {icon: 5});
+    //         return;
+    //     }
+    //     var myLayer = layer.open({
+    //         skin: 'card', //自定义样式winning-class
+    //         title: "处理事件",
+    //         area: ['500px', '350px'],
+    //         resize: true, //是否拉升
+    //         offset: 'auto', //居中
+    //         content: template("modelbatch", {
+    //             title: "123"
+    //         }),
+    //         btn: ['提交', '取消'],
+    //         yes: function(index, layero) {
+    //             var userId = $("#userId").val();
+    //             $.show_overall_loding();
+    //             $.putJSON(deviceServiceUrl + "/eventGl/batchset", {
+    //                 'userId': userId,
+    //                 'eventGlIds': ids
+    //             }, function(data) {
+    //                 $.hide_overall_loding();
+    //                 if(data.code == 0) {
+    //                     layer.close(myLayer);
+    //                     layer.msg("成功", {
+    //                         icon: 1
+    //                     });
+    //                     $('#myTable').bootstrapTable('refresh');
+    //                     return true;
+    //                 } else {
+    //                     layer.close(myLayer);
+    //                     $('#myTable').bootstrapTable('refresh');
+    //                     if (data.code == 401000) {
+    //                         parent.layer.msg(data.message, {
+    //                             icon: 5
+    //                         });
+    //                     } else if (data.messages != null) {
+    //                         parent.layer.msg(data.messages[0].error, {
+    //                             icon: 5
+    //                         });
+    //                     } else {
+    //                         parent.layer.msg(data.message, {
+    //                             icon: 5
+    //                         });
+    //                     }
+    //                 }
+    //             });
+    //         },
+    //         success: function(layero) {
+    //             $("#selectUser").click(function () {
+    //                 var modeLayer = layer.open({
+    //                     skin: 'card', //自定义样式winning-class
+    //                     type: 1,
+    //                     title: ["选择用户", ""],
+    //                     area: ['650px', '500px'], //宽高
+    //                     resize: true, //是否拉升
+    //                     offset: 'auto', //居中
+    //                     content: template("userList", {
+    //                         title: "123"
+    //                     }),
+    //                     btn: ['设置', '取消'],
+    //                     yes: function (index, layero) {
+    //                         var list = $("#userTable").bootstrapTable('getSelections');
+    //                         if (list.length < 1) {
+    //                             layer.msg("请选择用户", {
+    //                                 icon: 2
+    //                             });
+    //                             return;
+    //                         }
+    //                         $("#userIds").val(ids.toString());
+    //                         layer.close(modeLayer);
+    //
+    //                         var list = $("#userTable").bootstrapTable('getSelections');
+    //                         if (list.length < 1) {
+    //                             layer.msg("请选择用户", {
+    //                                 icon: 2
+    //                             });
+    //                             return;
+    //                         }
+    //                         var one = list[0];
+    //                         $("#userId").val(one.id);
+    //                         $("#userName1").val(one.userName);
+    //                         $("#userMobile1").val(one.userMobile);
+    //                         layer.close(modeLayer);
+    //                     },
+    //                     success: function (layero) {
+    //                         mModeUserId = $("#userId").val();
+    //                         getUserTable();
+    //                     }
+    //                 });
+    //             })
+    //         }
+    // 	});
+    // });
+    //
+    // /*批量删除*/
+    // $("#remove").on("click", function () {
+    //     var data = $("#myTable").bootstrapTable('getSelections');
+    //     var ids = [];
+    //     for (var i = 0; i < data.length; i++) {
+    //         var one = data[i];
+    //         ids.push(one.id);
+    //     }
+    //     if (ids.length == 0) {
+    //         layer.msg('请选择需删除的事件', {icon: 5});
+    //         return;
+    //     }
+    //     var conlayer = layer.confirm("确定删除选中数据？", {
+    //         btn: ['确定', '取消']
+    //     }, function () {
+    //         $.show_overall_loding();
+    //         $.deleteJSON(deviceServiceUrl + "/eventGl?eventGlIds=" + ids, {}, function (data) {
+    //             if (data.code == 0) {
+    //                 layer.close(conlayer);
+    //                 layer.msg("成功", {
+    //                     icon: 1
+    //                 });
+    //                 $.show_overall_loding();
+    //                 $('#myTable').bootstrapTable('refresh');
+    //                 return true;
+    //             } else {
+    //                 layer.close(conlayer);
+    //                 $('#myTable').bootstrapTable('refresh');
+    //                 if (data.code == 401000) {
+    //                     parent.layer.msg(data.message, {
+    //                         icon: 5
+    //                     });
+    //                 } else if (data.messages != null) {
+    //                     parent.layer.msg(data.messages[0].error, {
+    //                         icon: 5
+    //                     });
+    //                 } else {
+    //                     parent.layer.msg(data.message, {
+    //                         icon: 5
+    //                     });
+    //                 }
+    //             }
+    //         })
+    //     }, function () {
+    //         layer.close(conlayer);
+    //     });
+    // });
+    //
+    // /*修改*/
+    // function updata(obj) {
+    //     showModel("修改消息", 2, obj);
+    // }
+    //
+    // function detail(obj){
+    //     url = "";
+    //     showModelDetails("事件详情", obj);
+	// }
+    //
+    // function showModelDetails(title, index) {
+    //     var html = template("modelEvnetDetails", {
+    //         title: "123"
+    //     });
+    //     var myLayer = layer.open({
+    //         skin: 'card',
+    //         type: 1,
+    //         title: '事件详情',
+    //         area: ['700px', '443px'], //宽高
+    //         resize: true, //是否拉升
+    //         offset: 'auto', //居中
+    //         content: html,
+    //         btn: ['关闭'],
+    //         yes: function (index, layero) {
+    //             layer.close(myLayer);
+    //         },
+    //         success: function (layero) {
+    //             var data = $("#myTable").bootstrapTable('getData')[index];
+    //             ;
+    //             if (data != null) {
+    //                 $("#eventDetailsForm").setForm(data);
+    //             }
+    //             $(".eventDisabled").attr("disabled", "disabled");
+    //         }
+    //     });
+    // }
+    //
+    // /*增加消息*/
+    // $("#addMsg").click(function() {
+    //     showModel("添加消息", 1);
+    // });
+    //
+    // var isAdd = true;
+    // function showModel(title, flag, index) {
+    //     if (flag == 1) {
+    //         isAdd = true;
+    //     } else {
+    //         isAdd = false;
+    //     }
+    //     var myLayer = layer.open({
+    //         skin: 'card',
+    //         type: 1,
+    //         title: title,
+    //         area: ['600px', '300px'],	//宽高
+    //         resize: true,				//是否拉升
+    //         offset: 'auto',				//居中
+    //         content: template("modelEvnet", {
+    //             title: "123"
+    //         }),
+    //         btn: ['提交', '取消'],
+    //         yes: function (index, layero) {
+    //             $("#modelEvnetForm").submit();
+    //         },
+    //         success: function (layero) {
+    //             var data = null;
+    //             if (flag == 2) {
+    //                 data = $("#myTable").bootstrapTable('getData')[index];
+    //                 $(".hide1").hide();
+    //             }
+    //             if (data != null) {
+    //                 $("#modelEvnetForm").setForm(data)
+    //             }
+    //             $("#selectDev").click(function () {
+    //                 var modeLayer = layer.open({
+    //                     skin: 'card', //自定义样式winning-class
+    //                     type: 1,
+    //                     title: ["选中设备", ""],
+    //                     area: ['550px', '450px'], //宽高
+    //                     resize: true, //是否拉升
+    //                     offset: 'auto', //居中
+    //                     content: template("deviceList", {
+    //                         title: "123"
+    //                     }),
+    //                     btn: ['设置', '取消'],
+    //                     yes: function (index, layero) {
+    //                         var list = $("#deviceTable").bootstrapTable('getSelections');
+    //                         if (list.length < 1) {
+    //                             layer.msg("请先选择设备", {
+    //                                 icon: 2
+    //                             });
+    //                             return;
+    //                         }
+    //                         var one = list[0];
+    //                         $("#deviceId").val(one.id);
+    //                         $("#deviceAlias").val(one.deviceAlias);
+    //                         layer.close(modeLayer);
+    //                     },
+    //                     success: function (layero) {
+    //                         mModeId = $("#deviceId").val();
+    //                         getTable();
+    //                     }
+    //                 });
+    //             })
+    //         }
+    //     });
+    //     var validate = $("#modelEvnetForm").validate({
+    //         rules: {
+    //             eventName: {
+    //                 required: true
+    //             }
+    //         },
+    //         messages: {
+    //             eventName: {
+    //                 required: "请输入事件名称"
+    //             }
+    //         },
+    //         submitHandler: function (form) {
+    //             var data = $("#modelEvnetForm").serializeJson();
+    //             var deviceAlias = $("#deviceAlias").val();
+    //             if (deviceAlias == "") {
+    //                 layer.msg('请选择设备', {icon: 5});
+    //                 return;
+    //             }
+    //             $.show_overall_loding();
+    //             if(isAdd) {
+    //                 $.postJSON(deviceServiceUrl + "/eventGl", data, function(data) {
+    //                     $.hide_overall_loding();
+    //                     if(data.code == 0) {
+    //                         layer.close(myLayer);
+    //                         layer.msg("成功", {
+    //                             icon: 1
+    //                         });
+    //                         $('#myTable').bootstrapTable('refresh');
+    //                         return true;
+    //                     } else {
+    //                         $('#myTable').bootstrapTable('refresh');
+    //                         if (data.code == 401000) {
+    //                             parent.layer.msg(data.message, {
+    //                                 icon: 5
+    //                             });
+    //                         } else if (data.messages != null) {
+    //                             parent.layer.msg(data.messages[0].error, {
+    //                                 icon: 5
+    //                             });
+    //                         } else {
+    //                             parent.layer.msg(data.message, {
+    //                                 icon: 5
+    //                             });
+    //                         }
+    //                     }
+    //                 });
+    //             } else {
+    //                 $.putJSON(deviceServiceUrl + "/eventGl", data, function(data) {
+    //                     $.hide_overall_loding();
+    //                     if(data.code == 0) {
+    //                         layer.close(myLayer);
+    //                         layer.msg("成功", {
+    //                             icon: 1
+    //                         });
+    //                         $('#myTable').bootstrapTable('refresh');
+    //                         return true;
+    //                     } else {
+    //                         $('#myTable').bootstrapTable('refresh');
+    //                         if (data.code == 401000) {
+    //                             parent.layer.msg(data.message, {
+    //                                 icon: 5
+    //                             });
+    //                         } else if (data.messages != null) {
+    //                             parent.layer.msg(data.messages[0].error, {
+    //                                 icon: 5
+    //                             });
+    //                         } else {
+    //                             parent.layer.msg(data.message, {
+    //                                 icon: 5
+    //                             });
+    //                         }
+    //                     }
+    //                 });
+    //             }
+    //         }
+    //     });
+    // }
+    //
+    // /*设备列表*/
+    // var mModeId = "";
+    // function getTable() {
+    //     $.show_overall_loding();
+    //     $('#deviceTable').bootstrapTable({
+    //         url: deviceServiceUrl + "/device/list", //请求后台的URL（*）
+    //         method: 'get', //请求方式（*）
+    //         contentType: "application/x-www-form-urlencoded",
+    //         toolbar: '', //工具按钮用哪个容器
+    //         striped: true, //是否显示行间隔色
+    //         cache: true, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+    //         pagination: true, //是否显示分页（*）
+    //         sortable: false, //是否启用排序
+    //         sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
+    //         pageNumber: 1, //初始化加载第一页，默认第一页
+    //         pageSize: 10, //每页的记录行数（*）
+    //         pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
+    //         queryParamsType: '',
+    //         queryParams: queryParams, //传递参数（*）
+    //         strictSearch: true,
+    //         singleSelect: true,
+    //         // height: 500,                            //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+    //         uniqueId: "id", //每一行的唯一标识，一般为主键列
+    //         cardView: false, //是否显示详细视图
+    //         detailView: false, //是否显示父子表
+    //         clickToSelect: true, //点击行是否选中
+    //         responseHandler: function (data) {
+    //             var result = data.data;
+    //             rdata = result.list;
+    //             var res = [];
+    //             res.push({
+    //                 total: result.total,
+    //                 rows: result.list
+    //             });
+    //             return res[0];
+    //         },
+    //         //单击行选中的操作
+    //         onClickRow: function (row) {
+    //             mModeId = row.id;
+    //         },
+    //         //双击行选中的操作
+    //         onDblClickRow: function (row) {
+    //             mModeId = row.id;
+    //         },
+    //         onLoadSuccess: function () {
+    //             $.hide_overall_loding();
+    //         },
+    //         columns: [{
+    //             checkbox: true,
+    //             formatter: function (i, row) { // 每次加载 checkbox 时判断当前 row 的 id 是否已经存在全局 Set() 里
+    //                 if (row.id == mModeId) { // 因为 判断数组里有没有这个 id
+    //                     // 存在则选中
+    //                     return {
+    //                         checked: true
+    //                     };
+    //                 }
+    //             }
+    //         }, {
+    //             width: 50,
+    //             title: '序号',
+    //             formatter: function (value, row, index) {
+    //                 return index + 1;
+    //             }
+    //         }, {
+    //             field: 'deviceAlias',
+    //             title: '设备名称',
+    //             width: 200
+    //         }, {
+    //             field: 'productCode',
+    //             title: '设备类型码',
+    //             width: 400
+    //         }]
+    //     });
+    //
+    //     function queryParams(params) {
+    //         return {
+    //             token: $.getToken(),
+    //             pageSize: params.pageSize,
+    //             pageNum: params.pageNumber,
+    //             deviceAlias: $("#ss_deviceAlias").val()
+    //         };
+    //     }
+    //
+    //     var serchaData = {};
+    //     $("#search1").on("click", function () {
+    //         $.show_overall_loding();
+    //         $('#deviceTable').bootstrapTable('refresh');
+    //     });
+    //
+    //     $("#clean1").click(function () {
+    //         $("#ss_deviceAlias").val("");
+    //         $("#search1").trigger("click");
+    //     });
+	// }
+    //
+	// /*用户列表*/
+    // var mModeUserId = "";
+    // function getUserTable() {
+    //     $.show_overall_loding();
+    //     $('#userTable').bootstrapTable({
+    //         url: userServiceUrl + "/user/list", //请求后台的URL（*）
+    //         method: 'get', //请求方式（*）
+    //         contentType: "application/x-www-form-urlencoded",
+    //         toolbar: '', //工具按钮用哪个容器
+    //         striped: true, //是否显示行间隔色
+    //         cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+    //         pagination: true, //是否显示分页（*）
+    //         sortable: false, //是否启用排序
+    //         sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
+    //         pageNumber: 1, //初始化加载第一页，默认第一页
+    //         pageSize: 10, //每页的记录行数（*）
+    //         pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
+    //         queryParamsType: '',
+    //         queryParams: queryParams, //传递参数（*）
+    //         strictSearch: true,
+    //         singleSelect: true,
+    //         // height: 500,                            //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+    //         uniqueId: "id", //每一行的唯一标识，一般为主键列
+    //         cardView: false, //是否显示详细视图
+    //         detailView: false, //是否显示父子表
+    //         clickToSelect: true, //点击行是否选中
+    //         responseHandler: function (data) {
+    //             var result = data.data;
+    //             rdata = result.list;
+    //             var res = [];
+    //             res.push({
+    //                 total: result.total,
+    //                 rows: result.list
+    //             });
+    //             return res[0];
+    //         },
+    //         //单击行选中的操作
+    //         onClickRow: function (row) {
+    //             mModeUserId = row.id;
+    //         },
+    //         //双击行选中的操作
+    //         onDblClickRow: function (row) {
+    //             mModeUserId = row.id;
+    //         },
+    //         onLoadSuccess: function () {
+    //             $.hide_overall_loding();
+    //         },
+    //         columns: [{
+    //             checkbox: true,
+    //             formatter: function (i, row) { // 每次加载 checkbox 时判断当前 row 的 id 是否已经存在全局 Set() 里
+    //                 if (row.id == mModeUserId) { // 因为 判断数组里有没有这个 id
+    //                     // 存在则选中
+    //                     return {
+    //                         checked: true
+    //                     };
+    //                 }
+    //             }
+    //         }, {
+    //             width: 50,
+    //             title: '序号',
+    //             formatter: function (value, row, index) {
+    //                 return index + 1;
+    //             }
+    //         }, {
+    //             field: 'userName',
+    //             title: '用户名称',
+    //             width: 200
+    //         }, {
+    //             field: 'organizationName',
+    //             title: '组织机构',
+    //             width: 400
+    //         }]
+    //     });
+    //
+    //     function queryParams(params) {
+    //         return {
+    //             token: $.getToken(),
+    //             pageSize: params.pageSize,
+    //             pageNum: params.pageNumber,
+    //             userName: $("#ss_userName").val()
+    //         };
+    //     }
+    //
+    //     var serchaData = {};
+    //     $("#search2").on("click", function () {
+    //         $.show_overall_loding();
+    //         $('#userTable').bootstrapTable('refresh');
+    //     });
+    //
+    //     $("#clean2").click(function () {
+    //         $("#ss_userName").val("");
+    //         $("#search1").trigger("click");
+    //     });
+    // }
 
 
 </script>

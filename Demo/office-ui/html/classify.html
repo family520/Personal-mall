@@ -25,8 +25,8 @@
 		<script src="../plus/validate/messages_zh.min.js"></script>
 		<script src="../js/bootstrap-treeview.js"></script>
 
-		<script src="../js/httpUtils.js"></script>
-		<script src="../js/Md5.js"></script>
+<!--<script src="../js/httpUtils.js"></script>-->
+<!--<script src="../js/Md5.js"></script>-->
 		<script src="../plus/iview/vue.min.js"></script>
 		<style type="text/css">
 			.simButton {
@@ -73,7 +73,7 @@
 								</div>
 								<!--Start-->
 								<div>
-									<button type="button" class="btn btn-primary" id="updateData" onclick="updateDevice()">
+									<button type="button" class="btn btn-primary" id="updateData" >
                                         <i class="fa fa-refresh"></i> 更新数据
                                     </button>
 								</div>
@@ -87,13 +87,13 @@
 		<div id="loadDiv"></div>
 	</body>
 	<script type="text/javascript">
-		$("#loadDiv").html(loadHtml);
+		// $("#loadDiv").html(loadHtml);
 		var html;
 		var url = "";
 		var appp;
 		$(function() {
 			$('#classifyList').bootstrapTable({
-				url: deviceServiceUrl + "/deviceType/list", //请求后台的URL（*）
+				url: "../../json/classify.json", //请求后台的URL（*）
 				//data: data1,                            //本地数据
 				method: 'get', //请求方式（*）
 				contentType: "application/x-www-form-urlencoded",
@@ -123,7 +123,7 @@
 							total: result.total,
 							rows: result.list
 						});
-						$.hide_overall_loding();
+						//$.hide_overall_loding();
 						return res[0];
 					} else {
 						res.push({
@@ -133,12 +133,12 @@
 						layer.msg("获取模板失败！", {
 							icon: 2
 						});
-						$.hide_overall_loding();
+						//$.hide_overall_loding();
 						return res[0];
 					}
 				},
 				onLoadSuccess: function() {
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 				},
 				onDblClickRow: function(row) {
 					console.info(row);
@@ -178,10 +178,8 @@
 						formatter: function(i1, i2, i3) {
 							var str = '' +
 								// '<button data-toggle="tooltip" title="修改别名" type="button" onclick="edit(' + i3 + ');" class="btn btn-warning tableButton"><i class="fa fa-edit"> </i></button>' +
-								'<button data-toggle="tooltip" title="模板设置" type="button" onclick="showTemp(' + i3 +
-								');" class="btn btn-primary tableButton"><i class="fa fa-cog"> </i></button>' +
-								'<button data-toggle="tooltip" title="设置通用模板为默认模板" type="button" onclick="setDefaultTemplate(' + i3 +
-								');" class="btn btn-info tableButton"><i class="fa fa-lock"> </i></button>';
+								'<button data-toggle="tooltip" title="模板设置" type="button" class="btn btn-primary tableButton"><i class="fa fa-cog"> </i></button>' +
+								'<button data-toggle="tooltip" title="设置通用模板为默认模板" type="button" class="btn btn-info tableButton"><i class="fa fa-lock"> </i></button>';
 							return str;
 						},
 						cellStyle: function() {
@@ -197,366 +195,366 @@
 			});
 
 			function queryParams(params) {
-				$.show_overall_loding();
+				// $.show_overall_loding();
 				return {
-					token: $.getToken(),
+					// token: $.getToken(),
 					pageSize: params.pageSize,
 					pageNum: params.pageNumber,
 					deviceTypeName: $("#s_typeName").val(),
 					deviceTypeAlias: $("#s_typeAlias").val()
 				};
 			}
-
-			$("#remove").on("click", function() {
-				var data = $("#classifyList").bootstrapTable('getSelections');
-				if(data.length == 1) {
-					var conlayer = parent.layer.confirm("确定删除？", {
-						btn: ['确定', '取消']
-					}, function() {
-						$.ajax({
-							url: "",
-							type: "post",
-							dataType: "json",
-							success: function(res) {
-								parent.layer.msg("成功", {
-									icon: 1
-								});
-								$('#classifyList').bootstrapTable('refresh');
-							}
-						});
-					}, function() {
-						parent.layer.close(conlayer);
-					});
-				} else {
-					parent.layer.msg("请选择一条数据", {
-						icon: 5
-					});
-				}
-			});
-
-			$("#search").on("click", function() {
-				$('#classifyList').bootstrapTable('refresh');
-			});
-
-			$("#clean").click(function() {
-				$("#s_typeName").val("");
-				$("#s_typeAlias").val("");
-				$("#search").trigger("click");
-			});
+            //
+			// $("#remove").on("click", function() {
+			// 	var data = $("#classifyList").bootstrapTable('getSelections');
+			// 	if(data.length == 1) {
+			// 		var conlayer = parent.layer.confirm("确定删除？", {
+			// 			btn: ['确定', '取消']
+			// 		}, function() {
+			// 			$.ajax({
+			// 				url: "",
+			// 				type: "post",
+			// 				dataType: "json",
+			// 				success: function(res) {
+			// 					parent.layer.msg("成功", {
+			// 						icon: 1
+			// 					});
+			// 					$('#classifyList').bootstrapTable('refresh');
+			// 				}
+			// 			});
+			// 		}, function() {
+			// 			parent.layer.close(conlayer);
+			// 		});
+			// 	} else {
+			// 		parent.layer.msg("请选择一条数据", {
+			// 			icon: 5
+			// 		});
+			// 	}
+			// });
+            //
+			// $("#search").on("click", function() {
+			// 	$('#classifyList').bootstrapTable('refresh');
+			// });
+            //
+			// $("#clean").click(function() {
+			// 	$("#s_typeName").val("");
+			// 	$("#s_typeAlias").val("");
+			// 	$("#search").trigger("click");
+			// });
 		});
 
-		//修改别名
-		function edit(obj) {
-			html = template("editNameModel", {
-				title: "123"
-			});
-			var data = $("#classifyList").bootstrapTable('getData');
-
-			var myLayer = layer.open({
-				skin: 'card',
-				type: 1,
-				title: "修改别名",
-				// area: ['400px'],	        //宽高
-				resize: true, //是否拉升
-				offset: 'auto', //居中
-				content: html,
-				btn: ['提交', '取消'],
-				yes: function(index, layero) {
-					$("#deviceForm").submit();
-				},
-				success: function(layero) {
-					$("#typeName").val(data[obj].typeName);
-					$("#oldTypeName").val(data[obj].typeAlias);
-				}
-			});
-
-			var validate = $("#deviceForm").validate({
-				rules: {
-					newTypeName: {
-						required: true
-					}
-				},
-				messages: {
-					newTypeName: {
-						required: "别名不能为空！"
-					}
-				},
-				submitHandler: function(form) {
-					var obj1 = {};
-					obj1.id = data[obj].id;
-					obj1.typeAlias = $("#newTypeName").val();
-					$.show_overall_loding();
-					$.putJSON(deviceServiceUrl + "/deviceType", obj1, function(data) {
-						$.hide_overall_loding();
-						if(data.code == 0) {
-							layer.close(myLayer);
-							layer.msg("成功", {
-								icon: 1
-							});
-							$.show_overall_loding();
-							$('#classifyList').bootstrapTable('refresh');
-						} else {
-							layer.msg("操作失败", {
-								icon: 2
-							});
-						}
-					});
-				}
-			});
-		}
-
-		//模板设置
-		function showTemp(obj) {
-			$.show_overall_loding();
-			html = template("modelWin", {
-				title: "123"
-			});
-			var localTemp;
-			var flag = false;
-			var myLayer;
-			var data = $("#classifyList").bootstrapTable('getData');
-			var id = data[obj].id;
-			var productCode = data[obj].productCode;
-			$.ajax({
-				url: addToUrlToken(deviceServiceUrl + "/typeTemplate/tempListByTypeId"),
-				type: "get",
-				contentType: "application/json",
-				dataType: "json",
-				timeout: 10000,
-				async: false,
-				data: {
-					typeId: productCode,
-					templateType: 1
-				},
-				success: function(data) {
-					$.hide_overall_loding();
-					console.info(data);
-					if(data.code == 0) {
-						if(data.data != null && data.data.list != null && data.data.list.length > 0) {
-							localTemp = data.data.list;
-							flag = true;
-						} else {
-							layer.msg('暂无模板', {
-								icon: 2
-							});
-							flag = false;
-						}
-					} else {
-						layer.msg('暂无模板', {
-							icon: 2
-						});
-						flag = false;
-					}
-				},
-				error: function() {
-					$.hide_overall_loding();
-				}
-			});
-
-			if(flag) {
-				myLayer = layer.open({
-					skin: 'card', //自定义样式winning-class
-					type: 1,
-					title: ["设置模板", ""],
-					area: ['900px', '500px'], //宽高
-					resize: true, //是否拉升
-					offset: 'auto', //居中
-					content: html,
-					btn: ['确定'],
-					yes: function(index, layero) {
-						layer.close(myLayer);
-					},
-					success: function(layero) {
-						$(".layui-layer-title").addClass("card-header");
-						appp = new Vue({
-							el: "#vueApp",
-							data: {
-								tempList: [],
-								isBuyTempList: [],
-								templateDefault: ""
-							},
-							methods: {
-								//设置默认模板
-								setDefaultTemp: function(value) {
-									$(".setDefaultBtn").attr({
-										"disabled": "disabled"
-									});
-									var data = {
-										oldId: appp.templateDefault,
-										newId: value.id
-									};
-									$.ajax({
-										url: addToUrlToken(deviceServiceUrl + "/typeTemplate/updateDefaultTemp"),
-										type: "put",
-										contentType: "application/json",
-										dataType: "json",
-										data: JSON.stringify(data),
-										timeout: 20000,
-										success: function(data) {
-											if(data.code == 401000) {
-												top.location.href = "../html/Login/login.html";
-												return;
-											}
-											console.info(data);
-											layer.msg('设置成功', {
-												icon: 1
-											});
-											appp.templateDefault = value.id;
-											$(".setDefaultBtn").removeAttr("disabled");
-										},
-										error: function(xhr, textstatus, thrown) {
-											$(".setDefaultBtn").removeAttr("disabled");
-										}
-									});
-									// this.templateDefault = index;
-								},
-								//购买模板
-								buyTemp: function(value, index) {
-									console.info(value);
-									$(".buyTempBtn").attr({
-										"disabled": "disabled"
-									});
-									//获取模板HTML代码
-									let tempCode = getTempCode(value.templateSign);
-									value.templateCode = tempCode;
-									value.typeId = productCode;
-									value.templateSign = value.id;
-									value.templateType = 1;
-
-									if(value.templateSign != null && value.templateSign != '') {
-										$.ajax({
-											url: addToUrlToken(deviceServiceUrl + "/typeTemplate/"),
-											type: "post",
-											contentType: "application/json",
-											dataType: "json",
-											timeout: 10000,
-											async: false,
-											data: JSON.stringify(value),
-											success: function(data) {
-												console.info(data);
-												if(data.code == 0) {
-													$(".buyTempBtn").removeAttr("disabled");
-													layer.msg('购买成功', {
-														icon: 1
-													});
-													appp.isBuyTempList.push(data.data.id);
-													appp.tempList[index].id = data.data.id;
-													appp.tempList[index].remarks = "0";
-												} else if(data.code == 401000) {
-													top.location.href = "../html/Login/login.html";
-													return;
-												} else {
-													$(".buyTempBtn").removeAttr("disabled");
-													layer.msg('购买失败', {
-														icon: 2
-													});
-												}
-											},
-										});
-									} else {
-										$(".buyTempBtn").removeAttr("disabled");
-										layer.msg('购买失败', {
-											icon: 2
-										});
-									}
-								},
-								preview: function(value) {
-									var imgLyaer = layer.open({
-										skin: 'card', //自定义样式winning-class
-										type: 1,
-										title: ["预览", ""],
-										area: ['600px'], //宽高
-										resize: true, //是否拉升
-										offset: 'auto', //居中
-										content: '<img src="' + value.templateImage + '">',
-									});
-									// console.info(value);
-								}
-							},
-							mounted: function() {
-								this.tempList = localTemp;
-								// console.info(localTemp);
-								for(let i = 0; i < localTemp.length; i++) {
-									if(localTemp[i].templateDefault == 1) {
-										this.templateDefault = localTemp[i].id;
-									}
-								}
-							},
-						});
-					},
-				});
-			}
-		}
-
-		//设置通用模板为默认模板
-		function setDefaultTemplate(obj) {
-			var data = $("#classifyList").bootstrapTable('getData');
-			var id = data[obj].productCode;
-			var productCode = data[obj].productCode;
-			var _data = {
-				oldId: productCode,
-				newId: "0000"
-			};
-			$.ajax({
-				url: addToUrlToken(deviceServiceUrl + "/typeTemplate/updateDefaultTemp"),
-				type: "put",
-				contentType: "application/json",
-				dataType: "json",
-				data: JSON.stringify(_data),
-				timeout: 20000,
-				success: function(data) {
-					if(data.code == 401000) {
-						top.location.href = "../html/Login/login.html";
-						return;
-					}
-					console.info(data);
-					layer.msg('设置成功', {
-						icon: 1
-					});
-				},
-				error: function(xhr, textstatus, thrown) {
-					layer.msg('设置失败', {
-						icon: 2
-					});
-				}
-			});
-		}
-
-		// 获取模板HTML代码
-		function getTempCode(id) {
-			/*$.ajax({
-			    url: "",
-			    type: "post",
-			    contentType: "application/json",
-			    dataType: "json",
-			    timeout: 10000,
-			    async: false,
-			    data: JSON.stringify(id),
-			    success: function (data) {
-			        return data;
-			    }
-			});*/
-			var code = {
-				"id": "1118770116633722881",
-				"template_name": "主控器 UI1",
-				"resouse": "<div>关灯</div>",
-				"create_time": "2019-04-18T14:55:56",
-				"update_time": null
-			}
-			return code.resouse;
-		}
-
-		function updateDevice() {
-			$.show_overall_loding();
-			$.postJSON(deviceServiceUrl + "/deviceType/updateList", {}, function(data) {
-				console.info(data);
-				if(data.code == 0) {
-					$('#classifyList').bootstrapTable('refresh');
-				} else {
-					$.hide_overall_loding();
-				}
-			});
-		}
+		// //修改别名
+		// function edit(obj) {
+		// 	html = template("editNameModel", {
+		// 		title: "123"
+		// 	});
+		// 	var data = $("#classifyList").bootstrapTable('getData');
+        //
+		// 	var myLayer = layer.open({
+		// 		skin: 'card',
+		// 		type: 1,
+		// 		title: "修改别名",
+		// 		// area: ['400px'],	        //宽高
+		// 		resize: true, //是否拉升
+		// 		offset: 'auto', //居中
+		// 		content: html,
+		// 		btn: ['提交', '取消'],
+		// 		yes: function(index, layero) {
+		// 			$("#deviceForm").submit();
+		// 		},
+		// 		success: function(layero) {
+		// 			$("#typeName").val(data[obj].typeName);
+		// 			$("#oldTypeName").val(data[obj].typeAlias);
+		// 		}
+		// 	});
+        //
+		// 	var validate = $("#deviceForm").validate({
+		// 		rules: {
+		// 			newTypeName: {
+		// 				required: true
+		// 			}
+		// 		},
+		// 		messages: {
+		// 			newTypeName: {
+		// 				required: "别名不能为空！"
+		// 			}
+		// 		},
+		// 		submitHandler: function(form) {
+		// 			var obj1 = {};
+		// 			obj1.id = data[obj].id;
+		// 			obj1.typeAlias = $("#newTypeName").val();
+		// 			$.show_overall_loding();
+		// 			$.putJSON(deviceServiceUrl + "/deviceType", obj1, function(data) {
+		// 				// //$.hide_overall_loding();
+		// 				if(data.code == 0) {
+		// 					layer.close(myLayer);
+		// 					layer.msg("成功", {
+		// 						icon: 1
+		// 					});
+		// 					$.show_overall_loding();
+		// 					$('#classifyList').bootstrapTable('refresh');
+		// 				} else {
+		// 					layer.msg("操作失败", {
+		// 						icon: 2
+		// 					});
+		// 				}
+		// 			});
+		// 		}
+		// 	});
+		// }
+        //
+		// //模板设置
+		// function showTemp(obj) {
+		// 	$.show_overall_loding();
+		// 	html = template("modelWin", {
+		// 		title: "123"
+		// 	});
+		// 	var localTemp;
+		// 	var flag = false;
+		// 	var myLayer;
+		// 	var data = $("#classifyList").bootstrapTable('getData');
+		// 	var id = data[obj].id;
+		// 	var productCode = data[obj].productCode;
+		// 	$.ajax({
+		// 		url: addToUrlToken(deviceServiceUrl + "/typeTemplate/tempListByTypeId"),
+		// 		type: "get",
+		// 		contentType: "application/json",
+		// 		dataType: "json",
+		// 		timeout: 10000,
+		// 		async: false,
+		// 		data: {
+		// 			typeId: productCode,
+		// 			templateType: 1
+		// 		},
+		// 		success: function(data) {
+		// 			// //$.hide_overall_loding();
+		// 			console.info(data);
+		// 			if(data.code == 0) {
+		// 				if(data.data != null && data.data.list != null && data.data.list.length > 0) {
+		// 					localTemp = data.data.list;
+		// 					flag = true;
+		// 				} else {
+		// 					layer.msg('暂无模板', {
+		// 						icon: 2
+		// 					});
+		// 					flag = false;
+		// 				}
+		// 			} else {
+		// 				layer.msg('暂无模板', {
+		// 					icon: 2
+		// 				});
+		// 				flag = false;
+		// 			}
+		// 		},
+		// 		error: function() {
+		// 			// //$.hide_overall_loding();
+		// 		}
+		// 	});
+        //
+		// 	if(flag) {
+		// 		myLayer = layer.open({
+		// 			skin: 'card', //自定义样式winning-class
+		// 			type: 1,
+		// 			title: ["设置模板", ""],
+		// 			area: ['900px', '500px'], //宽高
+		// 			resize: true, //是否拉升
+		// 			offset: 'auto', //居中
+		// 			content: html,
+		// 			btn: ['确定'],
+		// 			yes: function(index, layero) {
+		// 				layer.close(myLayer);
+		// 			},
+		// 			success: function(layero) {
+		// 				$(".layui-layer-title").addClass("card-header");
+		// 				appp = new Vue({
+		// 					el: "#vueApp",
+		// 					data: {
+		// 						tempList: [],
+		// 						isBuyTempList: [],
+		// 						templateDefault: ""
+		// 					},
+		// 					methods: {
+		// 						//设置默认模板
+		// 						setDefaultTemp: function(value) {
+		// 							$(".setDefaultBtn").attr({
+		// 								"disabled": "disabled"
+		// 							});
+		// 							var data = {
+		// 								oldId: appp.templateDefault,
+		// 								newId: value.id
+		// 							};
+		// 							$.ajax({
+		// 								url: addToUrlToken(deviceServiceUrl + "/typeTemplate/updateDefaultTemp"),
+		// 								type: "put",
+		// 								contentType: "application/json",
+		// 								dataType: "json",
+		// 								data: JSON.stringify(data),
+		// 								timeout: 20000,
+		// 								success: function(data) {
+		// 									if(data.code == 401000) {
+		// 										top.location.href = "../html/Login/login.html";
+		// 										return;
+		// 									}
+		// 									console.info(data);
+		// 									layer.msg('设置成功', {
+		// 										icon: 1
+		// 									});
+		// 									appp.templateDefault = value.id;
+		// 									$(".setDefaultBtn").removeAttr("disabled");
+		// 								},
+		// 								error: function(xhr, textstatus, thrown) {
+		// 									$(".setDefaultBtn").removeAttr("disabled");
+		// 								}
+		// 							});
+		// 							// this.templateDefault = index;
+		// 						},
+		// 						//购买模板
+		// 						buyTemp: function(value, index) {
+		// 							console.info(value);
+		// 							$(".buyTempBtn").attr({
+		// 								"disabled": "disabled"
+		// 							});
+		// 							//获取模板HTML代码
+		// 							let tempCode = getTempCode(value.templateSign);
+		// 							value.templateCode = tempCode;
+		// 							value.typeId = productCode;
+		// 							value.templateSign = value.id;
+		// 							value.templateType = 1;
+        //
+		// 							if(value.templateSign != null && value.templateSign != '') {
+		// 								$.ajax({
+		// 									url: addToUrlToken(deviceServiceUrl + "/typeTemplate/"),
+		// 									type: "post",
+		// 									contentType: "application/json",
+		// 									dataType: "json",
+		// 									timeout: 10000,
+		// 									async: false,
+		// 									data: JSON.stringify(value),
+		// 									success: function(data) {
+		// 										console.info(data);
+		// 										if(data.code == 0) {
+		// 											$(".buyTempBtn").removeAttr("disabled");
+		// 											layer.msg('购买成功', {
+		// 												icon: 1
+		// 											});
+		// 											appp.isBuyTempList.push(data.data.id);
+		// 											appp.tempList[index].id = data.data.id;
+		// 											appp.tempList[index].remarks = "0";
+		// 										} else if(data.code == 401000) {
+		// 											top.location.href = "../html/Login/login.html";
+		// 											return;
+		// 										} else {
+		// 											$(".buyTempBtn").removeAttr("disabled");
+		// 											layer.msg('购买失败', {
+		// 												icon: 2
+		// 											});
+		// 										}
+		// 									},
+		// 								});
+		// 							} else {
+		// 								$(".buyTempBtn").removeAttr("disabled");
+		// 								layer.msg('购买失败', {
+		// 									icon: 2
+		// 								});
+		// 							}
+		// 						},
+		// 						preview: function(value) {
+		// 							var imgLyaer = layer.open({
+		// 								skin: 'card', //自定义样式winning-class
+		// 								type: 1,
+		// 								title: ["预览", ""],
+		// 								area: ['600px'], //宽高
+		// 								resize: true, //是否拉升
+		// 								offset: 'auto', //居中
+		// 								content: '<img src="' + value.templateImage + '">',
+		// 							});
+		// 							// console.info(value);
+		// 						}
+		// 					},
+		// 					mounted: function() {
+		// 						this.tempList = localTemp;
+		// 						// console.info(localTemp);
+		// 						for(let i = 0; i < localTemp.length; i++) {
+		// 							if(localTemp[i].templateDefault == 1) {
+		// 								this.templateDefault = localTemp[i].id;
+		// 							}
+		// 						}
+		// 					},
+		// 				});
+		// 			},
+		// 		});
+		// 	}
+		// }
+        //
+		// //设置通用模板为默认模板
+		// function setDefaultTemplate(obj) {
+		// 	var data = $("#classifyList").bootstrapTable('getData');
+		// 	var id = data[obj].productCode;
+		// 	var productCode = data[obj].productCode;
+		// 	var _data = {
+		// 		oldId: productCode,
+		// 		newId: "0000"
+		// 	};
+		// 	$.ajax({
+		// 		url: addToUrlToken(deviceServiceUrl + "/typeTemplate/updateDefaultTemp"),
+		// 		type: "put",
+		// 		contentType: "application/json",
+		// 		dataType: "json",
+		// 		data: JSON.stringify(_data),
+		// 		timeout: 20000,
+		// 		success: function(data) {
+		// 			if(data.code == 401000) {
+		// 				top.location.href = "../html/Login/login.html";
+		// 				return;
+		// 			}
+		// 			console.info(data);
+		// 			layer.msg('设置成功', {
+		// 				icon: 1
+		// 			});
+		// 		},
+		// 		error: function(xhr, textstatus, thrown) {
+		// 			layer.msg('设置失败', {
+		// 				icon: 2
+		// 			});
+		// 		}
+		// 	});
+		// }
+        //
+		// // 获取模板HTML代码
+		// function getTempCode(id) {
+		// 	/*$.ajax({
+		// 	    url: "",
+		// 	    type: "post",
+		// 	    contentType: "application/json",
+		// 	    dataType: "json",
+		// 	    timeout: 10000,
+		// 	    async: false,
+		// 	    data: JSON.stringify(id),
+		// 	    success: function (data) {
+		// 	        return data;
+		// 	    }
+		// 	});*/
+		// 	var code = {
+		// 		"id": "1118770116633722881",
+		// 		"template_name": "主控器 UI1",
+		// 		"resouse": "<div>关灯</div>",
+		// 		"create_time": "2019-04-18T14:55:56",
+		// 		"update_time": null
+		// 	}
+		// 	return code.resouse;
+		// }
+        //
+		// function updateDevice() {
+		// 	$.show_overall_loding();
+		// 	$.postJSON(deviceServiceUrl + "/deviceType/updateList", {}, function(data) {
+		// 		console.info(data);
+		// 		if(data.code == 0) {
+		// 			$('#classifyList').bootstrapTable('refresh');
+		// 		} else {
+		// 			//$.hide_overall_loding();
+		// 		}
+		// 	});
+		// }
 	</script>
 
 	<!--修改别名模板-->

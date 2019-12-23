@@ -25,9 +25,9 @@
 		<script src="../plus/validate/messages_zh.min.js"></script>
 		<script src="../js/bootstrap-treeview.js"></script>
 
-		<script src="../js/httpUtils.js"></script>
-		<script src="../js/Md5.js"></script>
-		<script src="../js/publicJs.js"></script>
+		<!--		<script src="../js/httpUtils.js"></script>-->
+		<!--<script src="../js/Md5.js"></script>-->
+<!--		<script src="../js/publicJs.js"></script>-->
 		<style type="text/css">
 			.subFooter {
 				width: 100%;
@@ -105,23 +105,23 @@
 	<script type="text/javascript">
 		var html;
 		var url = "";
-		$("#loadDiv").html(loadHtml);
-		$.show_overall_loding();
+		// $("#loadDiv").html(loadHtml);
+		// $.show_overall_loding();
 		$(function() {
-			$("#search").click(function() {
-				$.show_overall_loding();
-				$('#subscribe').bootstrapTable('refresh');
-			});
+			// $("#search").click(function() {
+			// 	$.show_overall_loding();
+			// 	$('#subscribe').bootstrapTable('refresh');
+			// });
 
-			$("#clean").click(function() {
-				$("#subscriberNumber1").val("");
-				$("#subscriberState1").val("");
-				$("#callbackUrl1").val("");
-				$("#search").trigger("click");
-			});
+			// $("#clean").click(function() {
+			// 	$("#subscriberNumber1").val("");
+			// 	$("#subscriberState1").val("");
+			// 	$("#callbackUrl1").val("");
+			// 	$("#search").trigger("click");
+			// });
 
 			$('#subscribe').bootstrapTable({
-				url: deviceServiceUrl + "/subscribertable/list", //请求后台的URL（*）
+				url: "../../json/subscribe.json", //请求后台的URL（*）
 				//data: data1,                            //本地数据
 				method: 'get', //请求方式（*）
 				contentType: "application/x-www-form-urlencoded",
@@ -153,7 +153,7 @@
 					return res[0];
 				},
 				onLoadSuccess: function() {
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 				},
 				onDblClickRow: function(row) {},
 				columns: [{
@@ -205,13 +205,13 @@
 					width: 500,
 					clickToSelect: false,
 					formatter: function(i1, i2, i3) {
-						var str = '<button data-toggle="tooltip" title="详情" type="button" onclick="showone(' + i3 + ');" class="btn btn-info tableButton"><i class="fa fa-info-circle"></i></button>' +
-							'<button data-toggle="tooltip" title="编辑" type="button" onclick="update(' + i3 + ');" class="btn btn-info tableButton"><i class="fa fa-pencil-square"></i></button>' +
-							'<button data-toggle="tooltip" title="订阅" type="button" onclick="subscriber(' + i3 + ');" class="btn btn-success tableButton"><i class="fa fa-rss"></i></button>' +
-							'<button data-toggle="tooltip" title="绑定设备" type="button" onclick="bidDevice(' + i3 + ');" class="btn  btn-warning tableButton"><i class="fa fa-puzzle-piece"></i></button>' +
-							'<button data-toggle="tooltip" title="解绑设备" type="button" onclick="unbidDevice(' + i3 + ');" class="btn  btn-danger tableButton"><i class="fa fa-puzzle-piece"></i></button>' +
-							'<button data-toggle="tooltip" title="同步设备" type="button" onclick="getDevice(' + i3 + ');" class="btn btn-warning tableButton"><i class="fa fa-refresh"></i></button>' +
-							'<button data-toggle="tooltip" title="删除" type="button" onclick="remove(' + i3 + ');" class="btn btn-danger tableButton"><i class="fa fa-trash-o"></i></button>';
+						var str = '<button data-toggle="tooltip" title="详情" type="button"  class="btn btn-info tableButton"><i class="fa fa-info-circle"></i></button>' +
+							'<button data-toggle="tooltip" title="编辑" type="button" class="btn btn-info tableButton"><i class="fa fa-pencil-square"></i></button>' +
+							'<button data-toggle="tooltip" title="订阅" type="button" class="btn btn-success tableButton"><i class="fa fa-rss"></i></button>' +
+							'<button data-toggle="tooltip" title="绑定设备" type="button" class="btn  btn-warning tableButton"><i class="fa fa-puzzle-piece"></i></button>' +
+							'<button data-toggle="tooltip" title="解绑设备" type="button" class="btn  btn-danger tableButton"><i class="fa fa-puzzle-piece"></i></button>' +
+							'<button data-toggle="tooltip" title="同步设备" type="button" class="btn btn-warning tableButton"><i class="fa fa-refresh"></i></button>' +
+							'<button data-toggle="tooltip" title="删除" type="button" class="btn btn-danger tableButton"><i class="fa fa-trash-o"></i></button>';
 						return str;
 					},
 
@@ -227,9 +227,9 @@
 			});
 
 			function queryParams(params) {
-				$.show_overall_loding();
+				// $.show_overall_loding();
 				return {
-					token: $.getToken(),
+					// token: $.getToken(),
 					pageSize: params.pageSize,
 					pageNum: params.pageNumber,
 					subscriberNumber: $('#subscriberNumber1').val(),
@@ -240,529 +240,529 @@
 			}
 		});
 
-		function getDevice(obj) {
-			var data = $("#subscribe").bootstrapTable('getData');
-			var subscriberNumber = data[obj].subscriberNumber;
-			var conlayer = layer.confirm("确定更新设备？", {
-				btn: ['确定', '取消']
-			}, function() {
-				$.show_overall_loding();
-				$.sanjiGetJSON(deviceServiceUrl + "/device/importApcosDervice?account=" + subscriberNumber, {}, function(data) {
-					$.hide_overall_loding();
-					if(data.code == 0) {
-						layer.close(conlayer);
-						layer.msg("更新成功", {
-							icon: 6
-						});
-						$('#subscribe').bootstrapTable('refresh');
-						return true;
-					} else {
-						if(data.code == 401000) {
-							parent.layer.msg(data.message, {
-								icon: 5
-							});
-						} else if(data.messages != null) {
-							parent.layer.msg(data.messages[0].error, {
-								icon: 5
-							});
-						} else {
-							parent.layer.msg(data.message, {
-								icon: 5
-							});
-						}
-					}
-				})
-			}, function() {
-				layer.close(conlayer);
-			});
-		}
+		// function getDevice(obj) {
+		// 	var data = $("#subscribe").bootstrapTable('getData');
+		// 	var subscriberNumber = data[obj].subscriberNumber;
+		// 	var conlayer = layer.confirm("确定更新设备？", {
+		// 		btn: ['确定', '取消']
+		// 	}, function() {
+		// 		$.show_overall_loding();
+		// 		$.sanjiGetJSON(deviceServiceUrl + "/device/importApcosDervice?account=" + subscriberNumber, {}, function(data) {
+		// 			//$.hide_overall_loding();
+		// 			if(data.code == 0) {
+		// 				layer.close(conlayer);
+		// 				layer.msg("更新成功", {
+		// 					icon: 6
+		// 				});
+		// 				$('#subscribe').bootstrapTable('refresh');
+		// 				return true;
+		// 			} else {
+		// 				if(data.code == 401000) {
+		// 					parent.layer.msg(data.message, {
+		// 						icon: 5
+		// 					});
+		// 				} else if(data.messages != null) {
+		// 					parent.layer.msg(data.messages[0].error, {
+		// 						icon: 5
+		// 					});
+		// 				} else {
+		// 					parent.layer.msg(data.message, {
+		// 						icon: 5
+		// 					});
+		// 				}
+		// 			}
+		// 		})
+		// 	}, function() {
+		// 		layer.close(conlayer);
+		// 	});
+		// }
+        //
+		// function subscriber(obj) {
+		// 	var data = $("#subscribe").bootstrapTable('getData');
+		// 	var subscriberNumber = data[obj].subscriberNumber;
+		// 	var conlayer = layer.confirm("确定订阅？", {
+		// 		btn: ['确定', '取消']
+		// 	}, function() {
+		// 		$.show_overall_loding();
+		// 		$.sanjiGetJSON(deviceServiceUrl + "/subscribertable/subscriber?subscriberNumber=" + subscriberNumber, {}, function(data) {
+		// 			//$.hide_overall_loding();
+		// 			if(data.code == 0) {
+		// 				layer.close(conlayer);
+		// 				layer.msg("订阅成功", {
+		// 					icon: 6
+		// 				});
+		// 				$('#subscribe').bootstrapTable('refresh');
+		// 				return true;
+		// 			} else {
+		// 				if(data.code == 401000) {
+		// 					parent.layer.msg(data.message, {
+		// 						icon: 5
+		// 					});
+		// 				} else if(data.messages != null) {
+		// 					parent.layer.msg(data.messages[0].error, {
+		// 						icon: 5
+		// 					});
+		// 				} else {
+		// 					parent.layer.msg(data.message, {
+		// 						icon: 5
+		// 					});
+		// 				}
+		// 			}
+		// 		})
+		// 	}, function() {
+		// 		layer.close(conlayer);
+		// 	});
+		// }
+        //
+		// function remove(obj) {
+		// 	var data = $("#subscribe").bootstrapTable('getData');
+		// 	var id = data[obj].id;
+		// 	var conlayer = layer.confirm("确定删除？", {
+		// 		btn: ['确定', '取消']
+		// 	}, function() {
+		// 		$.show_overall_loding();
+		// 		$.deleteJSON(deviceServiceUrl + "/subscribertable?id=" + id, {}, function(data) {
+		// 			//$.hide_overall_loding();
+		// 			if(data.code == 0) {
+		// 				layer.close(conlayer);
+		// 				layer.msg("删除成功", {
+		// 					icon: 6
+		// 				});
+		// 				$('#subscribe').bootstrapTable('refresh');
+		// 				return true;
+		// 			} else {
+		// 				if(data.code == 401000) {
+		// 					parent.layer.msg(data.message, {
+		// 						icon: 5
+		// 					});
+		// 				} else if(data.messages != null) {
+		// 					parent.layer.msg(data.messages[0].error, {
+		// 						icon: 5
+		// 					});
+		// 				} else {
+		// 					parent.layer.msg(data.message, {
+		// 						icon: 5
+		// 					});
+		// 				}
+		// 			}
+		// 		})
+		// 	}, function() {
+		// 		layer.close(conlayer);
+		// 	});
+		// }
+		// var isAdd = true;
+		// $("#addAccount").on("click", function() {
+		// 	$('#subscriberNumber').val();
+		// 	$('#remarks').val();
+		// 	$('#id').val();
+		// 	showAccount("添加账号", 1, 1);
+		// });
+		// $("#addAccounts").on("click", function() {
+		// 	$('#subscriberNumber').val();
+		// 	$('#remarks').val();
+		// 	$('#id').val();
+		// 	showAccount("申请账号", 3, 1);
+		// });
+		// var objUpdate;
+        //
+		// function update(obj) {
+		// 	objUpdate = obj;
+		// 	showAccount("修改账号", 2, 1);
+		// }
+        //
+		// function showone(obj) {
+		// 	objUpdate = obj;
+		// 	showAccount("账号详情", 2, 1);
+		// 	$("#accountForm input").attr("disabled", "disabled");
+		// 	$("#accountForm select").attr("disabled", "disabled");
+		// 	$("#accountForm textarea").attr("disabled", "disabled");
+		// }
+        //
+		// function intAreaClick() {
+		// 	var o1 = '<option value="">请选择省</option>';
+		// 	var o2 = '<option value="">请选择市</option>';
+		// 	var o3 = '<option value="">请选择区</option>';
+		// 	$("#areaCode1").html("");
+		// 	$("#areaCode1").append(o1);
+		// 	$("#areaCode2").html("");
+		// 	$("#areaCode2").append(o2);
+		// 	$("#areaCode3").html("");
+		// 	$("#areaCode3").append(o3);
+		// 	getAreaData(1, 0, $("#areaCode1"));
+        //
+		// 	$("#areaCode1").change(function() {
+		// 		$("#areaCode2").html("");
+		// 		$("#areaCode2").append(o2);
+		// 		$("#areaCode3").html("");
+		// 		$("#areaCode3").append(o3);
+		// 		getAreaData(2, $(this).find("option:selected").attr("id"), $("#areaCode2"));
+		// 	})
+		// 	$("#areaCode2").change(function() {
+		// 		$("#areaCode3").html("");
+		// 		$("#areaCode3").append(o3);
+		// 		getAreaData(3, $(this).find("option:selected").attr("id"), $("#areaCode3"));
+		// 	})
+        //
+		// }
+        //
+		// function getAreaData(levelNo, parentId, node) {
+		// 	var o1 = '<option value="">请选择省</option>';
+		// 	var o2 = '<option value="">请选择市</option>';
+		// 	var o3 = '<option value="">请选择区</option>';
+		// 	var data = {};
+		// 	data.levelNo = levelNo;
+		// 	data.parentId = parentId;
+		// 	$.show_overall_loding();
+		// 	$.sanjiGetJSON(deviceServiceUrl + "/sysarea/list", data, function(data) {
+		// 		//$.hide_overall_loding();
+		// 		if(data.code == 0) {
+		// 			var list = data.data;
+		// 			for(var i = 0; i < list.length; i++) {
+		// 				var one = list[i];
+		// 				if((code1 != "" && one.areaCode == code1) || (code2 != "" && one.areaCode == code2) || (code3 != "" && one.areaCode == code3)) {
+		// 					node.append('<option id="' + one.areaId + '" value="' + one.areaCode + '"  selected="selected">' + one.areaName + '</option>');
+		// 					if(one.areaCode == code1) {
+		// 						$("#areaCode2").html("");
+		// 						$("#areaCode2").append(o2);
+		// 						$("#areaCode3").html("");
+		// 						$("#areaCode3").append(o3);
+		// 						getAreaData(2, one.areaId, $("#areaCode2"));
+		// 					}
+		// 					if(one.areaCode == code2) {
+		// 						$("#areaCode3").html("");
+		// 						$("#areaCode3").append(o3);
+		// 						getAreaData(3, one.areaId, $("#areaCode3"));
+		// 					}
+		// 				} else {
+		// 					node.append('<option id="' + one.areaId + '" value="' + one.areaCode + '">' + one.areaName + '</option>');
+		// 				}
+		// 			}
+        //
+		// 		} else {
+		// 			return "";
+		// 		}
+		// 	})
+		// }
+		// var code1 = "";
+		// var code2 = "";
+		// var code3 = "";
+        //
+		// function showAccount(title, flag, index) {
+		// 	code1 = "";
+		// 	code2 = "";
+		// 	code3 = "";
+		// 	html = template("addSubscribe", {
+		// 		title: "123"
+		// 	});
+		// 	var myLayer = layer.open({
+		// 		skin: 'card',
+		// 		type: 1,
+		// 		title: [title, ''],
+		// 		area: ['650px', '450px'],
+		// 		resize: true,
+		// 		offset: 'auto',
+		// 		content: html,
+		// 		btn: ['提交', '取消'],
+		// 		yes: function(index, layero) {
+		// 			$("#accountForm").submit();
+		// 		},
+		// 		success: function(layero) {
+		// 			$(".layui-layer-title").addClass("card-header");
+		// 			initTree();
+		// 			if(flag == 2) {
+		// 				var data = $("#subscribe").bootstrapTable('getData');
+		// 				$("#accountForm").setForm(data[objUpdate]);
+		// 				isAdd = false;
+		// 				if(data[objUpdate].subscriberType == 1) {
+		// 					$(".type2").hide();
+		// 				} else {
+		// 					$(".type1").hide();
+		// 					intAreaClick();
+		// 					code1 = data[objUpdate].area_code1;
+		// 					code2 = data[objUpdate].area_code2;
+		// 					code3 = data[objUpdate].area_code3;
+		// 				}
+        //
+		// 			}
+		// 			if(flag == 1) {
+		// 				$(".type2").hide();
+		// 				isAdd = true;
+		// 			}
+		// 			if(flag == 3) {
+		// 				$(".type1").hide();
+		// 				intAreaClick();
+		// 				isAdd = true;
+		// 			}
+		// 		}
+		// 	});
+		// 	var validate = $("#accountForm").validate({
+		// 		rules: {
+		// 			subscriberNumber: {
+		// 				required: true
+		// 			}
+		// 		},
+		// 		messages: {
+		// 			subscriberNumber: {
+		// 				required: "请输入订阅账号"
+		// 			}
+		// 		},
+		// 		submitHandler: function(form) {
+		// 			var data = $("#accountForm").serializeJson()
+		// 			if(isAdd) {
+		// 				$.show_overall_loding();
+		// 				$.postJSON(deviceServiceUrl + "/subscribertable", data, function(data) {
+		// 					//$.hide_overall_loding();
+		// 					if(data.code == 0) {
+		// 						layer.close(myLayer);
+		// 						layer.msg("新增成功", {
+		// 							icon: 6
+		// 						});
+		// 						$('#subscribe').bootstrapTable('refresh');
+		// 						return true;
+		// 					} else {
+		// 						if(data.code == 401000) {
+		// 							parent.layer.msg(data.message, {
+		// 								icon: 5
+		// 							});
+		// 						} else if(data.messages != null) {
+		// 							parent.layer.msg(data.messages[0].error, {
+		// 								icon: 5
+		// 							});
+		// 						} else {
+		// 							parent.layer.msg(data.message, {
+		// 								icon: 5
+		// 							});
+		// 						}
+		// 					}
+		// 				});
+		// 			} else {
+		// 				$.show_overall_loding();
+		// 				$.putJSON(deviceServiceUrl + "/subscribertable", data, function(data) {
+		// 					//$.hide_overall_loding();
+		// 					if(data.code == 0) {
+		// 						layer.close(myLayer);
+		// 						layer.msg("修改成功", {
+		// 							icon: 6
+		// 						});
+		// 						$('#subscribe').bootstrapTable('refresh');
+		// 						return true;
+		// 					} else {
+		// 						if(data.code == 401000) {
+		// 							parent.layer.msg(data.message, {
+		// 								icon: 5
+		// 							});
+		// 						} else if(data.messages != null) {
+		// 							parent.layer.msg(data.messages[0].error, {
+		// 								icon: 5
+		// 							});
+		// 						} else {
+		// 							parent.layer.msg(data.message, {
+		// 								icon: 5
+		// 							});
+		// 						}
+		// 					}
+		// 				});
+		// 			}
+		// 		}
+		// 	});
+		// }
+        //
+		// var organizationData = "";
+        //
+		// function bidDevice(obj) {
+		// 	var data = $("#subscribe").bootstrapTable('getData');
+		// 	var subscriberNumber = data[obj].subscriberNumber;
+		// 	html = template("bindDevice", {
+		// 		title: "123"
+		// 	});
+		// 	var myLayer = layer.open({
+		// 		skin: 'card',
+		// 		type: 1,
+		// 		title: ["绑定设备", ''],
+		// 		area: ['450px', '270px'],
+		// 		resize: true,
+		// 		offset: 'auto',
+		// 		content: html,
+		// 		btn: ['提交', '取消'],
+		// 		yes: function(index, layero) {
+		// 			$("#bindDeviceForm").submit();
+		// 		},
+		// 		success: function(layero) {
+		// 			$(".layui-layer-title").addClass("card-header");
+		// 			$("#account").val(subscriberNumber);
+		// 		}
+		// 	});
+        //
+		// 	var validate = $("#bindDeviceForm").validate({
+		// 		rules: {
+		// 			account: {
+		// 				required: true
+		// 			},
+		// 			serial_num: {
+		// 				required: true
+		// 			},
+		// 			genuine_code: {
+		// 				required: true
+		// 			}
+		// 		},
+		// 		messages: {
+		// 			account: {
+		// 				required: "请输入订阅账号"
+		// 			},
+		// 			serial_num: {
+		// 				required: "请输入设备序列号"
+		// 			},
+		// 			genuine_code: {
+		// 				required: "请输入设备序正品码"
+		// 			}
+		// 		},
+		// 		submitHandler: function(form) {
+		// 			var data = $("#bindDeviceForm").serializeJson()
+		// 			$.show_overall_loding();
+		// 			$.postJSON(deviceServiceUrl + "/subscribertable/bindDevice", data, function(data) {
+		// 				//$.hide_overall_loding();
+		// 				if(data.code == 0) {
+		// 					layer.close(myLayer);
+		// 					layer.msg("绑定成功", {
+		// 						icon: 6
+		// 					});
+		// 					return true;
+		// 				} else {
+		// 					if(data.code == 401000) {
+		// 						parent.layer.msg(data.message, {
+		// 							icon: 5
+		// 						});
+		// 					} else if(data.messages != null) {
+		// 						parent.layer.msg(data.messages[0].error, {
+		// 							icon: 5
+		// 						});
+		// 					} else {
+		// 						parent.layer.msg(data.message, {
+		// 							icon: 5
+		// 						});
+		// 					}
+		// 				}
+		// 			});
+		// 		}
+		// 	});
+        //
+		// }
+        //
+		// function unbidDevice(obj) {
+		// 	var data = $("#subscribe").bootstrapTable('getData');
+		// 	var subscriberNumber = data[obj].subscriberNumber;
+		// 	html = template("unbindDevice", {
+		// 		title: "123"
+		// 	});
+		// 	var myLayer = layer.open({
+		// 		skin: 'card',
+		// 		type: 1,
+		// 		title: ["绑定设备", ''],
+		// 		area: ['450px', '220px'],
+		// 		resize: true,
+		// 		offset: 'auto',
+		// 		content: html,
+		// 		btn: ['提交', '取消'],
+		// 		yes: function(index, layero) {
+		// 			$("#unbindDeviceForm").submit();
+		// 		},
+		// 		success: function(layero) {
+		// 			$(".layui-layer-title").addClass("card-header");
+		// 			$("#account").val(subscriberNumber);
+		// 		}
+		// 	});
+        //
+		// 	var validate = $("#unbindDeviceForm").validate({
+		// 		rules: {
+		// 			account: {
+		// 				required: true
+		// 			},
+		// 			serial_num: {
+		// 				required: true
+		// 			}
+		// 		},
+		// 		messages: {
+		// 			account: {
+		// 				required: "请输入订阅账号"
+		// 			},
+		// 			serial_num: {
+		// 				required: "请输入设备序列号"
+		// 			}
+		// 		},
+		// 		submitHandler: function(form) {
+		// 			var data = $("#unbindDeviceForm").serializeJson()
+		// 			$.show_overall_loding();
+		// 			$.postJSON(deviceServiceUrl + "/subscribertable/unbindDevice", data, function(data) {
+		// 				//$.hide_overall_loding();
+		// 				if(data.code == 0) {
+		// 					layer.close(myLayer);
+		// 					layer.msg("解绑成功", {
+		// 						icon: 6
+		// 					});
+		// 					return true;
+		// 				} else {
+		// 					if(data.code == 401000) {
+		// 						parent.layer.msg(data.message, {
+		// 							icon: 5
+		// 						});
+		// 					} else if(data.messages != null) {
+		// 						parent.layer.msg(data.messages[0].error, {
+		// 							icon: 5
+		// 						});
+		// 					} else {
+		// 						parent.layer.msg(data.message, {
+		// 							icon: 5
+		// 						});
+		// 					}
+		// 				}
+		// 			});
+		// 		}
+		// 	});
+		// }
+        //
+		// function getTreeData(data) {
+		// 	var rdata = [];
+		// 	for(var i = 0; i < data.length; i++) {
+		// 		var node = data[i];
+		// 		var one = {};
+		// 		one.text = node.organizationName;
+		// 		one.id = node.id;
+		// 		if(node.childrens != undefined && node.childrens != null && node.childrens != '') {
+		// 			one.nodes = getTreeData(node.childrens);
+		// 		}
+		// 		rdata.push(one);
+		// 	}
+		// 	return rdata;
+		// }
+        //
+		// function initTree() {
+		// 	if(organizationData == "") {
+		// 		$.sanjiGetJSON(userServiceUrl + "/organization/treeList?isScreenOrganization=1", {}, function(data) {
+		// 			organizationData = getTreeData(data.data);
+		// 			initTreeData();
+		// 		});
+		// 		return;
+		// 	}
+		// 	initTreeData();
+		// }
+        //
+		// function initTreeData() {
+		// 	var options = {
+		// 		checkedIcon: "glyphicon glyphicon-check",
+		// 		nodeIcon: "none", //所有节点的默认图标
+		// 		levels: 1,
+		// 		data: organizationData,
+		// 		// onhoverColor: "rgba(255,255,255,0.9)",
+		// 		onhoverColor: "rgba(0,0,0,0.1)",
+		// 		onNodeSelected: function(event, data) {
+		// 			$("#organizationName").val(data.text);
+		// 			$("#organizationId").val(data.id);
+		// 			$("#myTree").hide();
+		// 		}
+		// 	};
 
-		function subscriber(obj) {
-			var data = $("#subscribe").bootstrapTable('getData');
-			var subscriberNumber = data[obj].subscriberNumber;
-			var conlayer = layer.confirm("确定订阅？", {
-				btn: ['确定', '取消']
-			}, function() {
-				$.show_overall_loding();
-				$.sanjiGetJSON(deviceServiceUrl + "/subscribertable/subscriber?subscriberNumber=" + subscriberNumber, {}, function(data) {
-					$.hide_overall_loding();
-					if(data.code == 0) {
-						layer.close(conlayer);
-						layer.msg("订阅成功", {
-							icon: 6
-						});
-						$('#subscribe').bootstrapTable('refresh');
-						return true;
-					} else {
-						if(data.code == 401000) {
-							parent.layer.msg(data.message, {
-								icon: 5
-							});
-						} else if(data.messages != null) {
-							parent.layer.msg(data.messages[0].error, {
-								icon: 5
-							});
-						} else {
-							parent.layer.msg(data.message, {
-								icon: 5
-							});
-						}
-					}
-				})
-			}, function() {
-				layer.close(conlayer);
-			});
-		}
-
-		function remove(obj) {
-			var data = $("#subscribe").bootstrapTable('getData');
-			var id = data[obj].id;
-			var conlayer = layer.confirm("确定删除？", {
-				btn: ['确定', '取消']
-			}, function() {
-				$.show_overall_loding();
-				$.deleteJSON(deviceServiceUrl + "/subscribertable?id=" + id, {}, function(data) {
-					$.hide_overall_loding();
-					if(data.code == 0) {
-						layer.close(conlayer);
-						layer.msg("删除成功", {
-							icon: 6
-						});
-						$('#subscribe').bootstrapTable('refresh');
-						return true;
-					} else {
-						if(data.code == 401000) {
-							parent.layer.msg(data.message, {
-								icon: 5
-							});
-						} else if(data.messages != null) {
-							parent.layer.msg(data.messages[0].error, {
-								icon: 5
-							});
-						} else {
-							parent.layer.msg(data.message, {
-								icon: 5
-							});
-						}
-					}
-				})
-			}, function() {
-				layer.close(conlayer);
-			});
-		}
-		var isAdd = true;
-		$("#addAccount").on("click", function() {
-			$('#subscriberNumber').val();
-			$('#remarks').val();
-			$('#id').val();
-			showAccount("添加账号", 1, 1);
-		});
-		$("#addAccounts").on("click", function() {
-			$('#subscriberNumber').val();
-			$('#remarks').val();
-			$('#id').val();
-			showAccount("申请账号", 3, 1);
-		});
-		var objUpdate;
-
-		function update(obj) {
-			objUpdate = obj;
-			showAccount("修改账号", 2, 1);
-		}
-
-		function showone(obj) {
-			objUpdate = obj;
-			showAccount("账号详情", 2, 1);
-			$("#accountForm input").attr("disabled", "disabled");
-			$("#accountForm select").attr("disabled", "disabled");
-			$("#accountForm textarea").attr("disabled", "disabled");
-		}
-
-		function intAreaClick() {
-			var o1 = '<option value="">请选择省</option>';
-			var o2 = '<option value="">请选择市</option>';
-			var o3 = '<option value="">请选择区</option>';
-			$("#areaCode1").html("");
-			$("#areaCode1").append(o1);
-			$("#areaCode2").html("");
-			$("#areaCode2").append(o2);
-			$("#areaCode3").html("");
-			$("#areaCode3").append(o3);
-			getAreaData(1, 0, $("#areaCode1"));
-
-			$("#areaCode1").change(function() {
-				$("#areaCode2").html("");
-				$("#areaCode2").append(o2);
-				$("#areaCode3").html("");
-				$("#areaCode3").append(o3);
-				getAreaData(2, $(this).find("option:selected").attr("id"), $("#areaCode2"));
-			})
-			$("#areaCode2").change(function() {
-				$("#areaCode3").html("");
-				$("#areaCode3").append(o3);
-				getAreaData(3, $(this).find("option:selected").attr("id"), $("#areaCode3"));
-			})
-
-		}
-
-		function getAreaData(levelNo, parentId, node) {
-			var o1 = '<option value="">请选择省</option>';
-			var o2 = '<option value="">请选择市</option>';
-			var o3 = '<option value="">请选择区</option>';
-			var data = {};
-			data.levelNo = levelNo;
-			data.parentId = parentId;
-			$.show_overall_loding();
-			$.sanjiGetJSON(deviceServiceUrl + "/sysarea/list", data, function(data) {
-				$.hide_overall_loding();
-				if(data.code == 0) {
-					var list = data.data;
-					for(var i = 0; i < list.length; i++) {
-						var one = list[i];
-						if((code1 != "" && one.areaCode == code1) || (code2 != "" && one.areaCode == code2) || (code3 != "" && one.areaCode == code3)) {
-							node.append('<option id="' + one.areaId + '" value="' + one.areaCode + '"  selected="selected">' + one.areaName + '</option>');
-							if(one.areaCode == code1) {
-								$("#areaCode2").html("");
-								$("#areaCode2").append(o2);
-								$("#areaCode3").html("");
-								$("#areaCode3").append(o3);
-								getAreaData(2, one.areaId, $("#areaCode2"));
-							}
-							if(one.areaCode == code2) {
-								$("#areaCode3").html("");
-								$("#areaCode3").append(o3);
-								getAreaData(3, one.areaId, $("#areaCode3"));
-							}
-						} else {
-							node.append('<option id="' + one.areaId + '" value="' + one.areaCode + '">' + one.areaName + '</option>');
-						}
-					}
-
-				} else {
-					return "";
-				}
-			})
-		}
-		var code1 = "";
-		var code2 = "";
-		var code3 = "";
-
-		function showAccount(title, flag, index) {
-			code1 = "";
-			code2 = "";
-			code3 = "";
-			html = template("addSubscribe", {
-				title: "123"
-			});
-			var myLayer = layer.open({
-				skin: 'card',
-				type: 1,
-				title: [title, ''],
-				area: ['650px', '450px'],
-				resize: true,
-				offset: 'auto',
-				content: html,
-				btn: ['提交', '取消'],
-				yes: function(index, layero) {
-					$("#accountForm").submit();
-				},
-				success: function(layero) {
-					$(".layui-layer-title").addClass("card-header");
-					initTree();
-					if(flag == 2) {
-						var data = $("#subscribe").bootstrapTable('getData');
-						$("#accountForm").setForm(data[objUpdate]);
-						isAdd = false;
-						if(data[objUpdate].subscriberType == 1) {
-							$(".type2").hide();
-						} else {
-							$(".type1").hide();
-							intAreaClick();
-							code1 = data[objUpdate].area_code1;
-							code2 = data[objUpdate].area_code2;
-							code3 = data[objUpdate].area_code3;
-						}
-
-					}
-					if(flag == 1) {
-						$(".type2").hide();
-						isAdd = true;
-					}
-					if(flag == 3) {
-						$(".type1").hide();
-						intAreaClick();
-						isAdd = true;
-					}
-				}
-			});
-			var validate = $("#accountForm").validate({
-				rules: {
-					subscriberNumber: {
-						required: true
-					}
-				},
-				messages: {
-					subscriberNumber: {
-						required: "请输入订阅账号"
-					}
-				},
-				submitHandler: function(form) {
-					var data = $("#accountForm").serializeJson()
-					if(isAdd) {
-						$.show_overall_loding();
-						$.postJSON(deviceServiceUrl + "/subscribertable", data, function(data) {
-							$.hide_overall_loding();
-							if(data.code == 0) {
-								layer.close(myLayer);
-								layer.msg("新增成功", {
-									icon: 6
-								});
-								$('#subscribe').bootstrapTable('refresh');
-								return true;
-							} else {
-								if(data.code == 401000) {
-									parent.layer.msg(data.message, {
-										icon: 5
-									});
-								} else if(data.messages != null) {
-									parent.layer.msg(data.messages[0].error, {
-										icon: 5
-									});
-								} else {
-									parent.layer.msg(data.message, {
-										icon: 5
-									});
-								}
-							}
-						});
-					} else {
-						$.show_overall_loding();
-						$.putJSON(deviceServiceUrl + "/subscribertable", data, function(data) {
-							$.hide_overall_loding();
-							if(data.code == 0) {
-								layer.close(myLayer);
-								layer.msg("修改成功", {
-									icon: 6
-								});
-								$('#subscribe').bootstrapTable('refresh');
-								return true;
-							} else {
-								if(data.code == 401000) {
-									parent.layer.msg(data.message, {
-										icon: 5
-									});
-								} else if(data.messages != null) {
-									parent.layer.msg(data.messages[0].error, {
-										icon: 5
-									});
-								} else {
-									parent.layer.msg(data.message, {
-										icon: 5
-									});
-								}
-							}
-						});
-					}
-				}
-			});
-		}
-
-		var organizationData = "";
-
-		function bidDevice(obj) {
-			var data = $("#subscribe").bootstrapTable('getData');
-			var subscriberNumber = data[obj].subscriberNumber;
-			html = template("bindDevice", {
-				title: "123"
-			});
-			var myLayer = layer.open({
-				skin: 'card',
-				type: 1,
-				title: ["绑定设备", ''],
-				area: ['450px', '270px'],
-				resize: true,
-				offset: 'auto',
-				content: html,
-				btn: ['提交', '取消'],
-				yes: function(index, layero) {
-					$("#bindDeviceForm").submit();
-				},
-				success: function(layero) {
-					$(".layui-layer-title").addClass("card-header");
-					$("#account").val(subscriberNumber);
-				}
-			});
-
-			var validate = $("#bindDeviceForm").validate({
-				rules: {
-					account: {
-						required: true
-					},
-					serial_num: {
-						required: true
-					},
-					genuine_code: {
-						required: true
-					}
-				},
-				messages: {
-					account: {
-						required: "请输入订阅账号"
-					},
-					serial_num: {
-						required: "请输入设备序列号"
-					},
-					genuine_code: {
-						required: "请输入设备序正品码"
-					}
-				},
-				submitHandler: function(form) {
-					var data = $("#bindDeviceForm").serializeJson()
-					$.show_overall_loding();
-					$.postJSON(deviceServiceUrl + "/subscribertable/bindDevice", data, function(data) {
-						$.hide_overall_loding();
-						if(data.code == 0) {
-							layer.close(myLayer);
-							layer.msg("绑定成功", {
-								icon: 6
-							});
-							return true;
-						} else {
-							if(data.code == 401000) {
-								parent.layer.msg(data.message, {
-									icon: 5
-								});
-							} else if(data.messages != null) {
-								parent.layer.msg(data.messages[0].error, {
-									icon: 5
-								});
-							} else {
-								parent.layer.msg(data.message, {
-									icon: 5
-								});
-							}
-						}
-					});
-				}
-			});
-
-		}
-
-		function unbidDevice(obj) {
-			var data = $("#subscribe").bootstrapTable('getData');
-			var subscriberNumber = data[obj].subscriberNumber;
-			html = template("unbindDevice", {
-				title: "123"
-			});
-			var myLayer = layer.open({
-				skin: 'card',
-				type: 1,
-				title: ["绑定设备", ''],
-				area: ['450px', '220px'],
-				resize: true,
-				offset: 'auto',
-				content: html,
-				btn: ['提交', '取消'],
-				yes: function(index, layero) {
-					$("#unbindDeviceForm").submit();
-				},
-				success: function(layero) {
-					$(".layui-layer-title").addClass("card-header");
-					$("#account").val(subscriberNumber);
-				}
-			});
-
-			var validate = $("#unbindDeviceForm").validate({
-				rules: {
-					account: {
-						required: true
-					},
-					serial_num: {
-						required: true
-					}
-				},
-				messages: {
-					account: {
-						required: "请输入订阅账号"
-					},
-					serial_num: {
-						required: "请输入设备序列号"
-					}
-				},
-				submitHandler: function(form) {
-					var data = $("#unbindDeviceForm").serializeJson()
-					$.show_overall_loding();
-					$.postJSON(deviceServiceUrl + "/subscribertable/unbindDevice", data, function(data) {
-						$.hide_overall_loding();
-						if(data.code == 0) {
-							layer.close(myLayer);
-							layer.msg("解绑成功", {
-								icon: 6
-							});
-							return true;
-						} else {
-							if(data.code == 401000) {
-								parent.layer.msg(data.message, {
-									icon: 5
-								});
-							} else if(data.messages != null) {
-								parent.layer.msg(data.messages[0].error, {
-									icon: 5
-								});
-							} else {
-								parent.layer.msg(data.message, {
-									icon: 5
-								});
-							}
-						}
-					});
-				}
-			});
-		}
-
-		function getTreeData(data) {
-			var rdata = [];
-			for(var i = 0; i < data.length; i++) {
-				var node = data[i];
-				var one = {};
-				one.text = node.organizationName;
-				one.id = node.id;
-				if(node.childrens != undefined && node.childrens != null && node.childrens != '') {
-					one.nodes = getTreeData(node.childrens);
-				}
-				rdata.push(one);
-			}
-			return rdata;
-		}
-
-		function initTree() {
-			if(organizationData == "") {
-				$.sanjiGetJSON(userServiceUrl + "/organization/treeList?isScreenOrganization=1", {}, function(data) {
-					organizationData = getTreeData(data.data);
-					initTreeData();
-				});
-				return;
-			}
-			initTreeData();
-		}
-
-		function initTreeData() {
-			var options = {
-				checkedIcon: "glyphicon glyphicon-check",
-				nodeIcon: "none", //所有节点的默认图标
-				levels: 1,
-				data: organizationData,
-				// onhoverColor: "rgba(255,255,255,0.9)",
-				onhoverColor: "rgba(0,0,0,0.1)",
-				onNodeSelected: function(event, data) {
-					$("#organizationName").val(data.text);
-					$("#organizationId").val(data.id);
-					$("#myTree").hide();
-				}
-			};
-
-			$('#myTree').treeview(options);
-		}
+			// $('#myTree').treeview(options);
+		// }
 	</script>
 	<!--订阅账号新增-->
 	<script type="text/html" id="addSubscribe">
@@ -788,7 +788,7 @@
 						<div class="col-lg-6 MarginPx">
 							<label class="layui-form-label">组织机构:</label>
 							<div class="layui-input-block">
-								<input class="form-control organizationInput position-box" id="organizationName" name="organizationName" type="text" onclick="$('#myTree').show();" readonly="readonly"
+								<input class="form-control organizationInput position-box" id="organizationName" name="organizationName" type="text" readonly="readonly"
 									   style="cursor: pointer">
 								<input type="hidden" id="organizationId" name="organizationId" value="">
 							</div>
