@@ -42,7 +42,7 @@ $(document).keyup(function (event) {
  */
 $.sanjiGetJSON = function (url, data, callback) {
     $.ajax({
-        url: addToUrlToken(url),
+        url: url,
         //      url: url,
         type: "get",
         contentType: "application/json",

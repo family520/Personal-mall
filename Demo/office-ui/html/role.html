@@ -25,8 +25,8 @@
 		<script src="../plus/validate/messages_zh.min.js"></script>
 		<script src="../js/bootstrap-treeview.js"></script>
 
-		<script src="../js/httpUtils.js"></script>
-		<script src="../js/Md5.js"></script>
+<!--		<script src="../js/httpUtils.js"></script>-->
+<!--		<script src="../js/Md5.js"></script>-->
 		<style type="text/css">
 			.roleFooter {
 				position: absolute;
@@ -37,7 +37,7 @@
 		</style>
 	</head>
 
-	<body>
+	<body style="padding-top: 20px;">
 		<main>
 			<div class="container-fluid">
 				<div class="row">
@@ -111,10 +111,23 @@
 		<div id="loadDiv"></div>
 
 		<script>
-			var html;
+			$.sanjiGetJSON = function (url, data, callback) {
+				$.ajax({
+					url: url,
+					//      url: url,
+					type: "get",
+					contentType: "application/json",
+					dataType: "json",
+					timeout: 10000,
+					data: data,
+					success: function (data) {
+						callback(data);
+					}
+				});
+			};
 		</script>
 		<script>
-			$("#loadDiv").html(loadHtml);
+			// $("#loadDiv").html(loadHtml);
 			var organization_option = function() {
 				return {
 					node: $("#myTree"), //渲染节点
@@ -139,7 +152,7 @@
 					initData: function() {
 						var _this = this;
 						//if(this.data == "") {
-						$.sanjiGetJSON(userServiceUrl + "/organization/treeList", {
+						$.sanjiGetJSON("../../json/ztqyManager.json", {
 							isScreenOrganization: 1
 						}, function(data) {
 							_this.data = _this.getTreeData(data.data);
@@ -343,7 +356,7 @@
 								}
 								$.show_overall_loding();
 								if(isAdd) {
-									$.postJSON(userServiceUrl + "/organization", data, function(data) {
+									$.postJSON("../../json/ztqyManager.json", data, function(data) {
 										$.hide_overall_loding();
 										if(data.code == 0) {
 											layer.close(myLayer);
@@ -409,10 +422,10 @@
 				return {
 					node: $('#myTable'),
 					init: function() {
-						$.show_overall_loding();
+						// $.show_overall_loding();
 						var that = this;
 						this.node.bootstrapTable({
-							url: userServiceUrl + "/role/list",
+							url: "../../json/roleList.json",
 							//data: tableData, //本地数据
 							method: 'get', //请求方式（*）
 							contentType: "application/x-www-form-urlencoded",
@@ -454,7 +467,7 @@
 								//						// $('.dropdown-toggle').parent().toggleClass("open");
 								//					});
 
-								$.hide_overall_loding();
+								// $.hide_overall_loding();
 							},
 							onDblClickRow: function(row) {
 								console.info(row);
@@ -484,9 +497,9 @@
 					},
 					queryParams: function(params) {
 						//console.log(params);
-						$.show_overall_loding();
+						// $.show_overall_loding();
 						var data = {
-							token: $.getToken(),
+							// token: $.getToken(),
 							pageSize: params.pageSize,
 							pageNum: params.pageNumber
 						}
@@ -505,7 +518,7 @@
 						return data;
 					},
 					refresh: function() {
-						$.show_overall_loding();
+						// $.show_overall_loding();
 						this.node.bootstrapTable('refresh')
 					},
 					getSelectVal: function() {
@@ -554,7 +567,7 @@
 								var conlayer = layer.confirm("确定删除？", {
 									btn: ['确定', '取消']
 								}, function() {
-									$.show_overall_loding();
+									// $.show_overall_loding();
 									$.deleteJSON(userServiceUrl + "/role?id=" + data[0].id, {}, function(data) {
 										$.hide_overall_loding();
 										if(data.code == 0) {

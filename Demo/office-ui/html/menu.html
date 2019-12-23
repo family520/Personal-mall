@@ -51,7 +51,7 @@
 		</style>
 	</head>
 
-	<body>
+	<body style="padding-top: 20px;">
 		<main>
 			<div class="container-fluid">
 				<div class="row">
@@ -97,17 +97,17 @@
 	</body>
 
 	<script>
-		var html;
+		// var html;
 
 		var rdata = {};
-		$("#loadDiv").html(loadHtml);
+		// $("#loadDiv").html(loadHtml);
 
 		var typeHide;
 
 		var authorityTypeValue = $('#authorityType  option:selected').val();
 
 		function getTable() {
-			$.show_overall_loding();
+			// $.show_overall_loding();
 			var oldResourceIds = "";
 			var oldResourceIds1 = [];
 			var data = $("#myTree").treeview('getSelected');
@@ -196,7 +196,7 @@
 
 			var serchaData = {};
 			$("#search").click(function() {
-				$.show_overall_loding();
+				// $.show_overall_loding();
 				$('#menuResourceTable').bootstrapTable('refresh');
 			});
 
@@ -221,9 +221,9 @@
 				},
 				initData: function() {
 					var _this = this;
-					$.show_overall_loding();
-					$.sanjiGetJSON(userServiceUrl + "/menu/treeList", {}, function(data) {
-						$.hide_overall_loding();
+					// $.show_overall_loding();
+					$.sanjiGetJSON("../../json/menu.json", {}, function(data) {
+						// $.hide_overall_loding();
 						_this.data = _this.getTreeData(data.data);
 						_this.init();
 					});
