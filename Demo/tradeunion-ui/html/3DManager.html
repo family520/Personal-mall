@@ -23,7 +23,7 @@
     <script src="../plus/layer/layer.js"></script>
     <script src="../js/template-web.js"></script>
     <script src="../js/bootstrap-treeview.js"></script>
-    <script src="../js/httpUtils.js"></script>
+<!--    <script src="../js/httpUtils.js"></script>-->
     <script src="../plus/iview/vue.min.js"></script>
     <script src="../plus/iview/iview.min.js"></script>
 
@@ -40,14 +40,8 @@
 </head>
 
 <body style="background: #f5f6fa;">
-<div id="hander">
-    <script>
-        $(function () {
-            $("#hander").load("handMenu.html");
-        });
-    </script>
-</div>
-<main class="lyear-layout-content" style="display: none">
+
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -71,17 +65,17 @@
                                 </div>-->
 
                                 <!--页面内容部分-->
-                                <select id="eleType" class="form-control" onchange="getEle()"
+                                <select id="eleType" class="form-control" 
                                         style="width: 200px;display: inline-block">
                                     <option value="">全部元件类型</option>
                                 </select>
-                                <button type="button" class="btn btn-primary" onclick="show3D(1)">
+                                <button type="button" class="btn btn-primary" >
                                     <i class="fa fa-plus"></i> 添加3D场景
                                 </button>
-                                <button type="button" class="btn btn-primary" onclick="show3D(2)">
+                                <button type="button" class="btn btn-primary" >
                                     <i class="fa fa-edit"></i> 修改3D场景
                                 </button>
-                                <button type="button" class="btn btn-primary" onclick="show3D(3)">
+                                <button type="button" class="btn btn-primary" >
                                     <i class="fa fa-eye"></i> 预览3D场景
                                 </button>
                                 <!--<input type="file" id="fff">-->
@@ -89,24 +83,24 @@
                             </div>
                         </div>
                         <div class="ibox-content row" id="app" style="margin-top: 30px">
-                            <div class="col-md-3" style="margin-bottom: 20px;" v-for="v in list" v-if="app.total != 0">
+                            <div class="col-md-3" style="margin-bottom: 20px;" v-for="v in list" v-if="total != 0">
                                 <div class="form-group" style="text-align: center">
                                     <label class="form-label" v-text="v.yj_mc"></label>
                                     <div style="background-color: #f8f8f9;" @click="showModel(v)">
                                         <img :src="v.fjtp" alt="v.fjmc">
                                     </div>
                                     <div id="btns" style="margin-top: 10px;letter-spacing: 100px;">
-                                        <button class="btn btn-success" @click="deviceList(v.yj_id, 1)">绑定</button>
-                                        <button class="btn btn-warning" @click="deviceList(v.yj_id, 2)">解绑</button>
+                                        <button class="btn btn-success" >绑定</button>
+                                        <button class="btn btn-warning" >解绑</button>
                                     </div>
                                 </div>
                             </div>
-                            <div v-if="app.total == 0">
+                            <div v-if="total == 0">
                                 <div style="font-size: 24px;text-align: center;padding: 20px">暂无元件</div>
                             </div>
                             <div class="col-lg-12" style="width: 100%;text-align: right;float: right;"
-                                 v-if="app.total != 0">
-                                <Page :total="total" :page-size="pageSize" @on-change="change" show-elevator/>
+                                 v-if="total != 0">
+                                <Page :total="total" :page-size="pageSize"  show-elevator/>
                             </div>
                         </div>
                     </div>
@@ -114,40 +108,19 @@
             </div>
         </div>
     </div>
-</main>
+
 <div id="loadDiv"></div>
 </body>
 <script>
-    $("#loadDiv").html(loadHtml);
-    // 请求3D地址
-    $.ajax({
-        url: addToUrlToken(deviceServiceUrl + "/platformparam/list"),
-        type: "get",
-        contentType: "application/json",
-        dataType: "json",
-        timeout: 10000,
-        data: {"platformType": 4},
-        async: false,
-        success: function (data) {
-            plan_3D_url = data.data[0].url_3d;;
-        }
-    });
-    // 请求3D的service_key和service_id
-    $.ajax({
-        url: addToUrlToken(deviceServiceUrl + "/platformparam/list"),
-        type: "get",
-        contentType: "application/json",
-        dataType: "json",
-        timeout: 10000,
-        data: {"platformType": 1},
-        async: false,
-        success: function (data) {
-            service_id = data.data[0].serviceId;
-            service_key = data.data[0].serviceKey;
-            call_back_url = data.data[0].callBackUrl;
-        }
-    });
+
     var app;
+    var plan_3D_url = "http://113.204.9.70:9080/3dwebgl";
+    var user_id = "551b62dcf931496288573a46c9df4440";
+    var service_id = "Nlr7kTDM4dOXQnaXw9h";   // 平台参数配置BCCA参数的serviceId
+    var service_key = "3be8052d90f24b94afa383028a0254ba";   // 平台参数配置BCCA参数的serviceKey
+    var call_back_url = "http://222.182.202.100:7777/device/api/platformparam/callback_operation";   // 平台参数配置BCCA参数的serviceKey
+
+
 
     //元件类型
     var eleType = "";
@@ -165,7 +138,7 @@
         methods: {
             getToken: function () {
                 var token = "";
-                var getTokenData = {service_id: service_id, user_id: $.getCookie("userId")};
+                var getTokenData = {service_id: service_id, user_id: user_id};
                 $.ajax({
                     url: plan_3D_url + "/otheAPI/getUserToken",
                     type: "post",
@@ -174,11 +147,12 @@
                     data: JSON.stringify(getTokenData),
                     async: false,
                     success: function (res) {
-                        console.info(res);
+                        //console.info(res);
                         if (res.status == 200) {
                             app.token = res.data.userToken;
                             token = res.data.userToken;
-                        } else if (res.status == 401) {    // 未注册的账户
+                        }
+                        else if (res.status == 401) {    // 未注册的账户
                             var _data = {
                                 service_id: service_id,
                                 dept_id: $.getCookie("userOrg"),
@@ -220,7 +194,7 @@
                     dataType: "json",
                     data: JSON.stringify(data),
                     success: function (res) {
-                        // console.info(res);
+                        //console.info(res);
                         if (res.status == 200) {
                             app.list = res.data.list;
                             app.total = res.data.totalRecords;
@@ -250,12 +224,12 @@
                         if (index == 1) {
                             initTbale(id, 1);
                             $("#bangding").on("click", function () {
-                                console.info($('#deviceTable').bootstrapTable('getData'));
+                                //console.info($('#deviceTable').bootstrapTable('getData'));
                                 var bond_list = [];
                                 var arr = $('#deviceTable').bootstrapTable('getData');
                                 for (var i in arr) {
                                     if (arr[i][0]) {
-                                        console.info(arr[i]);
+                                        //console.info(arr[i]);
                                         var _data = {yj_id: id};
                                         _data.serial_num = arr[i].serialNum;
                                         _data.equip_name = arr[i].deviceAlias;
@@ -279,7 +253,7 @@
                                     dataType: "json",
                                     data: JSON.stringify(data),
                                     success: function (res) {
-                                        console.info(res);
+                                        //console.info(res);
                                         if (res.status == 200) {
                                             layer.msg("绑定成功", {icon: 1});
                                         } else {
@@ -297,7 +271,7 @@
                                 var arr = $('#deviceTable').bootstrapTable('getData');
                                 for (var i in arr) {
                                     if (arr[i][0]) {
-                                        console.info(arr[i]);
+                                        //console.info(arr[i]);
                                         bond_list[arr[i].serialNum] = id;
                                     }
                                 }
@@ -318,7 +292,7 @@
                                     dataType: "json",
                                     data: JSON.stringify(data),
                                     success: function (res) {
-                                        console.info(res);
+                                        //console.info(res);
                                         if (res.status == 200) {
                                             layer.msg("解绑成功", {icon: 1});
                                         } else {
@@ -332,7 +306,7 @@
                 });
             },
             showModel: function (obj) {
-                console.info(obj);
+                //console.info(obj);
                 // return;
                 var data = {url: obj.fjdz};
                 $.ajax({
@@ -343,7 +317,7 @@
                     data: JSON.stringify({url: encodeURI(encodeURI(JSON.stringify(obj.fjdz)))}),
                     async: false,
                     success: function (res) {
-                        console.info(res);
+                        //console.info(res);
                         if (res.status == 200) {
                             var url = plan_3D_url + res.data.viewurl;
                             var myLayer = layer.open({
@@ -363,35 +337,14 @@
         },
     });
 
-    function initTbale(id, index) {
-        var arr = [];
-        if (index == 2) {
-            $.ajax({
-                url: plan_3D_url + "/otheAPI/getBondInfo",
-                type: "post",
-                contentType: "application/json",
-                dataType: "json",
-                data: JSON.stringify({yj_id: id, user_token: app.token}),
-                async: false,
-                success: function (res) {
-                    console.info(res);
-                    if (res.status == 200) {
-                        arr = res.data;
-                    } else {
-                        layer.msg(res.msg, {
-                            icon: 2
-                        });
-                    }
-                }
-            });
-        }
+
         $('#deviceTable').bootstrapTable({
-            url: deviceServiceUrl + "/device/list", //请求后台的URL（*）
+            url: '../../json/3DManager.json', //请求后台的URL（*）
             method: 'get', //请求方式（*）
             contentType: "application/x-www-form-urlencoded",
             striped: true, //是否显示行间隔色
             cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
-            pagination: index == 1 ? true : false, //是否显示分页（*）
+            pagination: true, //是否显示分页（*）
             sortable: false, //是否启用排序
             sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
             pageNumber: 1, //初始化加载第一页，默认第一页
@@ -406,7 +359,7 @@
             detailView: false, //是否显示父子表
             clickToSelect: true, //点击行是否选中
             responseHandler: function (data) {
-                // console.info(data);
+                //console.info(data);
                 if (data.code == 0) {
                     var result = data.data;
                     var tempList = [];
@@ -459,9 +412,53 @@
             ]
         });
 
+
+        var getToken = function () {
+        var token = "";
+        var getTokenData = {service_id: service_id, user_id: user_id};
+        $.ajax({
+            url: plan_3D_url + "/otheAPI/getUserToken",
+            type: "post",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(getTokenData),
+            async: false,
+            success: function (res) {
+                //console.info(res);
+                if (res.status == 200) {
+                    app.token = res.data.userToken;
+                    token = res.data.userToken;
+                }
+                else if (res.status == 401) {    // 未注册的账户
+                    var _data = {
+                        service_id: service_id,
+                        dept_id: $.getCookie("userOrg"),
+                        user_id: $.getCookie("userId"),
+                        user_name: $.getCookie("userName")
+                    };
+                    $.ajax({
+                        url: plan_3D_url + "/otheAPI/registerUser",
+                        type: "post",
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: JSON.stringify(_data),
+                        async: false,
+                        success: function (res1) {
+                            if (res1.status == 200) {
+                                app.token = res1.data.userToken;
+                                token = res.data.userToken;
+                            }
+                        },
+                    });
+                }
+            }
+        });
+        return token;
+    };
+    //
         function queryParams(params) {
             return {
-                token: $.getToken(),
+                token: getToken(),
                 pageSize: index == 1 ? params.pageSize : 9999,
                 pageNum: params.pageNumber,
                 deviceName: $("#s_deviceAlias").val(),
@@ -469,18 +466,9 @@
                 deviceSubscriberNumber: $("#s_subscriber").val(),
             };
         }
-    }
-
-    function search() {
-        $('#deviceTable').bootstrapTable('refresh');
-    }
-
-    function reset() {
-        $("#s_deviceAlias").val("");
-        $("#s_serialNum").val("");
-        $("#s_subscriber").val("");
-        $('#deviceTable').bootstrapTable('refresh');
-    }
+    // }
+    //
+   
 
     $(function () {
         var token = getToken();
@@ -494,7 +482,7 @@
             dataType: "json",
             data: JSON.stringify({user_token: token}),
             success: function (res) {
-                // console.info(res);
+                //console.info(res);
                 if (res.status == 200) {
                     for (var i in res.data) {
                         $("#eleType").append("<option value='" + res.data[i].yjlx_id + "'>" + res.data[i].yjlx_mc + "</option>");
@@ -504,271 +492,271 @@
         });
     });
 
-    // 选择元件类型
-    function getEle() {
-        eleType = $("#eleType").val();
-        app.pageNumber = 1;
-        app.getList(0, eleType);
-    }
-
-    var orgId;
-
-    var modeId;
-
-    function show3D(type) {
-        orgId = "";
-        modeId = "";
-        var myLayer = layer.open({
-            skin: 'card', //自定义样式winning-class
-            type: 1,
-            title: ["选择组织机构"],
-            area: ['400px', '500px'], //宽高
-            maxHeight: '500px',
-            resize: false, //是否拉升
-            offset: 'auto', //居中
-            content: template("orgMode", {title: "123"}),
-            btn: ['确认', '取消'],
-            yes: function (index) {
-                // console.info(index);
-                var token = getToken();
-                var url = "";
-                if (type == 1) {
-                    url = plan_3D_url + "/otheAPI/openEditScene" + "?user_token=" + token + "&ext_parmas=" + orgId;
-                } else {
-                    if (orgId == "") {
-                        layer.msg("请选择组织机构！", {icon: 5});
-                        return;
-                    }
-                    if (modeId == null || modeId == "") {
-                        layer.msg("该机构暂无3D场景！", {icon: 5});
-                        return;
-                    }
-                    // console.info(type);
-                    if (type == 2) {
-                        url = plan_3D_url + "/otheAPI/openEditScene" + "?user_token=" + token + "&id=" + modeId;
-                    } else {
-                        url = plan_3D_url + "/Scene?" + modeId;
-                    }
-                }
-                // console.info(url);
-                var eleLayer = layer.open({
-                    type: 1,
-                    skin: 'card', //自定义样式winning-class
-                    title: "3D场景",
-                    area: ['1000px', '650px'],
-                    maxmin: true,
-                    resize: true, //是否拉升
-                    offset: 'auto', //居中
-                    content: '<iframe id="myIframe" src="' + url + '" scrolling="no" frameborder="0" ' +
-                    'style="min-height: 400px;width: 100%;height: 99%;"></iframe>',
-                });
-                layer.full(eleLayer);
-                layer.close(myLayer);
-            },
-            success: function (layero) {
-                $.sanjiGetJSON(userServiceUrl + "/organization/treeList", {isScreenOrganization: 1}, function (data) {
-                    // console.info(data);
-                    if (data.code == 0) {
-                        var datas = handleData(data.data);
-                        var options = {
-                            checkedIcon: "glyphicon glyphicon-check",
-                            nodeIcon: "none", //所有节点的默认图标
-                            levels: 5,
-                            data: datas,
-                            onhoverColor: "rgba(0,0,0,0.1)",
-                            onNodeSelected: function (event, data) {
-                                orgId = data.id;
-                                modeId = data.modeId;
-                            }
-                        };
-                        $("#myTree").treeview(options);
-                    } else {
-                        layer.msg("获取组织机构失败！", {icon: 5});
-                    }
-                });
-            }
-        });
-    }
-
-    function handleData(data) {
-        var rdata = [];
-        if (data == null) {
-            return rdata;
-        }
-        for (var i = 0; i < data.length; i++) {
-            var node = data[i];
-            var one = {};
-            one.text = node.organizationName;
-            one.parentIds = node.parentId;
-            one.organizationName = node.organizationName;
-            one.organizationDescription = node.organizationDescription;
-            one.id = node.id;
-            one.modeId = node.modeId;
-            if (typeof (node.childrens) != undefined && node.childrens != null && node.childrens != '') {
-                one.nodes = handleData(node.childrens);
-            }
-            rdata.push(one);
-        }
-        return rdata;
-    }
-
-    //监听3D模型
-    window.addEventListener('message', function (e) {
-        console.info("=============================");
-        console.info(e);
-        var data = e.data;
-        if (data.type == "sceneId") {
-            save3DMode(data.ext_parmas, data.scene_id);
-        } else if (data.type == "model_info") {
-            if (typeof (data.showControl) != "undefined") {
-                //获取元件（设备）的序列号
-                var serial_num = data.element_data.serial_num;
-                showDeviceControlPage(serial_num);
-            }
-        }
-    });
-
-    //保存3D模型到组织机构上面
-    function save3DMode(orgId, modeId) {
-        $.sanjiGetJSON(userServiceUrl + "/organization/bind3D", {orgId: orgId, modeId: modeId}, function (res) {
-            console.info(res);
-        });
-    }
-
-    //点击元件显示设备信息
-    function showDeviceControlPage(serial_num) {
-        var deviceInfo;
-        var json = {};
-        var layer3D = layer.open({
-            type: 1,
-            skin: 'card', //自定义样式winning-class
-            title: "设备信息",
-            area: ['800px', '350px'],
-            offset: 'auto', //居中
-            zIndex: layer.zIndex,
-            content: template("deviceInfoMode", {title: ""}),
-            success: function () {
-                $.sanjiGetJSON(deviceServiceUrl + "/devicemanger/list", {
-                    isScreenOrganization: 1,
-                    serialNum: serial_num
-                }, function (res) {
-                    if (res.code == 0) {
-                        deviceInfo = res.data.list[0];
-                        console.info(deviceInfo);
-                        $("#deviceForm").setForm(deviceInfo);
-                        if (deviceInfo.deviceState == 1) $('#deviceState').val("正常");
-                        if (deviceInfo.deviceState == 2) $('#deviceState').val("离线");
-                        if (deviceInfo.deviceState == 3) $('#deviceState').val("报警");
-                        if (deviceInfo.deviceState == 4) $('#deviceState').val("故障");
-                        if (deviceInfo.deviceState == 5) $('#deviceState').val("过流");
-                        if (deviceInfo.deviceState == 6) $('#deviceState').val("过压");
-                        json = {
-                            "account": deviceInfo.deviceSubscriberNumber,
-                            "productId": deviceSubscriberNumber.productCode,
-                            "serial_num": deviceSubscriberNumber.serialNum,
-                            "token": $.getToken(),
-                            "operation": "",
-                            "controlParams": ""
-                        }
-                    } else {
-                        layer.msg("获取设备信息失败！", {icon: 5});
-                    }
-                });
-                $('#openControlBtn').click(function () {
-                    var url = deviceServiceUrl + "/typeTemplate/getTemplate?mac=" + serial_num + "&templateType=3";
-                    $.ajax({
-                        url: url,
-                        type: "get",
-                        contentType: "application/json",
-                        dataType: "json",
-                        timeout: 10000,
-                        success: function (res) {
-                            console.info(res);
-                            if (res.code == 0 && res.data.templateCode != null) {
-                                var array = [];
-                                $.ajax({
-                                    url: addToUrlToken(deviceServiceUrl + "/templateconfig/list"),
-                                    type: "get",
-                                    contentType: "application/json",
-                                    dataType: "json",
-                                    timeout: 10000,
-                                    async: false,
-                                    data: {templateId: res.data.id},
-                                    success: function (data) {
-                                        if (data.code == 0) {
-                                            for (var i = 0; i < data.data.list.length; i++) {
-                                                array.push(data.data.list[i].tcValue);
-                                            }
-                                        } else {
-                                            layer.msg("获取数据失败！", {icon: 5});
-                                        }
-                                    }
-                                });
-                                layer.open({
-                                    type: 1,
-                                    skin: 'card', //自定义样式winning-class
-                                    title: "控制",
-                                    area: ['800px', '600px'],
-                                    offset: 'auto', //居中
-                                    zIndex: layer.zIndex,
-                                    content: '<iframe src="" id="modeIfr" name="modeIfr" frameborder="0" scrolling="no"' +
-                                    ' style="min-height: 400px;width: 100%;height: 99%;"></iframe>',
-                                    success: function () {
-                                        document.getElementById("modeIfr").srcdoc = res.data.templateCode;
-                                        $("#modeIfr").load(function () {
-                                            $("#modeIfr")[0].contentWindow.getField("false", array, json);
-                                            /*$("#modeIfr").contents().find(".sendControlBtn").unbind();
-                                            $("#modeIfr").contents().find(".sendControlBtn").on("click", function () {
-                                                var datas = $("#modeIfr")[0].contentWindow.getCmdParams($(this));
-                                                // console.info(datas);
-                                                if (!datas) {
-                                                    layer.msg("操作失败", {icon: 2});
-                                                    return false;
-                                                }
-                                                if (datas.controlParams) {
-                                                    datas.controlParams = JSON.stringify(datas.controlParams);
-                                                }
-                                                if (!datas.operation) {
-                                                    layer.msg("操作失败", {icon: 2});
-                                                    return false;
-                                                }
-                                                // console.info(datas);
-                                                var _data = {
-                                                    account: deviceInfo.deviceSubscriberNumber,
-                                                    serial_num: deviceInfo.serialNum,
-                                                    serial_mac: deviceInfo.serialNum,
-                                                    operation: datas.operation,
-                                                    controlParams: datas.controlParams,
-                                                    productId: deviceInfo.productCode
-                                                };
-                                                $.postJSON(deviceServiceUrl + "/device/controlDervice", _data, function (res) {
-                                                    // console.info(res);
-                                                    if (res.code == 0) {
-                                                        layer.msg("控制成功！", {icon: 1});
-                                                    } else {
-                                                        layer.msg("控制失败", {icon: 2});
-                                                    }
-                                                });
-
-                                                // modeControlData[data.serial_num] = datas;
-                                                /!*$.extend(datas, {
-                                                    account: one.deviceSubscriberNumber,
-                                                    serial_num: one.deviceMac,
-                                                    productId: one.productCode
-                                                })*!/
-                                            });*/
-                                        });
-                                    }
-                                });
-                            } else {
-                                layer.msg("获取模板失败！", {icon: 5});
-                            }
-                        }
-                    });
-                });
-            }
-        });
-    }
+    // // 选择元件类型
+    // function getEle() {
+    //     eleType = $("#eleType").val();
+    //     app.pageNumber = 1;
+    //     app.getList(0, eleType);
+    // }
+    //
+    // var orgId;
+    //
+    // var modeId;
+    //
+    // function show3D(type) {
+    //     orgId = "";
+    //     modeId = "";
+    //     var myLayer = layer.open({
+    //         skin: 'card', //自定义样式winning-class
+    //         type: 1,
+    //         title: ["选择组织机构"],
+    //         area: ['400px', '500px'], //宽高
+    //         maxHeight: '500px',
+    //         resize: false, //是否拉升
+    //         offset: 'auto', //居中
+    //         content: template("orgMode", {title: "123"}),
+    //         btn: ['确认', '取消'],
+    //         yes: function (index) {
+    //             // //console.info(index);
+    //             var token = getToken();
+    //             var url = "";
+    //             if (type == 1) {
+    //                 url = plan_3D_url + "/otheAPI/openEditScene" + "?user_token=" + token + "&ext_parmas=" + orgId;
+    //             } else {
+    //                 if (orgId == "") {
+    //                     layer.msg("请选择组织机构！", {icon: 5});
+    //                     return;
+    //                 }
+    //                 if (modeId == null || modeId == "") {
+    //                     layer.msg("该机构暂无3D场景！", {icon: 5});
+    //                     return;
+    //                 }
+    //                 // //console.info(type);
+    //                 if (type == 2) {
+    //                     url = plan_3D_url + "/otheAPI/openEditScene" + "?user_token=" + token + "&id=" + modeId;
+    //                 } else {
+    //                     url = plan_3D_url + "/Scene?" + modeId;
+    //                 }
+    //             }
+    //             // //console.info(url);
+    //             var eleLayer = layer.open({
+    //                 type: 1,
+    //                 skin: 'card', //自定义样式winning-class
+    //                 title: "3D场景",
+    //                 area: ['1000px', '650px'],
+    //                 maxmin: true,
+    //                 resize: true, //是否拉升
+    //                 offset: 'auto', //居中
+    //                 content: '<iframe id="myIframe" src="' + url + '" scrolling="no" frameborder="0" ' +
+    //                 'style="min-height: 400px;width: 100%;height: 99%;"></iframe>',
+    //             });
+    //             layer.full(eleLayer);
+    //             layer.close(myLayer);
+    //         },
+    //         success: function (layero) {
+    //             $.sanjiGetJSON(userServiceUrl + "/organization/treeList", {isScreenOrganization: 1}, function (data) {
+    //                 // //console.info(data);
+    //                 if (data.code == 0) {
+    //                     var datas = handleData(data.data);
+    //                     var options = {
+    //                         checkedIcon: "glyphicon glyphicon-check",
+    //                         nodeIcon: "none", //所有节点的默认图标
+    //                         levels: 5,
+    //                         data: datas,
+    //                         onhoverColor: "rgba(0,0,0,0.1)",
+    //                         onNodeSelected: function (event, data) {
+    //                             orgId = data.id;
+    //                             modeId = data.modeId;
+    //                         }
+    //                     };
+    //                     $("#myTree").treeview(options);
+    //                 } else {
+    //                     layer.msg("获取组织机构失败！", {icon: 5});
+    //                 }
+    //             });
+    //         }
+    //     });
+    // }
+    //
+    // function handleData(data) {
+    //     var rdata = [];
+    //     if (data == null) {
+    //         return rdata;
+    //     }
+    //     for (var i = 0; i < data.length; i++) {
+    //         var node = data[i];
+    //         var one = {};
+    //         one.text = node.organizationName;
+    //         one.parentIds = node.parentId;
+    //         one.organizationName = node.organizationName;
+    //         one.organizationDescription = node.organizationDescription;
+    //         one.id = node.id;
+    //         one.modeId = node.modeId;
+    //         if (typeof (node.childrens) != undefined && node.childrens != null && node.childrens != '') {
+    //             one.nodes = handleData(node.childrens);
+    //         }
+    //         rdata.push(one);
+    //     }
+    //     return rdata;
+    // }
+    //
+    // //监听3D模型
+    // window.addEventListener('message', function (e) {
+    //     //console.info("=============================");
+    //     //console.info(e);
+    //     var data = e.data;
+    //     if (data.type == "sceneId") {
+    //         save3DMode(data.ext_parmas, data.scene_id);
+    //     } else if (data.type == "model_info") {
+    //         if (typeof (data.showControl) != "undefined") {
+    //             //获取元件（设备）的序列号
+    //             var serial_num = data.element_data.serial_num;
+    //             showDeviceControlPage(serial_num);
+    //         }
+    //     }
+    // });
+    //
+    // //保存3D模型到组织机构上面
+    // function save3DMode(orgId, modeId) {
+    //     $.sanjiGetJSON(userServiceUrl + "/organization/bind3D", {orgId: orgId, modeId: modeId}, function (res) {
+    //         //console.info(res);
+    //     });
+    // }
+    //
+    // //点击元件显示设备信息
+    // function showDeviceControlPage(serial_num) {
+    //     var deviceInfo;
+    //     var json = {};
+    //     var layer3D = layer.open({
+    //         type: 1,
+    //         skin: 'card', //自定义样式winning-class
+    //         title: "设备信息",
+    //         area: ['800px', '350px'],
+    //         offset: 'auto', //居中
+    //         zIndex: layer.zIndex,
+    //         content: template("deviceInfoMode", {title: ""}),
+    //         success: function () {
+    //             $.sanjiGetJSON(deviceServiceUrl + "/devicemanger/list", {
+    //                 isScreenOrganization: 1,
+    //                 serialNum: serial_num
+    //             }, function (res) {
+    //                 if (res.code == 0) {
+    //                     deviceInfo = res.data.list[0];
+    //                     //console.info(deviceInfo);
+    //                     $("#deviceForm").setForm(deviceInfo);
+    //                     if (deviceInfo.deviceState == 1) $('#deviceState').val("正常");
+    //                     if (deviceInfo.deviceState == 2) $('#deviceState').val("离线");
+    //                     if (deviceInfo.deviceState == 3) $('#deviceState').val("报警");
+    //                     if (deviceInfo.deviceState == 4) $('#deviceState').val("故障");
+    //                     if (deviceInfo.deviceState == 5) $('#deviceState').val("过流");
+    //                     if (deviceInfo.deviceState == 6) $('#deviceState').val("过压");
+    //                     json = {
+    //                         "account": deviceInfo.deviceSubscriberNumber,
+    //                         "productId": deviceSubscriberNumber.productCode,
+    //                         "serial_num": deviceSubscriberNumber.serialNum,
+    //                         "token": $.getToken(),
+    //                         "operation": "",
+    //                         "controlParams": ""
+    //                     }
+    //                 } else {
+    //                     layer.msg("获取设备信息失败！", {icon: 5});
+    //                 }
+    //             });
+    //             $('#openControlBtn').click(function () {
+    //                 var url = deviceServiceUrl + "/typeTemplate/getTemplate?mac=" + serial_num + "&templateType=3";
+    //                 $.ajax({
+    //                     url: url,
+    //                     type: "get",
+    //                     contentType: "application/json",
+    //                     dataType: "json",
+    //                     timeout: 10000,
+    //                     success: function (res) {
+    //                         //console.info(res);
+    //                         if (res.code == 0 && res.data.templateCode != null) {
+    //                             var array = [];
+    //                             $.ajax({
+    //                                 url: addToUrlToken(deviceServiceUrl + "/templateconfig/list"),
+    //                                 type: "get",
+    //                                 contentType: "application/json",
+    //                                 dataType: "json",
+    //                                 timeout: 10000,
+    //                                 async: false,
+    //                                 data: {templateId: res.data.id},
+    //                                 success: function (data) {
+    //                                     if (data.code == 0) {
+    //                                         for (var i = 0; i < data.data.list.length; i++) {
+    //                                             array.push(data.data.list[i].tcValue);
+    //                                         }
+    //                                     } else {
+    //                                         layer.msg("获取数据失败！", {icon: 5});
+    //                                     }
+    //                                 }
+    //                             });
+    //                             layer.open({
+    //                                 type: 1,
+    //                                 skin: 'card', //自定义样式winning-class
+    //                                 title: "控制",
+    //                                 area: ['800px', '600px'],
+    //                                 offset: 'auto', //居中
+    //                                 zIndex: layer.zIndex,
+    //                                 content: '<iframe src="" id="modeIfr" name="modeIfr" frameborder="0" scrolling="no"' +
+    //                                 ' style="min-height: 400px;width: 100%;height: 99%;"></iframe>',
+    //                                 success: function () {
+    //                                     document.getElementById("modeIfr").srcdoc = res.data.templateCode;
+    //                                     $("#modeIfr").load(function () {
+    //                                         $("#modeIfr")[0].contentWindow.getField("false", array, json);
+    //                                         /*$("#modeIfr").contents().find(".sendControlBtn").unbind();
+    //                                         $("#modeIfr").contents().find(".sendControlBtn").on("click", function () {
+    //                                             var datas = $("#modeIfr")[0].contentWindow.getCmdParams($(this));
+    //                                             // //console.info(datas);
+    //                                             if (!datas) {
+    //                                                 layer.msg("操作失败", {icon: 2});
+    //                                                 return false;
+    //                                             }
+    //                                             if (datas.controlParams) {
+    //                                                 datas.controlParams = JSON.stringify(datas.controlParams);
+    //                                             }
+    //                                             if (!datas.operation) {
+    //                                                 layer.msg("操作失败", {icon: 2});
+    //                                                 return false;
+    //                                             }
+    //                                             // //console.info(datas);
+    //                                             var _data = {
+    //                                                 account: deviceInfo.deviceSubscriberNumber,
+    //                                                 serial_num: deviceInfo.serialNum,
+    //                                                 serial_mac: deviceInfo.serialNum,
+    //                                                 operation: datas.operation,
+    //                                                 controlParams: datas.controlParams,
+    //                                                 productId: deviceInfo.productCode
+    //                                             };
+    //                                             $.postJSON(deviceServiceUrl + "/device/controlDervice", _data, function (res) {
+    //                                                 // //console.info(res);
+    //                                                 if (res.code == 0) {
+    //                                                     layer.msg("控制成功！", {icon: 1});
+    //                                                 } else {
+    //                                                     layer.msg("控制失败", {icon: 2});
+    //                                                 }
+    //                                             });
+    //
+    //                                             // modeControlData[data.serial_num] = datas;
+    //                                             /!*$.extend(datas, {
+    //                                                 account: one.deviceSubscriberNumber,
+    //                                                 serial_num: one.deviceMac,
+    //                                                 productId: one.productCode
+    //                                             })*!/
+    //                                         });*/
+    //                                     });
+    //                                 }
+    //                             });
+    //                         } else {
+    //                             layer.msg("获取模板失败！", {icon: 5});
+    //                         }
+    //                     }
+    //                 });
+    //             });
+    //         }
+    //     });
+    // }
 </script>
 
 <!-- 设备列表模板 -->

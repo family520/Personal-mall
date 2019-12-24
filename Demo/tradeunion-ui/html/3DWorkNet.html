@@ -23,52 +23,69 @@
     <script src="../plus/layer/layer.js"></script>
     <script src="../js/template-web.js"></script>
     <script src="../js/bootstrap-treeview.js"></script>
-    <script src="../js/httpUtils.js"></script>
+<!--    <script src="../js/httpUtils.js"></script>-->
     <script src="../plus/iview/vue.min.js"></script>
     <script src="../plus/iview/iview.min.js"></script>
 </head>
 
 <body style="background: #f5f6fa;">
-<div id="hander">
-    <script>
-        $(function () {
-            $("#hander").load("handMenu.html");
-        });
-    </script>
-</div>
-<main class="lyear-layout-content" style="display: none">
+
     <iframe src="" id="ifr" width="100%" frameborder="0" scrolling="no"></iframe>
-</main>
 
 <script>
-    // 请求3D地址
-    $.ajax({
-        url: addToUrlToken(deviceServiceUrl + "/platformparam/list"),
-        type: "get",
-        contentType: "application/json",
-        dataType: "json",
-        timeout: 10000,
-        data: {"platformType": 4},
-        async: false,
-        success: function (data) {
-            plan_3D_url = data.data[0].url_3d;;
-        }
-    });
-    // 请求3D的service_key和service_id
-    $.ajax({
-        url: addToUrlToken(deviceServiceUrl + "/platformparam/list"),
-        type: "get",
-        contentType: "application/json",
-        dataType: "json",
-        timeout: 10000,
-        data: {"platformType": 1},
-        async: false,
-        success: function (data) {
-            service_id = data.data[0].serviceId;
-            service_key = data.data[0].serviceKey;
-            call_back_url = data.data[0].callBackUrl;
-        }
-    });
+
+    // 3D执行计划相关
+    // var plan_3D_url = "http://192.168.5.2:8088";
+    var plan_3D_url = "http://113.204.9.70:9080/3dwebgl";
+    var user_id = "551b62dcf931496288573a46c9df4440";
+    var service_id = "Nlr7kTDM4dOXQnaXw9h";   // 平台参数配置BCCA参数的serviceId
+    var service_key = "3be8052d90f24b94afa383028a0254ba";   // 平台参数配置BCCA参数的serviceKey
+    var call_back_url = "http://222.182.202.100:7777/device/api/platformparam/callback_operation";   // 平台参数配置BCCA参数的serviceKey
+
+
+    // 获取用户token（3D相关的东西）
+    function getToken() {
+        var token = "";
+        var getTokenData = {service_id: service_id, user_id: user_id};
+        $.ajax({
+            url: "http://113.204.9.70:9080/3dwebgl/otheAPI/getUserToken",
+            type: "post",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(getTokenData),
+            async: false,
+            success: function (res) {
+                console.info(res.data.userToken);
+                if (res.status == 200) {
+                    token = res.data.userToken;
+                }
+                else if (res.status == 401) {    // 未注册的账户
+                    var _data = {
+                        service_id: service_id,
+                        dept_id: $.getCookie("userOrg"),
+                        user_id: $.getCookie("userId"),
+                        user_name: $.getCookie("userName")
+                    };
+                    $.ajax({
+                        url: plan_3D_url + "/otheAPI/registerUser",
+                        type: "post",
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: JSON.stringify(_data),
+                        async: false,
+                        success: function (res1) {
+                            if (res1.status == 200) {
+                                token = res.data.userToken;
+                            }
+                        },
+                    });
+                    window.location.reload();
+                }
+            }
+        });
+        return token;
+    }
+
     var token = getToken();
     var url = plan_3D_url + "/otheAPI/openWorkstation";
     url += "?user_token=" + token;
@@ -76,7 +93,7 @@
 
     function changeFrameHeight() {
         var ifm = document.getElementById("ifr");
-        ifm.height = document.documentElement.clientHeight-68;
+        ifm.height = document.documentElement.clientHeight - 0;
     }
 
     window.onresize = function () {
