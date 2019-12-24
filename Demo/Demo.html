@@ -37,8 +37,8 @@
     <div class="rightBox">
     <div class="title">页面</div>
     <ul id="app">
-        <li v-for="(item,index) in secondData" :key="index">
-            <input :id="index" class="checkInput" @click="addNavData(index)" :checked="item.isCheck" type="checkbox">
+        <li v-for="(item,index) in secondData" :key="index" >
+            <input :id="index" :disabled="item.isReadonly"  class="checkInput" @click="addNavData(index)" :checked="item.isCheck" type="checkbox">
             <label :for="index"></label>
             <input class="inputBox" readonly type="text" :value="item.name">
             <button class="saveBtn" :value="index">保存</button>
@@ -105,6 +105,7 @@
                             icon:"img/navLeft/nav_1.png",
                             name:"首页",
                             isCheck:false,
+                            isReadonly:true,
                             iframeUrl:"htmls/ggHome.html"
                         },
                         {
@@ -153,6 +154,7 @@
                             code:"108",
                             icon:"img/navLeft/nav_8.png",
                             name:"登陆日志管理",
+                            isReadonly:true,
                             isCheck:false,
                             iframeUrl:"office-ui/html/loginLog.html"
                         },
@@ -199,52 +201,60 @@
                             iframeUrl:"office-ui/html/role.html"
                         },
                         {
-                            code:"109",
+                            code:"115",
                             icon:"img/navLeft/nav_8.png",
                             name:"菜单权限管理",
+                            isReadonly:true,
                             isCheck:true,
+
                             iframeUrl:"office-ui/html/menu.html"
                         },
                         {
-                            code:"109",
+                            code:"116",
                             icon:"img/navLeft/nav_8.png",
                             name:"系统日志管理",
                             isCheck:true,
+                            isReadonly:true,
                             iframeUrl:"office-ui/html/systemLog.html"
                         },
                         {
                             code:"114",
                             icon:"img/navLeft/nav_8.png",
                             name:"BCCA分类管理",
-                            isCheck:false,
+                            isCheck:true,
+                            isReadonly:true,
                             iframeUrl:"tradeunion-ui/html/classify.html"
                         },
                         {
                             code:"115",
                             icon:"img/navLeft/nav_8.png",
                             name:"BCCA平台管理",
-                            isCheck:false,
+                            isCheck:true,
+                            isReadonly:true,
                             iframeUrl:"tradeunion-ui/html/platform.html"
                         },
                         {
                             code:"116",
                             icon:"img/navLeft/nav_8.png",
                             name:"BCCA账号管理",
-                            isCheck:false,
+                            isCheck:true,
+                            isReadonly:true,
                             iframeUrl:"tradeunion-ui/html/subscribe.html"
                         },
                         {
                             code:"117",
                             icon:"img/navLeft/nav_8.png",
                             name:"设备事件管理",
-                            isCheck:false,
+                            isCheck:true,
+                            isReadonly:true,
                             iframeUrl:"tradeunion-ui/html/devEvent.html"
                         },
                         {
                             code:"118",
                             icon:"img/navLeft/nav_8.png",
                             name:"我的事件管理",
-                            isCheck:false,
+                            isCheck:true,
+                            isReadonly:true,
                             iframeUrl:"tradeunion-ui/html/myEvent.html"
                         },
                         {
@@ -266,6 +276,14 @@
                             name:"工作站",
                             isCheck:false,
                             iframeUrl:"tradeunion-ui/html/3DWorkNet.html"
+                        },
+                        {
+                            code:"119",
+                            icon:"img/navLeft/nav_8.png",
+                            name:"操作日志管理",
+                            isCheck:true,
+                            isReadonly:true,
+                            iframeUrl:"office-ui/html/controlLog.html"
                         }
 
                     ],

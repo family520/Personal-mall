@@ -25,21 +25,21 @@
 		<script src="../plus/validate/messages_zh.min.js"></script>
 		<script src="../js/bootstrap-treeview.js"></script>
 
-		<script src="../js/httpUtils.js"></script>
-		<script src="../js/Md5.js"></script>
+<!--		<script src="../js/httpUtils.js"></script>-->
+<!--		<script src="../js/Md5.js"></script>-->
 		<style>
 
 		</style>
 	</head>
 
 	<body>
-		<div id="hander">
-			<script>
-				$(function() {
-					$("#hander").load("handMenu.html");
-				});					
-		</script>				
-		</div>
+<!--		<div id="hander">-->
+<!--			<script>-->
+<!--				$(function() {-->
+<!--					$("#hander").load("handMenu.html");-->
+<!--				});					-->
+<!--		</script>				-->
+<!--		</div>-->
 		<main class="lyear-layout-content" style="display: none">
 			<div class="container-fluid">
 				<div class="row">
@@ -109,11 +109,11 @@
 	<script>
 		var html;
 		var url = "";
-		$("#loadDiv").html(loadHtml);
+		// $("#loadDiv").html(loadHtml);
 		$(function() {
-			$.show_overall_loding();
+			// $.show_overall_loding();
 			$('#myTable').bootstrapTable({
-				url: logServiceUrl + "/controlLog/list", //请求后台的URL（*）
+				url: "../../json/controlLol.json", //请求后台的URL（*）
 				//data: data1,                            //本地数据
 				method: 'get', //请求方式（*）
 				contentType: "application/x-www-form-urlencoded",
@@ -155,7 +155,7 @@
 					console.info(row);
 				},
 				onLoadSuccess: function() {
-					$.hide_overall_loding();
+					// $.hide_overall_loding();
 				},
 				columns: [{
 						width: 50,
@@ -201,9 +201,9 @@
 			});
 
 			function queryParams(params) {
-				$.show_overall_loding();
+				// $.show_overall_loding();
 				return {
-					token: $.getToken(),
+					// token: $.getToken(),
 					pageSize: params.pageSize,
 					pageNum: params.pageNumber,
 					controlName: $("#s_controlName").val(),
@@ -213,7 +213,7 @@
 			}
 
 			$("#search").click(function() {
-				$.show_overall_loding();
+				// $.show_overall_loding();
 				$('#myTable').bootstrapTable('refresh');
 			});
 			$("#clean").click(function() {
