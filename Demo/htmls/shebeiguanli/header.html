@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/elementUI.css">
+    <link rel="stylesheet" href="../../css/basicStyle.css">
+    <script src="../../js/vue.min.js"></script>
+    <script src="../../js/elementUI.js"></script>
+</head>
+<style>
+    #nav{
+        width: 100%;
+        height: 58px;
+        background-color: #f1f1f1;
+        margin-bottom: 2px;
+    }
+    #nav>ul{
+        width: 60%;
+        height: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    ul>li>a{
+        font-size: 0.14rem;
+        color: #333333;
+        cursor: pointer;
+        height: 60px;
+        box-sizing: content-box;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-width: 0.8rem;
+        padding: 0 0.1rem;
+    }
+    ul>li:hover>a{
+        color: #333399;
+        border-bottom: 2px solid #333399;
+    }
+    .navactive{
+        color: #333399;
+        border-bottom: 2px solid #333399;
+    }
+
+    iframe{
+        width: 100%;
+        height: calc(100% - 64px);
+        background: #F1F1F1;
+    }
+
+</style>
+<body>
+<div id="app">
+
+    <div id="nav">
+        <ul>
+            <li v-for="(item,index) in navData">
+                <a @click="navClick(index,item.url)"
+                         :class=" numClick=== index ? 'navactive':''">
+                    {{item.item}}
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <iframe :src="iframeSrc" frameborder="0"></iframe>
+</div>
+</body>
+
+<script>
+    let navVue = new Vue({
+        el: '#app',
+        data() {
+            return {
+                //导航栏数据
+                navData:[
+                    {
+                        "url" : "../../office-ui/html/cameraGl.html",
+                        "item" : "摄像头管理"
+                    },
+                    {
+                        "url" : "../../office-ui/html/modeManage.html",
+                        "item" : "设备模式管理"
+                    },
+
+                ],
+
+                //默认第一个被选中
+                numClick:0,
+
+                //iframe src地址动态变化变量
+                iframeSrc:"../../office-ui/html/cameraGl.html",
+            }
+        },
+
+        methods:{
+
+
+            navClick (i,url)
+            {
+                this.numClick = i;
+                this.iframeSrc = url;
+            }
+
+        }
+    })
+</script>
+</html>

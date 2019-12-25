@@ -36,7 +36,7 @@
             el:"#xxxx",
             data:{
                 mmm:null,
-                name:"智慧办公",
+                name:"",
                 src : "",
             },
             methods:{
@@ -50,6 +50,7 @@
 
             let xxData =JSON.parse(localStorage.getItem("xxData"));
 
+
             if(JSON.stringify(xxxx.mmm) != localStorage.getItem("xxData")){
 
                 xxxx.mmm = xxData;
@@ -59,9 +60,7 @@
 
         let Ohref=decodeURI(window.location.href);//译码
         let OhrefIndex=Ohref.split('?name=');
-        console.log(OhrefIndex);
-        xxxx.name = OhrefIndex[1];
-        $("#name").text(OhrefIndex[1]);
+        // console.log(OhrefIndex);
 
 
         function changeName(name){
