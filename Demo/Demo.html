@@ -30,17 +30,17 @@
         </div>
         <div class="container">
             <div>
-                <ul class="yycxUl" style="border:1px solid red">
+                <ul class="all-ul">
                     <li v-for="(item,index) in allList" :key="index">
-                        <div class="boxImg">
+                        <span class="allImg">
                             <img @click="imgBtn(index,'1')"  :src="item.imgUrl" alt="">
-                        </div>
-                        <p class="imgName">{{item.name}}</p>
+                        </span>
+                        <p>{{item.name}}</p>
                     </li>
                 </ul>
             </div>
             <div style="display: none">
-                <ul class="yycxUl" style="border:1px solid red">
+                <ul class="yycxUl">
                     <li v-for="(item,index) in sysList" :key="index">
                         <div class="boxImg">
                             <img @click="imgBtn(index)"  :src="item.imgUrl" alt="">

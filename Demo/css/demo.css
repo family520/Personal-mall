@@ -102,8 +102,7 @@ header img{
 .leftBox .container{
     position: relative;
     width: 100%;
-    height: 100%;
-    border: 1px solid red;
+    height: 96.5%;
 }
 .leftBox .container div{
     position: absolute;
@@ -113,8 +112,51 @@ header img{
     height: 100%;
 }
 
+.leftBox .all-ul{
+    width: 100%;
+    list-style: none;
+    height: 93%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+.leftBox .all-ul::-webkit-scrollbar {
+    display: none;
+}
 
+.leftBox .all-ul > li{
+    width: 100%;
+    height: 0.4rem;
+    line-height: 0.4rem;
+    border: 1px solid red;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    padding-left: 0.1rem;
+    cursor: pointer;
+}
+.leftBox .all-ul > li:hover{
+    background-color: #0f6bc7;
+}
+.leftBox .all-ul li .allImg{
+    width: 0.2rem;
+    height: 0.2rem;
+    margin-top: -0.1rem;
+    border: none !important;
+}
+.leftBox .all-ul li .allImg img{
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    border: none !important;
+}
 
+.leftBox .all-ul li p {
+    font-size: 0.18rem;
+    white-space: nowrap;
+    width:80%;
+    border: 1px solid red;
+    margin-left: 0.15rem;
+}
 
 .leftBox .yycxUl {
     margin-top: 0.1rem;
