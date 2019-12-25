@@ -81,7 +81,7 @@
         <span class="imgBox" onclick= "$('#upload1').click();" style="position: relative">
             <img src="img/202.png" alt="">
             <span class="imgTitle logoBtn">logo</span>
-            <input type="file" id="upload1" name="upload" style="position: absolute;top:0;left: 0;width: 100%;height: 100%;opacity: 0">
+            <input type="file" id="upload1" οnchange="l(this)" name="upload" style="position: absolute;top:0;left: 0;width: 100%;height: 100%;opacity: 0">
         </span>
     </div>
 </div>
@@ -1584,8 +1584,22 @@
 <script>
     $(function () {
 
-
-
+        function l(evn) {
+            var name = event.target.files[0].name;//获取上传的文件名
+            var divObj = $(evn).prev()  //获取div的DOM对象
+            $(divObj).html(name) //插入文件名
+            var id = $(evn).attr('id');//获取id
+            var num = id.substr(4, 1);
+            var file = event.target.files[0];
+            if (window.FileReader) {
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                //监听文件读取结束后事件
+                reader.onloadend = function (e) {
+                    console.log(e.target.result);
+                };
+            }
+        }
         //左边table切换
         $(".tabs span").each(function () {
             let index = $(this).index();
