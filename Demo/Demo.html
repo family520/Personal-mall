@@ -29,7 +29,16 @@
             <span>应用程序</span>
         </div>
         <div class="container">
-            <div>1</div>
+            <div>
+                <ul class="yycxUl" style="border:1px solid red">
+                    <li v-for="(item,index) in allList" :key="index">
+                        <div class="boxImg">
+                            <img @click="imgBtn(index,'1')"  :src="item.imgUrl" alt="">
+                        </div>
+                        <p class="imgName">{{item.name}}</p>
+                    </li>
+                </ul>
+            </div>
             <div style="display: none">
                 <ul class="yycxUl" style="border:1px solid red">
                     <li v-for="(item,index) in sysList" :key="index">
@@ -1497,17 +1506,38 @@
         },
         methods: {
             //点击左侧
-            imgBtn: function (index) {
-                this.name = this.sysList[index].name;
-                $("body .name").text(this.name);
-                this.xxData = [];
-                this.value = index;
-                this.secondData = this.sysList[index].dataList;
-                for(let i = 0; i < this.secondData.length; i++){
-                    if(this.secondData[i].isCheck === true){
-                        this.xxData.pus+h(this.secondData[i]);
-                    }
-                };
+            imgBtn: function (index,container) {
+                //点击系统的时候
+                if(!container){
+
+                    this.name = this.sysList[index].name;
+                    $("body .name").text(this.name);
+                    this.xxData = [];
+                    this.value = index;
+                    this.secondData = this.sysList[index].dataList;
+                    for(let i = 0; i < this.secondData.length; i++){
+                        if(this.secondData[i].isCheck === true){
+                            this.xxData.push(this.secondData[i]);
+                        }
+                    };
+
+                }
+                //点击全部列表的时候
+                else {
+
+                    this.name = this.allList[index].name;
+                    $("body .name").text(this.name);
+                    this.xxData = [];
+                    this.value = index;
+                    this.secondData = this.allList[index];
+                    for(let i = 0; i < this.secondData.length; i++){
+                        if(this.secondData[i].isCheck === true){
+                            this.xxData.push(this.secondData[i]);
+                        }
+                    };
+
+                }
+
             },
 
 
