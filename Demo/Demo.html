@@ -31,9 +31,9 @@
         <div class="container">
             <div>
                 <ul class="all-ul">
-                    <li v-for="(item,index) in allList" :key="index">
+                    <li v-for="(item,index) in allList" :key="index" @click="imgBtn(index,'1')">
                         <span class="allImg">
-                            <img @click="imgBtn(index,'1')"  :src="item.imgUrl" alt="">
+                            <img :src="item.imgUrl" alt="">
                         </span>
                         <p>{{item.name}}</p>
                     </li>
@@ -41,9 +41,9 @@
             </div>
             <div style="display: none">
                 <ul class="yycxUl">
-                    <li v-for="(item,index) in sysList" :key="index">
+                    <li v-for="(item,index) in sysList" :key="index" @click="imgBtn(index)" >
                         <div class="boxImg">
-                            <img @click="imgBtn(index)"  :src="item.imgUrl" alt="">
+                            <img :src="item.imgUrl" alt="">
                         </div>
                         <p class="imgName">{{item.name}}</p>
                     </li>
@@ -77,6 +77,11 @@
         <span class="imgBox">
             <img src="img/202.png" alt="">
             <span class="imgTitle scBtn">输出</span>
+        </span>
+        <span class="imgBox" onclick= "$('#upload1').click();" style="position: relative">
+            <img src="img/202.png" alt="">
+            <span class="imgTitle logoBtn">logo</span>
+            <input type="file" id="upload1" name="upload" style="position: absolute;top:0;left: 0;width: 100%;height: 100%;opacity: 0">
         </span>
     </div>
 </div>
@@ -1507,6 +1512,7 @@
         methods: {
             //点击左侧
             imgBtn: function (index,container) {
+                console.log(123213);
                 //点击系统的时候
                 if(!container){
 
@@ -1577,6 +1583,9 @@
 </script>
 <script>
     $(function () {
+
+
+
         //左边table切换
         $(".tabs span").each(function () {
             let index = $(this).index();
@@ -1587,7 +1596,6 @@
                 $(".container>div").eq(index).stop(true).show().siblings().stop(true).hide();
             });
         });
-
 
         //123
         $(".mmmm").blur(function () {
@@ -1655,9 +1663,6 @@
         })
 
     });
-
-
-
 </script>
 </body>
 </html>

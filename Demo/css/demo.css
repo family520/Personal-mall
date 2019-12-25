@@ -86,12 +86,10 @@ header img{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid red;
 }
 .leftBox .tabs span{
     width: 50%;
     height: 100%;
-    border: 1px solid red;
     text-align: center;
     cursor: pointer;
 }
@@ -124,10 +122,10 @@ header img{
 }
 
 .leftBox .all-ul > li{
+    border-bottom: 1px solid rgba(255,255,255,0.1);
     width: 100%;
     height: 0.4rem;
     line-height: 0.4rem;
-    border: 1px solid red;
     display: flex;
     justify-content: left;
     align-items: center;
@@ -141,20 +139,18 @@ header img{
     width: 0.2rem;
     height: 0.2rem;
     margin-top: -0.1rem;
-    border: none !important;
+
 }
 .leftBox .all-ul li .allImg img{
     width: 100%;
     height: 100%;
     background-size: cover;
-    border: none !important;
 }
 
 .leftBox .all-ul li p {
     font-size: 0.18rem;
     white-space: nowrap;
     width:80%;
-    border: 1px solid red;
     margin-left: 0.15rem;
 }
 
