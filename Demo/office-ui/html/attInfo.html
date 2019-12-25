@@ -377,48 +377,48 @@
 
 
 
-    var organizationData = "";
-    function get_o_TreeData(data) {
-        var rdata = [];
-        for(var i = 0; i < data.length; i++) {
-            var node = data[i];
-            var one = {};
-            one.text = node.organizationName;
-            one.id = node.id;
-            if(node.childrens != undefined && node.childrens != null && node.childrens != '') {
-                one.nodes = get_o_TreeData(node.childrens);
-            }
-            rdata.push(one);
-        }
-        return rdata;
-    }
-    function s_init_o_Tree() {
-        if(organizationData == "") {
-            $.sanjiGetJSON(userServiceUrl + "/organization/treeList", {}, function(data) {
-                organizationData = get_o_TreeData(data.data);
-                s_initTreeData();
-            });
-            return;
-        }
-        s_initTreeData();
-    }
-    function s_initTreeData() {
-        var options = {
-            checkedIcon: "glyphicon glyphicon-check",
-            nodeIcon: "none", //所有节点的默认图标
-            levels: 1,
-            data: organizationData,
-            // onhoverColor: "rgba(255,255,255,0.9)",
-            onhoverColor: "rgba(0,0,0,0.1)",
-            onNodeSelected: function(event, data) {
-                $("#s_organizationName").val(data.text);
-                $("#s_organizationId").val(data.id);
-                $("#s_organizationTree").hide();
-            }
-        };
-        $('#s_organizationTree').treeview(options);
-    }
-    s_init_o_Tree();
+    // var organizationData = "";
+    // function get_o_TreeData(data) {
+    //     var rdata = [];
+    //     for(var i = 0; i < data.length; i++) {
+    //         var node = data[i];
+    //         var one = {};
+    //         one.text = node.organizationName;
+    //         one.id = node.id;
+    //         if(node.childrens != undefined && node.childrens != null && node.childrens != '') {
+    //             one.nodes = get_o_TreeData(node.childrens);
+    //         }
+    //         rdata.push(one);
+    //     }
+    //     return rdata;
+    // }
+    // function s_init_o_Tree() {
+    //     if(organizationData == "") {
+    //         $.sanjiGetJSON(userServiceUrl + "/organization/treeList", {}, function(data) {
+    //             organizationData = get_o_TreeData(data.data);
+    //             s_initTreeData();
+    //         });
+    //         return;
+    //     }
+    //     s_initTreeData();
+    // }
+    // function s_initTreeData() {
+    //     var options = {
+    //         checkedIcon: "glyphicon glyphicon-check",
+    //         nodeIcon: "none", //所有节点的默认图标
+    //         levels: 1,
+    //         data: organizationData,
+    //         // onhoverColor: "rgba(255,255,255,0.9)",
+    //         onhoverColor: "rgba(0,0,0,0.1)",
+    //         onNodeSelected: function(event, data) {
+    //             $("#s_organizationName").val(data.text);
+    //             $("#s_organizationId").val(data.id);
+    //             $("#s_organizationTree").hide();
+    //         }
+    //     };
+    //     $('#s_organizationTree').treeview(options);
+    // }
+    // s_init_o_Tree();
 
 </script>
 <!-- 详情模板 -->

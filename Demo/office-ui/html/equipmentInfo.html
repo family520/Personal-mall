@@ -330,179 +330,179 @@
 			html = template("modelWin", {
 				title: "123"
 			});
-
-			$("#pi_office").click(function() {
-				var list = $("#myTable").bootstrapTable('getSelections');
-				if(list.length < 1) {
-					layer.msg("请先选择要设置的设备", {
-						icon: 2
-					});
-					return;
-				}
-				var myLayer = layer.open({
-					skin: 'card', //自定义样式winning-class
-					title: "配置机构",
-					area: ['500px', '440px'],
-					resize: true, //是否拉升
-					offset: 'auto', //居中
-					content: template("modelOffice", {
-						title: "123"
-					}),
-					btn: ['提交', '取消'],
-					yes: function(index, layero) {
-						var ids = [];
-						for(var i = 0; i < list.length; i++) {
-							var one = list[i];
-							ids.push(one.id);
-						}
-						var organizationId = $("#organizationId").val();
-						$.show_overall_loding();
-						$.putJSON(deviceServiceUrl + "/device/batch_up_organization", {
-							'id': organizationId,
-							'deviceIds': ids
-						}, function(data) {
-							$.hide_overall_loding();
-							if(data.code == 0) {
-								layer.close(myLayer);
-								layer.msg("成功", {
-									icon: 1
-								});
-								$('#myTable').bootstrapTable('refresh');
-								return true;
-							}
-							layer.msg("操作失败", {
-								icon: 2
-							});
-						});
-					},
-					success: function(layero) {
-						init_o_Tree();
-					}
-				})
-			});
-
-			$("#pi_weizhi").click(function() {
-				var list = $("#myTable").bootstrapTable('getSelections');
-				if(list.length < 1) {
-					layer.msg("请先选择要设置的设备", {
-						icon: 2
-					});
-					return;
-				}
-				var myLayer = layer.open({
-					skin: 'card', //自定义样式winning-class
-					title: "配置位置",
-					area: ['500px', '440px'],
-					resize: true, //是否拉升
-					offset: 'auto', //居中
-					content: template("modelWeizhi", {
-						title: "123"
-					}),
-					btn: ['提交', '取消'],
-					yes: function(index, layero) {
-						var ids = [];
-						for(var i = 0; i < list.length; i++) {
-							var one = list[i];
-							ids.push(one.id);
-						}
-						var positionId = $("#positionId").val();
-						$.show_overall_loding();
-						$.putJSON(deviceServiceUrl + "/device/batch_up_position", {
-							'id': positionId,
-							'deviceIds': ids
-						}, function(data) {
-							$.hide_overall_loding();
-							if(data.code == 0) {
-								layer.close(myLayer);
-								layer.msg("成功", {
-									icon: 1
-								});
-								$('#myTable').bootstrapTable('refresh');
-								return true;
-							}
-							layer.msg("操作失败", {
-								icon: 2
-							});
-						});
-					},
-					success: function(layero) {
-						init_p_Tree();
-					}
-				})
-
-			});
-
-			$("#pi_room").click(function() {
-				var list = $("#myTable").bootstrapTable('getSelections');
-				if(list.length < 1) {
-					layer.msg("请先选择要设置的设备", {
-						icon: 2
-					});
-					return;
-				}
-				var myLayer = layer.open({
-					skin: 'card', //自定义样式winning-class
-					title: "配置会议室",
-					area: ['500px', '440px'],
-					resize: true, //是否拉升
-					offset: 'auto', //居中
-					content: template("modelRoom", {
-						title: "123"
-					}),
-					btn: ['提交', '取消'],
-					yes: function(index, layero) {
-						var ids = [];
-						for(var i = 0; i < list.length; i++) {
-							var one = list[i];
-							ids.push(one.id);
-						}
-						var roomId = $("#roomId").val();
-						$.show_overall_loding();
-						$.putJSON(deviceServiceUrl + "/device/batch_up_room", {
-							'id': roomId,
-							'deviceIds': ids
-						}, function(data) {
-							$.hide_overall_loding();
-							if(data.code == 0) {
-								layer.close(myLayer);
-								layer.msg("成功", {
-									icon: 1
-								});
-								$('#myTable').bootstrapTable('refresh');
-								return true;
-							}
-							layer.msg("操作失败", {
-								icon: 2
-							});
-						});
-					},
-					success: function(layero) {
-						$("#selectRoom").click(function() {
-							var sshtml = template("selectRoomDiv", {
-								title: "123"
-							});
-							mode_Layer = layer.open({
-								skin: 'card',
-								type: 1,
-								title: "选择会议室",
-								area: ['950px', '550px'], //宽高
-								resize: true, //是否拉升
-								offset: 'auto', //居中
-								content: sshtml,
-								maxmin: true, //开启最大化最小化按钮
-								yes: function(index, layero) {},
-								success: function(layero) {
-									var tables = new table_room();
-									tables.init();
-									tables.bindCreate();
-									$(".selectpickers").selectpicker('refresh');
-								}
-							})
-						})
-					}
-
-				});
-			});
+            //
+			// $("#pi_office").click(function() {
+			// 	var list = $("#myTable").bootstrapTable('getSelections');
+			// 	if(list.length < 1) {
+			// 		layer.msg("请先选择要设置的设备", {
+			// 			icon: 2
+			// 		});
+			// 		return;
+			// 	}
+			// 	var myLayer = layer.open({
+			// 		skin: 'card', //自定义样式winning-class
+			// 		title: "配置机构",
+			// 		area: ['500px', '440px'],
+			// 		resize: true, //是否拉升
+			// 		offset: 'auto', //居中
+			// 		content: template("modelOffice", {
+			// 			title: "123"
+			// 		}),
+			// 		btn: ['提交', '取消'],
+			// 		yes: function(index, layero) {
+			// 			var ids = [];
+			// 			for(var i = 0; i < list.length; i++) {
+			// 				var one = list[i];
+			// 				ids.push(one.id);
+			// 			}
+			// 			var organizationId = $("#organizationId").val();
+			// 			$.show_overall_loding();
+			// 			$.putJSON(deviceServiceUrl + "/device/batch_up_organization", {
+			// 				'id': organizationId,
+			// 				'deviceIds': ids
+			// 			}, function(data) {
+			// 				$.hide_overall_loding();
+			// 				if(data.code == 0) {
+			// 					layer.close(myLayer);
+			// 					layer.msg("成功", {
+			// 						icon: 1
+			// 					});
+			// 					$('#myTable').bootstrapTable('refresh');
+			// 					return true;
+			// 				}
+			// 				layer.msg("操作失败", {
+			// 					icon: 2
+			// 				});
+			// 			});
+			// 		},
+			// 		success: function(layero) {
+			// 			init_o_Tree();
+			// 		}
+			// 	})
+			// });
+            //
+			// $("#pi_weizhi").click(function() {
+			// 	var list = $("#myTable").bootstrapTable('getSelections');
+			// 	if(list.length < 1) {
+			// 		layer.msg("请先选择要设置的设备", {
+			// 			icon: 2
+			// 		});
+			// 		return;
+			// 	}
+			// 	var myLayer = layer.open({
+			// 		skin: 'card', //自定义样式winning-class
+			// 		title: "配置位置",
+			// 		area: ['500px', '440px'],
+			// 		resize: true, //是否拉升
+			// 		offset: 'auto', //居中
+			// 		content: template("modelWeizhi", {
+			// 			title: "123"
+			// 		}),
+			// 		btn: ['提交', '取消'],
+			// 		yes: function(index, layero) {
+			// 			var ids = [];
+			// 			for(var i = 0; i < list.length; i++) {
+			// 				var one = list[i];
+			// 				ids.push(one.id);
+			// 			}
+			// 			var positionId = $("#positionId").val();
+			// 			$.show_overall_loding();
+			// 			$.putJSON(deviceServiceUrl + "/device/batch_up_position", {
+			// 				'id': positionId,
+			// 				'deviceIds': ids
+			// 			}, function(data) {
+			// 				$.hide_overall_loding();
+			// 				if(data.code == 0) {
+			// 					layer.close(myLayer);
+			// 					layer.msg("成功", {
+			// 						icon: 1
+			// 					});
+			// 					$('#myTable').bootstrapTable('refresh');
+			// 					return true;
+			// 				}
+			// 				layer.msg("操作失败", {
+			// 					icon: 2
+			// 				});
+			// 			});
+			// 		},
+			// 		success: function(layero) {
+			// 			init_p_Tree();
+			// 		}
+			// 	})
+            //
+			// });
+            //
+			// $("#pi_room").click(function() {
+			// 	var list = $("#myTable").bootstrapTable('getSelections');
+			// 	if(list.length < 1) {
+			// 		layer.msg("请先选择要设置的设备", {
+			// 			icon: 2
+			// 		});
+			// 		return;
+			// 	}
+			// 	var myLayer = layer.open({
+			// 		skin: 'card', //自定义样式winning-class
+			// 		title: "配置会议室",
+			// 		area: ['500px', '440px'],
+			// 		resize: true, //是否拉升
+			// 		offset: 'auto', //居中
+			// 		content: template("modelRoom", {
+			// 			title: "123"
+			// 		}),
+			// 		btn: ['提交', '取消'],
+			// 		yes: function(index, layero) {
+			// 			var ids = [];
+			// 			for(var i = 0; i < list.length; i++) {
+			// 				var one = list[i];
+			// 				ids.push(one.id);
+			// 			}
+			// 			var roomId = $("#roomId").val();
+			// 			$.show_overall_loding();
+			// 			$.putJSON(deviceServiceUrl + "/device/batch_up_room", {
+			// 				'id': roomId,
+			// 				'deviceIds': ids
+			// 			}, function(data) {
+			// 				$.hide_overall_loding();
+			// 				if(data.code == 0) {
+			// 					layer.close(myLayer);
+			// 					layer.msg("成功", {
+			// 						icon: 1
+			// 					});
+			// 					$('#myTable').bootstrapTable('refresh');
+			// 					return true;
+			// 				}
+			// 				layer.msg("操作失败", {
+			// 					icon: 2
+			// 				});
+			// 			});
+			// 		},
+			// 		success: function(layero) {
+			// 			$("#selectRoom").click(function() {
+			// 				var sshtml = template("selectRoomDiv", {
+			// 					title: "123"
+			// 				});
+			// 				mode_Layer = layer.open({
+			// 					skin: 'card',
+			// 					type: 1,
+			// 					title: "选择会议室",
+			// 					area: ['950px', '550px'], //宽高
+			// 					resize: true, //是否拉升
+			// 					offset: 'auto', //居中
+			// 					content: sshtml,
+			// 					maxmin: true, //开启最大化最小化按钮
+			// 					yes: function(index, layero) {},
+			// 					success: function(layero) {
+			// 						var tables = new table_room();
+			// 						tables.init();
+			// 						tables.bindCreate();
+			// 						$(".selectpickers").selectpicker('refresh');
+			// 					}
+			// 				})
+			// 			})
+			// 		}
+            //
+			// 	});
+			// });
 		});
 		
 		
@@ -520,46 +520,46 @@
 
 		$(".selectpickers").selectpicker({});
 
-		function initSelectType() {
-			$.sanjiGetJSON(deviceServiceUrl + "/deviceType/allList", {}, function(data) {
-
-				var list = data.data;
-				if(list.length > 0) {
-					var htmls = '<option value=""> 选择分类</option>';
-					for(var i = 0; i < list.length; i++) {
-						var one = list[i];
-						htmls += '<option value="' + one.productCode + '">' + one.typeAlias + '</option>';
-					}
-					console.log("加载下拉数据完成");
-					$(".selectpickers").html(htmls);
-					$(".selectpickers").selectpicker("render");
-					$(".selectpickers").selectpicker("refresh");
-					$(".selectpickers").selectpicker();
-				}
-			})
-		}
-		initSelectType();
-		$("#clean").click(function() {
-			$("#s_deviceAlias").val("");
-			$("#s_deviceSubscriberNumber").val("");
-			$("#s_productCode").val("");
-			$("#s_serialNum").val("");
-			$("#s_organizationId").val("");
-			$("#s_positionId").val("");
-			$("#s_organization").val("");
-			$("#s_positionName").val("");
-			$(".selectpickers").val("");
-			$(".selectpickers").selectpicker('refresh');
-			$("#search").trigger("click");
-		});
-
-		function detail(obj) {
-			showModel("设备详情", 1, obj);
-		}
-
-		function updata(obj) {
-			showModel("设备编辑", 2, obj);
-		}
+		// function initSelectType() {
+		// 	$.sanjiGetJSON(deviceServiceUrl + "/deviceType/allList", {}, function(data) {
+        //
+		// 		var list = data.data;
+		// 		if(list.length > 0) {
+		// 			var htmls = '<option value=""> 选择分类</option>';
+		// 			for(var i = 0; i < list.length; i++) {
+		// 				var one = list[i];
+		// 				htmls += '<option value="' + one.productCode + '">' + one.typeAlias + '</option>';
+		// 			}
+		// 			console.log("加载下拉数据完成");
+		// 			$(".selectpickers").html(htmls);
+		// 			$(".selectpickers").selectpicker("render");
+		// 			$(".selectpickers").selectpicker("refresh");
+		// 			$(".selectpickers").selectpicker();
+		// 		}
+		// 	})
+		// }
+		// initSelectType();
+		// $("#clean").click(function() {
+		// 	$("#s_deviceAlias").val("");
+		// 	$("#s_deviceSubscriberNumber").val("");
+		// 	$("#s_productCode").val("");
+		// 	$("#s_serialNum").val("");
+		// 	$("#s_organizationId").val("");
+		// 	$("#s_positionId").val("");
+		// 	$("#s_organization").val("");
+		// 	$("#s_positionName").val("");
+		// 	$(".selectpickers").val("");
+		// 	$(".selectpickers").selectpicker('refresh');
+		// 	$("#search").trigger("click");
+		// });
+        //
+		// function detail(obj) {
+		// 	showModel("设备详情", 1, obj);
+		// }
+        //
+		// function updata(obj) {
+		// 	showModel("设备编辑", 2, obj);
+		// }
 
 		function op(obj) {
 			//TODO  typeId需要换成one 的typecode
@@ -804,155 +804,155 @@
 			});
 		}
 
-		var organizationData = "";
-
-		function get_o_TreeData(data) {
-			var rdata = [];
-			for(var i = 0; i < data.length; i++) {
-				var node = data[i];
-				var one = {};
-				one.text = node.organizationName;
-				one.id = node.id;
-				if(node.childrens != undefined && node.childrens != null && node.childrens != '') {
-					one.nodes = get_o_TreeData(node.childrens);
-				}
-				rdata.push(one);
-			}
-			return rdata;
-		}
-
-		function init_o_Tree() {
-			if(organizationData == "") {
-				$.sanjiGetJSON(userServiceUrl + "/organization/treeList", {}, function(data) {
-					organizationData = get_o_TreeData(data.data);
-					initTreeData();
-				});
-				return;
-			}
-			initTreeData();
-		}
-
-		function initTreeData() {
-			var options = {
-				checkedIcon: "glyphicon glyphicon-check",
-				nodeIcon: "none", //所有节点的默认图标
-				levels: 1,
-				data: organizationData,
-				// onhoverColor: "rgba(255,255,255,0.9)",
-				onhoverColor: "rgba(0,0,0,0.1)",
-				onNodeSelected: function(event, data) {
-					$("#organization").val(data.text);
-					$("#organizationId").val(data.id);
-					$("#organizationTree").hide();
-				}
-			};
-			$('#organizationTree').treeview(options);
-		}
-
-		function s_init_o_Tree() {
-			if(organizationData == "") {
-				$.sanjiGetJSON(userServiceUrl + "/organization/treeList", {}, function(data) {
-					organizationData = get_o_TreeData(data.data);
-					s_initTreeData();
-				});
-				return;
-			}
-			s_initTreeData();
-		}
-
-		function s_initTreeData() {
-			var options = {
-				checkedIcon: "glyphicon glyphicon-check",
-				nodeIcon: "none", //所有节点的默认图标
-				levels: 1,
-				data: organizationData,
-				// onhoverColor: "rgba(255,255,255,0.9)",
-				onhoverColor: "rgba(0,0,0,0.1)",
-				onNodeSelected: function(event, data) {
-					$("#s_organization").val(data.text);
-					$("#s_organizationId").val(data.id);
-					$("#s_organizationTree").hide();
-				}
-			};
-			$('#s_organizationTree').treeview(options);
-		}
-
-		s_init_o_Tree();
-
-		var positionData = "";
-
-		function get_p_TreeData(data) {
-			var rdata = [];
-			for(var i = 0; i < data.length; i++) {
-				var node = data[i];
-				var one = {};
-				one.text = node.devicePositionName;
-				one.id = node.id;
-				if(node.childrens != undefined && node.childrens != null && node.childrens != '') {
-					one.nodes = get_p_TreeData(node.childrens);
-				}
-				rdata.push(one);
-			}
-			return rdata;
-		}
-
-		function init_p_Tree() {
-			if(positionData == "") {
-				$.sanjiGetJSON(deviceServiceUrl + "/devicess/treeList", {}, function(data) {
-					positionData = get_p_TreeData(data.data);
-					init_p_TreeData();
-				});
-				return;
-			}
-			init_p_TreeData();
-		}
-
-		function init_p_TreeData() {
-			var options = {
-				checkedIcon: "glyphicon glyphicon-check",
-				nodeIcon: "none", //所有节点的默认图标
-				levels: 1,
-				data: positionData,
-				// onhoverColor: "rgba(255,255,255,0.9)",
-				onhoverColor: "rgba(0,0,0,0.1)",
-				onNodeSelected: function(event, data) {
-					$("#positionName").val(data.text);
-					$("#positionId").val(data.id);
-					$("#positionTree").hide();
-				}
-			};
-			$('#positionTree').treeview(options);
-		}
-
-		function s_init_p_Tree() {
-			if(positionData == "") {
-				$.sanjiGetJSON(deviceServiceUrl + "/devicess/treeList", {}, function(data) {
-					positionData = get_p_TreeData(data.data);
-					s_init_p_TreeData();
-				});
-				return;
-			}
-			s_init_p_TreeData();
-		}
-
-		function s_init_p_TreeData() {
-			var options = {
-				checkedIcon: "glyphicon glyphicon-check",
-				nodeIcon: "none", //所有节点的默认图标
-				levels: 1,
-				data: positionData,
-				// onhoverColor: "rgba(255,255,255,0.9)",
-				onhoverColor: "rgba(0,0,0,0.1)",
-				onNodeSelected: function(event, data) {
-					$("#s_positionName").val(data.text);
-					$("#s_positionId").val(data.id);
-					$("#s_positionTree").hide();
-				}
-			};
-			$('#s_positionTree').treeview(options);
-		}
-
-		s_init_p_Tree();
+		// var organizationData = "";
+        //
+		// function get_o_TreeData(data) {
+		// 	var rdata = [];
+		// 	for(var i = 0; i < data.length; i++) {
+		// 		var node = data[i];
+		// 		var one = {};
+		// 		one.text = node.organizationName;
+		// 		one.id = node.id;
+		// 		if(node.childrens != undefined && node.childrens != null && node.childrens != '') {
+		// 			one.nodes = get_o_TreeData(node.childrens);
+		// 		}
+		// 		rdata.push(one);
+		// 	}
+		// 	return rdata;
+		// }
+        //
+		// function init_o_Tree() {
+		// 	if(organizationData == "") {
+		// 		$.sanjiGetJSON(userServiceUrl + "/organization/treeList", {}, function(data) {
+		// 			organizationData = get_o_TreeData(data.data);
+		// 			initTreeData();
+		// 		});
+		// 		return;
+		// 	}
+		// 	initTreeData();
+		// }
+        //
+		// function initTreeData() {
+		// 	var options = {
+		// 		checkedIcon: "glyphicon glyphicon-check",
+		// 		nodeIcon: "none", //所有节点的默认图标
+		// 		levels: 1,
+		// 		data: organizationData,
+		// 		// onhoverColor: "rgba(255,255,255,0.9)",
+		// 		onhoverColor: "rgba(0,0,0,0.1)",
+		// 		onNodeSelected: function(event, data) {
+		// 			$("#organization").val(data.text);
+		// 			$("#organizationId").val(data.id);
+		// 			$("#organizationTree").hide();
+		// 		}
+		// 	};
+		// 	$('#organizationTree').treeview(options);
+		// }
+        //
+		// function s_init_o_Tree() {
+		// 	if(organizationData == "") {
+		// 		$.sanjiGetJSON(userServiceUrl + "/organization/treeList", {}, function(data) {
+		// 			organizationData = get_o_TreeData(data.data);
+		// 			s_initTreeData();
+		// 		});
+		// 		return;
+		// 	}
+		// 	s_initTreeData();
+		// }
+        //
+		// function s_initTreeData() {
+		// 	var options = {
+		// 		checkedIcon: "glyphicon glyphicon-check",
+		// 		nodeIcon: "none", //所有节点的默认图标
+		// 		levels: 1,
+		// 		data: organizationData,
+		// 		// onhoverColor: "rgba(255,255,255,0.9)",
+		// 		onhoverColor: "rgba(0,0,0,0.1)",
+		// 		onNodeSelected: function(event, data) {
+		// 			$("#s_organization").val(data.text);
+		// 			$("#s_organizationId").val(data.id);
+		// 			$("#s_organizationTree").hide();
+		// 		}
+		// 	};
+		// 	$('#s_organizationTree').treeview(options);
+		// }
+        //
+		// s_init_o_Tree();
+        //
+		// var positionData = "";
+        //
+		// function get_p_TreeData(data) {
+		// 	var rdata = [];
+		// 	for(var i = 0; i < data.length; i++) {
+		// 		var node = data[i];
+		// 		var one = {};
+		// 		one.text = node.devicePositionName;
+		// 		one.id = node.id;
+		// 		if(node.childrens != undefined && node.childrens != null && node.childrens != '') {
+		// 			one.nodes = get_p_TreeData(node.childrens);
+		// 		}
+		// 		rdata.push(one);
+		// 	}
+		// 	return rdata;
+		// }
+        //
+		// function init_p_Tree() {
+		// 	if(positionData == "") {
+		// 		$.sanjiGetJSON(deviceServiceUrl + "/devicess/treeList", {}, function(data) {
+		// 			positionData = get_p_TreeData(data.data);
+		// 			init_p_TreeData();
+		// 		});
+		// 		return;
+		// 	}
+		// 	init_p_TreeData();
+		// }
+        //
+		// function init_p_TreeData() {
+		// 	var options = {
+		// 		checkedIcon: "glyphicon glyphicon-check",
+		// 		nodeIcon: "none", //所有节点的默认图标
+		// 		levels: 1,
+		// 		data: positionData,
+		// 		// onhoverColor: "rgba(255,255,255,0.9)",
+		// 		onhoverColor: "rgba(0,0,0,0.1)",
+		// 		onNodeSelected: function(event, data) {
+		// 			$("#positionName").val(data.text);
+		// 			$("#positionId").val(data.id);
+		// 			$("#positionTree").hide();
+		// 		}
+		// 	};
+		// 	$('#positionTree').treeview(options);
+		// }
+        //
+		// function s_init_p_Tree() {
+		// 	if(positionData == "") {
+		// 		$.sanjiGetJSON(deviceServiceUrl + "/devicess/treeList", {}, function(data) {
+		// 			positionData = get_p_TreeData(data.data);
+		// 			s_init_p_TreeData();
+		// 		});
+		// 		return;
+		// 	}
+		// 	s_init_p_TreeData();
+		// }
+        //
+		// function s_init_p_TreeData() {
+		// 	var options = {
+		// 		checkedIcon: "glyphicon glyphicon-check",
+		// 		nodeIcon: "none", //所有节点的默认图标
+		// 		levels: 1,
+		// 		data: positionData,
+		// 		// onhoverColor: "rgba(255,255,255,0.9)",
+		// 		onhoverColor: "rgba(0,0,0,0.1)",
+		// 		onNodeSelected: function(event, data) {
+		// 			$("#s_positionName").val(data.text);
+		// 			$("#s_positionId").val(data.id);
+		// 			$("#s_positionTree").hide();
+		// 		}
+		// 	};
+		// 	$('#s_positionTree').treeview(options);
+		// }
+        //
+		// s_init_p_Tree();
 
 		var table_room = function() {
 			return {

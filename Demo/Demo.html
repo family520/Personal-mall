@@ -1502,13 +1502,16 @@
             xxData : [] //选中的数据包
         },
         mounted(){
-            this.imgBtn(0);
+            // this.imgBtn(0);
         },
         methods: {
             //点击左侧
             imgBtn: function (index,container) {
                 //点击系统的时候
                 if(!container){
+
+                    console.log(index);
+                    console.log(this.secondData);
 
                     this.name = this.sysList[index].name;
                     $("body .name").text(this.name);
@@ -1525,11 +1528,18 @@
                 //点击全部列表的时候
                 else {
 
-                    this.name = this.allList[index].name;
-                    $("body .name").text(this.name);
+                    // this.name = this.allList[index].name;
+                    // $("body .name").text(this.name);
                     this.xxData = [];
                     this.value = index;
-                    this.secondData = this.allList[index];
+                    //判断是否之前已经加入
+                    for(let i =0; i< this.secondData.length ; i ++){
+                        if(this.secondData[i].name == this.allList[index].name){
+                            return;
+                        }
+                    }
+
+                    this.secondData.push(this.allList[index]);
                     for(let i = 0; i < this.secondData.length; i++){
                         if(this.secondData[i].isCheck === true){
                             this.xxData.push(this.secondData[i]);
@@ -1639,7 +1649,7 @@
             document.cookie = $("body .name").text();
         }
 
-        $(".leftBox>ul>li").click(function () {
+        $(".leftBox ul>li").click(function () {
             $("#childframe")[0].contentWindow.changeName(one.name);
             // document.getElementById("childframe").contentWindow.changeName();
         })
