@@ -33,7 +33,7 @@ header {
     align-items: center;
 }
 header img{
-    height: 77%;
+    height: 70%;
     margin: 0.05rem;
     padding-right: 0.1rem;
     border-right: 3px solid white;
@@ -79,9 +79,45 @@ header img{
     top: 0.5rem;
 
 }
+.leftBox .tabs{
+    width: 100%;
+    height: 0.4rem;
+    line-height: 0.4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid red;
+}
+.leftBox .tabs span{
+    width: 50%;
+    height: 100%;
+    border: 1px solid red;
+    text-align: center;
+    cursor: pointer;
+}
+.leftBox .tabs span.active{
+    background: gold;
+}
 
-.leftBox ul {
-    margin-top: 0.2rem;
+.leftBox .container{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border: 1px solid red;
+}
+.leftBox .container div{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+
+
+.leftBox .yycxUl {
+    margin-top: 0.1rem;
     width: 100%;
     list-style: none;
     height: 93%;
@@ -89,11 +125,11 @@ header img{
     overflow-y: scroll;
 }
 
-.leftBox ul::-webkit-scrollbar {
+.leftBox .yycxUl::-webkit-scrollbar {
     display: none;
 }
 
-.leftBox ul li {
+.leftBox .yycxUl li {
     margin: 0.1rem 0;
     width: 100%;
     text-align: center;
@@ -101,7 +137,7 @@ header img{
 }
 
 
-.leftBox ul li .boxImg {
+.leftBox .yycxUl li .boxImg {
     cursor: pointer;
     margin: auto;
     width: 1.94rem;
@@ -110,7 +146,7 @@ header img{
     border-radius: 0.05rem;
     overflow: hidden;
 }
-.leftBox ul li .boxImg:after{
+.leftBox .yycxUl li .boxImg:after{
     position: absolute;
     top:0;
     left: 0;
@@ -120,11 +156,11 @@ header img{
     pointer-events:none;
     background-color: rgba(0,104,255,0.3);
 }
-.leftBox ul li .boxImg img{
+.leftBox .yycxUl li .boxImg img{
     width: 100%;
     height: 100%;
 }
-.leftBox ul li .imgName {
+.leftBox .yycxUl li .imgName {
     font-size: 0.18rem;
 }
 
