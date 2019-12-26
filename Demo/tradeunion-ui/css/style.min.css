@@ -10,7 +10,7 @@ body {
 	line-height: 1.5;
 	font-size: 14px;
 	overflow-x: hidden;
-    background-color: #f5f6fa;
+    background-color: #E1EEF6;;
 }
 html,
 body {
@@ -2739,12 +2739,12 @@ dd, dt {
 	height: 100%;
 	width: 100%;
     /*padding-top: 68px;*/
-    /*padding-left: 240px;*/
+    padding-left: 240px;
     -webkit-transition: padding 0.3s;
     transition: padding 0.3s;
 }
 .lyear-layout-content .container-fluid {
-    padding-top: 15px;
+    /*padding-top: 15px;*/
     padding-bottom: 15px;
 }
 

@@ -3398,7 +3398,7 @@ dt {
 }
 
 .lyear-layout-content .container-fluid {
-	padding-top: 15px;
+	/*padding-top: 15px;*/
 	padding-bottom: 15px;
 }
 
@@ -5376,9 +5376,14 @@ body[data-theme='translucent'] {
 	padding-left: 20px;
 }
 
-.row>div:last-child {
-	padding-right: 20px;
+.container-fluid .row{
+    padding-top: 20px;
+
 }
+.container-fluid{
+    padding-right: 20px; !important;
+}
+
 
 
 /*板块标题*/
