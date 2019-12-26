@@ -53,12 +53,10 @@ body,html{
 .navLeft>p{
     width: 100%;
     height: 8%;
-    border: 1px solid red;
 }
 .navLeft>p img{
     width: 100%;
     height: 100%;
-    border: 1px solid red;
 }
 
 .navLeft > ul{

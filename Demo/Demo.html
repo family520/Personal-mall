@@ -78,10 +78,10 @@
             <img src="img/202.png" alt="">
             <span class="imgTitle scBtn">输出</span>
         </span>
-        <span class="imgBox" onclick= "$('#upload1').click();" style="position: relative">
+        <span class="imgBox" style="position: relative">
             <img src="img/202.png" alt="">
             <span class="imgTitle logoBtn">logo</span>
-            <input type="file" id="upload1" οnchange="l(this)" name="upload" style="position: absolute;top:0;left: 0;width: 100%;height: 100%;opacity: 0">
+            <input type="file" id="upload" name="upload" style="filter: alpha(opacity = 0);position: absolute;top:0;left: 0;width: 100%;height: 100%;opacity: 0">
         </span>
     </div>
 </div>
@@ -119,6 +119,7 @@
     let one = new Vue({
         el:"#one",
         data:{
+            logoUrl:"",
             value:null,
             smile:{
                 background: '#6c757d',
@@ -1125,28 +1126,23 @@
                 var xxData = JSON.stringify(this.xxData);
                 storage.setItem('xxData',xxData);
             },
+            logoUrl(){
+                var storage = window.localStorage;
+                var logourl = JSON.stringify(this.logoUrl);
+                storage.setItem('logoUrl',logourl);
+            },
         },
     });
 </script>
 <script>
     $(function () {
 
-        function l(evn) {
-            var name = event.target.files[0].name;//获取上传的文件名
-            var divObj = $(evn).prev()  //获取div的DOM对象
-            $(divObj).html(name) //插入文件名
-            var id = $(evn).attr('id');//获取id
-            var num = id.substr(4, 1);
-            var file = event.target.files[0];
-            if (window.FileReader) {
-                var reader = new FileReader();
-                reader.readAsDataURL(file);
-                //监听文件读取结束后事件
-                reader.onloadend = function (e) {
-                    console.log(e.target.result);
-                };
-            }
-        }
+        $("#upload").change(function () {
+            let f = document.getElementById('upload').files[0];
+            let src = window.URL.createObjectURL(f);
+            console.log(src);
+            one.logoUrl = src;
+        });
         //左边table切换
         $(".tabs span").each(function () {
             let index = $(this).index();

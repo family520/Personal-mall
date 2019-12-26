@@ -15,7 +15,7 @@
         <div class="navLeft">
 <!--            <p class="name" id="name">{{name || '智慧办公'}}</p>-->
             <p class="" id="">
-                <img src="" alt="123123123">
+                <img :src="logoUrl" alt="">
             </p>
             <ul>
                 <li v-for="(item,index) in mmm" :key="index" class="liClick" @click="jj(index)">
@@ -38,6 +38,7 @@
                 mmm:null,
                 name:"",
                 src : "",
+                logoUrl:""
             },
             methods:{
                 jj:function (index) {
@@ -55,6 +56,14 @@
 
                 xxxx.mmm = xxData;
 
+            }
+        },500);
+
+
+        setInterval(function () {
+            let logoUrl =JSON.parse(localStorage.getItem("logoUrl"));
+            if(JSON.stringify(xxxx.logoUrl) != localStorage.getItem("logoUrl")){
+                xxxx.logoUrl = logoUrl;
             }
         },500);
 
