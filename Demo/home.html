@@ -5,9 +5,14 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>项目应用</title>
     <link rel="stylesheet" href="css/basicStyle.css">
     <link rel="stylesheet" href="css/home.css">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="js/vue.min.js"></script>
+    <script src="js/elementUI.js"></script>
 </head>
 <body>
 <header>
@@ -35,7 +40,220 @@
         </span>
     </span>
 </div>
-<div class="contentBox"></div>
+<div class="contentBox" id="one">
+    <div class="listBox">
+        <div class="itemBox" v-for="(item,index) in listData" :key="index">
+            <div class="imgBox" @click="show(index)">
+                <img :src="item.imgUrl" alt="">
+            </div>
+            <p>
+                <i></i>
+                <span class="sysName" :title="item.id" contenteditable="true">{{item.name}}</span>
+                <img class="setImg" src="" alt="">
+            </p>
+            <div class="setBox">
+                <span class="updateBtn">编辑</span>
+                <span>删除</span>
+                <span>发布</span>
+                <span>上架商城</span>
+            </div>
+        </div>
+        <!--分页器-->
+        <div class="pageBox">
+            <el-pagination
+                    style="margin: auto"
+                    background
+                    layout="prev, pager, next"
+                    :total="8">
+            </el-pagination>
+        </div>
+    </div>
+    <div class="detailBox">
+        <div class="iconImg">
+            <img :src="detailData.imgUrl" alt="">
+        </div>
+        <p class="xmDetail"><span></span>项目详情</p>
+        <div class="detailList">
+            <p>
+                <span>名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称:</span>
+                <span class="smName">{{detailData.name}}</span>
+            </p>
+            <p>
+                <span>企业名称:</span>
+                <span>{{detailData.qyName}}</span>
+            </p>
+            <p>
+                <span>所属行业:</span>
+                <span>{{detailData.sshy}}</span>
+            </p>
+            <p>
+                <span>创建时间:</span>
+                <span>{{detailData.createTime}}</span>
+            </p>
+            <p>
+                <span>修改时间:</span>
+                <span>{{detailData.updateTime}}</span>
+            </p>
+            <p>
+                <span>时间节点:</span>
+                <span>{{detailData.timeJD}}</span>
+            </p>
+            <p>
+                <span>应用模块:</span>
+                <span>{{detailData.yymk}}</span>
+            </p>
+            <p>
+                <span>网络要求:</span>
+                <span>{{detailData.wnyq}}</span>
+            </p>
+            <p>
+                <span>描&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;述:</span>
+                <span>{{detailData.message}}</span>
+            </p>
+        </div>
+    </div>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script>
+    $(function () {
+
+        //跳转页面
+        $(".updateBtn").on("click",function () {
+            window.location.href = "Demo.html"
+        });
+
+        // $(".listBox .sysName").each(function () {
+            $(".sysName").blur(function () {
+                let index = $(this).attr("title");
+                let id = index -1;
+                console.log(id);
+                vm.detailData.name = $(this).text();
+                vm.listData[id].name = $(this).text();
+                console.log(vm.detailData.name);
+                // $(".smName").text(vm.detailData.name);
+            });
+        // });
+
+
+        $(".imgBox").on("click",function () {
+            $(".listBox").css({
+                width:"calc(100% - 5.21rem)"
+            });
+            $('.detailBox').show();
+        });
+
+        $(document).bind("click",function(e){
+            let con_one=$("body .setImg");//设置目标区域
+            if(!con_one.is(e.target) && con_one.has(e.target).length===0){
+                $(".setBox").hide();//需要隐藏的元素
+            }
+        });
+        $("body .setImg").each(function () {
+            $(this).on("click",function () {
+                $(this).parent().next(".setBox").slideDown(200);
+            });
+        });
+    });
+</script>
+
+<script>
+    let vm = new Vue({
+        el:"#one",
+        data(){
+            return{
+                listData:[
+                    {
+                        id:1,
+                        name:"智慧办公",
+                        imgUrl:"img/zhimg/zhbg.jpg",
+                        qyName:"重庆金鑫科技",
+                        sshy:'智慧办公',
+                        createTime:"2019-07-06 15:31:30",
+                        updateTime:"2019-07-06 15:31:30",
+                        timeJD:"2019-12-28",
+                        yymk:13,
+                        wnyq:"内网",
+                        message:'智能家居水电科技物联网'
+                    },
+                    {
+                        id:2,
+                        name:"智慧安防",
+                        imgUrl:"img/zhimg/zhaf.jpg",
+                        qyName:"重庆金鑫科技",
+                        sshy:'智慧办公',
+                        createTime:"2019-07-06 15:31:30",
+                        updateTime:"2019-07-06 15:31:30",
+                        timeJD:"2019-12-28",
+                        yymk:13,
+                        wnyq:"内网",
+                        message:'智能家居水电科技物联网'
+                    },
+                    {
+                        id:3,
+                        name:"智慧园区",
+                        imgUrl:"img/zhimg/zhyq.jpeg",
+                        qyName:"重庆金鑫科技",
+                        sshy:'智慧办公',
+                        createTime:"2019-07-06 15:31:30",
+                        updateTime:"2019-07-06 15:31:30",
+                        timeJD:"2019-12-28",
+                        yymk:13,
+                        wnyq:"内网",
+                        message:'智能家居水电科技物联网'
+                    },
+                    {
+                        id:4,
+                        name:"智慧商超",
+                        imgUrl:"img/zhimg/zhcs.jpg",
+                        qyName:"重庆金鑫科技",
+                        sshy:'智慧办公',
+                        createTime:"2019-07-06 15:31:30",
+                        updateTime:"2019-07-06 15:31:30",
+                        timeJD:"2019-12-28",
+                        yymk:13,
+                        wnyq:"内网",
+                        message:'智能家居水电科技物联网'
+                    },
+                    {
+                        id:5,
+                        name:"智慧楼宇",
+                        imgUrl:"img/zhimg/zhly.jpg",
+                        qyName:"重庆金鑫科技",
+                        sshy:'智慧办公',
+                        createTime:"2019-07-06 15:31:30",
+                        updateTime:"2019-07-06 15:31:30",
+                        timeJD:"2019-12-28",
+                        yymk:13,
+                        wnyq:"内网",
+                        message:'智能家居水电科技物联网'
+                    }
+                ],
+                detailData:{}
+            }
+        },
+        methods:{
+            show(index){
+                // this.detailData.name = "";
+                this.detailData={
+                    id:this.listData[index].id,
+                    name:this.listData[index].name,
+                    imgUrl:this.listData[index].imgUrl,
+                    qyName:this.listData[index].qyName,
+                    sshy:this.listData[index].sshy,
+                    createTime:this.listData[index].createTime,
+                    updateTime:this.listData[index].updateTime,
+                    timeJD:this.listData[index].timeJD,
+                    yymk:this.listData[index].yymk,
+                    wnyq:this.listData[index].wnyq,
+                    message:this.listData[index].message
+                }
+            }
+        },
+    });
+
+
+</script>
 </body>
 
 </html>
