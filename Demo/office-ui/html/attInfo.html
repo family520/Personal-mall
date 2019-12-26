@@ -346,7 +346,7 @@
     /*详情*/
     function detail(obj){
         url = "";
-        showModelDetails("事件详情", obj);
+        // showModelDetails("事件详情", obj);
     }
     function showModelDetails(title, index) {
         var html = template("modelAttInfoDetails", {
@@ -368,7 +368,7 @@
                 var data = $("#myTable").bootstrapTable('getData')[index];
                 ;
                 if (data != null) {
-                    $("#attInfoDetailsForm").setForm(data);
+                    // $("#attInfoDetailsForm").setForm(data);
                 }
                 $(".attInfoDisabled").attr("disabled", "disabled");
             }

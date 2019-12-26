@@ -297,7 +297,7 @@
                 clickToSelect: false,
                 formatter: function(i1, i2, i3) {
                     var str =
-                        '<button data-toggle="tooltip" title="详情" type="button" onclick="detail(' + i3 + ');" class="btn btn-info tableButton"><i class="fa fa-info-circle"></i></button>'
+                        '<button data-toggle="tooltip" title="详情" type="button"  class="btn btn-info tableButton"><i class="fa fa-info-circle"></i></button>'
                     return str;
                 },
                 cellStyle: function() {
@@ -350,7 +350,7 @@
     /*详情*/
     function detail(obj){
         url = "";
-        showModelDetails("事件详情", obj);
+        // showModelDetails("事件详情", obj);
     }
     function showModelDetails(title, index) {
         var html = template("modelAttInfoDetails", {
@@ -369,12 +369,11 @@
                 layer.close(myLayer);
             },
             success: function (layero) {
-                var data = $("#myTable").bootstrapTable('getData')[index];
-                ;
-                if (data != null) {
-                    $("#attInfoDetailsForm").setForm(data);
-                }
-                $(".attInfoDisabled").attr("disabled", "disabled");
+                // var data = $("#myTable").bootstrapTable('getData')[index];
+                // if (data != null) {
+                //     // $("#attInfoDetailsForm").setForm(data);
+                // }
+                // $(".attInfoDisabled").attr("disabled", "disabled");
             }
         });
     }
