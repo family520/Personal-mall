@@ -94,7 +94,7 @@ header img{
     cursor: pointer;
 }
 .leftBox .tabs span.active{
-    background: gold;
+    background:linear-gradient(90deg,#0D72FB 0%,#00A5FE 100%);
 }
 
 .leftBox .container{

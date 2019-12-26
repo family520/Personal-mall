@@ -27,6 +27,15 @@
             <p class="zcBox"><a href="#">注册</a></p>
         </div>
     </div>
+    <script src="js/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $('.loginBtn').on('click',function(){
+                parent.$(window.parent.document).find('#fater_login').click();
+            });
+            $(".xmName").text(localStorage.getItem("projectName"));
+        });
+    </script>
 </body>
 <script>
 

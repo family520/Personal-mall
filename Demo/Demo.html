@@ -9,13 +9,11 @@
     <link rel="stylesheet" href="css/demo.css">
     <script src="js/jquery.min.js"></script>
     <script src="js/vue.min.js"></script>
-
     <style>
         .sm{
             background-color: #6c757d !important;
         }
     </style>
-
 </head>
 <body>
 <header>
@@ -55,8 +53,8 @@
 
     </div>
     <!-- 中间盒子 -->
-    <div id="pagName"><span class="mmmm" contenteditable="true">{{name}}</span></div>
-    <div class="centerBox">
+<!--    <div id="pagName"><span class="mmmm" contenteditable="true">{{name}}</span></div>-->
+    <div class="centerBox" style="margin-top: 1rem">
         <iframe id="childframe" src="centerHtml.html" frameborder="0" style="width: 14.09rem;height: 7.93rem; "></iframe>
     </div>
     <!-- 右边盒子 -->
@@ -102,7 +100,7 @@
                 <img src="img/666.png" alt="">
             </div>
             <div class="scRight">
-                <p>项目名称:<span class="scName">XXXXXX</span></p>
+                <p>项目名称:<span class="scName">智慧办公</span></p>
                 <p>
                     创建时间:<span class="nowTime" style="margin-left: 0.05rem"></span>
                 </p>
@@ -1204,7 +1202,8 @@
         //弹出模板
         $(".scBtn").on("click",function () {
             console.log($(".scName").text());
-            $(".scName").text(one.name);
+            console.log(localStorage.getItem("projectName"));
+            $(".scName").text(localStorage.getItem("projectName"));
             $(".scBox").show();
         });
         $(".outImg").on("click",function () {
