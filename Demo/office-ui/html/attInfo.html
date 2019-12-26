@@ -148,6 +148,15 @@
 </body>
 
 <script>
+
+    $(document).bind("click",function(e){
+        var con_one=$(".hidden_style");//设置目标区域
+        if(!con_one.is(e.target)&&con_one.has(e.target).length===0){
+            $(".style_ul").hide();//需要隐藏的元素
+        }
+    });
+
+
     var html;
     // var userIdd = $.getCookie("userId");
     var url = "";

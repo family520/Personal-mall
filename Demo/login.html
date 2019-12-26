@@ -8,6 +8,7 @@
     <title>登录页面</title>
     <link rel="stylesheet" href="css/basicStyle.css">
     <link rel="stylesheet" href="css/login.css">
+    <script src="js/jquery.min.js"></script>
 </head>
 <body>
     <div class="loginBox">
@@ -27,4 +28,10 @@
         </div>
     </div>
 </body>
+<script>
+
+    $('.loginBtn').on('click',function(){
+        parent.$(window.parent.document).find('#fater_login').click();
+    });
+</script>
 </html>
