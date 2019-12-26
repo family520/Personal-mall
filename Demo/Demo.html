@@ -179,7 +179,7 @@
                 {
                     code:"104",
                     icon:"img/navLeft/nav_3.png",
-                    name:" 平台设备管理",
+                    name:"平台设备管理",
                     isCheck:false,
                     iframeUrl:"office-ui/html/equipmentInfo.html"
                 },
@@ -311,9 +311,6 @@
                     name:"智慧养老",
                     imgUrl:"img/zhimg/zhyl.jpg",
                     dataList:[
-
-
-
                         {
                             code:"105",
                             icon:"img/navLeft/nav_5.png",
@@ -328,7 +325,6 @@
                             isCheck:false,
                             iframeUrl:"office-ui/html/equipmentInfo.html"
                         },
-
                         {
                             code:"109",
                             icon:"img/navLeft/nav_8.png",
@@ -357,7 +353,6 @@
                             isCheck:false,
                             iframeUrl:"htmls/zmHtml.html"
                         },
-
                     ],
                 },
                 {
@@ -365,7 +360,6 @@
                     name:"智慧医院",
                     imgUrl:"img/zhimg/zhyy.jpg",
                     dataList:[
-
 
                         {
                             code:"105",
@@ -383,8 +377,6 @@
 
                             iframeUrl:"office-ui/html/equipmentInfo.html"
                         },
-
-
                         {
                             code:"109",
                             icon:"img/navLeft/nav_8.png",
@@ -437,7 +429,6 @@
 
                             iframeUrl:"office-ui/html/officeRoom.html"
                         },
-
                         {
                             code:"104",
                             icon:"img/navLeft/nav_4.png",
@@ -1070,13 +1061,36 @@
                 //点击系统的时候
                 if(!container){
                     this.value = index;
-                    this.secondData = this.secondData.concat(this.sysList[index].dataList);
+                    //拿到非必选的数据 数组
+                    let chooseArr = [];
+                    let flag = true;
+                    let chooseArr_length;
+                    for(var j = 6;j < this.secondData.length;j++){
+                        if(this.secondData[j].isCheck){
+                            chooseArr.push(this.secondData[j])
+                        }
+                    }
+                    chooseArr_length = chooseArr.length;
 
-                    // for(let i = 0; i < this.secondData.length; i++){
-                    //     if(this.secondData[i].isCheck === true){
-                    //         this.xxData.push(this.secondData[i]);
-                    //     }
-                    // };
+                    for(var i =0;i<this.sysList[index].dataList.length;i++){
+
+                        for(var j = 0;j < chooseArr_length; j++){
+                            flag = true;
+                            if(chooseArr[j].name == this.sysList[index].dataList[i].name){
+                                flag = false;
+                                break
+                            }
+                        }
+                        if(flag) chooseArr.push(this.sysList[index].dataList[i])
+                    }
+
+                    console.log(chooseArr);
+
+
+                    this.secondData = this.secondData.splice(0, 6)
+
+                    this.secondData =  this.secondData.concat(chooseArr);
+
 
                 }
                 //点击全部列表的时候
@@ -1089,17 +1103,10 @@
                     //判断是否之前已经加入
                     for(let i =0; i< this.secondData.length ; i ++){
                         if(this.secondData[i].name == this.allList[index].name){
-                            return;
+                            return
                         }
                     }
-
                     this.secondData.push(this.allList[index]);
-                    // for(let i = 0; i < this.secondData.length; i++){
-                    //     if(this.secondData[i].isCheck === true){
-                    //         this.xxData.push(this.secondData[i]);
-                    //     }
-                    // };
-
                 }
 
             },
