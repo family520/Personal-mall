@@ -84,8 +84,8 @@ body,html{
     align-items: center;
 }
 .navLeft > ul>li >span>img{
-    width: 0.19rem;
-    height: 0.19rem;
+    width: 0.5rem;
+    /*height: 0.19rem;*/
     margin-right: 0.21rem;
 }
 

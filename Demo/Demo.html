@@ -33,7 +33,7 @@
                 <ul class="all-ul">
                     <li v-for="(item,index) in allList" :key="index" @click="imgBtn(index,'1')">
                         <span class="allImg">
-                            <img :src="item.imgUrl" alt="">
+                            <img :src="item.icon" alt="">
                         </span>
                         <p>{{item.name}}</p>
                     </li>
@@ -131,111 +131,200 @@
             name:"智慧办公",
             //全部模块列表
             allList:[
-                {
-                    code:"101",
-                    parentsName:"智慧办公",
-                    icon:"img/navLeft/nav_1.png",
-                    name:"首页",
-                    isCheck:true,
-                    isReadonly:true,
-                    iframeUrl:"htmls/ggHome.html"
-                },
-                {
-                    code:"109",
-                    icon:"img/navLeft/nav_8.png",
-                    name:"系统管理",
-                    isCheck:true,
-                    isReadonly:true,
-                    iframeUrl:"htmls/xitongguanli/header.html"
-                },
-                {
-                    code:"110",
-                    icon:"img/navLeft/nav_8.png",
-                    name:"事件管理",
-                    isCheck:true,
-                    isReadonly:true,
-                    iframeUrl:"htmls/shebeishijian/header.html"
-                },
-                {
-                    code:"111",
-                    icon:"img/navLeft/nav_8.png",
-                    name:"平台管理",
-                    isCheck:true,
-                    isReadonly:true,
-                    iframeUrl:"htmls/pingtaiguanli/header.html"
-                },
-                {
-                    code:"119",
-                    icon:"img/navLeft/nav_8.png",
-                    name:" 管理3D",
-                    isCheck:true,
-                    isReadonly:true,
-                    iframeUrl:"htmls/guanli3D/header.html"
-                },
-                {
-                    code:"103",
-                    icon:"img/navLeft/nav_3.png",
-                    name:" 设备管理",
-                    isCheck:true,
-                    isReadonly:true,
-                    iframeUrl:"htmls/shebeiguanli/header.html"
-                },
-                {
-                    code:"104",
-                    icon:"img/navLeft/nav_3.png",
-                    name:"平台设备管理",
-                    isCheck:false,
-                    iframeUrl:"office-ui/html/equipmentInfo.html"
-                },
+
                 {
                     code:"102",
-                    icon:"img/navLeft/nav_2.png",
+                    icon:"img/allIcon/huiyiguanli.png",
                     name:"会议室管理",
                     isCheck:false,
                     iframeUrl:"office-ui/html/officeRoom.html"
                 },
                 {
                     code:"104",
-                    icon:"img/navLeft/nav_4.png",
+                    icon:"img/allIcon/kaoqinmokuai.png",
                     name:"考勤管理",
                     isCheck:false,
                     iframeUrl:"office-ui/html/attInfo.html"
                 },
                 {
                     code:"109",
-                    icon:"img/navLeft/nav_8.png",
+                    icon:"img/allIcon/baojingxitong.png",
                     name:"报警系统",
                     isCheck:false,
                     iframeUrl:"htmls/warningstystem/header.html"
                 },
                 {
                     code:"110",
-                    icon:"img/navLeft/nav_8.png",
+                    icon:"img/allIcon/xinfengkongzhi.png",
                     name:"新风系统",
                     isCheck:false,
                     iframeUrl:"htmls/lfHome.html"
                 },
                 {
                     code:"111",
-                    icon:"img/navLeft/nav_8.png",
+                    icon:"img/allIcon/nenghaoguanli.png",
                     name:"能源概况",
                     isCheck:false,
                     iframeUrl:"htmls/nygk.html"
                 },
                 {
                     code:"112",
-                    icon:"img/navLeft/nav_8.png",
+                    icon:"img/allIcon/zhaomingguanli.png",
                     name:"照明系统",
                     isCheck:false,
                     iframeUrl:"htmls/zmHtml.html"
                 },
                 {
                     code:"113",
-                    icon:"img/navLeft/nav_8.png",
+                    icon:"img/allIcon/tingcheguanli.png",
                     name:"停车系统",
                     isCheck:false,
                     iframeUrl:"htmls/tcxt.html"
                 },
+                {
+                    code:"114",
+                    icon:"img/allIcon/xinxifabu.png",
+                    name:"信息发布",
+                    isCheck:false,
+                    isReadonly :true,
+                    iframeUrl:"htmls/tcxt.html"
+
+                },
+                {
+                    code:"115",
+                    icon:"img/allIcon/shipinjiankong.png",
+                    name:"视频监控",
+                    isCheck:false,
+                    isReadonly :true,
+                    iframeUrl:"htmls/tcxt.html"
+
+                },
+                {
+                    code:"116",
+                    icon:"img/allIcon/shipinfenxi.png",
+                    name:"视频分析",
+                    isCheck:false,
+                    isReadonly :true,
+                    iframeUrl:"htmls/tcxt.html"
+
+                },
+                {
+                    code:"117",
+                    icon:"img/allIcon/zhinengmenjin.png",
+                    name:"智慧门禁",
+                    isCheck:false,
+                    isReadonly :true,
+                    iframeUrl:"htmls/tcxt.html"
+
+                },
+                {
+                    code:"118",
+                    icon:"img/allIcon/zhinengmenjin.png",
+                    name:"智慧门禁",
+                    isCheck:false,
+                    isReadonly :true,
+                    iframeUrl:"htmls/tcxt.html"
+
+                },
+                {
+                    code:"119",
+                    icon:"img/allIcon/keshiduijiang.png",
+                    name:"可视化对讲",
+                    isCheck:false,
+                    isReadonly :true,
+                    iframeUrl:"htmls/tcxt.html"
+
+                },
+                {
+                    code:"120",
+                    icon:"img/allIcon/zhoujieyujing.png",
+                    name:"周界预警",
+                    isCheck:false,
+                    isReadonly :true,
+                    iframeUrl:"htmls/tcxt.html"
+                },
+                {
+                    code:"121",
+                    icon:"img/allIcon/kongtiaokongzhi.png",
+                    name:"空调控制",
+                    isCheck:false,
+                    isReadonly :true,
+                    iframeUrl:"htmls/tcxt.html"
+                },
+                {
+                    code:"122",
+                    icon:"img/allIcon/beijingyinyue.png",
+                    name:"背景音乐",
+                    isCheck:false,
+                    isReadonly :true,
+                    iframeUrl:"htmls/tcxt.html"
+                },
+                {
+                    code:"123",
+                    icon:"img/allIcon/dianzixungeng.png",
+                    name:"电子巡更",
+                    isCheck:false,
+                    isReadonly :true,
+                    iframeUrl:"htmls/tcxt.html"
+                },
+                {
+                    code:"124",
+                    icon:"img/allIcon/tikongmokuai.png",
+                    name:"梯控模块",
+                    isCheck:false,
+                    isReadonly :true,
+                    iframeUrl:"htmls/tcxt.html"
+                },
+                {
+                    code:"125",
+                    icon:"img/allIcon/huanjingjiankong.png",
+                    name:"环境监控",
+                    isCheck:false,
+                    isReadonly :true,
+                    iframeUrl:"htmls/tcxt.html"
+                },
+                {
+                    code:"126",
+                    icon:"img/allIcon/xiaofangguanli.png",
+                    name:"消防管理",
+                    isCheck:false,
+                    isReadonly :true,
+                    iframeUrl:"htmls/tcxt.html"
+                },
+                {
+                    code:"126",
+                    icon:"img/allIcon/OAbanggong.png",
+                    name:"OA办公",
+                    isCheck:false,
+                    isReadonly :true,
+                    iframeUrl:"htmls/tcxt.html"
+                },
+                {
+                    code:"127",
+                    icon:"img/allIcon/fangkeguanli.png",
+                    name:"访客管理",
+                    isCheck:false,
+                    isReadonly :true,
+                    iframeUrl:"htmls/tcxt.html"
+                },
+                {
+                    code:"128",
+                    icon:"img/allIcon/wuyeguanli.png",
+                    name:"物业管理",
+                    isCheck:false,
+                    isReadonly :true,
+                    iframeUrl:"htmls/tcxt.html"
+                },
+                {
+                    code:"129",
+                    icon:"img/allIcon/shangchengmokuai.png",
+                    name:"商城模块",
+                    isCheck:false,
+                    isReadonly :true,
+                    iframeUrl:"htmls/tcxt.html"
+                }
+
+
             ],
             // 系统列表
             sysList:[
@@ -246,14 +335,14 @@
                     dataList:[
                         {
                             code:"102",
-                            icon:"img/navLeft/nav_2.png",
+                            icon:"img/allIcon/huiyiguanli.png",
                             name:"会议室管理",
                             isCheck:false,
                             iframeUrl:"office-ui/html/officeRoom.html"
                         },
                         {
                             code:"104",
-                            icon:"img/navLeft/nav_4.png",
+                            icon:"img/allIcon/kaoqinmokuai.png",
                             name:"考勤管理",
                             isCheck:false,
                             iframeUrl:"office-ui/html/attInfo.html"
@@ -266,43 +355,36 @@
                             iframeUrl:"office-ui/html/modeManage.html"
                         },
                         {
-                            code:"106",
-                            icon:"img/navLeft/nav_6.png",
-                            name:"平台设备管理",
-                            isCheck:false,
-                            iframeUrl:"office-ui/html/equipmentInfo.html"
-                        },
-                        {
                             code:"109",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/baojingxitong.png",
                             name:"报警系统",
                             isCheck:false,
                             iframeUrl:"htmls/warningstystem/header.html"
                         },
                         {
                             code:"110",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/xinfengkongzhi.png",
                             name:"新风系统",
                             isCheck:false,
                             iframeUrl:"htmls/lfHome.html"
                         },
                         {
                             code:"111",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/nenghaoguanli.png",
                             name:"能源概况",
                             isCheck:false,
                             iframeUrl:"htmls/nygk.html"
                         },
                         {
                             code:"112",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/zhaomingguanli.png",
                             name:"照明系统",
                             isCheck:false,
                             iframeUrl:"htmls/zmHtml.html"
                         },
                         {
                             code:"113",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/tingcheguanli.png",
                             name:"停车系统",
                             isCheck:false,
                             iframeUrl:"htmls/tcxt.html"
@@ -323,36 +405,29 @@
                             iframeUrl:"office-ui/html/modeManage.html"
                         },
                         {
-                            code:"106",
-                            icon:"img/navLeft/nav_6.png",
-                            name:"平台设备管理",
-                            isCheck:false,
-                            iframeUrl:"office-ui/html/equipmentInfo.html"
-                        },
-                        {
                             code:"109",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/baojingxitong.png",
                             name:"报警系统",
                             isCheck:false,
                             iframeUrl:"htmls/warningstystem/header.html"
                         },
                         {
                             code:"110",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/xinfengkongzhi.png",
                             name:"新风系统",
                             isCheck:false,
                             iframeUrl:"htmls/lfHome.html"
                         },
                         {
                             code:"111",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/nenghaoguanli.png",
                             name:"能源概况",
                             isCheck:false,
                             iframeUrl:"htmls/nygk.html"
                         },
                         {
                             code:"112",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/zhaomingguanli.png",
                             name:"照明系统",
                             isCheck:false,
                             iframeUrl:"htmls/zmHtml.html"
@@ -374,44 +449,36 @@
                             iframeUrl:"office-ui/html/modeManage.html"
                         },
                         {
-                            code:"106",
-                            icon:"img/navLeft/nav_6.png",
-                            name:"平台设备管理",
-                            isCheck:false,
-
-                            iframeUrl:"office-ui/html/equipmentInfo.html"
-                        },
-                        {
                             code:"109",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/baojingxitong.png",
                             name:"报警系统",
                             isCheck:false,
                             iframeUrl:"htmls/warningstystem/header.html"
                         },
                         {
                             code:"110",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/xinfengkongzhi.png",
                             name:"新风系统",
                             isCheck:false,
                             iframeUrl:"htmls/lfHome.html"
                         },
                         {
                             code:"111",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/nenghaoguanli.png",
                             name:"能源概况",
                             isCheck:false,
                             iframeUrl:"htmls/nygk.html"
                         },
                         {
                             code:"112",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/zhaomingguanli.png",
                             name:"照明系统",
                             isCheck:false,
                             iframeUrl:"htmls/zmHtml.html"
                         },
                         {
                             code:"113",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/tingcheguanli.png",
                             name:"停车系统",
                             isCheck:false,
                             iframeUrl:"htmls/tcxt.html"
@@ -427,18 +494,16 @@
 
                         {
                             code:"102",
-                            icon:"img/navLeft/nav_2.png",
+                            icon:"img/allIcon/huiyiguanli.png",
                             name:"会议室管理",
                             isCheck:false,
-
                             iframeUrl:"office-ui/html/officeRoom.html"
                         },
                         {
                             code:"104",
-                            icon:"img/navLeft/nav_4.png",
+                            icon:"img/allIcon/kaoqinmokuai.png",
                             name:"考勤管理",
                             isCheck:false,
-
                             iframeUrl:"office-ui/html/attInfo.html"
                         },
                         {
@@ -449,45 +514,36 @@
                             iframeUrl:"office-ui/html/modeManage.html"
                         },
                         {
-                            code:"106",
-                            icon:"img/navLeft/nav_6.png",
-                            name:"平台设备管理",
-                            isCheck:false,
-                            iframeUrl:"office-ui/html/equipmentInfo.html"
-                        },
-
-
-                        {
                             code:"109",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/baojingxitong.png",
                             name:"报警系统",
                             isCheck:false,
                             iframeUrl:"htmls/warningstystem/header.html"
                         },
                         {
                             code:"110",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/xinfengkongzhi.png",
                             name:"新风系统",
                             isCheck:false,
                             iframeUrl:"htmls/lfHome.html"
                         },
                         {
                             code:"111",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/nenghaoguanli.png",
                             name:"能源概况",
                             isCheck:false,
                             iframeUrl:"htmls/nygk.html"
                         },
                         {
                             code:"112",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/zhaomingguanli.png",
                             name:"照明系统",
                             isCheck:false,
                             iframeUrl:"htmls/zmHtml.html"
                         },
                         {
                             code:"113",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/tingcheguanli.png",
                             name:"停车系统",
                             isCheck:false,
                             iframeUrl:"htmls/tcxt.html"
@@ -499,8 +555,6 @@
                     name:"智慧社区",
                     imgUrl:"img/zhimg/zhsq.jpg",
                     dataList:[
-
-
                         {
                             code:"105",
                             icon:"img/navLeft/nav_5.png",
@@ -510,39 +564,29 @@
                             iframeUrl:"office-ui/html/modeManage.html"
                         },
                         {
-                            code:"106",
-                            icon:"img/navLeft/nav_6.png",
-                            name:"平台设备管理",
-                            isCheck:false,
-
-                            iframeUrl:"office-ui/html/equipmentInfo.html"
-                        },
-
-
-                        {
                             code:"109",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/baojingxitong.png",
                             name:"报警系统",
                             isCheck:false,
                             iframeUrl:"htmls/warningstystem/header.html"
                         },
                         {
                             code:"111",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/nenghaoguanli.png",
                             name:"能源概况",
                             isCheck:false,
                             iframeUrl:"htmls/nygk.html"
                         },
                         {
                             code:"112",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/zhaomingguanli.png",
                             name:"照明系统",
                             isCheck:false,
                             iframeUrl:"htmls/zmHtml.html"
                         },
                         {
                             code:"113",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/tingcheguanli.png",
                             name:"停车系统",
                             isCheck:false,
                             iframeUrl:"htmls/tcxt.html"
@@ -562,43 +606,32 @@
                             icon:"img/navLeft/nav_5.png",
                             name:"设备模式管理",
                             isCheck:false,
-
                             iframeUrl:"office-ui/html/modeManage.html"
                         },
                         {
-                            code:"106",
-                            icon:"img/navLeft/nav_6.png",
-                            name:"平台设备管理",
-                            isCheck:false,
-
-                            iframeUrl:"office-ui/html/equipmentInfo.html"
-                        },
-
-
-                        {
                             code:"110",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/xinfengkongzhi.png",
                             name:"新风系统",
                             isCheck:false,
                             iframeUrl:"htmls/lfHome.html"
                         },
                         {
                             code:"111",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/nenghaoguanli.png",
                             name:"能源概况",
                             isCheck:false,
                             iframeUrl:"htmls/nygk.html"
                         },
                         {
                             code:"112",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/zhaomingguanli.png",
                             name:"照明系统",
                             isCheck:false,
                             iframeUrl:"htmls/zmHtml.html"
                         },
                         {
                             code:"113",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/tingcheguanli.png",
                             name:"停车系统",
                             isCheck:false,
                             iframeUrl:"htmls/tcxt.html"
@@ -610,21 +643,9 @@
                     name:"智慧安防",
                     imgUrl:"img/zhimg/zhaf.jpg",
                     dataList:[
-
-
-
-                        {
-                            code:"106",
-                            icon:"img/navLeft/nav_6.png",
-                            name:"平台设备管理",
-                            isCheck:false,
-                            iframeUrl:"office-ui/html/equipmentInfo.html"
-                        },
-
-
                         {
                             code:"109",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/baojingxitong.png",
                             name:"报警系统",
                             isCheck:false,
                             iframeUrl:"htmls/warningstystem/header.html"
@@ -640,7 +661,7 @@
 
                         {
                             code:"102",
-                            icon:"img/navLeft/nav_2.png",
+                            icon:"img/allIcon/huiyiguanli.png",
                             name:"会议室管理",
                             isCheck:false,
                             iframeUrl:"office-ui/html/officeRoom.html"
@@ -649,21 +670,21 @@
 
                         {
                             code:"110",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/xinfengkongzhi.png",
                             name:"新风系统",
                             isCheck:false,
                             iframeUrl:"htmls/lfHome.html"
                         },
                         {
                             code:"111",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/nenghaoguanli.png",
                             name:"能源概况",
                             isCheck:false,
                             iframeUrl:"htmls/nygk.html"
                         },
                         {
                             code:"112",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/zhaomingguanli.png",
                             name:"照明系统",
                             isCheck:false,
                             iframeUrl:"htmls/zmHtml.html"
@@ -680,44 +701,37 @@
 
                         {
                             code:"104",
-                            icon:"img/navLeft/nav_4.png",
+                            icon:"img/allIcon/kaoqinmokuai.png",
                             name:"考勤管理",
                             isCheck:false,
                             iframeUrl:"office-ui/html/attInfo.html"
-                        },
-                        {
-                            code:"106",
-                            icon:"img/navLeft/nav_6.png",
-                            name:"平台设备管理",
-                            isCheck:false,
-                            iframeUrl:"office-ui/html/equipmentInfo.html"
                         },
 
 
                         {
                             code:"109",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/baojingxitong.png",
                             name:"报警系统",
                             isCheck:false,
                             iframeUrl:"htmls/warningstystem/header.html"
                         },
                         {
                             code:"110",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/xinfengkongzhi.png",
                             name:"新风系统",
                             isCheck:false,
                             iframeUrl:"htmls/lfHome.html"
                         },
                         {
                             code:"111",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/nenghaoguanli.png",
                             name:"能源概况",
                             isCheck:false,
                             iframeUrl:"htmls/nygk.html"
                         },
                         {
                             code:"112",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/zhaomingguanli.png",
                             name:"照明系统",
                             isCheck:false,
                             iframeUrl:"htmls/zmHtml.html"
@@ -739,46 +753,39 @@
                             isCheck:false,
                             iframeUrl:"office-ui/html/modeManage.html"
                         },
-                        {
-                            code:"106",
-                            icon:"img/navLeft/nav_6.png",
-                            name:"平台设备管理",
-                            isCheck:false,
-                            iframeUrl:"office-ui/html/equipmentInfo.html"
-                        },
 
 
                         {
                             code:"109",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/baojingxitong.png",
                             name:"报警系统",
                             isCheck:false,
                             iframeUrl:"htmls/warningstystem/header.html"
                         },
                         {
                             code:"110",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/xinfengkongzhi.png",
                             name:"新风系统",
                             isCheck:false,
                             iframeUrl:"htmls/lfHome.html"
                         },
                         {
                             code:"111",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/nenghaoguanli.png",
                             name:"能源概况",
                             isCheck:false,
                             iframeUrl:"htmls/nygk.html"
                         },
                         {
                             code:"112",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/zhaomingguanli.png",
                             name:"照明系统",
                             isCheck:false,
                             iframeUrl:"htmls/zmHtml.html"
                         },
                         {
                             code:"113",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/tingcheguanli.png",
                             name:"停车系统",
                             isCheck:false,
                             iframeUrl:"htmls/tcxt.html"
@@ -799,26 +806,17 @@
                             isCheck:false,
                             iframeUrl:"office-ui/html/modeManage.html"
                         },
-                        {
-                            code:"106",
-                            icon:"img/navLeft/nav_6.png",
-                            name:"平台设备管理",
-                            isCheck:false,
-
-                            iframeUrl:"office-ui/html/equipmentInfo.html"
-                        },
-
 
                         {
                             code:"109",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/baojingxitong.png",
                             name:"报警系统",
                             isCheck:false,
                             iframeUrl:"htmls/warningstystem/header.html"
                         },
                         {
                             code:"113",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/tingcheguanli.png",
                             name:"停车系统",
                             isCheck:false,
                             iframeUrl:"htmls/tcxt.html"
@@ -840,46 +838,39 @@
                             isCheck:false,
                             iframeUrl:"office-ui/html/modeManage.html"
                         },
-                        {
-                            code:"106",
-                            icon:"img/navLeft/nav_6.png",
-                            name:"平台设备管理",
-                            isCheck:false,
-                            iframeUrl:"office-ui/html/equipmentInfo.html"
-                        },
 
 
                         {
                             code:"109",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/baojingxitong.png",
                             name:"报警系统",
                             isCheck:false,
                             iframeUrl:"htmls/warningstystem/header.html"
                         },
                         {
                             code:"110",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/xinfengkongzhi.png",
                             name:"新风系统",
                             isCheck:false,
                             iframeUrl:"htmls/lfHome.html"
                         },
                         {
                             code:"111",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/nenghaoguanli.png",
                             name:"能源概况",
                             isCheck:false,
                             iframeUrl:"htmls/nygk.html"
                         },
                         {
                             code:"112",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/zhaomingguanli.png",
                             name:"照明系统",
                             isCheck:false,
                             iframeUrl:"htmls/zmHtml.html"
                         },
                         {
                             code:"113",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/tingcheguanli.png",
                             name:"停车系统",
                             isCheck:false,
                             iframeUrl:"htmls/tcxt.html"
@@ -902,45 +893,36 @@
                             iframeUrl:"office-ui/html/modeManage.html"
                         },
                         {
-                            code:"106",
-                            icon:"img/navLeft/nav_6.png",
-                            name:"平台设备管理",
-                            isCheck:false,
-                            iframeUrl:"office-ui/html/equipmentInfo.html"
-                        },
-
-
-                        {
                             code:"109",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/baojingxitong.png",
                             name:"报警系统",
                             isCheck:false,
                             iframeUrl:"htmls/warningstystem/header.html"
                         },
                         {
                             code:"110",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/xinfengkongzhi.png",
                             name:"新风系统",
                             isCheck:false,
                             iframeUrl:"htmls/lfHome.html"
                         },
                         {
                             code:"111",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/nenghaoguanli.png",
                             name:"能源概况",
                             isCheck:false,
                             iframeUrl:"htmls/nygk.html"
                         },
                         {
                             code:"112",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/zhaomingguanli.png",
                             name:"照明系统",
                             isCheck:false,
                             iframeUrl:"htmls/zmHtml.html"
                         },
                         {
                             code:"113",
-                            icon:"img/navLeft/nav_8.png",
+                            icon:"img/allIcon/tingcheguanli.png",
                             name:"停车系统",
                             isCheck:false,
                             iframeUrl:"htmls/tcxt.html"
@@ -1087,7 +1069,7 @@
                         if(flag) chooseArr.push(this.sysList[index].dataList[i])
                     }
 
-                    console.log(chooseArr);
+                    // console.log(chooseArr);
 
 
                     this.secondData = this.secondData.splice(0, 6)
@@ -1120,12 +1102,35 @@
                 if(!changeName){
                     this.secondData[index].isCheck = !this.secondData[index].isCheck;
                 }
-                this.xxData = [];
-                for(let i = 0; i < this.secondData.length; i++){
-                    if(this.secondData[i].isCheck === true){
-                        this.xxData.push(this.secondData[i]);
+
+                if(this.secondData[index].isCheck){
+                    this.secondData[index].icon = this.secondData[index].icon.split(".png")[0]+"_1.png";
+                    this.xxData.push(this.secondData[index]);
+                }else {
+
+                    for(let i = 0; i<this.xxData.length;i++){
+                        if(this.xxData[i].name ==  this.secondData[index].name){
+                            this.secondData[index].icon = this.secondData[index].icon.split("_1")[0]+".png";
+                            console.log(this.secondData[index].icon);
+                            this.xxData.splice(i,1);
+                            return;
+                        }
                     }
-                };
+
+                }
+
+                // this.xxData = [];
+                //
+                // for(let i = 0; i < this.secondData.length; i++){
+                //     if(this.secondData[i].isCheck === true){
+                //
+                //         console.log(this.secondData[i].icon.split(".png")[0]);
+                //         this.secondData[i].icon = this.secondData[i].icon.split(".png")[0]+"_1.png";
+                //         // console.log(this.secondData[i].icon);
+                //
+                //         this.xxData.push(this.secondData[i]);
+                //     }
+                // };
             }
 
         },
