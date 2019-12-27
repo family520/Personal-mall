@@ -454,7 +454,7 @@
             value: 28
         }
     ];
-    let color = ["#8d7fec", "#5085f2","#e75fc3"]
+    let color = ["#00c3b3", "#ff6f79","#00a0f8"]
     let xdata = ['用电量', "用水量", "用气量",];
 
 
@@ -563,7 +563,7 @@
             trigger: 'axis'
         },
         legend: {
-            color: [ "#47D8BE", "#F9A589", "#ac65f9"],
+            color: [ "#00c3b3", "#ff6f79", "#00a0f8"],
             data: ['运行', '故障','报警'],
             left: 'center',
             top: 'top'
@@ -695,33 +695,32 @@
                         width: 5,
                         color: {
                             type: 'linear',
-
                             colorStops: [{
                                 offset: 0,
-                                color: '#ac65f9' // 0% 处的颜色
+                                color: '#00a0f8' // 0% 处的颜色
                             },
                                 {
                                     offset: 0.4,
-                                    color: '#ac65f9' // 100% 处的颜色
+                                    color: '#00a0f8' // 100% 处的颜色
                                 }, {
                                     offset: 1,
-                                    color: '#ac65f9' // 100% 处的颜色
+                                    color: '#00a0f8' // 100% 处的颜色
                                 }
                             ],
                             globalCoord: false // 缺省为 false
                         },
-                        shadowColor: 'rgba(172,101,249, 0.5)',
+                        shadowColor: 'rgba(0,160,248, 0.5)',
                         shadowBlur: 10,
                         shadowOffsetY: 7
                     }
                 },
                 itemStyle: {
                     normal: {
-                        color: '#ac65f9',
+                        color: '#00a0f8',
                         borderWidth: 10,
                         /*shadowColor: 'rgba(72,216,191, 0.3)',
                          shadowBlur: 100,*/
-                        borderColor: "#ac65f9"
+                        borderColor: "#00a0f8"
                     }
                 },
                 smooth: true

@@ -8,11 +8,13 @@
     <title>项目应用</title>
     <link rel="stylesheet" href="css/basicStyle.css">
     <link rel="stylesheet" href="css/home.css">
-    <!-- 引入样式 -->
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="js/jquery.min.js"></script>
     <!-- 引入组件库 -->
     <script src="js/vue.min.js"></script>
-    <script src="js/elementUI.js"></script>
+    <!-- 引入样式 -->
+<!--    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
+    <!-- 引入组件库 -->
+<!--    <script src="https://unpkg.com/element-ui/lib/index.js"></script>-->
 </head>
 <body>
 <header>
@@ -28,7 +30,7 @@
         </span>
         <span class="settItem">
             <img src="img/addIcon.png" alt="">
-            <span>新建</span>
+            <span class="addPro">新建</span>
         </span>
         <span class="settItem">
             <img src="img/tbIcon.png" alt="">
@@ -113,8 +115,146 @@
         </div>
     </div>
 </div>
+<div class="template" id="template">
+    <div class="minBox">
+        <div class="titleBox">
+            <span>新增项目</span>
+            <img class="outImg" src="img/public/close.png" alt="">
+        </div>
+        <div class="infoBox">
+            <p>
+                <span>项目名称:</span>
+                <input class="proName" type="text">
+            </p>
+            <p>
+                <span>项目logo:</span>
+                <select name="" id="sntImg">
+                    <option title="img/zhimg/zhbg.jpg">智慧办公</option>
+                    <option title="img/zhimg/zhyl.jpg">智慧养老</option>
+                    <option title="img/zhimg/zhyy.jpg">智慧医院</option>
+                    <option title="img/zhimg/zhly.jpg">智慧楼宇</option>
+                    <option title="img/zhimg/zhsq.jpg">智慧社区</option>
+                    <option title="img/zhimg/zhjd.jpg">智慧酒店</option>
+                    <option title="img/zhimg/zhaf.jpg">智慧安防</option>
+                    <option title="img/zhimg/zhzw.jpg">智慧政务</option>
+                    <option title="img/zhimg/zhwy.jpg">智慧物业</option>
+                    <option title="img/zhimg/zhyq.jpeg">智慧园区</option>
+                    <option title="img/zhimg/zhny.jpg">智慧旅游</option>
+                    <option title="img/zhimg/zhcs.jpg">智慧商超</option>
+                    <option title="img/zhimg/zhxy.jpg">智慧校园</option>
 
-<script src="js/jquery.min.js"></script>
+                </select>
+            </p>
+            <p>
+                <span>企业名称:</span>
+                <input class="companyName" type="text">
+            </p>
+            <p>
+                <span>所属行业:</span>
+                <input class="sshy" type="text">
+            </p>
+            <p style="position: relative">
+                <span>事件节点:</span>
+                <el-date-picker
+                        style="position: absolute;width: 100%;left: 17.8%"
+                        v-model="value1"
+                        type="datetime"
+                        placeholder="选择日期时间">
+                </el-date-picker>
+            </p>
+            <p>
+                <span>网络要求:</span>
+                <select name="" id="inter">
+                    <option value="专网">专网</option>
+                    <option value="互联网">互联网</option>
+                    <option value="内网">内网</option>
+                </select>
+            </p>
+            <p>
+                <span>项目描述:</span>
+                <input class="proMS" type="text">
+            </p>
+            <div class="btns">
+                <button class="addBtn">添加</button>
+                <button class="closeBtn">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 引入样式 -->
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+<script>
+    $(function () {
+
+        //获取当前时间
+        function nowTime(){
+            let date = new Date();
+            this.year = date.getFullYear();
+            this.month = date.getMonth() + 1;
+            this.date = date.getDate();
+            this.hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+            this.minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+            this.second = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+            let time = this.year+"-"+this.month+"-"+this.date+" "+this.minute+":"+this.minute+":"+this.second;
+
+            return time;
+        }
+
+
+        //添加
+        $(".addBtn").on("click",function () {
+            let proName = $(".proName").val();
+            let sntImg = $("#sntImg option:selected").attr("title");
+            let companyName = $(".companyName").val();
+            let sshy = $(".sshy").val();
+            let inter = $("#inter option:selected").val();
+            let proMS = $(".proMS").val();
+            //获取当前事件
+            let updateTime = nowTime();
+            vm.listData.push({
+                id:vm.listData.length+1,
+                name:proName,
+                imgUrl:sntImg,
+                qyName:companyName,
+                sshy:sshy,
+                createTime:nowTime(),
+                updateTime:updateTime,
+                timeJD:template.value1,
+                yymk:10,
+                wnyq:inter,
+                message:proMS
+            });
+            console.log(vm.listData);
+            $("#sntImg").empty();
+            $(".template").hide();
+        });
+        //关闭  取消
+        $(".closeBtn").on("click",function () {
+            $(".template").hide();
+        });
+        $(".outImg").on("click",function () {
+            $(".template").hide();
+        });
+
+        //新建
+        $(".addPro").on("click",function () {
+            $(".template").show();
+        });
+    });
+</script>
+<script>
+    let template = new Vue({
+        el:'#template',
+        data() {
+            return {
+                value1:""
+            };
+        }
+    });
+</script>
 <script>
     $(function () {
 
@@ -127,15 +267,15 @@
             window.location.href = "Demo.html"
         });
 
-            $(".sysName").blur(function () {
-                let index = $(this).attr("title");
-                let id = index -1;
-                vm.detailData.name = $(this).text();
-                vm.listData[id].name = $(this).text();
-            });
+        $(".sysName").blur(function () {
+            let index = $(this).attr("title");
+            let id = index -1;
+            vm.detailData.name = $(this).text();
+            vm.listData[id].name = $(this).text();
+        });
 
 
-        $(".imgBox").on("click",function () {
+        $('body').on("click",".imgBox",function () {
             $(".listBox").css({
                 width:"calc(100% - 5.21rem)"
             });
@@ -168,7 +308,6 @@
         });
     });
 </script>
-
 <script>
     let vm = new Vue({
         el:"#one",
@@ -266,6 +405,7 @@
 
 
 </script>
+
 </body>
 
 </html>

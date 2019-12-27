@@ -29,8 +29,9 @@ header {
     color: white;
     font-weight: bold;
     display: flex;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
+    padding-left: 0.1rem;
 }
 header img{
     height: 70%;
