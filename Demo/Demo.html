@@ -218,15 +218,6 @@
 
                 },
                 {
-                    code:"118",
-                    icon:"img/allIcon/zhinengmenjin.png",
-                    name:"智慧门禁",
-                    isCheck:false,
-                    isReadonly :true,
-                    iframeUrl:"htmls/tcxt.html"
-
-                },
-                {
                     code:"119",
                     icon:"img/allIcon/keshiduijiang.png",
                     name:"可视化对讲",
@@ -949,7 +940,7 @@
                 },
                 {
                     code:"109",
-                    icon:"img/navLeft/nav_8.png",
+                    icon:"img/allIcon/xitongguanli_1.png",
                     name:"系统管理",
                     isCheck:true,
                     isReadonly:true,
@@ -957,7 +948,7 @@
                 },
                 {
                     code:"110",
-                    icon:"img/navLeft/nav_8.png",
+                    icon:"img/allIcon/shijianguanli_1.png",
                     name:"事件管理",
                     isCheck:true,
                     isReadonly:true,
@@ -965,7 +956,7 @@
                 },
                 {
                     code:"111",
-                    icon:"img/navLeft/nav_8.png",
+                    icon:"img/allIcon/pingtaiguanli_1.png",
                     name:"平台管理",
                     isCheck:true,
                     isReadonly:true,
@@ -973,7 +964,7 @@
                 },
                 {
                     code:"119",
-                    icon:"img/navLeft/nav_8.png",
+                    icon:"img/allIcon/3dguanli_1.png",
                     name:" 管理3D",
                     isCheck:true,
                     isReadonly:true,
@@ -981,7 +972,7 @@
                 },
                 {
                     code:"103",
-                    icon:"img/navLeft/nav_3.png",
+                    icon:"img/allIcon/shebeiguanli_1.png",
                     name:" 设备管理",
                     isCheck:true,
                     isReadonly:true,
@@ -1000,7 +991,7 @@
                 },
                 {
                     code:"109",
-                    icon:"img/navLeft/nav_8.png",
+                    icon:"img/allIcon/xitongguanli_1.png",
                     name:"系统管理",
                     isCheck:true,
                     isReadonly:true,
@@ -1008,7 +999,7 @@
                 },
                 {
                     code:"110",
-                    icon:"img/navLeft/nav_8.png",
+                    icon:"img/allIcon/shijianguanli_1.png",
                     name:"事件管理",
                     isCheck:true,
                     isReadonly:true,
@@ -1016,7 +1007,7 @@
                 },
                 {
                     code:"111",
-                    icon:"img/navLeft/nav_8.png",
+                    icon:"img/allIcon/pingtaiguanli_1.png",
                     name:"平台管理",
                     isCheck:true,
                     isReadonly:true,
@@ -1024,7 +1015,7 @@
                 },
                 {
                     code:"119",
-                    icon:"img/navLeft/nav_8.png",
+                    icon:"img/allIcon/3dguanli_1.png",
                     name:" 管理3D",
                     isCheck:true,
                     isReadonly:true,
@@ -1032,7 +1023,7 @@
                 },
                 {
                     code:"103",
-                    icon:"img/navLeft/nav_3.png",
+                    icon:"img/allIcon/shebeiguanli_1.png",
                     name:" 设备管理",
                     isCheck:true,
                     isReadonly:true,
@@ -1080,7 +1071,6 @@
                 }
                 //点击全部列表的时候
                 else {
-
                     // this.name = this.allList[index].name;
                     // $("body .name").text(this.name);
                     // this.xxData = [];
@@ -1096,9 +1086,9 @@
 
             },
 
-
             //点击右侧
             addNavData(index,changeName){
+
                 if(!changeName){
                     this.secondData[index].isCheck = !this.secondData[index].isCheck;
                 }
@@ -1106,7 +1096,9 @@
                 if(this.secondData[index].isCheck){
                     this.secondData[index].icon = this.secondData[index].icon.split(".png")[0]+"_1.png";
                     this.xxData.push(this.secondData[index]);
-                }else {
+                }
+
+                else {
 
                     for(let i = 0; i<this.xxData.length;i++){
                         if(this.xxData[i].name ==  this.secondData[index].name){
@@ -1118,6 +1110,8 @@
                     }
 
                 }
+
+
 
                 // this.xxData = [];
                 //
@@ -1193,13 +1187,24 @@
             $(this).siblings(".inputBox").css({
                 "border":"none",
             });
-            $(".inputBox").text(text);
-            let xx = $(this).attr("value");
-            one.secondData[xx].name = text;
-            one.addNavData(xx,"changeName");
             $(this).css({
                 "display":"none"
             });
+            let xx = $(this).attr("value");
+
+            // for(let i = 0; i<one.xxData.length;i++){
+            //     if(one.xxData[i].name ==  one.secondData[xx].name){
+            //         one.xxData[i].name = text;
+            //         var storage = window.localStorage;
+            //         var xxData = JSON.stringify(one.xxData);
+            //         storage.setItem('xxData',xxData);
+            //         break;
+            //     }
+            // }
+            one.secondData[xx].name = text;
+            var storage = window.localStorage;
+            var xxData = JSON.stringify(one.xxData);
+            storage.setItem('xxData',xxData);
         });
         //获取当前时间
         let date = new Date();
