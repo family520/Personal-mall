@@ -44,7 +44,7 @@
     <div class="listBox">
         <div class="itemBox" v-for="(item,index) in listData" :key="index">
             <div class="imgBox" @click="show(index)">
-                <img :src="item.imgUrl" alt="">
+                <img class="showImg" :src="item.imgUrl" alt="">
             </div>
             <p>
                 <i></i>
@@ -127,17 +127,12 @@
             window.location.href = "Demo.html"
         });
 
-        // $(".listBox .sysName").each(function () {
             $(".sysName").blur(function () {
                 let index = $(this).attr("title");
                 let id = index -1;
-                // console.log(id);
                 vm.detailData.name = $(this).text();
                 vm.listData[id].name = $(this).text();
-                // console.log(vm.detailData.name);
-                // $(".smName").text(vm.detailData.name);
             });
-        // });
 
 
         $(".imgBox").on("click",function () {
@@ -153,6 +148,19 @@
                 $(".setBox").hide();//需要隐藏的元素
             }
         });
+
+        //右边隐藏
+        $(document).bind("click",function(e){
+            let con_one=$("body .detailBox");//设置目标区域
+            if(!con_one.is(e.target) && con_one.has(e.target).length===0 && !$(".showImg").is(e.target)){
+                $(".listBox").css({
+                    width:"100%"
+                });
+                $(".detailBox").hide();//需要隐藏的元素
+            }
+        });
+
+
         $("body .setImg").each(function () {
             $(this).on("click",function () {
                 $(this).parent().next(".setBox").slideDown(200);
