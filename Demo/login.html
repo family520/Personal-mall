@@ -31,16 +31,10 @@
     <script>
         $(function () {
             $('.loginBtn').on('click',function(){
-                parent.$(window.parent.document).find('#fater_login').click();
+                window.parent.hideFaterLogin()
             });
             $(".xmName").text(localStorage.getItem("projectName"));
         });
     </script>
 </body>
-<script>
-
-    $('.loginBtn').on('click',function(){
-        parent.$(window.parent.document).find('#fater_login').click();
-    });
-</script>
 </html>
