@@ -66,7 +66,7 @@
             <label :for="index" :class="{ sm : item.isReadonly}"></label>
             <input class="inputBox" readonly type="text" :value="item.name">
             <button class="saveBtn" :value="index">保存</button>
-            <img  class="updateImg" src="img/303.png" alt="">
+            <img  class="updateImg" src="img/303.png" alt="" v-show="!item.isCheck">
         </li>
     </ul>
     <div class="rightBottomBox">
@@ -339,7 +339,7 @@
                         },
                         {
                             code:"105",
-                            icon:"img/navLeft/nav_5.png",
+                            icon:"img/allIcon/shebeimoshiguanli.png",
                             name:"设备模式管理",
                             isCheck:false,
                             iframeUrl:"office-ui/html/modeManage.html"
@@ -389,7 +389,7 @@
                     dataList:[
                         {
                             code:"105",
-                            icon:"img/navLeft/nav_5.png",
+                            icon:"img/allIcon/shebeimoshiguanli.png",
                             name:"设备模式管理",
                             isCheck:false,
                             iframeUrl:"office-ui/html/modeManage.html"
@@ -432,7 +432,7 @@
 
                         {
                             code:"105",
-                            icon:"img/navLeft/nav_5.png",
+                            icon:"img/allIcon/shebeimoshiguanli.png",
                             name:"设备模式管理",
                             isCheck:false,
 
@@ -498,7 +498,7 @@
                         },
                         {
                             code:"105",
-                            icon:"img/navLeft/nav_5.png",
+                            icon:"img/allIcon/shebeimoshiguanli.png",
                             name:"设备模式管理",
                             isCheck:false,
                             iframeUrl:"office-ui/html/modeManage.html"
@@ -547,7 +547,7 @@
                     dataList:[
                         {
                             code:"105",
-                            icon:"img/navLeft/nav_5.png",
+                            icon:"img/allIcon/shebeimoshiguanli.png",
                             name:"设备模式管理",
                             isCheck:false,
 
@@ -590,7 +590,7 @@
                     dataList:[
                         {
                             code:"105",
-                            icon:"img/navLeft/nav_5.png",
+                            icon:"img/allIcon/shebeimoshiguanli.png",
                             name:"设备模式管理",
                             isCheck:false,
                             iframeUrl:"office-ui/html/modeManage.html"
@@ -735,7 +735,7 @@
 
                         {
                             code:"105",
-                            icon:"img/navLeft/nav_5.png",
+                            icon:"img/allIcon/shebeimoshiguanli.png",
                             name:"设备模式管理",
                             isCheck:false,
                             iframeUrl:"office-ui/html/modeManage.html"
@@ -788,7 +788,7 @@
 
                         {
                             code:"105",
-                            icon:"img/navLeft/nav_5.png",
+                            icon:"img/allIcon/shebeimoshiguanli.png",
                             name:"设备模式管理",
                             isCheck:false,
                             iframeUrl:"office-ui/html/modeManage.html"
@@ -820,7 +820,7 @@
 
                         {
                             code:"105",
-                            icon:"img/navLeft/nav_5.png",
+                            icon:"img/allIcon/shebeimoshiguanli.png",
                             name:"设备模式管理",
                             isCheck:false,
                             iframeUrl:"office-ui/html/modeManage.html"
@@ -874,7 +874,7 @@
 
                         {
                             code:"105",
-                            icon:"img/navLeft/nav_5.png",
+                            icon:"img/allIcon/shebeimoshiguanli.png",
                             name:"设备模式管理",
                             isCheck:false,
                             iframeUrl:"office-ui/html/modeManage.html"
@@ -1084,28 +1084,49 @@
 
             //点击右侧
             addNavData(index,changeName){
+            
 
                 if(!changeName){
+
                     this.secondData[index].isCheck = !this.secondData[index].isCheck;
-                }
 
-                if(this.secondData[index].isCheck){
-                    this.secondData[index].icon = this.secondData[index].icon.split(".png")[0]+"_1.png";
-                    this.xxData.push(this.secondData[index]);
-                }
 
-                else {
+                    if(this.secondData[index].isCheck){
+                        this.secondData[index].icon = this.secondData[index].icon.split(".png")[0]+"_1.png";
+                        this.xxData.push(this.secondData[index]);
 
-                    for(let i = 0; i<this.xxData.length;i++){
-                        if(this.xxData[i].name ==  this.secondData[index].name){
-                            this.secondData[index].icon = this.secondData[index].icon.split("_1")[0]+".png";
-                            console.log(this.secondData[index].icon);
-                            this.xxData.splice(i,1);
-                            return;
+                        for(let i = 0; i<this.allList.length;i++){
+                            if(this.allList[i].name ==  this.secondData[index].name){
+                                this.allList[i].icon = this.secondData[index].icon;
+                                // console.log(this.secondData[index].icon);
+                                break
+                            }
                         }
+
+
                     }
 
+                    else {
+                        for(let i = 0; i<this.xxData.length;i++){
+                            if(this.xxData[i].name ==  this.secondData[index].name){
+                                this.secondData[index].icon = this.secondData[index].icon.split("_1")[0]+".png";
+                                // console.log(this.secondData[index].icon);
+                                this.xxData.splice(i,1);
+                                break;
+                            }
+                        }
+                        for(let i = 0; i<this.allList.length;i++){
+                            if(this.allList[i].name ==  this.secondData[index].name){
+                                this.allList[i].icon = this.secondData[index].icon;
+                                // console.log(this.secondData[index].icon);
+                                break
+                            }
+                        }
+
+                    }
                 }
+
+                
 
 
 
@@ -1166,6 +1187,7 @@
 
         //修改title
         $('body').on("click",".updateImg",function () {
+
             $(this).siblings(".saveBtn").css({
                 "display":"block"
             });
