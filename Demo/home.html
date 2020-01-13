@@ -44,7 +44,7 @@
 </div>
 <div class="contentBox" id="one">
     <div class="listBox">
-        <div class="itemBox" v-for="(item,index) in listData" :key="index">
+        <div class="itemBox" v-for="(item,index) in listData" :key="index" v-show="index < 7">
             <div class="imgBox" @click="show(index)">
                 <img class="showImg" :src="item.imgUrl" alt="">
             </div>
@@ -182,9 +182,9 @@
     </div>
 </div>
 <!-- 引入样式 -->
-<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+<link rel="stylesheet" href="css/elementUI.css">
 <!-- 引入组件库 -->
-<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="js/elementUI.js"></script>
 
 <script>
     $(function () {
@@ -227,8 +227,6 @@
                 wnyq:inter,
                 message:proMS
             });
-            console.log(vm.listData);
-            $("#sntImg").empty();
             $(".template").hide();
         });
         //关闭  取消
