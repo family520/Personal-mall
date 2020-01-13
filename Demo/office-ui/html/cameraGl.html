@@ -121,9 +121,9 @@
 <script>
     var html;
     var url = "";
-    // $("#loadDiv").html(loadHtml);
+    // // $("#loadDiv").html(loadHtml);
     $(function() {
-        // $.show_overall_loding();
+        // //$.show_overall_loding();
         $('#myTable').bootstrapTable({
             url: '../../json/test002.json', //请求后台的URL（*）
             //data: data1,                            //本地数据
@@ -167,7 +167,7 @@
                 console.info(row);
             },
             onLoadSuccess: function() {
-                // $.hide_overall_loding();
+                // //$.hide_overall_loding();
             },
             columns: [{
                 checkbox: true
@@ -215,9 +215,9 @@
         });
 
         function queryParams(params) {
-            // $.show_overall_loding();
+            // //$.show_overall_loding();
             return {
-                // token: $.getToken(),
+                // // token: $.getToken(),
                 pageSize: params.pageSize,
                 pageNum: params.pageNumber,
                 cameraName: $("#s_cameraName").val(),
@@ -228,7 +228,7 @@
         }
 
         $("#search").click(function() {
-            $.show_overall_loding();
+            //$.show_overall_loding();
             $('#myTable').bootstrapTable('refresh');
         });
 
@@ -255,14 +255,14 @@
         var conlayer = layer.confirm("确定删除选中数据？", {
             btn: ['确定', '取消']
         }, function () {
-            $.show_overall_loding();
+            //$.show_overall_loding();
             $.deleteJSON(deviceServiceUrl + "/camerGl?clIds=" + ids, {}, function (data) {
                 if (data.code == 0) {
                     layer.close(conlayer);
                     layer.msg("成功", {
                         icon: 1
                     });
-                    $.show_overall_loding();
+                    //$.show_overall_loding();
                     $('#myTable').bootstrapTable('refresh');
                     return true;
                 } else {
@@ -402,10 +402,10 @@
                     layer.msg('请配置位置', {icon: 5});
                     return;
                 }
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 if(isAdd) {
                     $.postJSON(deviceServiceUrl + "/camerGl", data, function(data) {
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                         if(data.code == 0) {
                             layer.close(myLayer);
                             layer.msg("成功", {
@@ -432,7 +432,7 @@
                     });
                 } else {
                     $.putJSON(deviceServiceUrl + "/camerGl", data, function(data) {
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                         if(data.code == 0) {
                             layer.close(myLayer);
                             layer.msg("成功", {

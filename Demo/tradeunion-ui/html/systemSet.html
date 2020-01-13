@@ -91,12 +91,12 @@
         },
         submitHandler: function (form) {
             var assetsNumber = $("#assetsNumber").val();
-            $.show_overall_loding();
+            //$.show_overall_loding();
             $.putJSON(userServiceUrl + "/systemSet", {
                 "id": id,
                 "assetsNumber": assetsNumber,
             }, function (data) {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
                 if (data.code == 0) {
                     parent.layer.msg("操作成功", {
                         icon: 6
@@ -125,10 +125,10 @@
     });
 	
     function fromBCCALoad() {
-        $.show_overall_loding();
+        //$.show_overall_loding();
         $.sanjiGetJSON(userServiceUrl + "/systemSet/list", {
         }, function (data) {
-            $.hide_overall_loding();
+            //$.hide_overall_loding();
             if (data.code == 0) {
                 var assetsNumber = data.data.list[0].assetsNumber;
                 id = data.data.list[0].id;

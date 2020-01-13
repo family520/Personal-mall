@@ -289,7 +289,7 @@
 				},
 				queryParams: function(params) {
 					return {
-						// token: $.getToken(),
+						// // token: $.getToken(),
 						pageSize: params.pageSize,
 						pageNum: params.pageNumber,
 						modeName: $("#s_modeName").val(),
@@ -298,7 +298,7 @@
 					};
 				},
 				refresh: function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					this.node.bootstrapTable('refresh')
 				},
 				bindCreate: function() {
@@ -393,10 +393,10 @@
 						},
 						submitHandler: function(form) {
 							var data = $("#modeForm").serializeJson();
-							$.show_overall_loding();
+							//$.show_overall_loding();
 							if(isAdd) {
 								$.postJSON(deviceServiceUrl + "/mode", data, function(data) {
-									$.hide_overall_loding();
+									//$.hide_overall_loding();
 									if(data.code == 0) {
 										layer.close(myLayer);
 										layer.msg("成功", {
@@ -411,7 +411,7 @@
 								});
 							} else {
 								$.putJSON(deviceServiceUrl + "/mode", data, function(data) {
-									$.hide_overall_loding();
+									//$.hide_overall_loding();
 									if(data.code == 0) {
 										layer.close(myLayer);
 										layer.msg("成功", {
@@ -460,12 +460,12 @@
                         ids.push(one.id);
                     }
                     var roomId = $("#roomId").val();
-                    $.show_overall_loding();
+                    //$.show_overall_loding();
                     $.putJSON(deviceServiceUrl + "/mode/batchSetRoom", {
                         'meetRoomId': roomId,
                         'modeIds': ids
                     }, function(data) {
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                         if(data.code == 0) {
                             layer.close(myLayer);
                             layer.msg("成功", {
@@ -543,13 +543,13 @@
 						});
 						return;
 					}
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					$.postJSON(deviceServiceUrl + "/mode/setMode", {
 						id: mode.id,
 						deviceList: pdatas
 					}, function(data) {
 						console.log(data);
-						$.hide_overall_loding();
+						//$.hide_overall_loding();
 						if(data.code == 0) {
 							layer.close(myLayer);
 							layer.msg("成功", {
@@ -611,9 +611,9 @@
 			var conlayer = layer.confirm("是否确认发送控制？", {
 				btn: ['确定', '取消']
 			}, function() {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				$.postJSON(deviceServiceUrl + "/mode/controlMode?id=" + id, {}, function(data) {
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 					if(data.code == 0) {
 						layer.close(conlayer);
 						layer.msg("成功", {
@@ -637,9 +637,9 @@
 			var conlayer = layer.confirm("确定删除？", {
 				btn: ['确定', '取消']
 			}, function() {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				$.deleteJSON(deviceServiceUrl + "/mode?id=" + id, {}, function(data) {
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 					if(data.code == 0) {
 						layer.close(conlayer);
 						layer.msg("成功", {
@@ -668,7 +668,7 @@
 			return {
 				node: $("#deviceTable"), //渲染节点
 				init: function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					var that = this;
 					this.node.bootstrapTable({
 						url: deviceServiceUrl + "/device/list", //请求后台的URL（*）
@@ -711,7 +711,7 @@
 							console.info(row);
 						},
 						onLoadSuccess: function() {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 						},
 						columns: [{
 							width: 50,
@@ -757,9 +757,9 @@
 
 				},
 				queryParams: function(params) {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					return {
-						token: $.getToken(),
+						// token: $.getToken(),
 						pageSize: params.pageSize,
 						pageNum: params.pageNumber,
 						deviceAlias: $("#s_deviceAlias").val(),
@@ -768,7 +768,7 @@
 					}
 				},
 				refresh: function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					this.node.bootstrapTable('refresh')
 				},
 				bindCreate: function() {
@@ -788,10 +788,10 @@
 			var pdata = {
 				typeId: one.productCode
 			}
-			$.show_overall_loding();
+			//$.show_overall_loding();
 			$.sanjiGetJSON(deviceServiceUrl + "/typeTemplate/getDefaultTemp", pdata, function(data) {
 				if(!data.data) {
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 					layer.msg("没有对应的控制模版，需要去分类管理去设置模版！", {
 						icon: 2
 					});
@@ -799,13 +799,13 @@
 				}
 				document.getElementById("Example2").srcdoc = data.data.templateCode;
 				$("#Example2").load(function() {
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 					$("#Example2").contents().find(".sendControlBtn").unbind();
 					$("#Example2").contents().find(".sendControlBtn").on("click", function() {
-						//$.show_overall_loding();
+						////$.show_overall_loding();
 						var datas = $("#Example2")[0].contentWindow.getCmdParams($(this));
 						if(!datas) {
-							//$.hide_overall_loding();
+							////$.hide_overall_loding();
 							layer.msg("操作失败", {
 								icon: 2
 							});
@@ -815,7 +815,7 @@
 							datas.controlParams = JSON.stringify(datas.controlParams);
 						}
 						if(!datas.operation) {
-							//$.hide_overall_loding();
+							////$.hide_overall_loding();
 							layer.msg("操作失败", {
 								icon: 2
 							});
@@ -894,7 +894,7 @@
             return {
                 node: $("#tableRoom"), //渲染节点
                 init: function() {
-                    $.show_overall_loding();
+                    //$.show_overall_loding();
                     var that = this;
                     this.node.bootstrapTable({
                         url: deviceServiceUrl + "/officeRoom/list", //请求后台的URL（*）
@@ -937,7 +937,7 @@
                             console.info(row);
                         },
                         onLoadSuccess: function() {
-                            $.hide_overall_loding();
+                            //$.hide_overall_loding();
                         },
                         columns: [{
                             width: 50,
@@ -992,9 +992,9 @@
 
                 },
                 queryParams: function(params) {
-                    $.show_overall_loding();
+                    //$.show_overall_loding();
                     return {
-                        token: $.getToken(),
+                        // token: $.getToken(),
                         pageSize: params.pageSize,
                         pageNum: params.pageNumber,
                         roomName: $("#s_roomName").val(),
@@ -1002,7 +1002,7 @@
                     }
                 },
                 refresh: function() {
-                    $.show_overall_loding();
+                    //$.show_overall_loding();
                     this.node.bootstrapTable('refresh')
                 },
                 bindCreate: function() {

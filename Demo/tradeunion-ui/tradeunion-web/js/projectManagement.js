@@ -78,7 +78,7 @@ $(function() {
 			type: "GET", //提交方式
 			url: userServiceUrl + "/projectInfo/list",
 			data: {
-				token: $.getToken(),
+				// token: $.getToken(),
 				pageNum: 1,
 				pageSize: 10000
 			},

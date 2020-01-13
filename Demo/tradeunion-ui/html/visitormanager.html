@@ -132,7 +132,7 @@
 <div id="loadDiv"></div>
 </body>
 <script type="text/javascript">
-    $("#loadDiv").html(loadHtml);
+    // $("#loadDiv").html(loadHtml);
     let html;
     var isRetract = false;
     var isInput = false;
@@ -169,7 +169,7 @@
                         total: result.total,
                         rows: result.list
                     });
-                    $.hide_overall_loding();
+                    //$.hide_overall_loding();
                     return res[0];
                 } else {
                     res.push({
@@ -177,12 +177,12 @@
                         rows: []
                     });
                     layer.msg("获取数据失败！", {icon: 2});
-                    $.hide_overall_loding();
+                    //$.hide_overall_loding();
                     return res[0];
                 }
             },
             onLoadSuccess: function () {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
             },
             onDblClickRow: function (row) {
                 console.info(row);
@@ -267,7 +267,7 @@
 
         function queryParams(params) {
             return {
-                token: $.getToken(),
+                // token: $.getToken(),
                 pageSize: params.pageSize,
                 pageNum: params.pageNumber,
                 leaderOne:$("#s_leaderOne").val(),
@@ -806,7 +806,7 @@
         return {
             node: $("#usermodeTable"), //渲染节点
             init: function() {
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 var that = this;
                 this.node.bootstrapTable({
                     url: userServiceUrl + "/visitorconfig/list", //请求后台的URL（*）
@@ -855,7 +855,7 @@
                         uModeId = row.id;
                     },
                     onLoadSuccess: function() {
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                     },
                     columns: [{
                         checkbox: true,
@@ -890,16 +890,16 @@
 
             },
             queryParams: function(params) {
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 return {
-                    token: $.getToken(),
+                    // token: $.getToken(),
                     pageSize: params.pageSize,
                     pageNum: params.pageNumber,
                     organizationName: $("#s_userName").val()
                 }
             },
             refresh: function() {
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 this.node.bootstrapTable('refresh')
             },
             bindCreate: function() {

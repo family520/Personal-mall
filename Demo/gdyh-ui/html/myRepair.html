@@ -23,9 +23,14 @@
     <script src="../plus/validate/messages_zh.min.js"></script>
     <script src="../js/bootstrap-treeview.js"></script>
 
-    <script src="../js/httpUtils.js"></script>
-    <script src="../js/Md5.js"></script>
+<!--    <script src="../js/httpUtils.js"></script>-->
+<!--    <script src="../js/Md5.js"></script>-->
     <style>
+        .lyear-layout-content{
+            padding-top:0;
+            padding-left: 0;
+            background: #E1EEF6;
+        }
     </style>
 </head>
 
@@ -35,15 +40,15 @@
 
         <!--加载头部和菜单栏-->
         <div id="hander">
-            <script>
-                $(function () {
-                    $("#hander").load("handMenu.html");
-                });
-            </script>
+<!--            <script>-->
+<!--                $(function () {-->
+<!--                    $("#hander").load("handMenu.html");-->
+<!--                });-->
+<!--            </script>-->
         </div>
 
         <!--页面主要内容-->
-        <main class="lyear-layout-content" style="display: none">
+        <main class="lyear-layout-content">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
@@ -122,11 +127,11 @@
 <script>
     var html;
     var rdata = {};
-    $("#loadDiv").html(loadHtml);
+    // $("#loadDiv").html(loadHtml);
     $(function () {
-        $.show_overall_loding();
+        //$.show_overall_loding();
         $('#myTable').bootstrapTable({
-            url: deviceServiceUrl + "/deviceRepair/myList", //请求后台的URL（*）
+            url: "../../json/gd_myRepair.json", //请求后台的URL（*）
             method: 'get',                         //请求方式（*）
             contentType: "application/x-www-form-urlencoded",
             toolbar: '',                            //工具按钮用哪个容器
@@ -167,7 +172,7 @@
                 console.info(row);
             },
             onLoadSuccess: function() {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
             },
             columns: [
                 {
@@ -233,9 +238,9 @@
         });
 
         function queryParams(params) {
-        	$.show_overall_loding();
+        	//$.show_overall_loding();
             return {
-            	token: $.getToken(),
+            	// token: $.getToken(),
                 pageSize: params.pageSize,
                 pageNum: params.pageNumber,
                 repairUserName: $("#repairUser").val(),
@@ -257,7 +262,7 @@
 
         var serchaData = {};
         $("#search").click(function() {
-            $.show_overall_loding();
+            //$.show_overall_loding();
             $('#myTable').bootstrapTable('refresh');
         });
 
@@ -363,18 +368,18 @@
             messages: {
             },
             submitHandler: function (form) {
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 var data = $("#vocieControlForm").serializeJson()
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 if (isAdd) {
                     $.postJSON(deviceServiceUrl + "/deviceRepair", data, function (data) {
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                         if (data.code == 0) {
                             layer.close(myLayer);
                             layer.msg("成功", {
                                 icon: 1
                             });
-                            $.show_overall_loding();
+                            //$.show_overall_loding();
                             $('#myTable').bootstrapTable('refresh');
                             return true;
                         }
@@ -384,13 +389,13 @@
                     });
                 } else {
                     $.putJSON(deviceServiceUrl + "/deviceRepair", data, function (data) {
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                         if (data.code == 0) {
                             layer.close(myLayer);
                             layer.msg("成功", {
                                 icon: 1
                             });
-                            $.show_overall_loding();
+                            //$.show_overall_loding();
                             $('#myTable').bootstrapTable('refresh');
                             return true;
                         }

@@ -116,9 +116,9 @@
     var html;
     // var userIdd = $.getCookie("userId");
     // var url = "";
-    // $("#loadDiv").html(loadHtml);
+    // // $("#loadDiv").html(loadHtml);
     $(function() {
-        // $.show_overall_loding();
+        // //$.show_overall_loding();
         $('#myTable').bootstrapTable({
             url: "../../json/devEvent.json", //请求后台的URL（*）
             //data: data1,                            //本地数据
@@ -162,7 +162,7 @@
                 console.info(row);
             },
             onLoadSuccess: function() {
-                // $.hide_overall_loding();
+                // //$.hide_overall_loding();
             },
             columns: [{
                 checkbox: true
@@ -225,9 +225,9 @@
         });
 
         function queryParams(params) {
-            // $.show_overall_loding();
+            // //$.show_overall_loding();
             return {
-                // token: $.getToken(),
+                // // token: $.getToken(),
                 pageSize: params.pageSize,
                 pageNum: params.pageNumber,
                 // loginUserId: userIdd,
@@ -241,7 +241,7 @@
         }
 
         // $("#search").click(function() {
-        //     $.show_overall_loding();
+        //     //$.show_overall_loding();
         //     $('#myTable').bootstrapTable('refresh');
         // });
         //
@@ -279,12 +279,12 @@
     //         btn: ['提交', '取消'],
     //         yes: function(index, layero) {
     //             var userId = $("#userId").val();
-    //             $.show_overall_loding();
+    //             //$.show_overall_loding();
     //             $.putJSON(deviceServiceUrl + "/eventGl/batchset", {
     //                 'userId': userId,
     //                 'eventGlIds': ids
     //             }, function(data) {
-    //                 $.hide_overall_loding();
+    //                 //$.hide_overall_loding();
     //                 if(data.code == 0) {
     //                     layer.close(myLayer);
     //                     layer.msg("成功", {
@@ -373,14 +373,14 @@
     //     var conlayer = layer.confirm("确定删除选中数据？", {
     //         btn: ['确定', '取消']
     //     }, function () {
-    //         $.show_overall_loding();
+    //         //$.show_overall_loding();
     //         $.deleteJSON(deviceServiceUrl + "/eventGl?eventGlIds=" + ids, {}, function (data) {
     //             if (data.code == 0) {
     //                 layer.close(conlayer);
     //                 layer.msg("成功", {
     //                     icon: 1
     //                 });
-    //                 $.show_overall_loding();
+    //                 //$.show_overall_loding();
     //                 $('#myTable').bootstrapTable('refresh');
     //                 return true;
     //             } else {
@@ -529,10 +529,10 @@
     //                 layer.msg('请选择设备', {icon: 5});
     //                 return;
     //             }
-    //             $.show_overall_loding();
+    //             //$.show_overall_loding();
     //             if(isAdd) {
     //                 $.postJSON(deviceServiceUrl + "/eventGl", data, function(data) {
-    //                     $.hide_overall_loding();
+    //                     //$.hide_overall_loding();
     //                     if(data.code == 0) {
     //                         layer.close(myLayer);
     //                         layer.msg("成功", {
@@ -559,7 +559,7 @@
     //                 });
     //             } else {
     //                 $.putJSON(deviceServiceUrl + "/eventGl", data, function(data) {
-    //                     $.hide_overall_loding();
+    //                     //$.hide_overall_loding();
     //                     if(data.code == 0) {
     //                         layer.close(myLayer);
     //                         layer.msg("成功", {
@@ -592,7 +592,7 @@
     // /*设备列表*/
     // var mModeId = "";
     // function getTable() {
-    //     $.show_overall_loding();
+    //     //$.show_overall_loding();
     //     $('#deviceTable').bootstrapTable({
     //         url: deviceServiceUrl + "/device/list", //请求后台的URL（*）
     //         method: 'get', //请求方式（*）
@@ -634,7 +634,7 @@
     //             mModeId = row.id;
     //         },
     //         onLoadSuccess: function () {
-    //             $.hide_overall_loding();
+    //             //$.hide_overall_loding();
     //         },
     //         columns: [{
     //             checkbox: true,
@@ -665,7 +665,7 @@
     //
     //     function queryParams(params) {
     //         return {
-    //             token: $.getToken(),
+    //             // token: $.getToken(),
     //             pageSize: params.pageSize,
     //             pageNum: params.pageNumber,
     //             deviceAlias: $("#ss_deviceAlias").val()
@@ -674,7 +674,7 @@
     //
     //     var serchaData = {};
     //     $("#search1").on("click", function () {
-    //         $.show_overall_loding();
+    //         //$.show_overall_loding();
     //         $('#deviceTable').bootstrapTable('refresh');
     //     });
     //
@@ -687,7 +687,7 @@
 	// /*用户列表*/
     // var mModeUserId = "";
     // function getUserTable() {
-    //     $.show_overall_loding();
+    //     //$.show_overall_loding();
     //     $('#userTable').bootstrapTable({
     //         url: userServiceUrl + "/user/list", //请求后台的URL（*）
     //         method: 'get', //请求方式（*）
@@ -729,7 +729,7 @@
     //             mModeUserId = row.id;
     //         },
     //         onLoadSuccess: function () {
-    //             $.hide_overall_loding();
+    //             //$.hide_overall_loding();
     //         },
     //         columns: [{
     //             checkbox: true,
@@ -760,7 +760,7 @@
     //
     //     function queryParams(params) {
     //         return {
-    //             token: $.getToken(),
+    //             // token: $.getToken(),
     //             pageSize: params.pageSize,
     //             pageNum: params.pageNumber,
     //             userName: $("#ss_userName").val()
@@ -769,7 +769,7 @@
     //
     //     var serchaData = {};
     //     $("#search2").on("click", function () {
-    //         $.show_overall_loding();
+    //         //$.show_overall_loding();
     //         $('#userTable').bootstrapTable('refresh');
     //     });
     //

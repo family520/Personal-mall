@@ -91,7 +91,7 @@
 		var html;
 
 		var rdata = {};
-		$("#loadDiv").html(loadHtml);
+		// $("#loadDiv").html(loadHtml);
 
 		var menu_option = function() {
 			return {
@@ -113,9 +113,9 @@
 				initData: function() {
 					var _this = this;
 					//if(this.data == "") {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					$.sanjiGetJSON(deviceServiceUrl + "/devicess/treeList", {}, function(data) {
-						$.hide_overall_loding();
+						//$.hide_overall_loding();
 						_this.data = _this.getTreeData(data.data);
 						_this.init();
 					});
@@ -189,9 +189,9 @@
 							var conlayer = layer.confirm("确定" + " " + data[0].devicePositionName + " " + "删除？", {
 								btn: ['确定', '取消']
 							}, function() {
-								$.show_overall_loding();
+								//$.show_overall_loding();
 								$.deleteJSON(deviceServiceUrl + "/devicess?id=" + data[0].id, {}, function(data) {
-									$.hide_overall_loding();
+									//$.hide_overall_loding();
 									if(data.code == 0) {
 										layer.close(conlayer);
 										layer.msg("成功", {
@@ -295,10 +295,10 @@
 							    "isScreenOrganization": 1
 							});*/
 
-							$.show_overall_loding();
+							//$.show_overall_loding();
 							if(isAdd) {
 								$.postJSON(deviceServiceUrl + "/devicess", data, function(data) {
-									$.hide_overall_loding();
+									//$.hide_overall_loding();
 									if(data.code == 0) {
 										layer.close(myLayer);
 										layer.msg("成功", {
@@ -313,7 +313,7 @@
 								});
 							} else {
 								$.putJSON(deviceServiceUrl + "/devicess", data, function(data) {
-									$.hide_overall_loding();
+									//$.hide_overall_loding();
 									if(data.code == 0) {
 										layer.close(myLayer);
 										layer.msg("成功", {

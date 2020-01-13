@@ -121,7 +121,7 @@
 <div id="loadDiv"></div>
 </body>
 <script type="text/javascript">
-    $("#loadDiv").html(loadHtml);
+    // $("#loadDiv").html(loadHtml);
     let html;
     $(function () {
         $('#myTable').bootstrapTable({
@@ -164,7 +164,7 @@
                 }
             },
             onLoadSuccess: function () {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
             },
             onDblClickRow: function (row) {
                 console.info(row);
@@ -229,7 +229,7 @@
 
         function queryParams(params) {
             return {
-                token: $.getToken(),
+                // token: $.getToken(),
                 pageSize: params.pageSize,
                 pageNum: params.pageNumber,
                 code: $("#search_code").val(),
@@ -239,7 +239,7 @@
         }
 
         $("#search").on("click", function () {
-			$.show_overall_loding();
+			//$.show_overall_loding();
             $('#myTable').bootstrapTable('refresh');
         });
 
@@ -292,9 +292,9 @@
             btn: ['提交','取消'],
             yes: function (index, layero) {
                 layer.close(myLayer);
-				$.show_overall_loding();
+				//$.show_overall_loding();
                 $.putJSON(userServiceUrl + "/industry",{id:data.id,code:$("#edit_code").val(),name:$("#edit_name").val(),type:$("#edit_type").val()},function (org) {
-                    $.hide_overall_loding();
+                    //$.hide_overall_loding();
 					if(org.code == 0){
                         layer.close(myLayer);
 						layer.msg("操作成功", {icon: 1});
@@ -322,9 +322,9 @@
         var conlayer = layer.confirm("确定删除？", {
 			btn: ['确定', '取消']
 		}, function() {
-			$.show_overall_loding();
+			//$.show_overall_loding();
 	        $.deleteJSON(addToUrlToken(userServiceUrl + "/industry")+"&id="+data.id,{},function (org) {
-	            $.hide_overall_loding();
+	            //$.hide_overall_loding();
 				if(org.code == 0) {
 					layer.close(conlayer);
 					layer.msg("操作成功", {icon: 1});
@@ -377,11 +377,11 @@
 				}
             },
             submitHandler:function (form) {
-				$.show_overall_loding();
+				//$.show_overall_loding();
                 $.postJSON(userServiceUrl+"/industry",
                     {code:$("#add_code").val(),name:$("#add_name").val(),type:$("#add_type").val()},
                     function (org) {
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                         if(org.code == 0){
                             layer.close(myLayer);
                             $("#myTable").bootstrapTable("refresh");

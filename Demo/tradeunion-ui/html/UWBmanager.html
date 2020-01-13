@@ -125,9 +125,9 @@
 <script>
     var html;
     var rdata = {};
-    $("#loadDiv").html(loadHtml);
+    // $("#loadDiv").html(loadHtml);
     $(function () {
-        $.show_overall_loding();
+        //$.show_overall_loding();
         $('#myTable').bootstrapTable({
             url: userServiceUrl + "/organizationFloor/allList", //请求后台的URL（*）
             method: 'get',                         //请求方式（*）
@@ -170,7 +170,7 @@
                 console.info(row);
             },
             onLoadSuccess: function() {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
             },
             columns: [
                 {
@@ -227,9 +227,9 @@
         });
 
         function queryParams(params) {
-        	$.show_overall_loding();
+        	//$.show_overall_loding();
             return {
-            	token: $.getToken(),
+            	// token: $.getToken(),
                 pageSize: params.pageSize,
                 pageNum: params.pageNumber,
                 name: $("#s_name").val(),
@@ -238,7 +238,7 @@
         }
         var serchaData = {};
         $("#search").click(function() {
-            $.show_overall_loding();
+            //$.show_overall_loding();
             $('#myTable').bootstrapTable('refresh');
         });
 
@@ -274,15 +274,15 @@
 		var conlayer = layer.confirm("确定解绑？", {
 			btn: ['确定', '取消']
 		}, function() {
-			$.show_overall_loding();
+			//$.show_overall_loding();
 			$.deleteJSON(addToUrlToken(deviceServiceUrl + "/windowscontrol")+"&id=" + data.id, {}, function(data) {
-				$.hide_overall_loding();
+				//$.hide_overall_loding();
 				if(data.code == 0) {
 					layer.close(conlayer);
 					layer.msg("成功", {
 						icon: 1
 					});
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					$('#myTable').bootstrapTable('refresh');
 					return true;
 				}
@@ -363,7 +363,7 @@
             		}
             },
             submitHandler: function (form) {
-            	$.show_overall_loding();
+            	//$.show_overall_loding();
         		var pDistance = $("#pDistance").val();
                 var aDistance = $("#aDistance").val();
                 var width = $("#aWidth").val();
@@ -380,12 +380,12 @@
                     if (resData.code == 0) {
                         layer.close(myLayer);
                         layer.msg("成功", {icon: 1});
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                         $('#myTable').bootstrapTable('refresh');
                         return true;
                     } else {
                         layer.msg("操作失败", {icon: 2});
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                     }
                 })
             }
@@ -604,7 +604,7 @@
             		}
             },
             submitHandler: function (form) {
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 var data = $("#repairForm").serializeJson()
                 var proportions = data.proportion.split(":");
 			    var mapRate = proportions[0]/proportions[1]
@@ -624,7 +624,7 @@
                     });
                     return;
                 }
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 $.postJSON(deviceServiceUrl + "/fixexeconf", data, function (data) {
                    
                     if (data.code == 0) {
@@ -632,7 +632,7 @@
                         layer.msg("成功", {
                             icon: 1
                         });
-                        $.show_overall_loding();
+                        //$.show_overall_loding();
                         $('#myTable').bootstrapTable('refresh');
                         return true;
                     }
@@ -652,7 +652,7 @@
             url: deviceServiceUrl + "/devicemanger/list",
             async:false,
             data: {
-                token: $.getToken(),
+                // token: $.getToken(),
                 productCode: "0004ab01",
                 deviceFloor: floorId
             },
@@ -749,7 +749,7 @@
 			return {
 				node: $("#modeTable"), //渲染节点
 				init: function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					var that = this;
 					this.node.bootstrapTable({
 						url: deviceServiceUrl + "/mode/list", //请求后台的URL（*）
@@ -798,7 +798,7 @@
 							dModeId = row.id;
 						},
 						onLoadSuccess: function() {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 						},
 						columns: [{
 							checkbox: true
@@ -834,16 +834,16 @@
 
 				},
 				queryParams: function(params) {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					return {
-						token: $.getToken(),
+						// token: $.getToken(),
 						pageSize: params.pageSize,
 						pageNum: params.pageNumber,
 						modeName: $("#s_modeName").val()
 					}
 				},
 				refresh: function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					this.node.bootstrapTable('refresh')
 				},
 				bindCreate: function() {
@@ -859,7 +859,7 @@
 			return {
 				node: $("#fixTable"), //渲染节点
 				init: function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					var that = this;
 					this.node.bootstrapTable({
 						url: deviceServiceUrl + "/fixexeconf/list", //请求后台的URL（*）
@@ -908,7 +908,7 @@
 							dModeId = row.id;
 						},
 						onLoadSuccess: function() {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 						},
 						columns: [{
 							checkbox: true
@@ -956,9 +956,9 @@
 
 				},
 				queryParams: function(params) {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					return {
-						token: $.getToken(),
+						// token: $.getToken(),
 						pageSize: params.pageSize,
 						pageNum: params.pageNumber,
 						uwbtagMac:serialNum,
@@ -966,7 +966,7 @@
 					}
 				},
 				refresh: function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					this.node.bootstrapTable('refresh')
 				},
 				bindCreate: function() {
@@ -983,9 +983,9 @@
 			var conlayer = layer.confirm("确定删除？", {
 				btn: ['确定', '取消']
 			}, function() {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				$.deleteJSON(deviceServiceUrl + "/fixexeconf/del?id=" + data.id, {}, function(data) {
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 					if(data.code == 0) {
 						layer.close(conlayer);
 						layer.msg("成功", {

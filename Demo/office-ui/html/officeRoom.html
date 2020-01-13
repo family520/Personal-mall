@@ -220,9 +220,9 @@
 			});
 
 			function queryParams(params) {
-				// $.show_overall_loding();
+				// //$.show_overall_loding();
 				return {
-					// token: $.getToken(),
+					// // token: $.getToken(),
 					roomName: $("#s_roomName").val(),
 					roomType: $("#s_roomType").val(),
 					pageSize: params.pageSize,
@@ -236,7 +236,7 @@
 		});
 
 		$("#search").click(function() {
-			// $.show_overall_loding();
+			// //$.show_overall_loding();
 			$('#myTable').bootstrapTable('refresh');
 		});
 
@@ -351,10 +351,10 @@
 				messages: {},
 				submitHandler: function(form) {
 					var data = $("#deviceForm").serializeJson();
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					if(isAdd) {
 						$.postJSON(deviceServiceUrl + "/officeRoom", data, function(data) {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 							if(data.code == 0) {
 								layer.close(myLayer);
 								layer.msg("成功", {
@@ -369,7 +369,7 @@
 						});
 					} else {
 						$.putJSON(deviceServiceUrl + "/officeRoom", data, function(data) {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 							if(data.code == 0) {
 								layer.close(myLayer);
 								layer.msg("成功", {
@@ -393,15 +393,15 @@
 			var conlayer = layer.confirm("确定删除？请三思而后行", {
 				btn: ['确定', '取消']
 			}, function() {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				$.deleteJSON(deviceServiceUrl + "/officeRoom?id=" + id, {}, function(data) {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					if(data.code == 0) {
 						layer.close(conlayer);
 						layer.msg("成功", {
 							icon: 1
 						});
-						$.show_overall_loding();
+						//$.show_overall_loding();
 						$('#myTable').bootstrapTable('refresh');
 						return true;
 					}
@@ -418,7 +418,7 @@
 			return {
 				node: $("#modeTable"), //渲染节点
 				init: function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					var that = this;
 					this.node.bootstrapTable({
 						url: deviceServiceUrl + "/mode/list", //请求后台的URL（*）
@@ -461,7 +461,7 @@
 							console.info(row);
 						},
 						onLoadSuccess: function() {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 						},
 						columns: [{
 							width: 50,
@@ -503,9 +503,9 @@
 
 				},
 				queryParams: function(params) {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					return {
-						token: $.getToken(),
+						// token: $.getToken(),
 						pageSize: params.pageSize,
 						pageNum: params.pageNumber,
 						modeName: $("#s_modeName").val(),
@@ -513,7 +513,7 @@
 					}
 				},
 				refresh: function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					this.node.bootstrapTable('refresh')
 				},
 				bindCreate: function() {

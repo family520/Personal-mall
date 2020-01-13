@@ -128,9 +128,9 @@
     var rdata = {};
     var DeviceTestList = "";
     var UserName = $.getCookie("userName");
-    $("#loadDiv").html(loadHtml);
+    // $("#loadDiv").html(loadHtml);
     $(function () {
-        $.show_overall_loding();
+        //$.show_overall_loding();
         $('#myTable').bootstrapTable({
             url: deviceServiceUrl + "/RmController/listAll", //请求后台的URL（*）
             method: 'get',                         //请求方式（*）
@@ -173,7 +173,7 @@
                 console.info(row);
             },
             onLoadSuccess: function() {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
             },
             columns: [
                 {
@@ -234,7 +234,7 @@
 
         function queryParams(params) {
             return {
-                token: $.getToken(),
+                // token: $.getToken(),
                 pageSize: params.pageSize,
                 pageNum: params.pageNumber,
                 deviceAlias: $("#l_deviceAlias").val(),
@@ -242,7 +242,7 @@
         }
 
         $("#search").click(function() {
-            $.show_overall_loding();
+            //$.show_overall_loding();
             $('#myTable').bootstrapTable('refresh');
         });
 
@@ -291,14 +291,14 @@
             var conlayer = layer.confirm("确定删除选中数据？", {
                 btn: ['确定', '取消']
             }, function () {
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 $.deleteJSON(deviceServiceUrl + "/RmController?rmIds=" + ids, {}, function (data) {
                     if (data.code == 0) {
                         layer.close(conlayer);
                         layer.msg("成功", {
                             icon: 1
                         });
-                        $.show_overall_loding();
+                        //$.show_overall_loding();
                         $('#myTable').bootstrapTable('refresh');
                         return true;
                     } else {
@@ -369,7 +369,7 @@
                             'remindType': remindType,
                             'rmIds': ids
                         }, function (data) {
-                            $.hide_overall_loding();
+                            //$.hide_overall_loding();
                             if (data.code == 0) {
                                 parent.layer.msg("操作成功", {
                                     icon: 6
@@ -405,7 +405,7 @@
     });
 
     function getDeviceTable() {
-        $.show_overall_loding();
+        //$.show_overall_loding();
         $('#deviceTable').bootstrapTable({
             url: deviceServiceUrl + "/devicemanger/list", //请求后台的URL（*）
             //data: data1,                            //本地数据
@@ -442,7 +442,7 @@
                 console.info(row);
             },
             onLoadSuccess: function() {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
             },
             columns: [{
                 checkbox: true
@@ -473,7 +473,7 @@
 
         function queryParams(params) {
             return {
-                token: $.getToken(),
+                // token: $.getToken(),
                 isScreenOrganization: 1,
                 deviceAlias: $("#s_deviceAlias").val(),
                 serialNum: $("#s_serialNum").val(),
@@ -485,7 +485,7 @@
 
         var serchaData = {};
         $("#search2").click(function() {
-            $.show_overall_loding();
+            //$.show_overall_loding();
             $('#deviceTable').bootstrapTable('refresh');
         });
 
@@ -608,7 +608,7 @@
                     layer.msg('请选择提醒类型', {
                         icon: 5
                     });
-                    $.hide_overall_loding();
+                    //$.hide_overall_loding();
                     return;
                 }
                 var testDate = "";
@@ -622,7 +622,7 @@
                 var conlayer = layer.confirm(testDate, {
                     btn: ['确定', '取消']
                 }, function () {
-                    $.show_overall_loding();
+                    //$.show_overall_loding();
                     $.putJSON(deviceServiceUrl + "/RmController/", {
                         "id": RmId,
                         "deviceId": deviceTestId,
@@ -633,7 +633,7 @@
                         "rmOrganizationId": organizationId
                     }, function (data) {
                         var testDate = startTime + "至" + endTime ;
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                         if (data.code == 0) {
                             parent.layer.msg("操作成功", {
                                 icon: 6
@@ -670,7 +670,7 @@
         $.sanjiGetJSON(deviceServiceUrl + "/RmController/list", {
             "deviceId": deviceTestId
         }, function (data) {
-            $.hide_overall_loding();
+            //$.hide_overall_loding();
             if (data.code == 0) {
                 if (data.data.length > 0) {
                     var deviceId = data.data[0].deviceId;
@@ -708,7 +708,7 @@
         $.sanjiGetJSON(deviceServiceUrl + "/RmController/list", {
             "deviceId": deviceTestId
         }, function (data) {
-            $.hide_overall_loding();
+            //$.hide_overall_loding();
             if (data.code == 0) {
                 if (data.data.length > 0) {
                     var deviceId = data.data[0].deviceId;

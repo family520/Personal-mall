@@ -87,7 +87,7 @@
 		<div id="loadDiv"></div>
 	</body>
 	<script type="text/javascript">
-		// $("#loadDiv").html(loadHtml);
+		// // $("#loadDiv").html(loadHtml);
 		var html;
 		var url = "";
 		var appp;
@@ -123,7 +123,7 @@
 							total: result.total,
 							rows: result.list
 						});
-						//$.hide_overall_loding();
+						////$.hide_overall_loding();
 						return res[0];
 					} else {
 						res.push({
@@ -133,12 +133,12 @@
 						layer.msg("获取模板失败！", {
 							icon: 2
 						});
-						//$.hide_overall_loding();
+						////$.hide_overall_loding();
 						return res[0];
 					}
 				},
 				onLoadSuccess: function() {
-					//$.hide_overall_loding();
+					////$.hide_overall_loding();
 				},
 				onDblClickRow: function(row) {
 					console.info(row);
@@ -195,9 +195,9 @@
 			});
 
 			function queryParams(params) {
-				// $.show_overall_loding();
+				// //$.show_overall_loding();
 				return {
-					// token: $.getToken(),
+					// // token: $.getToken(),
 					pageSize: params.pageSize,
 					pageNum: params.pageNumber,
 					deviceTypeName: $("#s_typeName").val(),
@@ -283,15 +283,15 @@
 		// 			var obj1 = {};
 		// 			obj1.id = data[obj].id;
 		// 			obj1.typeAlias = $("#newTypeName").val();
-		// 			$.show_overall_loding();
+		// 			//$.show_overall_loding();
 		// 			$.putJSON(deviceServiceUrl + "/deviceType", obj1, function(data) {
-		// 				// //$.hide_overall_loding();
+		// 				// ////$.hide_overall_loding();
 		// 				if(data.code == 0) {
 		// 					layer.close(myLayer);
 		// 					layer.msg("成功", {
 		// 						icon: 1
 		// 					});
-		// 					$.show_overall_loding();
+		// 					//$.show_overall_loding();
 		// 					$('#classifyList').bootstrapTable('refresh');
 		// 				} else {
 		// 					layer.msg("操作失败", {
@@ -305,7 +305,7 @@
         //
 		// //模板设置
 		// function showTemp(obj) {
-		// 	$.show_overall_loding();
+		// 	//$.show_overall_loding();
 		// 	html = template("modelWin", {
 		// 		title: "123"
 		// 	});
@@ -327,7 +327,7 @@
 		// 			templateType: 1
 		// 		},
 		// 		success: function(data) {
-		// 			// //$.hide_overall_loding();
+		// 			// ////$.hide_overall_loding();
 		// 			console.info(data);
 		// 			if(data.code == 0) {
 		// 				if(data.data != null && data.data.list != null && data.data.list.length > 0) {
@@ -347,7 +347,7 @@
 		// 			}
 		// 		},
 		// 		error: function() {
-		// 			// //$.hide_overall_loding();
+		// 			// ////$.hide_overall_loding();
 		// 		}
 		// 	});
         //
@@ -545,13 +545,13 @@
 		// }
         //
 		// function updateDevice() {
-		// 	$.show_overall_loding();
+		// 	//$.show_overall_loding();
 		// 	$.postJSON(deviceServiceUrl + "/deviceType/updateList", {}, function(data) {
 		// 		console.info(data);
 		// 		if(data.code == 0) {
 		// 			$('#classifyList').bootstrapTable('refresh');
 		// 		} else {
-		// 			//$.hide_overall_loding();
+		// 			////$.hide_overall_loding();
 		// 		}
 		// 	});
 		// }

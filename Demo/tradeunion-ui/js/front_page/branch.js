@@ -38,7 +38,7 @@ $(function() {
 				url: deviceServiceUrl + "/device/list",
 				async: false,
 				data: {
-					token: $.getToken(),
+					// token: $.getToken(),
 					deviceFloor: arr[1]
 				},
 				success: function(result) {
@@ -91,7 +91,7 @@ $(function() {
 			type: "get",
 			url: userServiceUrl + "/deviceAir/getPMListByDeviceId",
 			data: {
-				token: $.getToken(),
+				// token: $.getToken(),
 				deviceId: deviceId
 			},
 			success: function(res) {

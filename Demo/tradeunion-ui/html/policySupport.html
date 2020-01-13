@@ -115,7 +115,7 @@
 <div id="loadDiv"></div>
 </body>
 <script type="text/javascript">
-    $("#loadDiv").html(loadHtml);
+    // $("#loadDiv").html(loadHtml);
     let html;
     $(function () {
         $('#policyTable').bootstrapTable({
@@ -149,7 +149,7 @@
                         total: result.total,
                         rows: result.list
                     });
-                    $.hide_overall_loding();
+                    //$.hide_overall_loding();
                     return res[0];
                 } else {
                     res.push({
@@ -157,12 +157,12 @@
                         rows: []
                     });
                     layer.msg("获取数据失败！", {icon: 2});
-                    $.hide_overall_loding();
+                    //$.hide_overall_loding();
                     return res[0];
                 }
             },
             onLoadSuccess: function () {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
             },
             onDblClickRow: function (row) {
                 console.info(row);
@@ -230,7 +230,7 @@
 
         function queryParams(params) {
             return {
-                token: $.getToken(),
+                // token: $.getToken(),
                 pageSize: params.pageSize,
                 pageNum: params.pageNumber
 //              title:$("#s_title").val()
@@ -343,10 +343,10 @@
 
     //删除信息
     function delMsg(id){
-        $.show_overall_loding();
+        //$.show_overall_loding();
         let dataList = $("#policyTable").bootstrapTable("getData");
         $.deleteJSON(userServiceUrl + "/policySupport?id="+dataList[id].id,{},function (delRes) {
-            $.hide_overall_loding();
+            //$.hide_overall_loding();
             if(delRes.code == 0){
                 $('#policyTable').bootstrapTable('refresh');
             }else{
@@ -370,7 +370,7 @@
             content: html,
             btn: ['确定','取消'],
             yes: function (index, layero) {
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 $("#newEventForm").submit();
             },
             success: function (layero) {
@@ -421,7 +421,7 @@
 				});
             	console.info(data)
                 $.postJSON(userServiceUrl+"/policySupport",data,function (addRes) {
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                         if(addRes.code == 0){
                             layer.close(myLayer);
                             $("#policyTable").bootstrapTable("refresh");
@@ -650,7 +650,7 @@
 	                contentType:false,
 	                processData:false,
 	                success:function (res) {
-	                    $.hide_overall_loding();
+	                    //$.hide_overall_loding();
 	                    if(res.code == 0){
 	                    	$("#fileUrls").val(res.data.filePath)
 	                    	layer.msg("上传成功", {icon: 1});

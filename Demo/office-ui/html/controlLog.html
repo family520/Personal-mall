@@ -102,9 +102,9 @@
 	<script>
 		// var html;
 		var url = "";
-		// $("#loadDiv").html(loadHtml);
+		// // $("#loadDiv").html(loadHtml);
 		$(function() {
-			// $.show_overall_loding();
+			// //$.show_overall_loding();
 			$('#myTable').bootstrapTable({
 				url:"../../json/controlLol.json", //请求后台的URL（*）
 				//data: data1,                            //本地数据
@@ -148,7 +148,7 @@
 					console.info(row);
 				},
 				onLoadSuccess: function() {
-					// $.hide_overall_loding();
+					// //$.hide_overall_loding();
 				},
 				columns: [{
 						width: 50,
@@ -194,9 +194,9 @@
 			});
 
 			function queryParams(params) {
-				// $.show_overall_loding();
+				// //$.show_overall_loding();
 				return {
-					//token: $.getToken(),
+					//// token: $.getToken(),
 					pageSize: params.pageSize,
 					pageNum: params.pageNumber,
 					controlName: $("#s_controlName").val(),
@@ -206,7 +206,7 @@
 			}
 
 			$("#search").click(function() {
-				// $.show_overall_loding();
+				// //$.show_overall_loding();
 				$('#myTable').bootstrapTable('refresh');
 			});
 			$("#clean").click(function() {

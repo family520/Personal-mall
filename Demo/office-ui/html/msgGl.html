@@ -87,9 +87,9 @@
     var html;
     var userIdd = $.getCookie("userId");
     var url = "";
-    $("#loadDiv").html(loadHtml);
+    // $("#loadDiv").html(loadHtml);
     $(function() {
-        $.show_overall_loding();
+        //$.show_overall_loding();
         $('#myTable').bootstrapTable({
             url: deviceServiceUrl + "/msgGl/list", //请求后台的URL（*）
             //data: data1,                            //本地数据
@@ -133,7 +133,7 @@
                 console.info(row);
             },
             onLoadSuccess: function() {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
             },
             columns: [{
                 checkbox: true
@@ -190,9 +190,9 @@
         });
 
         function queryParams(params) {
-            $.show_overall_loding();
+            //$.show_overall_loding();
             return {
-                token: $.getToken(),
+                // token: $.getToken(),
                 pageSize: params.pageSize,
                 pageNum: params.pageNumber,
                 selectType: 1,
@@ -203,7 +203,7 @@
         }
 
         $("#search").click(function() {
-            $.show_overall_loding();
+            //$.show_overall_loding();
             $('#myTable').bootstrapTable('refresh');
         });
 
@@ -228,14 +228,14 @@
         var conlayer = layer.confirm("确定删除选中数据？", {
             btn: ['确定', '取消']
         }, function () {
-            $.show_overall_loding();
+            //$.show_overall_loding();
             $.deleteJSON(deviceServiceUrl + "/msgGl?msgGlIds=" + ids, {}, function (data) {
                 if (data.code == 0) {
                     layer.close(conlayer);
                     layer.msg("成功", {
                         icon: 1
                     });
-                    $.show_overall_loding();
+                    //$.show_overall_loding();
                     $('#myTable').bootstrapTable('refresh');
                     return true;
                 } else {
@@ -386,14 +386,14 @@
             },
             submitHandler: function (form) {
                 var data = $("#modelMsgForm").serializeJson();
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 console.log(userIds);
                 if(isAdd) {
                     $.extend(data, {
                         "userIds": userIds,
                     });
                     $.postJSON(deviceServiceUrl + "/msgGl", data, function(data) {
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                         if(data.code == 0) {
                             layer.close(myLayer);
                             layer.msg("成功", {
@@ -420,7 +420,7 @@
                     });
                 } else {
                     $.putJSON(deviceServiceUrl + "/msgGl", data, function(data) {
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                         if(data.code == 0) {
                             layer.close(myLayer);
                             layer.msg("成功", {
@@ -452,7 +452,7 @@
 
     var mModeId = "";
     function getTable() {
-        $.show_overall_loding();
+        //$.show_overall_loding();
         $('#userTable').bootstrapTable({
             url: userServiceUrl + "/user/list", //请求后台的URL（*）
             method: 'get', //请求方式（*）
@@ -494,7 +494,7 @@
                 mModeId = row.id;
             },
             onLoadSuccess: function () {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
             },
             columns: [{
                 checkbox: true,
@@ -525,7 +525,7 @@
 
         function queryParams(params) {
             return {
-                token: $.getToken(),
+                // token: $.getToken(),
                 pageSize: params.pageSize,
                 pageNum: params.pageNumber,
                 userName: $("#s_userName").val(),
@@ -535,7 +535,7 @@
 
         var serchaData = {};
         $("#search1").on("click", function () {
-            $.show_overall_loding();
+            //$.show_overall_loding();
             $('#userTable').bootstrapTable('refresh');
         });
 
@@ -549,7 +549,7 @@
 
     /*接收消息者*/
     function getUserTable(obj) {
-        $.show_overall_loding();
+        //$.show_overall_loding();
         $('#userNameTable').bootstrapTable({
             url: deviceServiceUrl + "/msgGl/userList?msgId=" + obj, //请求后台的URL（*）
             method: 'get', //请求方式（*）
@@ -591,7 +591,7 @@
                 console.info(row);
             },
             onLoadSuccess: function() {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
             },
             columns: [{
                 width: 50,
@@ -628,7 +628,7 @@
 		});
         function queryParams(params) {
             return {
-                token: $.getToken(),
+                // token: $.getToken(),
                 pageSize: params.pageSize,
                 pageNum: params.pageNumber,
                 userName: $("#ss_userName").val(),
@@ -639,7 +639,7 @@
 
         var serchaData = {};
         $("#search2").on("click", function () {
-            $.show_overall_loding();
+            //$.show_overall_loding();
             $('#userNameTable').bootstrapTable('refresh');
         });
 

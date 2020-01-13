@@ -108,7 +108,7 @@
 		<div id="loadDiv"></div>
 	</body>
 	<script type="text/javascript">
-		$("#loadDiv").html(loadHtml);
+		// $("#loadDiv").html(loadHtml);
 		var html;
 		var url = "";
 		var appp;
@@ -165,7 +165,7 @@
 							total: result.total,
 							rows: result.list
 						});
-						$.hide_overall_loding();
+						//$.hide_overall_loding();
 						return res[0];
 					} else {
 						res.push({
@@ -175,12 +175,12 @@
 						layer.msg("获取数据失败！", {
 							icon: 2
 						});
-						$.hide_overall_loding();
+						//$.hide_overall_loding();
 						return res[0];
 					}
 				},
 				onLoadSuccess: function() {
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 				},
 				onDblClickRow: function(row) {
 					console.info(row);
@@ -239,9 +239,9 @@
 			});
 
 			function queryParams(params) {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				return {
-					token: $.getToken(),
+					// token: $.getToken(),
 					pageSize: params.pageSize,
 					pageNumber: params.pageNumber,
 					excutionPlanName: $("#s_excutionPlanName").val(),
@@ -254,7 +254,7 @@
 			});
 
 			$("#search").click(function() {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				$('#planTable').bootstrapTable('refresh');
 			});
 
@@ -277,10 +277,10 @@
 			layer.confirm('确定删除？', {
 				btn: ['确定', '取消'] //按钮
 			}, function() {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				$.deleteJSON(deviceServiceUrl + "/exeutionPlan?id=" + id, {}, function(data) {
 					console.info(data);
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 					if(data.code == 0) {
 						layer.msg('删除成功', {
 							icon: 1
@@ -352,13 +352,13 @@
 					},
 				},
 				submitHandler: function(form) {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					var data = $("#addForm").serializeJson();
 					console.info(data);
 					if(isAdd) { //添加操作
 						$.postJSON(deviceServiceUrl + "/exeutionPlan", data, function(data) {
 							console.info(data);
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 							if(data.code == 0) {
 								layer.close(myLayer);
 								layer.msg("成功", {
@@ -374,7 +374,7 @@
 					} else {
 						$.putJSON(deviceServiceUrl + "/exeutionPlan", data, function(data) {
 							console.info(data);
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 							if(data.code == 0) {
 								layer.close(myLayer);
 								layer.msg("成功", {
@@ -632,11 +632,11 @@
 			var conlayer = layer.confirm("确定删除？", {
 				btn: ['确定', '取消']
 			}, function() {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				$.deleteJSON(deviceServiceUrl + "/exeutionPlanProcess?id=" + data.platformProcessId + "&account=" + tempUser +
 					"&localId=" + data.id, {},
 					function(data) {
-						$.hide_overall_loding();
+						//$.hide_overall_loding();
 						if(data.code == 0) {
 							layer.msg('删除成功', {
 								icon: 1
@@ -693,7 +693,7 @@
 					}
 				},
 				onLoadSuccess: function() {
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 				},
 				columns: [{
 					width: 50,
@@ -749,9 +749,9 @@
 			});
 
 			function queryParams3(params) {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				return {
-					token: $.getToken(),
+					// token: $.getToken(),
 					pageSize: params.pageSize,
 					pageNum: params.pageNumber,
 					modeName: $("#s_modeName").val(),
@@ -809,7 +809,7 @@
 					}
 				},
 				onLoadSuccess: function() {
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 				},
 				columns: [{
 					width: 50,
@@ -896,7 +896,7 @@
 					}
 				},
 				onLoadSuccess: function() {
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 				},
 				columns: [{
 						checkbox: true,
@@ -1011,7 +1011,7 @@
 					}
 				},
 				onLoadSuccess: function() {
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 				},
 				columns: [{
 						checkbox: true,
@@ -1045,10 +1045,10 @@
 			});
 
 			function queryParams2(params) {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				console.info(tempUser);
 				return {
-					token: $.getToken(),
+					// token: $.getToken(),
 					pageSize: params.pageSize,
 					pageNum: params.pageNumber,
 					account: tempUser
@@ -1163,7 +1163,7 @@
 				},
 				submitHandler: function(form) {
 
-					// $.show_overall_loding();
+					// //$.show_overall_loding();
 					var data = $("#addForm").serializeJson();
 					var timeData = $("#timeTable").bootstrapTable('getData');
 					var conditionData = $("#conditionTable").bootstrapTable('getData');
@@ -1227,7 +1227,7 @@
 					if(flag == 1) { //添加进程操作
 						$.postJSON(deviceServiceUrl + "/exeutionPlanProcess", obj, function(data) {
 							console.info(data);
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 							if(data.code == 0) {
 								layer.close(myProcessLayer);
 								layer.msg("成功", {
@@ -1244,7 +1244,7 @@
 						obj.platform_process_id = data.platformProcessId; // 平台进程id
 						$.putJSON(deviceServiceUrl + "/exeutionPlanProcess", obj, function(data) {
 							console.info(data);
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 							if(data.code == 0) {
 								layer.close(myProcessLayer);
 								layer.msg("成功", {
@@ -1360,7 +1360,7 @@
 			});
 			var validate = $("#addTimeForm").validate({
 				submitHandler: function(form) {
-					// $.show_overall_loding();
+					// //$.show_overall_loding();
 					var data = $("#addTimeForm").serializeJson();
 					console.info(data);
 					var obj = {};

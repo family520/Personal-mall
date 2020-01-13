@@ -70,7 +70,7 @@ $(function() {
 			type: "GET", //提交方式
 			url: userServiceUrl + "/organization/list",
 			data: {
-				token: $.getToken(),
+				// token: $.getToken(),
 				pageNum: 1,
 				organizetionLvl: 1,
 				pageSize: 10000

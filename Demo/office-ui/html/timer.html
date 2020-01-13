@@ -112,7 +112,7 @@
 		<div id="loadDiv"></div>
 	</body>
 	<script type="text/javascript">
-		$("#loadDiv").html(loadHtml);
+		// $("#loadDiv").html(loadHtml);
 		var html;
 		var url = "";
 		var appp;
@@ -159,7 +159,7 @@
 							total: result.total,
 							rows: result.list
 						});
-						$.hide_overall_loding();
+						//$.hide_overall_loding();
 						return res[0];
 					} else {
 						res.push({
@@ -169,12 +169,12 @@
 						layer.msg("获取数据失败！", {
 							icon: 2
 						});
-						$.hide_overall_loding();
+						//$.hide_overall_loding();
 						return res[0];
 					}
 				},
 				onLoadSuccess: function() {
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 				},
 				onDblClickRow: function(row) {
 					console.info(row);
@@ -262,9 +262,9 @@
 			});
 
 			function queryParams(params) {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				return {
-					token: $.getToken(),
+					// token: $.getToken(),
 					pageSize: params.pageSize,
 					pageNumber: params.pageNumber,
 					timerName: $("#s_typeName").val(),
@@ -299,10 +299,10 @@
 			layer.confirm('确定删除？', {
 				btn: ['确定', '取消'] //按钮
 			}, function() {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				$.deleteJSON(deviceServiceUrl + "/timerTask?id=" + id, {}, function(data) {
 					console.info(data);
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 					if(data.code == 0) {
 						layer.msg('删除成功', {
 							icon: 1
@@ -415,7 +415,7 @@
 					}
 				},
 				submitHandler: function(form) {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					var data = $("#modeForm").serializeJson();
 					if(data.timerCycle == 2) {
 						var cy = "";
@@ -441,7 +441,7 @@
 						layer.msg("请选择模式", {
 							icon: 2
 						});
-						$.hide_overall_loding();
+						//$.hide_overall_loding();
 						return false;
 					}
 					$.extend(data, {
@@ -460,7 +460,7 @@
 					if(isAdd) { //添加操作
 						$.postJSON(deviceServiceUrl + "/timerTask", data, function(data) {
 							console.info(data);
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 							if(data.code == 0) {
 								layer.close(myLayer);
 								layer.msg("成功", {
@@ -490,7 +490,7 @@
 						data.newModelList = data.modelList;
 						$.putJSON(deviceServiceUrl + "/timerTask", data, function(data) {
 							console.info(data);
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 							if(data.code == 0) {
 								layer.close(myLayer);
 								layer.msg("成功", {
@@ -624,7 +624,7 @@
 					//取消全选按钮
 					// $("input[name='btSelectAll']").css("display", "none");
 
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 				},
 				//单击行选中的操作
 				onClickRow: function(row) {
@@ -737,9 +737,9 @@
 			});
 
 			function queryParams1(params) {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				return {
-					token: $.getToken(),
+					// token: $.getToken(),
 					pageSize: params.pageSize,
 					pageNum: params.pageNumber,
 					modeName: $("#s_modeName").val(),

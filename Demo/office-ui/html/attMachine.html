@@ -184,11 +184,11 @@
 </body>
 <script type="text/javascript">
     var html;
-    $("#loadDiv").html(loadHtml)
+    // $("#loadDiv").html(loadHtml)
     var userLongName = $.getCookie("userName");
     var userIdd = $.getCookie("userId");
     $(function() {
-        $.show_overall_loding();
+        //$.show_overall_loding();
         $('#myTable').bootstrapTable({
             url: deviceServiceUrl + "/device/list", //请求后台的URL（*）
             method: 'get', //请求方式（*）
@@ -224,7 +224,7 @@
                 console.info(row);
             },
             onLoadSuccess: function() {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
             },
             columns: [{
                 checkbox: true
@@ -280,9 +280,9 @@
         });
 
         function queryParams(params) {
-            $.show_overall_loding();
+            //$.show_overall_loding();
             return {
-                token: $.getToken(),
+                // token: $.getToken(),
                 isScreenOrganization: 1,
                 deviceAlias: $("#s_deviceAlias").val(),
                 deviceSubscriberNumber: $("#s_deviceSubscriberNumber").val(),
@@ -297,7 +297,7 @@
     });
 
     $("#search").click(function() {
-        $.show_overall_loding();
+        //$.show_overall_loding();
         $('#myTable').bootstrapTable('refresh');
     });
 
@@ -325,19 +325,19 @@
         var conlayer = layer.confirm("确认" + " " + userLongName + " " + "打卡?", {
             btn: ['确定', '取消']
         }, function() {
-            $.show_overall_loding();
+            //$.show_overall_loding();
             $.postJSON(deviceServiceUrl + "/amtCon", {
                 "userId":userIdd,
                 "dkTime":frontOneHour('yyyy-MM-dd hh:mm:ss'),
 				"deviceId":data[obj].id
             }, function(data) {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
                 if(data.code == 0) {
                     layer.close(conlayer);
                     layer.msg("成功", {
                         icon: 1
                     });
-                    $.show_overall_loding();
+                    //$.show_overall_loding();
                     $('#myTable').bootstrapTable('refresh');
                     return true;
                 }
@@ -411,12 +411,12 @@
                     ids.push(one.id);
                 }
                 var isAttendanceMachine = $('#isAttendanceMachine  option:selected').val();
-                // $.show_overall_loding();
+                // //$.show_overall_loding();
                 $.putJSON(deviceServiceUrl + "/device/batchUpMachine", {
                     'isAttendanceMachine': isAttendanceMachine,
                     'deviceIds': ids
                 }, function (data) {
-                    $.hide_overall_loding();
+                    //$.hide_overall_loding();
                     if (data.code == 0) {
                         parent.layer.msg("操作成功", {
                             icon: 6

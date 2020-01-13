@@ -230,7 +230,7 @@
 <!--            var serviceKey = $("#serviceKey").val();-->
 <!--            var callBackUrl = $("#callBackUrl").val();-->
 <!--            var Url = $("#Url").val();-->
-<!--            //$.hide_overall_loding();-->
+<!--            ////$.hide_overall_loding();-->
 <!--            $.putJSON(deviceServiceUrl + "/platformparam", {-->
 <!--                "id": bccaId,-->
 <!--                "url": url,-->
@@ -239,7 +239,7 @@
 <!--                "callBackUrl": callBackUrl,-->
 <!--                "platformType": 1-->
 <!--            }, function (data) {-->
-<!--                $.hide_overall_loding();-->
+<!--                //$.hide_overall_loding();-->
 <!--                if (data.code == 0) {-->
 <!--                    parent.layer.msg("操作成功", {-->
 <!--                        icon: 6-->
@@ -302,7 +302,7 @@
 <!--            var serviceKey = $("#appKey").val();-->
 <!--            var Url = $("#urlBig").val();-->
 <!--            var apId = $("#apId").val();-->
-<!--            //$.hide_overall_loding();-->
+<!--            ////$.hide_overall_loding();-->
 <!--            $.putJSON(deviceServiceUrl + "/platformparam", {-->
 <!--                "id": bigId,-->
 <!--                "url": Url,-->
@@ -311,7 +311,7 @@
 <!--                "apId": apId,-->
 <!--                "platformType": 2-->
 <!--            }, function (data) {-->
-<!--                $.hide_overall_loding();-->
+<!--                //$.hide_overall_loding();-->
 <!--                if (data.code == 0) {-->
 <!--                    parent.layer.msg("操作成功", {-->
 <!--                        icon: 6-->
@@ -367,7 +367,7 @@
 <!--            var serviceId = $("#serviceIdDevelopment").val();-->
 <!--            var serviceKey = $("#serviceKeyDevelopment").val();-->
 <!--            var Url = $("#urlDevelopment").val();-->
-<!--            //$.hide_overall_loding();-->
+<!--            ////$.hide_overall_loding();-->
 <!--            $.putJSON(deviceServiceUrl + "/platformparam", {-->
 <!--                "id": developmentId,-->
 <!--                "url": Url,-->
@@ -375,7 +375,7 @@
 <!--                "serviceKey": serviceKey,-->
 <!--                "platformType": 3-->
 <!--            }, function (data) {-->
-<!--                $.hide_overall_loding();-->
+<!--                //$.hide_overall_loding();-->
 <!--                if (data.code == 0) {-->
 <!--                    parent.layer.msg("操作成功", {-->
 <!--                        icon: 6-->
@@ -438,7 +438,7 @@
 <!--            var url_3D = $("#url_3D").val();-->
 <!--            var organization_3D = $("#organization_3D").val();-->
 <!--            var organizationName_3D = $("#organizationName_3D").val();-->
-<!--            //$.hide_overall_loding();-->
+<!--            ////$.hide_overall_loding();-->
 
 <!--            var data = {-->
 <!--                "service_id": service_id,-->
@@ -509,11 +509,11 @@
 
 
 <!--    function fromBCCALoad() {-->
-<!--        //$.hide_overall_loding();-->
+<!--        ////$.hide_overall_loding();-->
 <!--        $.sanjiGetJSON(deviceServiceUrl + "/platformparam/list", {-->
 <!--            "platformType": 1-->
 <!--        }, function (data) {-->
-<!--            $.hide_overall_loding();-->
+<!--            //$.hide_overall_loding();-->
 <!--            if (data.code == 0) {-->
 <!--                if (data.data.length > 0) {-->
 <!--                    var serviceId = data.data[0].serviceId;-->
@@ -547,11 +547,11 @@
 <!--    }-->
 
 <!--    function fromBigLoad() {-->
-<!--        //$.hide_overall_loding();-->
+<!--        ////$.hide_overall_loding();-->
 <!--        $.sanjiGetJSON(deviceServiceUrl + "/platformparam/list", {-->
 <!--            "platformType": 2-->
 <!--        }, function (data) {-->
-<!--            $.hide_overall_loding();-->
+<!--            //$.hide_overall_loding();-->
 <!--            if (data.code == 0) {-->
 <!--                if (data.data.length > 0) {-->
 <!--                    var url = data.data[0].url;-->
@@ -584,11 +584,11 @@
 <!--    }-->
 
 <!--    function fromDevelopmentLoad() {-->
-<!--        //$.hide_overall_loding();-->
+<!--        ////$.hide_overall_loding();-->
 <!--        $.sanjiGetJSON(deviceServiceUrl + "/platformparam/list", {-->
 <!--            "platformType": 3-->
 <!--        }, function (data) {-->
-<!--            $.hide_overall_loding();-->
+<!--            //$.hide_overall_loding();-->
 <!--            if (data.code == 0) {-->
 <!--                if (data.data.length > 0) {-->
 <!--                    var serviceIdDevelopment = data.data[0].serviceId;-->
@@ -620,9 +620,9 @@
 <!--    }-->
 
 <!--    function from3DLoad() {-->
-<!--        //$.hide_overall_loding();-->
+<!--        ////$.hide_overall_loding();-->
 <!--        $.sanjiGetJSON(deviceServiceUrl + "/platformparam/getRedis", {}, function (r) {-->
-<!--            $.hide_overall_loding();-->
+<!--            //$.hide_overall_loding();-->
 <!--            console.info(r);-->
 <!--            $("#back_3D").val(r.data[0]);-->
 <!--            $("#url_3D").val(r.data[1]);-->
@@ -636,7 +636,7 @@
 <!--            contentType: "application/json",-->
 <!--            async: false,-->
 <!--            success: function (r) {-->
-<!--                $.hide_overall_loding();-->
+<!--                //$.hide_overall_loding();-->
 <!--                console.info(r);-->
 <!--                $("#back_3D").val(r.data[0]);-->
 <!--                $("#url_3D").val(r.data[1]);-->

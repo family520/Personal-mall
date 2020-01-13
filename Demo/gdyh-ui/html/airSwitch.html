@@ -110,7 +110,7 @@
 </body>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script type="text/javascript">
-    $("#loadDiv").html(loadHtml);
+    // $("#loadDiv").html(loadHtml);
     let html;
     let vm;
     let consoleVm;
@@ -149,7 +149,7 @@
                             total: result.total,
                             rows: result.list
                         });
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                         return res[0];
                     } else {
                         res.push({
@@ -157,12 +157,12 @@
                             rows: []
                         });
                         layer.msg("获取数据失败！", {icon: 2});
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                         return res[0];
                     }
                 },
                 onLoadSuccess: function () {
-                    $.hide_overall_loding();
+                    //$.hide_overall_loding();
                 },
                 onDblClickRow: function (row) {
                     console.info(row);
@@ -246,7 +246,7 @@
 
         function queryParams(params) {
             return {
-                token: $.getToken(),
+                // token: $.getToken(),
                 pageSize: params.pageSize,
                 pageNum: params.pageNumber,
                 deviceAlias:$("#s_deviceName").val(),
@@ -269,12 +269,12 @@
 
     //控制设备开始
     function consoleDevice(id){
-        $.show_overall_loding();
+        //$.show_overall_loding();
         let dataList = $("#deviceEventList").bootstrapTable("getData");
         let formData = {};
         formData.deviceId = dataList[id].id;
         $.postJSON(deviceServiceUrl +"/device/selectMenus",formData,function (selectRes) {
-            $.hide_overall_loding();
+            //$.hide_overall_loding();
             if(selectRes == null || selectRes == ""){
                 layer.msg("该设备没有可控按键",{icon:2});
             }else {
@@ -319,7 +319,7 @@
     function updateMenu(id){
         let dangerConfirm = layer.confirm("是否更新设备按键信息",["确定","取消"],function () {
             layer.close(dangerConfirm);
-            $.show_overall_loding();
+            //$.show_overall_loding();
             let dataList = $("#deviceEventList").bootstrapTable("getData");
             let formData = {};
             formData.deviceSubscriberNumber = dataList[id].deviceSubscriberNumber;
@@ -327,7 +327,7 @@
             formData.serialNum = dataList[id].serialNum;
             formData.deviceId = dataList[id].id;
             $.postJSON(deviceServiceUrl +"/device/getAirSwitchMenu",formData,function (conRes) {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
                 if(conRes.code == 0){
                     if(conRes.data.resultContent != null || conRes.data.resultContent != ""){//bcca平台返回结果
                         let resContent = conRes.data.resultContent;
@@ -366,7 +366,7 @@
             content: html,
             btn: ['提交', '取消'],
             yes: function (index, layero) {
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 let menuSelect = document.getElementsByName("s_menu");
                 let menuNames = document.getElementsByName("menuName");
                 let totalSwitchList = document.getElementsByName("totalSwitch");
@@ -381,7 +381,7 @@
                     switchMap.switchList.push(menuData);
                 }
                 $.postJSON(deviceServiceUrl +"/device/updateSwitchMenu",switchMap,function (updateRes) {
-                    $.hide_overall_loding();
+                    //$.hide_overall_loding();
                     if(updateRes.code == 0){
                         layer.msg("修改成功",{icon:1});
                     }else {
@@ -417,12 +417,12 @@
 
     //修改事件开始
     function editEvent(id){
-        $.show_overall_loding();
+        //$.show_overall_loding();
         let dataList = $("#deviceEventList").bootstrapTable("getData");
         let formData = {};
         formData.deviceId = dataList[id].id;
         $.postJSON(deviceServiceUrl +"/device/selectMenus",formData,function (selectRes) {
-            $.hide_overall_loding();
+            //$.hide_overall_loding();
             if(selectRes == null || selectRes == ""){
                 layer.msg("该设备没有可控按键",{icon:2});
                 return;
@@ -530,7 +530,7 @@
             },
             methods: {
                 updateType: function (item) {
-                    $.show_overall_loding();
+                    //$.show_overall_loding();
                     $.putJSON(deviceServiceUrl + "/device/addOrUpdateSwitchDeviceType",{id:item.id,typeName:item.typeName},function (res) {
                         if (res.code === 0) {
                             layer.msg("修改成功",{icon:1});
@@ -539,11 +539,11 @@
                         }else {
                             layer.msg("修改失败",{icon:2});
                         }
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                     })
                 },
                 delType: function (id) {
-                    $.show_overall_loding();
+                    //$.show_overall_loding();
                     $.sanjiGetJSON(deviceServiceUrl + "/device/delSwitchDeviceType",{id:id},function (res) {
                         if (res.code === 0) {
                             layer.msg("删除成功",{icon:1});
@@ -552,7 +552,7 @@
                         }else {
                             layer.msg("删除失败",{icon:2});
                         }
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                         layer.close(editTypeWindow);
                     })
                 }
@@ -574,7 +574,7 @@
             },
             methods: {
                 openSwitch: function (deviceAddress) {
-                    $.show_overall_loding();
+                    //$.show_overall_loding();
                     let formData = {};
                     formData.account = this.account;
                     formData.controlParams = '{p1:"'+deviceAddress+'",p2:"00 00"}';
@@ -584,13 +584,13 @@
                     let resFlag;
                     setTimeout(function () {
                         if (!resFlag) {
-                            $.hide_overall_loding();
+                            //$.hide_overall_loding();
                             layer.msg("控制时间已超过10秒",{icon:2});
                         }
                     },1000*10)
                     $.postJSON(deviceServiceUrl +"/device/controlDervice_s",formData,function (conRes) {
                         resFlag = conRes;
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                         if(conRes.code == 0){
                             let dataRes = conRes.data;
                             if(dataRes == null || dataRes == ""){
@@ -613,7 +613,7 @@
                     })
                 },
                 closeSwitch: function (deviceAddress) {
-                    $.show_overall_loding();
+                    //$.show_overall_loding();
                     let formData = {};
                     formData.account = this.account;
                     formData.controlParams = '{p1:"'+deviceAddress+'",p2:"FF 00"}';
@@ -623,13 +623,13 @@
                     let resFlag;
                     setTimeout(function () {
                         if (!resFlag) {
-                            $.hide_overall_loding();
+                            //$.hide_overall_loding();
                             layer.msg("控制时间已超过10秒",{icon:2});
                         }
                     },1000*10)
                     $.postJSON(deviceServiceUrl +"/device/controlDervice_s",formData,function (conRes) {
                         resFlag = conRes;
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                         if(conRes.code == 0){
                             let dataRes = conRes.data;
                             if(dataRes == null || dataRes == ""){

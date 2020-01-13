@@ -102,12 +102,12 @@
 	</body>
 	<script type="text/javascript">
 		var html;
-		$("#loadDiv").html(loadHtml);
+		// $("#loadDiv").html(loadHtml);
 		var url = "";
 
 		$(".selectpickers").selectpicker('refresh');
 		$(function() {
-			$.show_overall_loding();
+			//$.show_overall_loding();
 			$('#myTable').bootstrapTable({
 				url: deviceServiceUrl + "/officeRoomOrder/list", //请求后台的URL（*）
 				//data: data1,                            //本地数据
@@ -144,7 +144,7 @@
 					console.info(row);
 				},
 				onLoadSuccess: function() {
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 				},
 				columns: [{
 					checkbox: true
@@ -208,9 +208,9 @@
 			});
 
 			function queryParams(params) {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				return {
-					token: $.getToken(),
+					// token: $.getToken(),
 					orderUserName: $("#s_orderUserName").val(),
 					orderRoomName: $("#s_orderRoomName").val(),
 					pageSize: params.pageSize,
@@ -220,7 +220,7 @@
 		});
 
 		$("#search").click(function() {
-			$.show_overall_loding();
+			//$.show_overall_loding();
 			$('#myTable').bootstrapTable('refresh');
 		});
 
@@ -285,19 +285,19 @@
 			var conlayer = layer.confirm("未开始的会议才可以删除,您是否删除此次会议？", {
 				btn: ['确定', '取消']
 			}, function() {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				$.deleteJSON(deviceServiceUrl + "/officeRoomOrder?id=" + id, {}, function(data) {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					if(data.code == 0) {
 						layer.close(conlayer);
 						layer.msg("成功", {
 							icon: 1
 						});
-						$.show_overall_loding();
+						//$.show_overall_loding();
 						$('#myTable').bootstrapTable('refresh');
 						return true;
 					}
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 					layer.msg(data.message, {
 						icon: 2
 					});
@@ -402,10 +402,10 @@
 				messages: {},
 				submitHandler: function(form) {
 					var data = $("#deviceForm").serializeJson();
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					data.userIds=userList;
 					$.postJSON(deviceServiceUrl + "/officeRoomOrder", data, function(data) {
-						$.hide_overall_loding();
+						//$.hide_overall_loding();
 						if(data.code == 0) {
 							layer.close(myLayer);
 							layer.msg("成功", {
@@ -426,7 +426,7 @@
 			return {
 				node: $("#tableRoom"), //渲染节点
 				init: function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					var that = this;
 					this.node.bootstrapTable({
 						url: deviceServiceUrl + "/officeRoom/list", //请求后台的URL（*）
@@ -469,7 +469,7 @@
 							console.info(row);
 						},
 						onLoadSuccess: function() {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 						},
 						columns: [{
 							width: 50,
@@ -524,9 +524,9 @@
 
 				},
 				queryParams: function(params) {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					return {
-						token: $.getToken(),
+						// token: $.getToken(),
 						pageSize: params.pageSize,
 						pageNum: params.pageNumber,
 						roomName: $("#s_roomName").val(),
@@ -534,7 +534,7 @@
 					}
 				},
 				refresh: function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					this.node.bootstrapTable('refresh')
 				},
 				bindCreate: function() {
@@ -609,7 +609,7 @@
 			return {
 				node: $("#tableUser"), //渲染节点
 				init: function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					var that = this;
 					this.node.bootstrapTable({
 						url: userServiceUrl + "/user/list", //请求后台的URL（*）
@@ -659,7 +659,7 @@
 							}
 						},
 						onLoadSuccess: function() {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 						},
 						columns: [{
 							checkbox: true,
@@ -694,9 +694,9 @@
 
 				},
 				queryParams: function(params) {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					return {
-						token: $.getToken(),
+						// token: $.getToken(),
 						pageSize: params.pageSize,
 						pageNum: params.pageNumber,
 						userName: $("#s_userName").val(),
@@ -704,7 +704,7 @@
 					}
 				},
 				refresh: function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					this.node.bootstrapTable('refresh')
 				},
 				bindCreate: function() {
@@ -723,7 +723,7 @@
 			return {
 				node: $("#tableShowUser"), //渲染节点
 				init: function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					var that = this;
 					this.node.bootstrapTable({
 						url: deviceServiceUrl + "/officeRoomOrder/user_list", //请求后台的URL（*）
@@ -773,7 +773,7 @@
 							}
 						},
 						onLoadSuccess: function() {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 						},
 						columns: [{
 							checkbox: true,
@@ -804,9 +804,9 @@
 
 				},
 				queryParams: function(params) {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					return {
-						token: $.getToken(),
+						// token: $.getToken(),
 						orderId:orderId,
 						pageSize: params.pageSize,
 						pageNum: params.pageNumber,
@@ -815,7 +815,7 @@
 					}
 				},
 				refresh: function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					this.node.bootstrapTable('refresh')
 				},
 				bindCreate: function() {

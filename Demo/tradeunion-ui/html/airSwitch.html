@@ -114,7 +114,7 @@
 </body>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script type="text/javascript">
-    $("#loadDiv").html(loadHtml);
+    // $("#loadDiv").html(loadHtml);
     let html;
     let vm;
     let consoleVm;
@@ -150,7 +150,7 @@
                         total: result.total,
                         rows: result.list
                     });
-                    $.hide_overall_loding();
+                    //$.hide_overall_loding();
                     return res[0];
                 } else {
                     res.push({
@@ -158,12 +158,12 @@
                         rows: []
                     });
                     layer.msg("获取数据失败！", {icon: 2});
-                    $.hide_overall_loding();
+                    //$.hide_overall_loding();
                     return res[0];
                 }
             },
             onLoadSuccess: function () {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
             },
             onDblClickRow: function (row) {
                 console.info(row);
@@ -244,7 +244,7 @@
 
         function queryParams(params) {
             return {
-                token: $.getToken(),
+                // token: $.getToken(),
                 pageSize: params.pageSize,
                 pageNum: params.pageNumber,
                 productCode: "00000a01",
@@ -266,12 +266,12 @@
 
     //控制设备开始
     function consoleDevice(id){
-        $.show_overall_loding();
+        //$.show_overall_loding();
         let dataList = $("#deviceEventList").bootstrapTable("getData");
         let formData = {};
         formData.deviceId = dataList[id].id;
         $.postJSON(deviceServiceUrl +"/device/selectMenus",formData,function (selectRes) {
-            $.hide_overall_loding();
+            //$.hide_overall_loding();
             if(selectRes == null || selectRes == ""){
                 layer.msg("该设备没有可控按键",{icon:2});
             }else {
@@ -316,7 +316,7 @@
     function updateMenu(id){
         let dangerConfirm = layer.confirm("更新按键会清空该设备所有按键的绑定关系,需要手动重新绑定",["确定","取消"],function () {
             layer.close(dangerConfirm);
-            $.show_overall_loding();
+            //$.show_overall_loding();
             let dataList = $("#deviceEventList").bootstrapTable("getData");
             let formData = {};
             formData.deviceSubscriberNumber = dataList[id].deviceSubscriberNumber;
@@ -324,7 +324,7 @@
             formData.serialNum = dataList[id].serialNum;
             formData.deviceId = dataList[id].id;
             $.postJSON(deviceServiceUrl +"/device/getAirSwitchMenu",formData,function (conRes) {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
                 if(conRes.code == 0){
                     if(conRes.data.resultContent != null || conRes.data.resultContent != ""){//bcca平台返回结果
                         let resContent = conRes.data.resultContent;
@@ -359,7 +359,7 @@
             content: html,
             btn: ['提交', '取消'],
             yes: function (index, layero) {
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 let menuSelect = document.getElementsByName("s_menu");
                 let switchMenuNames = document.getElementsByName("switchMenuName");
                 let nameArr = ["未关联类型","空调","照明","招牌","插座","其它"];
@@ -373,7 +373,7 @@
                     switchMap.switchList.push(menuData);
                 }
                 $.postJSON(deviceServiceUrl +"/device/updateSwitchMenu",switchMap,function (updateRes) {
-                    $.hide_overall_loding();
+                    //$.hide_overall_loding();
                     if(updateRes.code == 0){
                         layer.msg("修改成功",{icon:1});
                     }else {
@@ -394,12 +394,12 @@
 
     //修改事件开始
     function editEvent(id){
-        $.show_overall_loding();
+        //$.show_overall_loding();
         let dataList = $("#deviceEventList").bootstrapTable("getData");
         let formData = {};
         formData.deviceId = dataList[id].id;
         $.postJSON(deviceServiceUrl +"/device/selectMenus",formData,function (selectRes) {
-            $.hide_overall_loding();
+            //$.hide_overall_loding();
             if(selectRes == null || selectRes == ""){
                 layer.msg("该设备没有可控按键",{icon:2});
             }else {
@@ -439,7 +439,7 @@
             },
             methods: {
                 openSwitch: function (deviceAddress) {
-                    $.show_overall_loding();
+                    //$.show_overall_loding();
                     let formData = {};
                     formData.account = this.account;
                     formData.controlParams = '{p1:"'+deviceAddress+'",p2:"00 00"}';
@@ -447,7 +447,7 @@
                     formData.productId = this.productId;
                     formData.serial_num = this.serial_num;
                     $.postJSON(deviceServiceUrl +"/device/controlDervice_s",formData,function (conRes) {
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                         if(conRes.code == 0){
                             let dataRes = conRes.data;
                             if(dataRes == null || dataRes == ""){
@@ -470,7 +470,7 @@
                     })
                 },
                 closeSwitch: function (deviceAddress) {
-                    $.show_overall_loding();
+                    //$.show_overall_loding();
                     let formData = {};
                     formData.account = this.account;
                     formData.controlParams = '{p1:"'+deviceAddress+'",p2:"FF 00"}';
@@ -478,7 +478,7 @@
                     formData.productId = this.productId;
                     formData.serial_num = this.serial_num;
                     $.postJSON(deviceServiceUrl +"/device/controlDervice_s",formData,function (conRes) {
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                         if(conRes.code == 0){
                             let dataRes = conRes.data;
                             if(dataRes == null || dataRes == ""){

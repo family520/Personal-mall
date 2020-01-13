@@ -119,12 +119,12 @@
 	</body>
 	<script type="text/javascript">
 		var html;
-		$("#loadDiv").html(loadHtml);
+		// $("#loadDiv").html(loadHtml);
 		var url = "";
 
 		$(".selectpickers").selectpicker('refresh');
 		$(function() {
-			$.show_overall_loding();
+			//$.show_overall_loding();
 			$('#myTable').bootstrapTable({
 				url: userServiceUrl + "/user/face_list", //请求后台的URL（*）
 				//data: data1,                            //本地数据
@@ -161,7 +161,7 @@
 					console.info(row);
 				},
 				onLoadSuccess: function() {
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 				},
 				columns: [{
 					checkbox: true
@@ -233,9 +233,9 @@
 			});
 
 			function queryParams(params) {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				return {
-					token: $.getToken(),
+					// token: $.getToken(),
 					organizationName: $("#s_organizationName").val(),
 					userFaceImage: $("#s_userFaceImage").val(),
 					userMobile: $("#s_userMobile").val(),
@@ -251,7 +251,7 @@
 		});
 
 		$("#search").click(function() {
-			$.show_overall_loding();
+			//$.show_overall_loding();
 			$('#myTable').bootstrapTable('refresh');
 		});
 
@@ -281,18 +281,18 @@
 					var conlayer = layer.confirm("是否确定审核？", {
 						btn: ['确定', '取消']
 					}, function() {
-						$.show_overall_loding();
+						//$.show_overall_loding();
 						$.putJSON(userServiceUrl + "/user/updateFace", {
 							id:one.id,
 							userFaceType:$("#userFaceType").val()
 						}, function(data) {
-							$.show_overall_loding();
+							//$.show_overall_loding();
 							if(data.code == 0) {
 								layer.close(myLayer);
 								layer.msg("成功", {
 									icon: 1
 								});
-								$.show_overall_loding();
+								//$.show_overall_loding();
 								$('#myTable').bootstrapTable('refresh');
 								return true;
 							}
@@ -315,18 +315,18 @@
 			var conlayer = layer.confirm("是否确定删除？删除后用户的人脸将不可用，需要重新上传审核才能复用", {
 				btn: ['确定', '取消']
 			}, function() {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				$.putJSON(userServiceUrl + "/user/updateFace", {
 					id:data[obj].id,
 					userFaceType:0
 				}, function(data) {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					if(data.code == 0) {
 						layer.close(conlayer);
 						layer.msg("成功", {
 							icon: 1
 						});
-						$.show_overall_loding();
+						//$.show_overall_loding();
 						$('#myTable').bootstrapTable('refresh');
 						return true;
 					}

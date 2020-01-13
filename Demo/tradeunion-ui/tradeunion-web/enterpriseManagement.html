@@ -784,9 +784,9 @@
 			var conlayer = layer.confirm("是否确认发送控制？", {
 				btn: ['确定', '取消']
 			}, function() {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				$.postJSON(deviceServiceUrl + "/mode/controlMode?id=" + id, {}, function(data) {
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 					if(data.code == 0) {
 						layer.close(conlayer);
 						layer.msg("成功", {

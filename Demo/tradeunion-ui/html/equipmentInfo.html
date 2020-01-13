@@ -154,7 +154,7 @@
 	<script type="text/javascript">
         var RmId = "";
 		var html;
-		$("#loadDiv").html(loadHtml);
+		// $("#loadDiv").html(loadHtml);
 		
 		var url = "";
 		// 百度地图API功能
@@ -167,7 +167,7 @@
 					display: "none"
 				});
 			});
-			$.show_overall_loding();
+			//$.show_overall_loding();
 			$('#myTable').bootstrapTable({
 				url: deviceServiceUrl + "/devicemanger/list", //请求后台的URL（*）
 				//data: data1,                            //本地数据
@@ -204,7 +204,7 @@
 					console.info(row);
 				},
 				onLoadSuccess: function() {
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 				},
 				columns: [{
 					checkbox: true
@@ -256,9 +256,9 @@
 			});
 
 			function queryParams(params) {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				return {
-					token: $.getToken(),
+					// token: $.getToken(),
 					isScreenOrganization: 1,
 					deviceAlias: $("#s_deviceAlias").val(),
 					deviceSubscriberNumber: $("#s_deviceSubscriberNumber").val(),
@@ -299,12 +299,12 @@
 							ids.push(one.id);
 						}
 						var organizationId = $("#organizationId").val();
-						$.show_overall_loding();
+						//$.show_overall_loding();
 						$.putJSON(deviceServiceUrl + "/devicemanger/batch_up_organization", {
 							'id': organizationId,
 							'deviceIds': ids
 						}, function(data) {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 							if(data.code == 0) {
 								layer.close(myLayer);
 								layer.msg("成功", {
@@ -369,12 +369,12 @@
 							ids.push(one.id);
 						}
 						var positionId = $("#positionId").val();
-						$.show_overall_loding();
+						//$.show_overall_loding();
 						$.putJSON(deviceServiceUrl + "/device/batch_up_position", {
 							'id': positionId,
 							'deviceIds': ids
 						}, function(data) {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 							if(data.code == 0) {
 								layer.close(myLayer);
 								layer.msg("成功", {
@@ -508,10 +508,10 @@
                         layer.msg('请选择提醒类型', {
                             icon: 5
                         });
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                         return;
                     }
-                    $.show_overall_loding();
+                    //$.show_overall_loding();
                     $.putJSON(deviceServiceUrl + "/RmController/", {
                         "id": RmId,
                         "deviceId": deviceTestId,
@@ -521,7 +521,7 @@
                         "remindType": remindTypeValue,
                         "rmOrganizationId": organizationId
                     }, function (data) {
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                         if (data.code == 0) {
                             parent.layer.msg("操作成功", {
                                 icon: 6
@@ -554,7 +554,7 @@
             $.sanjiGetJSON(deviceServiceUrl + "/RmController/list", {
                 "deviceId": deviceTestId
             }, function (data) {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
                 if (data.code == 0) {
                     if (data.data.length > 0) {
                         var deviceId = data.data[0].deviceId;
@@ -596,7 +596,7 @@
 
 
 		$("#search").click(function() {
-			$.show_overall_loding();
+			//$.show_overall_loding();
 			$('#myTable').bootstrapTable('refresh');
 		});
 
@@ -656,7 +656,7 @@
 //				"typeId":'00000a01', //TODO 需换成数据的类型码
 				"templateType":1
 			}
-			$.show_overall_loding();
+			//$.show_overall_loding();
 			var templateCode;
         	var templateId;
 			$.ajax({//查询控制模板
@@ -701,7 +701,7 @@
 								
 							},
 							error: function() {
-								$.hide_overall_loding();
+								//$.hide_overall_loding();
 							}
 						});
 						
@@ -720,7 +720,7 @@
 					            maxmin: true,
 					            content: '<iframe id="Example1" style="width: 100%;height: 100%;" title="Example2"  frameborder="0" src=""></iframe>',
 					            success:function(){
-					            	$.hide_overall_loding();
+					            	//$.hide_overall_loding();
 					            	document.getElementById("Example1").srcdoc = templateCode
 					            	$("#Example1").load(function () {
 					            		$("#Example1")[0].contentWindow.getField("false",array,json);
@@ -732,12 +732,12 @@
 						layer.msg("没有对应的控制模版，需要去分类管理去设置模版！", {
 							icon: 2
 						});
-						$.hide_overall_loding();
+						//$.hide_overall_loding();
 						return;
 					}
 				},
 				error: function() {
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 				}
 			});
 
@@ -971,9 +971,9 @@
 				messages: {},
 				submitHandler: function(form) {
 					var data = $("#deviceForm").serializeJson();
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					$.putJSON(deviceServiceUrl + "/devicemanger", data, function(data) {
-						$.hide_overall_loding();
+						//$.hide_overall_loding();
 						if(data.code == 0) {
 							layer.close(myLayer);
 							layer.msg("成功", {
@@ -999,7 +999,7 @@
 				url: userServiceUrl + "/organizationFloor/list",
 				async:false,
 				data: {
-					token: $.getToken(),
+					// token: $.getToken(),
 					organizationId: organizationId
 				},
 				success: function(resData) {
@@ -1051,7 +1051,7 @@
 				url: userServiceUrl + "/organizationFloorBooth/list",
 				async:false,
 				data: {
-					token: $.getToken(),
+					// token: $.getToken(),
 					floorId: floorId
 				},
 				success: function(resData) {
@@ -1284,7 +1284,7 @@
 							total: result.total,
 							rows: result.list
 						});
-						$.hide_overall_loding();
+						//$.hide_overall_loding();
 						return res[0];
 					} else {
 						res.push({
@@ -1294,12 +1294,12 @@
 						layer.msg("获取数据失败！", {
 							icon: 2
 						});
-						$.hide_overall_loding();
+						//$.hide_overall_loding();
 						return res[0];
 					}
 				},
 				onLoadSuccess: function() {
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 				},
 				onDblClickRow: function(row) {
 					console.info(row);
@@ -1329,7 +1329,7 @@
 			//查询参数
 			function select_queryParams(params) {
 				return {
-					token: $.getToken(),
+					// token: $.getToken(),
 					pageSize: params.pageSize,
 					pageNum: params.pageNumber,
 					deviceName: $("#select_deviceName").val(),
@@ -1382,7 +1382,7 @@
 							total: result.total,
 							rows: result.list
 						});
-						$.hide_overall_loding();
+						//$.hide_overall_loding();
 						return res[0];
 					} else {
 						res.push({
@@ -1392,12 +1392,12 @@
 						layer.msg("获取数据失败！", {
 							icon: 2
 						});
-						$.hide_overall_loding();
+						//$.hide_overall_loding();
 						return res[0];
 					}
 				},
 				onLoadSuccess: function() {
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 				},
 				onDblClickRow: function(row) {
 					console.info(row);
@@ -1429,7 +1429,7 @@
 			//查询参数
 			function select_queryParams2(params) {
 				return {
-					token: $.getToken(),
+					// token: $.getToken(),
 					pageSize: params.pageSize,
 					pageNum: params.pageNumber,
 					deviceName: $("#select_deviceName").val(),

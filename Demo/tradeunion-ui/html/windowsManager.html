@@ -110,9 +110,9 @@
 <script>
     var html;
     var rdata = {};
-    $("#loadDiv").html(loadHtml);
+    // $("#loadDiv").html(loadHtml);
     $(function () {
-        $.show_overall_loding();
+        //$.show_overall_loding();
         $('#myTable').bootstrapTable({
             url: deviceServiceUrl + "/windowscontrol/list", //请求后台的URL（*）
             method: 'get',                         //请求方式（*）
@@ -155,7 +155,7 @@
                 console.info(row);
             },
             onLoadSuccess: function() {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
             },
             columns: [
                 {
@@ -204,9 +204,9 @@
         });
 
         function queryParams(params) {
-        	$.show_overall_loding();
+        	//$.show_overall_loding();
             return {
-            	token: $.getToken(),
+            	// token: $.getToken(),
                 pageSize: params.pageSize,
                 pageNum: params.pageNumber,
                 productCode:"00046301",
@@ -262,7 +262,7 @@
 		
         var serchaData = {};
         $("#search").click(function() {
-            $.show_overall_loding();
+            //$.show_overall_loding();
             $('#myTable').bootstrapTable('refresh');
         });
 
@@ -340,7 +340,7 @@
 							
 						},
 						error: function() {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 						}
 					});
 					
@@ -370,12 +370,12 @@
 					layer.msg("没有对应的控制模版，需要去分类管理去设置模版！", {
 						icon: 2
 					});
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 					return;
 				}
 			},
 			error: function() {
-				$.hide_overall_loding();
+				//$.hide_overall_loding();
 			}
 		});
         
@@ -408,15 +408,15 @@
 		var conlayer = layer.confirm("确定解绑？", {
 			btn: ['确定', '取消']
 		}, function() {
-			$.show_overall_loding();
+			//$.show_overall_loding();
 			$.deleteJSON(addToUrlToken(deviceServiceUrl + "/windowscontrol")+"&id=" + data.id, {}, function(data) {
-				$.hide_overall_loding();
+				//$.hide_overall_loding();
 				if(data.code == 0) {
 					layer.close(conlayer);
 					layer.msg("成功", {
 						icon: 1
 					});
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					$('#myTable').bootstrapTable('refresh');
 					return true;
 				}
@@ -457,12 +457,12 @@
 				}
 				
 				$.postJSON(deviceServiceUrl + "/windowscontrol", data, function (data) {
-                    $.hide_overall_loding();
+                    //$.hide_overall_loding();
                     if (data.code == 0) {
                         layer.msg("成功", {
                             icon: 1
                         });
-                        $.show_overall_loding();
+                        //$.show_overall_loding();
                         $('#myTable').bootstrapTable('refresh');
                         return true;
                     }
@@ -492,7 +492,7 @@
 		return {
 			node: $("#devicemodeTable"), //渲染节点
 			init: function() {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				var that = this;
 				this.node.bootstrapTable({
 					url: deviceServiceUrl + "/windowscontrol/mlist", //请求后台的URL（*）
@@ -541,7 +541,7 @@
 						dModeId = row.openId;
 					},
 					onLoadSuccess: function() {
-						$.hide_overall_loding();
+						//$.hide_overall_loding();
 					},
 					columns: [{
 						checkbox: true,
@@ -572,9 +572,9 @@
 
 			},
 			queryParams: function(params) {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				return {
-					token: $.getToken(),
+					// token: $.getToken(),
 					pageSize: params.pageSize,
 					pageNum: params.pageNumber,
 					productCode:"00000a01",
@@ -582,7 +582,7 @@
 				}
 			},
 			refresh: function() {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				this.node.bootstrapTable('refresh')
 			},
 			bindCreate: function() {

@@ -140,10 +140,10 @@
 	<script>
 		var html;
 		var rdata = {};
-		$("#loadDiv").html(loadHtml);
+		// $("#loadDiv").html(loadHtml);
 		$(function() {
 			
-			$.show_overall_loding();
+			//$.show_overall_loding();
 			$('#myTable').bootstrapTable({
 				url: userServiceUrl + "/brand/list", //请求后台的URL（*）
 				//data: data1, //本地数据
@@ -189,7 +189,7 @@
 					console.info(row);
 				},
 				onLoadSuccess: function() {
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 				},
 				columns: [{
 					width: 100,
@@ -239,9 +239,9 @@
 				}]
 			});
 			function queryParams(params) {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				return {
-					token: $.getToken(),
+					// token: $.getToken(),
 					pageSize: params.pageSize,
 					pageNum: params.pageNumber,
 					isScreenOrganization: 1,
@@ -255,7 +255,7 @@
 
 			var serchaData = {};
 			$("#search").click(function() {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				$('#myTable').bootstrapTable('refresh');
 			});
 
@@ -279,15 +279,15 @@
 			var conlayer = layer.confirm("确定删除？", {
 				btn: ['确定', '取消']
 			}, function() {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				$.sanjiGetJSON(userServiceUrl + "/brand/delete?id=" + id, {}, function(data) {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					if(data.code == 0) {
 						layer.close(conlayer);
 						layer.msg("成功", {
 							icon: 1
 						});
-						$.show_overall_loding();
+						//$.show_overall_loding();
 						$('#myTable').bootstrapTable('refresh');
 						return true;
 					}
@@ -365,19 +365,19 @@
 						return;
 					}
 					
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					if(isAdd) {
 //						$.extend(data, {
 //							"brandIcon": $("#imgUrlAdd").val();
 //						});
 						$.postJSON(userServiceUrl + "/brand/create", data, function(data) {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 							if(data.code == 0) {
 								layer.close(myLayer);
 								layer.msg("成功", {
 									icon: 1
 								});
-								$.show_overall_loding();
+								//$.show_overall_loding();
 								$('#myTable').bootstrapTable('refresh');
 								return true;
 							}
@@ -387,13 +387,13 @@
 						});
 					} else {
 						$.putJSON(userServiceUrl + "/brand/update", data, function(data) {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 							if(data.code == 0) {
 								layer.close(myLayer);
 								layer.msg("成功", {
 									icon: 1
 								});
-								$.show_overall_loding();
+								//$.show_overall_loding();
 								$('#myTable').bootstrapTable('refresh');
 								return true;
 							}
@@ -514,7 +514,7 @@
 		                contentType:false,
 		                processData:false,
 		                success:function (res) {
-		                    $.hide_overall_loding();
+		                    //$.hide_overall_loding();
 		                    if(res.code == 0){
 		                    	var image = new Image();
 								image.src = res.data.filePath;

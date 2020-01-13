@@ -104,7 +104,7 @@
 <div id="loadDiv"></div>
 </body>
 <script type="text/javascript">
-    $("#loadDiv").html(loadHtml);
+    // $("#loadDiv").html(loadHtml);
     var app;
     app = new Vue({
         el: "#app",
@@ -366,7 +366,7 @@
                 // console.info(row);
             },
             onLoadSuccess: function () {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
                 if (index == 2) {
                     $(".fixed-table-pagination").hide();
                 }
@@ -400,7 +400,7 @@
 
         function queryParams(params) {
             return {
-                token: $.getToken(),
+                // token: $.getToken(),
                 pageSize: index == 1 ? params.pageSize : 9999,
                 pageNum: params.pageNumber,
                 deviceName: $("#s_deviceAlias").val(),

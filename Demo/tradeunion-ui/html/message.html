@@ -93,7 +93,7 @@
 <div id="loadDiv"></div>
 </body>
 <script type="text/javascript">
-    $("#loadDiv").html(loadHtml);
+    // $("#loadDiv").html(loadHtml);
     let html;
     $(function () {
         $('#messageTable').bootstrapTable({
@@ -127,7 +127,7 @@
                         total: result.total,
                         rows: result.list
                     });
-                    $.hide_overall_loding();
+                    //$.hide_overall_loding();
                     return res[0];
                 } else {
                     res.push({
@@ -135,12 +135,12 @@
                         rows: []
                     });
                     layer.msg("获取数据失败！", {icon: 2});
-                    $.hide_overall_loding();
+                    //$.hide_overall_loding();
                     return res[0];
                 }
             },
             onLoadSuccess: function () {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
             },
             onDblClickRow: function (row) {
                 console.info(row);
@@ -198,7 +198,7 @@
 
         function queryParams(params) {
             return {
-                token: $.getToken(),
+                // token: $.getToken(),
                 pageSize: params.pageSize,
                 pageNum: params.pageNumber,
                 organizationId:""
@@ -295,15 +295,15 @@
         var conlayer = layer.confirm("确定删除？", {
 			btn: ['确定', '取消']
 		}, function() {
-			$.show_overall_loding();
+			//$.show_overall_loding();
 	        $.deleteJSON(addToUrlToken(userServiceUrl + "/platformNotice")+"&id="+dataList.id,{},function (data) {
-	            $.show_overall_loding();
+	            //$.show_overall_loding();
 				if(data.code == 0) {
 					layer.close(conlayer);
 					layer.msg("成功", {
 						icon: 1
 					});
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					$('#messageTable').bootstrapTable('refresh');
 					return true;
 				}
@@ -329,7 +329,7 @@
             content: html,
             btn: ['确定','取消'],
             yes: function (index, layero) {
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 $("#newEventForm").submit();
             },
             success: function (layero) {
@@ -357,7 +357,7 @@
                 $.postJSON(userServiceUrl+"/platformNotice",
                     {title:$("#n_title").val(),content:$("#n_content").val(),organizationId:$("#n_organizationId").val()},
                     function (addRes) {
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                         if(addRes.code == 0){
                             layer.close(myLayer);
                             $("#messageTable").bootstrapTable("refresh");
@@ -433,7 +433,7 @@
                                 total: result.total,
                                 rows: result.list
                             });
-                            $.hide_overall_loding();
+                            //$.hide_overall_loding();
                             return res[0];
                         } else {
                             res.push({
@@ -441,12 +441,12 @@
                                 rows: []
                             });
                             layer.msg("获取数据失败！", {icon: 2});
-                            $.hide_overall_loding();
+                            //$.hide_overall_loding();
                             return res[0];
                         }
                     },
                     onLoadSuccess: function () {
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                     },
                     onDblClickRow: function (row) {
                         console.info(row);
@@ -487,7 +487,7 @@
                 //查询参数
                 function select_queryParams2(params) {
                     return {
-                        token: $.getToken(),
+                        // token: $.getToken(),
                         pageSize: params.pageSize,
                         pageNum: params.pageNumber,
                         organizationName:$("#select_organizationName").val()

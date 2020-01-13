@@ -174,10 +174,10 @@
 				}
 			});
 		}
-		$("#loadDiv").html(loadHtml);
+		// $("#loadDiv").html(loadHtml);
 		$(function() {
 
-			$.show_overall_loding();
+			//$.show_overall_loding();
 			$('#myTable').bootstrapTable({
 				url: deviceServiceUrl + "/ipush/list", //请求后台的URL（*）
 				//data: data1, //本地数据
@@ -215,7 +215,7 @@
 					console.info(row);
 				},
 				onLoadSuccess: function() {
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 				},
 				columns: [{
 					checkbox: true
@@ -260,9 +260,9 @@
 			});
 
 			function queryParams(params) {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				return {
-					token: $.getToken(),
+					// token: $.getToken(),
 					pageSize: params.pageSize,
 					pageNum: params.pageNumber,
 					isScreenOrganization: 1,
@@ -370,7 +370,7 @@
 
 			var serchaData = {};
 			$("#search").click(function() {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				$('#myTable').bootstrapTable('refresh');
 			});
 
@@ -415,7 +415,7 @@
 		};
 
 		function getVideoResource(vireType, deviceId) {
-			$.show_overall_loding();
+			//$.show_overall_loding();
 			$('#deviceVideoResource').bootstrapTable({
 				url: deviceServiceUrl + "/vdVtr/byDevIdlist", //请求后台的URL（*）
 				method: 'get', //请求方式（*）
@@ -458,7 +458,7 @@
 					console.info(row);
 				},
 				onLoadSuccess: function() {
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 				},
 				columns: [{
 					field: 'checked',
@@ -507,7 +507,7 @@
 
 			function queryParams(params) {
 				return {
-					token: $.getToken(),
+					// token: $.getToken(),
 					pageSize: params.pageSize,
 					pageNum: params.pageNumber,
 					deviceId: deviceId,
@@ -519,7 +519,7 @@
 
 			var serchaData = {};
 			$("#search2").click(function() {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				$('#deviceVideoResource').bootstrapTable('refresh');
 			});
 
@@ -547,13 +547,13 @@
 					offset: 'auto',
 					btn: ['提交', '关闭'],
 					yes: function(index, layero) {
-						$.show_overall_loding();
+						//$.show_overall_loding();
 						$.postJSON(deviceServiceUrl + "/vdVtr", {
 							"vireType": vireType,
 							"deviceId": deviceId,
 							"videoIds": globalArrayList
 						}, function(data) {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 							if(data.code == 0) {
 								parent.layer.msg("操作成功", {
 									icon: 6
@@ -606,9 +606,9 @@
 				var conlayer = layer.confirm("确定删除选中数据？", {
 					btn: ['确定', '取消']
 				}, function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					$.deleteJSON(deviceServiceUrl + "/vdVtr?videoDevIds=" + ids, {}, function(data) {
-						$.hide_overall_loding();
+						//$.hide_overall_loding();
 						if(data.code == 0) {
 							layer.close(conlayer);
 							layer.msg("成功", {
@@ -659,14 +659,14 @@
 				yes: function(index, layero) {
 					var vireType = $("#vireType").val();
 					var vdNum = $("#vdNum").val();
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					$.putJSON(deviceServiceUrl + "/vdVtr", {
 						"id": data.id,
 						"deviceId": data.deviceId,
 						'vireType': vireType,
 						'vdNum': vdNum
 					}, function(data) {
-						$.hide_overall_loding();
+						//$.hide_overall_loding();
 						if(data.code == 0) {
 							layer.close(myEditLayer);
 							layer.msg("成功", {
@@ -703,7 +703,7 @@
 		}
 
 		function getImgVIdeoTable(obj, deviceId) {
-			$.show_overall_loding();
+			//$.show_overall_loding();
 			$('#deviceImgVideo').bootstrapTable({
 				url: deviceServiceUrl + "/videoRe/list", //请求后台的URL（*）
 				method: 'get', //请求方式（*）
@@ -772,7 +772,7 @@
 					console.log(globalArrayList);
 				},
 				onLoadSuccess: function() {
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 				},
 				columns: [{
 					field: 'checked',
@@ -805,7 +805,7 @@
 
 			function queryParams(params) {
 				return {
-					token: $.getToken(),
+					// token: $.getToken(),
 					pageSize: params.pageSize,
 					pageNum: params.pageNumber,
 					vireType: obj,
@@ -844,7 +844,7 @@
 
 			var serchaData = {};
 			$("#search1").click(function() {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				$('#deviceImgVideo').bootstrapTable('refresh');
 			});
 
@@ -950,13 +950,13 @@
 						}
 
 						$.postJSON(deviceServiceUrl + "/ipushlog/batch_up_push", pushData, function(data) {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 							if(data.code == 0) {
 								layer.close(myLayer);
 								layer.msg("成功", {
 									icon: 1
 								});
-								$.show_overall_loding();
+								//$.show_overall_loding();
 								$('#myTable').bootstrapTable('refresh');
 								return true;
 							}
@@ -996,13 +996,13 @@
 							"deviceId": deviceIds
 						});
 						$.postJSON(deviceServiceUrl + "/ipush/batch_up_information", data, function(data) {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 							if(data.code == 0) {
 								layer.close(myLayer);
 								layer.msg("成功", {
 									icon: 1
 								});
-								$.show_overall_loding();
+								//$.show_overall_loding();
 								$('#myTable').bootstrapTable('refresh');
 								return true;
 							}
@@ -1418,7 +1418,7 @@
 			} else {
 				let formData = new FormData();
 				formData.append("file", $(ele)[0].files[0]);
-				//				$.show_overall_loding();
+				//				//$.show_overall_loding();
 				$.ajax({
 					type: "post",
 					url: "http://39.98.137.198:7788/api/file/upload?appId=168254",
@@ -1435,7 +1435,7 @@
 						return myXhr; //xhr对象返回给jQuery使用  
 					},
 					success: function(res) {
-						//						$.hide_overall_loding();
+						//						//$.hide_overall_loding();
 						if(res.code == 0) {
 							let virePath = res.data.filePath;
 							$(ele).parent().parent().find('.upfile-box img').attr('src', virePath);
@@ -1465,7 +1465,7 @@
 			} else {
 				let formData = new FormData();
 				formData.append("file", $(ele)[0].files[0]);
-				//				$.show_overall_loding();
+				//				//$.show_overall_loding();
 				$.ajax({
 					type: "post",
 					url: "http://39.98.137.198:7788/api/file/upload?appId=168254",
@@ -1482,7 +1482,7 @@
 						return myXhr; //xhr对象返回给jQuery使用  
 					},
 					success: function(res) {
-						//						$.hide_overall_loding();
+						//						//$.hide_overall_loding();
 						if(res.code == 0) {
 							let virePath = res.data.filePath;
 							$(ele).parent().parent().find('.videolist').attr('ipath', virePath);
@@ -1503,7 +1503,7 @@
 
 		function upLoadFileAll(data, ele) {
 			$.postJSON(deviceServiceUrl + "/videoRe", data, function(data) {
-				$.hide_overall_loding();
+				//$.hide_overall_loding();
 				layer.close(ele);
 				if(data.code == 0) {
 					layer.msg("成功", {
@@ -1695,7 +1695,7 @@
 			return {
 				node: $("#hisInfoTable"), //渲染节点
 				init: function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					var that = this;
 					this.node.bootstrapTable({
 						url: deviceServiceUrl + "/ipushlog/list", //请求后台的URL（*）
@@ -1740,7 +1740,7 @@
 						//双击行选中的操作
 						onDblClickRow: function(row) {},
 						onLoadSuccess: function() {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 						},
 						columns: [{
 							width: 50,
@@ -1802,16 +1802,16 @@
 
 				},
 				queryParams: function(params) {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					return {
-						token: $.getToken(),
+						// token: $.getToken(),
 						pageSize: params.pageSize,
 						pageNum: params.pageNumber,
 						deviceId: deviceId
 					}
 				},
 				refresh: function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					this.node.bootstrapTable('refresh')
 				},
 				bindCreate: function() {
@@ -1842,12 +1842,12 @@
 				"filetype": data.pushType
 			}
 			$.postJSON(deviceServiceUrl + "/ipushlog/batch_up_repush", pushData, function(data) {
-				$.hide_overall_loding();
+				//$.hide_overall_loding();
 				if(data.code == 0) {
 					layer.msg("成功", {
 						icon: 1
 					});
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					$('#hisInfoTable').bootstrapTable('refresh');
 					return true;
 				}
@@ -2370,7 +2370,7 @@
 					contentType: false,
 					processData: false,
 					success: function(res) {
-						$.hide_overall_loding();
+						//$.hide_overall_loding();
 						if(res.code == 0) {
 							var image = new Image();
 							image.src = res.data.filePath;
@@ -2429,7 +2429,7 @@
 					contentType: false,
 					processData: false,
 					success: function(res) {
-						$.hide_overall_loding();
+						//$.hide_overall_loding();
 						if(res.code == 0) {
 							var image = new Image();
 							image.src = res.data.filePath;
@@ -2484,7 +2484,7 @@
 						async: false,
 						processData: false,
 						success: function(res) {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 							if(res.code == 0) {
 								if($("#repeatType").val() == "repeat") {
 									var fileUrlsVal = $("#fileUrls").val();
@@ -2572,7 +2572,7 @@
 							return myXhr; //xhr对象返回给jQuery使用  
 						},
 						success: function(res) {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 							if(res.code == 0) {
 								$('.progress-container').hide();
 								if($("#repeatType").val() == "repeat") {
@@ -2629,7 +2629,7 @@
 					contentType: false,
 					processData: false,
 					success: function(res) {
-						$.hide_overall_loding();
+						//$.hide_overall_loding();
 						if(res.code == 0) {
 							$("#fileUrls").val(res.data.filePath)
 							layer.msg("上传成功", {

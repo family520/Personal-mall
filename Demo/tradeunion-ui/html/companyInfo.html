@@ -165,7 +165,7 @@
 <div id="loadDiv"></div>
 </body>
 <script type="text/javascript">
-    $("#loadDiv").html(loadHtml);
+    // $("#loadDiv").html(loadHtml);
 	
 	function typeList(org) {
 		$.ajax({
@@ -231,7 +231,7 @@
                 }
             },
             onLoadSuccess: function () {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
             },
             onDblClickRow: function (row) {
                 console.info(row);
@@ -323,7 +323,7 @@
 
         function queryParams(params) {
             return {
-                token: $.getToken(),
+                // token: $.getToken(),
                 pageSize: params.pageSize,
                 pageNum: params.pageNumber,
 				name: $("#search_name").val(),
@@ -333,7 +333,7 @@
         }
 
         $("#search").on("click", function () {
-			$.show_overall_loding();
+			//$.show_overall_loding();
             $('#myTable').bootstrapTable('refresh');
         });
 
@@ -418,9 +418,9 @@
 				
 				var data = $("#editForm").serializeJson();
                 layer.close(myLayer);
-				$.show_overall_loding();
+				//$.show_overall_loding();
                 $.putJSON(userServiceUrl + "/companyInfo",data,function (org) {
-                    $.hide_overall_loding();
+                    //$.hide_overall_loding();
 					if(org.code == 0){
                         layer.close(myLayer);
 						layer.msg("操作成功", {icon: 1});
@@ -472,9 +472,9 @@
         var conlayer = layer.confirm("确定删除？", {
 			btn: ['确定', '取消']
 		}, function() {
-			$.show_overall_loding();
+			//$.show_overall_loding();
 	        $.deleteJSON(addToUrlToken(userServiceUrl + "/companyInfo")+"&id="+data.id,{},function (org) {
-	            $.hide_overall_loding();
+	            //$.hide_overall_loding();
 				if(org.code == 0) {
 					layer.close(conlayer);
 					layer.msg("操作成功", {icon: 1});
@@ -569,9 +569,9 @@
 				}
 				
 				var data = $("#addForm").serializeJson();
-				$.show_overall_loding();
+				//$.show_overall_loding();
                 $.postJSON(userServiceUrl+"/companyInfo",data,function (org) {
-                    $.hide_overall_loding();
+                    //$.hide_overall_loding();
                     if(org.code == 0){
                         layer.close(myLayer);
                         $("#myTable").bootstrapTable("refresh");
@@ -793,7 +793,7 @@
 	            contentType: false,
 	            processData: false,
 	            success: function (res) {
-	                $.hide_overall_loding();
+	                //$.hide_overall_loding();
 	                if (res.code == 0) {
 	                    $("#"+org+"boothImage").attr("value", res.data.filePath);
 	                } else {

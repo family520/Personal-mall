@@ -146,9 +146,9 @@
 <script>
   var html;
   var rdata = {};
-  $("#loadDiv").html(loadHtml);
+  // $("#loadDiv").html(loadHtml);
   $(function () {
-    $.show_overall_loding();
+    //$.show_overall_loding();
     $('#myTable').bootstrapTable({
       url: deviceServiceUrl + "/airQualityTrigger/list", //请求后台的URL（*）
       //data: data1, //本地数据
@@ -198,7 +198,7 @@
         //						// $('.dropdown-toggle').parent().toggleClass("open");
         //					});
 
-        $.hide_overall_loding();
+        //$.hide_overall_loding();
       },
       columns: [{
         width: 50,
@@ -253,9 +253,9 @@
     });
 
     function queryParams(params) {
-      $.show_overall_loding();
+      //$.show_overall_loding();
       return {
-        token: $.getToken(),
+        // token: $.getToken(),
         pageSize: params.pageSize,
         pageNum: params.pageNumber,
         isScreenOrganization: 1,
@@ -270,7 +270,7 @@
 
     var serchaData = {};
     $("#search").click(function () {
-      $.show_overall_loding();
+      //$.show_overall_loding();
       $('#myTable').bootstrapTable('refresh');
     });
 
@@ -341,15 +341,15 @@
     var conlayer = layer.confirm("确定删除？", {
       btn: ['确定', '取消']
     }, function () {
-      $.show_overall_loding();
+      //$.show_overall_loding();
       $.deleteJSON(deviceServiceUrl + "/airQualityTrigger?id=" + id, {}, function (data) {
-        $.show_overall_loding();
+        //$.show_overall_loding();
         if (data.code == 0) {
           layer.close(conlayer);
           layer.msg("成功", {
             icon: 1
           });
-          $.show_overall_loding();
+          //$.show_overall_loding();
           $('#myTable').bootstrapTable('refresh');
           return true;
         }
@@ -912,16 +912,16 @@
 
         console.log(data)
 
-        $.show_overall_loding();
+        //$.show_overall_loding();
         if (isAdd) {
           $.postJSON(deviceServiceUrl + "/airQualityTrigger/save", data, function (data) {
-            $.hide_overall_loding();
+            //$.hide_overall_loding();
             if (data.code == 0) {
               layer.close(myLayer);
               layer.msg("成功", {
                 icon: 1
               });
-              $.show_overall_loding();
+              //$.show_overall_loding();
               $('#myTable').bootstrapTable('refresh');
               return true;
             }
@@ -938,13 +938,13 @@
           });
         } else {
           $.postJSON(deviceServiceUrl + "/airQualityTrigger/update", data, function (data) {
-            $.hide_overall_loding();
+            //$.hide_overall_loding();
             if (data.code == 0) {
               layer.close(myLayer);
               layer.msg("成功", {
                 icon: 1
               });
-              $.show_overall_loding();
+              //$.show_overall_loding();
               $('#myTable').bootstrapTable('refresh');
               return true;
             }
@@ -991,7 +991,7 @@
             total: result.total,
             rows: result.list
           });
-          $.hide_overall_loding();
+          //$.hide_overall_loding();
           return res[0];
         } else {
           res.push({
@@ -999,12 +999,12 @@
             rows: []
           });
           layer.msg("获取数据失败！", {icon: 2});
-          $.hide_overall_loding();
+          //$.hide_overall_loding();
           return res[0];
         }
       },
       onLoadSuccess: function () {
-        $.hide_overall_loding();
+        //$.hide_overall_loding();
       },
       onDblClickRow: function (row) {
         console.info(row);
@@ -1033,7 +1033,7 @@
     //查询参数
     function select_queryParams(params) {
       return {
-        token: $.getToken(),
+        // token: $.getToken(),
         pageSize: params.pageSize,
         pageNum: params.pageNumber,
         organizationId: $("#organizationId1").val()

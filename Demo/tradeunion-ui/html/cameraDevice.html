@@ -125,7 +125,7 @@
 <div id="loadDiv"></div>
 </body>
 <script type="text/javascript">
-    $("#loadDiv").html(loadHtml);
+    // $("#loadDiv").html(loadHtml);
     let html;
     var isRetract = false;
 	var isInput = false;
@@ -162,7 +162,7 @@
                         total: result.total,
                         rows: result.list
                     });
-                    $.hide_overall_loding();
+                    //$.hide_overall_loding();
                     return res[0];
                 } else {
                     res.push({
@@ -170,12 +170,12 @@
                         rows: []
                     });
                     layer.msg("获取数据失败！", {icon: 2});
-                    $.hide_overall_loding();
+                    //$.hide_overall_loding();
                     return res[0];
                 }
             },
             onLoadSuccess: function () {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
             },
             onDblClickRow: function (row) {
                 console.info(row);
@@ -243,7 +243,7 @@
 
         function queryParams(params) {
             return {
-                token: $.getToken(),
+                // token: $.getToken(),
                 pageSize: params.pageSize,
                 pageNum: params.pageNumber,
                 cameraName:$("#s_cameraName").val(),

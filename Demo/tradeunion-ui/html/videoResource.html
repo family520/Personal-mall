@@ -135,9 +135,9 @@
     var rdata = {};
     var DeviceTestList = "";
     var UserName = $.getCookie("userName");
-    $("#loadDiv").html(loadHtml);
+    // $("#loadDiv").html(loadHtml);
     $(function () {
-        $.show_overall_loding();
+        //$.show_overall_loding();
         $('#myTable').bootstrapTable({
             url: deviceServiceUrl + "/videoRe/list", //请求后台的URL（*）
             method: 'get',                         //请求方式（*）
@@ -180,7 +180,7 @@
                 console.info(row);
             },
             onLoadSuccess: function() {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
             },
             columns: [
                 {
@@ -227,7 +227,7 @@
 
         function queryParams(params) {
             return {
-                token: $.getToken(),
+                // token: $.getToken(),
                 pageSize: params.pageSize,
                 pageNum: params.pageNumber,
                 userName: $("#s_userName").val(),
@@ -237,7 +237,7 @@
         }
 
         $("#search").click(function() {
-            $.show_overall_loding();
+            //$.show_overall_loding();
             $('#myTable').bootstrapTable('refresh');
         });
 
@@ -254,14 +254,14 @@
                 var conlayer = layer.confirm("确定" + " " + data[0].vireName + " " + "删除？", {
                     btn: ['确定', '取消']
                 }, function () {
-                    $.show_overall_loding();
+                    //$.show_overall_loding();
                     $.deleteJSON(deviceServiceUrl + "/videoRe?id=" + data[0].id, {}, function (data) {
                         if (data.code == 0) {
                             layer.close(conlayer);
                             layer.msg("成功", {
                                 icon: 1
                             });
-                            $.show_overall_loding();
+                            //$.show_overall_loding();
                             $('#myTable').bootstrapTable('refresh');
                             return true;
                         }
@@ -302,14 +302,14 @@
         var conlayer = layer.confirm("确定" + " " + name + " " + "删除？", {
             btn: ['确定', '取消']
         }, function () {
-            $.show_overall_loding();
+            //$.show_overall_loding();
             $.deleteJSON(deviceServiceUrl + "/videoRe?id=" + id, {}, function (data) {
                 if (data.code == 0) {
                     layer.close(conlayer);
                     layer.msg("成功", {
                         icon: 1
                     });
-                    $.show_overall_loding();
+                    //$.show_overall_loding();
                     $('#myTable').bootstrapTable('refresh');
                     return true;
                 }
@@ -428,9 +428,9 @@
                     "virePath": virePath
                 });
                 if (isAdd) {
-                    $.show_overall_loding();
+                    //$.show_overall_loding();
                     $.postJSON(deviceServiceUrl + "/videoRe", data, function (data) {
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                         if(data.code == 0) {
                             layer.close(myLayer);
                             layer.msg("成功", {
@@ -455,9 +455,9 @@
                         }
                     });
                 } else {
-                    $.show_overall_loding();
+                    //$.show_overall_loding();
                     $.putJSON(deviceServiceUrl + "/videoRe", data, function (data) {
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                         if(data.code == 0) {
                             layer.close(myLayer);
                             layer.msg("成功", {

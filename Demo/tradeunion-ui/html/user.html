@@ -119,9 +119,9 @@
 <script>
 	// var html;
 	var rdata = {};
-	// $("#loadDiv").html(loadHtml);
+	// // $("#loadDiv").html(loadHtml);
 	$(function() {
-		// $.show_overall_loding();
+		// //$.show_overall_loding();
 		$('#myTable').bootstrapTable({
 			url: '../../json/test006.json', //请求后台的URL（*）
 			//data: data1, //本地数据
@@ -222,7 +222,7 @@
 
 		function queryParams(params) {
 			return {
-				// token: $.getToken(),
+				// // token: $.getToken(),
 				pageSize: params.pageSize,
 				pageNum: params.pageNumber,
 				isScreenOrganization: 1,
@@ -255,11 +255,11 @@
 			var conlayer = layer.confirm("确认重置用户密码？", {
 				btn: ['确定', '取消']
 			}, function () {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				$.putJSON(userServiceUrl + "/user/resetPws", {
 					"userIds": ids
 				}, function (data) {
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 					if (data.code == 0) {
 						layer.msg("密码重置成功", {
 							icon: 1
@@ -288,7 +288,7 @@
 		});
 		var serchaData = {};
 		$("#search").click(function() {
-			$.show_overall_loding();
+			//$.show_overall_loding();
 			$('#myTable').bootstrapTable('refresh');
 		});
 
@@ -311,15 +311,15 @@
 				var conlayer = layer.confirm("确定删除？", {
 					btn: ['确定', '取消']
 				}, function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					$.deleteJSON(userServiceUrl + "/user?id=" + data[0].id, {}, function(data) {
-						$.hide_overall_loding();
+						//$.hide_overall_loding();
 						if(data.code == 0) {
 							layer.close(conlayer);
 							layer.msg("成功", {
 								icon: 1
 							});
-							$.show_overall_loding();
+							//$.show_overall_loding();
 							$('#myTable').bootstrapTable('refresh');
 							return true;
 						}
@@ -351,15 +351,15 @@
 		var conlayer = layer.confirm("确定删除？", {
 			btn: ['确定', '取消']
 		}, function() {
-			$.show_overall_loding();
+			//$.show_overall_loding();
 			$.deleteJSON(userServiceUrl + "/user?id=" + id, {}, function(data) {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				if(data.code == 0) {
 					layer.close(conlayer);
 					layer.msg("成功", {
 						icon: 1
 					});
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					$('#myTable').bootstrapTable('refresh');
 					return true;
 				}
@@ -506,20 +506,20 @@
 					return;
 				}
 				var data = $("#userForm").serializeJson();
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				if (isAdd) {
 					$.extend(data, {
 						"userPassword": MD5("000000"),
 						"loginName":$("#userMobile").val()
 					});
 					$.postJSON(userServiceUrl + "/user", data, function (data) {
-						$.hide_overall_loding();
+						//$.hide_overall_loding();
 						if (data.code == 0) {
 							layer.close(myLayer);
 							layer.msg("成功", {
 								icon: 1
 							});
-							$.show_overall_loding();
+							//$.show_overall_loding();
 							$('#myTable').bootstrapTable('refresh');
 							return true;
 						} else {
@@ -543,13 +543,13 @@
 						"loginName":$("#userMobile").val()
 					});
 					$.putJSON(userServiceUrl + "/user", data, function (data) {
-						$.hide_overall_loding();
+						//$.hide_overall_loding();
 						if (data.code == 0) {
 							layer.close(myLayer);
 							layer.msg("成功", {
 								icon: 1
 							});
-							$.show_overall_loding();
+							//$.show_overall_loding();
 							$('#myTable').bootstrapTable('refresh');
 							return true;
 						} else {

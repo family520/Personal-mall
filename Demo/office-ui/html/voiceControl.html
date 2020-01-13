@@ -98,9 +98,9 @@
 	<script>
 		var html;
 		var url = "";
-		$("#loadDiv").html(loadHtml);
+		// $("#loadDiv").html(loadHtml);
 		$(function() {
-			$.show_overall_loding();
+			//$.show_overall_loding();
 			$('#myTable').bootstrapTable({
 				url: deviceServiceUrl + "/vocieControl/list", //请求后台的URL（*）
 				//data: data1,                            //本地数据
@@ -144,7 +144,7 @@
 					console.info(row);
 				},
 				onLoadSuccess: function() {
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 				},
 				columns: [{
 					width: 50,
@@ -186,9 +186,9 @@
 			});
 
 			function queryParams(params) {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				return {
-					token: $.getToken(),
+					// token: $.getToken(),
 					pageSize: params.pageSize,
 					pageNum: params.pageNumber,
 					voiceContent: $("#s_voiceContent").val(),
@@ -198,7 +198,7 @@
 			}
 
 			$("#search").click(function() {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				$('#myTable').bootstrapTable('refresh');
 			});
 
@@ -310,11 +310,11 @@
 				messages: {},
 				submitHandler: function(form) {
 					var data = $("#vocieControlForm").serializeJson();
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					if(isAdd) {
 						console.log(1);
 						$.postJSON(deviceServiceUrl + "/vocieControl", data, function(data) {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 							if(data.code == 0) {
 								layer.close(myLayer);
 								layer.msg("成功", {
@@ -335,7 +335,7 @@
 						});
 					} else {
 						$.putJSON(deviceServiceUrl + "/vocieControl", data, function(data) {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 							if(data.code == 0) {
 								layer.close(myLayer);
 								layer.msg("成功", {
@@ -358,7 +358,7 @@
 			return {
 				node: $("#modeTable"), //渲染节点
 				init: function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					var that = this;
 					this.node.bootstrapTable({
 						url: deviceServiceUrl + "/mode/list", //请求后台的URL（*）
@@ -407,7 +407,7 @@
 							mModeId = row.id;
 						},
 						onLoadSuccess: function() {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 						},
 						columns: [{
 							checkbox: true,
@@ -438,16 +438,16 @@
 
 				},
 				queryParams: function(params) {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					return {
-						token: $.getToken(),
+						// token: $.getToken(),
 						pageSize: params.pageSize,
 						pageNum: params.pageNumber,
 						modeName: $("#s_modeName").val()
 					}
 				},
 				refresh: function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					this.node.bootstrapTable('refresh')
 				},
 				bindCreate: function() {

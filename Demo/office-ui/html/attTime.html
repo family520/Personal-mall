@@ -189,7 +189,7 @@
                 $('#endDelay').val(endDelayValue);
                 return;
             }
-            $.show_overall_loding();
+            //$.show_overall_loding();
             $.putJSON(deviceServiceUrl + "/attTime", {
                 "id": attTimeId,
                 "startTime": startTime,
@@ -197,7 +197,7 @@
                 "endTime": endTime,
                 "endDelay": endDelay
             }, function (data) {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
                 if (data.code == 0) {
                     parent.layer.msg("操作成功", {
                         icon: 6
@@ -226,10 +226,10 @@
     });
 
     function fromAttTimeLoad() {
-        $.show_overall_loding();
+        //$.show_overall_loding();
         $.sanjiGetJSON(deviceServiceUrl + "/attTime/list", {
         }, function (data) {
-            $.hide_overall_loding();
+            //$.hide_overall_loding();
             if (data.code == 0) {
                 console.log(data);
                 if (data.data.length > 0) {

@@ -1,0 +1,50 @@
+{
+  "code": 0,
+  "message": "成功",
+  "currentTimeMillis": 1578898826706,
+  "messages": null,
+  "data": {
+    "total": 1,
+    "list": [
+      {
+        "id": "6aa9470f752040bcafcaf078c1697a38",
+        "standardName": "常熟支行",
+        "organizationId": "a0d15c67dffc4d3c9448918c454d16e8",
+        "organizationName": "常熟支行",
+        "temperature": "40",
+        "humidity": "100",
+        "coOne": null,
+        "coTwo": "2000",
+        "pmTem": "150",
+        "pmTwoFive": "100",
+        "pmOnePointZero": "150",
+        "pressure": null,
+        "hcho": "200",
+        "chFour": null,
+        "smog": null,
+        "beam": null,
+        "noise": null,
+        "voc": "200",
+        "otwo": null
+      }
+    ],
+    "pageNum": 1,
+    "pageSize": 1,
+    "size": 1,
+    "startRow": 0,
+    "endRow": 0,
+    "pages": 1,
+    "prePage": 0,
+    "nextPage": 0,
+    "isFirstPage": true,
+    "isLastPage": true,
+    "hasPreviousPage": false,
+    "hasNextPage": false,
+    "navigatePages": 8,
+    "navigatepageNums": [
+      1
+    ],
+    "navigateFirstPage": 1,
+    "navigateLastPage": 1
+  }
+}

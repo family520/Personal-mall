@@ -112,9 +112,9 @@
     var html;
     var userIdd = $.getCookie("userId");
     var url = "";
-    $("#loadDiv").html(loadHtml);
+    // $("#loadDiv").html(loadHtml);
     $(function() {
-        $.show_overall_loding();
+        //$.show_overall_loding();
         $('#myTable').bootstrapTable({
             url: deviceServiceUrl + "/eventGl/list", //请求后台的URL（*）
             //data: data1,                            //本地数据
@@ -158,7 +158,7 @@
                 console.info(row);
             },
             onLoadSuccess: function() {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
             },
             columns: [{
                 checkbox: true
@@ -216,9 +216,9 @@
         });
 
         function queryParams(params) {
-            $.show_overall_loding();
+            //$.show_overall_loding();
             return {
-                token: $.getToken(),
+                // token: $.getToken(),
                 pageSize: params.pageSize,
                 pageNum: params.pageNumber,
                 loginUserId: userIdd,
@@ -232,7 +232,7 @@
         }
 
         $("#search").click(function() {
-            $.show_overall_loding();
+            //$.show_overall_loding();
             $('#myTable').bootstrapTable('refresh');
         });
 
@@ -272,13 +272,13 @@
                 var eventStateValue = $('#eventState  option:selected').val();
                 console.log(eventStateValue);
                 var evnetContent = $("#evnetContent").val();
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 $.putJSON(deviceServiceUrl + "/eventGl/batchUpdate", {
                     'eventState': eventStateValue,
                     'evnetContent': evnetContent,
                     'eventGlIds': ids
                 }, function(data) {
-                    $.hide_overall_loding();
+                    //$.hide_overall_loding();
                     if(data.code == 0) {
                         layer.close(myLayer);
                         layer.msg("成功", {
@@ -313,7 +313,7 @@
     /*用户列表*/
     var mModeUserId = "";
     function getUserTable() {
-        $.show_overall_loding();
+        //$.show_overall_loding();
         $('#userTable').bootstrapTable({
             url: userServiceUrl + "/user/list", //请求后台的URL（*）
             method: 'get', //请求方式（*）
@@ -355,7 +355,7 @@
                 mModeUserId = row.id;
             },
             onLoadSuccess: function () {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
             },
             columns: [{
                 checkbox: true,
@@ -386,7 +386,7 @@
 
         function queryParams(params) {
             return {
-                token: $.getToken(),
+                // token: $.getToken(),
                 pageSize: params.pageSize,
                 pageNum: params.pageNumber,
                 userName: $("#ss_userName").val()
@@ -395,7 +395,7 @@
 
         var serchaData = {};
         $("#search2").on("click", function () {
-            $.show_overall_loding();
+            //$.show_overall_loding();
             $('#userTable').bootstrapTable('refresh');
         });
 

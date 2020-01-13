@@ -245,13 +245,13 @@ function showUpdatePwd(title, flag) {
 				});
 				return;
 			}
-			$.show_overall_loding();
+			//$.show_overall_loding();
 			let formData = {};
 			formData.oldUserPassword = MD5(oldPwd);
 			formData.userPassword = MD5(truePwd);
-			$.show_overall_loding();
+			//$.show_overall_loding();
 			$.putJSON(userServiceUrl + "/user/updatePassword", formData, function(res) {
-				$.hide_overall_loding();
+				//$.hide_overall_loding();
 				if(res.code == 0) {
 					layer.msg("密码修改成功", {
 						icon: 1

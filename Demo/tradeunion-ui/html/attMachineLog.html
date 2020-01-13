@@ -134,9 +134,9 @@
     var html;
     var userIdd = $.getCookie("userId");
     var url = "";
-    $("#loadDiv").html(loadHtml);
+    // $("#loadDiv").html(loadHtml);
     $(function() {
-        $.show_overall_loding();
+        //$.show_overall_loding();
         $('#myTable').bootstrapTable({
             url: deviceServiceUrl + "/amtCon/list", //请求后台的URL（*）
             //data: data1,                            //本地数据
@@ -180,7 +180,7 @@
                 console.info(row);
             },
             onLoadSuccess: function() {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
             },
             columns: [{
                 checkbox: true
@@ -214,9 +214,9 @@
         });
 
         function queryParams(params) {
-            $.show_overall_loding();
+            //$.show_overall_loding();
             return {
-                token: $.getToken(),
+                // token: $.getToken(),
                 pageSize: params.pageSize,
                 pageNum: params.pageNumber,
                 loginUserId: userIdd,
@@ -233,7 +233,7 @@
         }
 
         $("#search").click(function() {
-            $.show_overall_loding();
+            //$.show_overall_loding();
             $('#myTable').bootstrapTable('refresh');
         });
 

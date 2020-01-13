@@ -124,9 +124,9 @@
 <script>
     var html;
     var rdata = {};
-    $("#loadDiv").html(loadHtml);
+    // $("#loadDiv").html(loadHtml);
     $(function () {
-        $.show_overall_loding();
+        //$.show_overall_loding();
         $('#myTable').bootstrapTable({
             url: deviceServiceUrl + "/devicerepairm/list", //请求后台的URL（*）
             method: 'get',                         //请求方式（*）
@@ -169,7 +169,7 @@
                 console.info(row);
             },
             onLoadSuccess: function() {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
             },
             columns: [
                 {
@@ -236,9 +236,9 @@
         });
 
         function queryParams(params) {
-        	$.show_overall_loding();
+        	//$.show_overall_loding();
             return {
-            	token: $.getToken(),
+            	// token: $.getToken(),
                 pageSize: params.pageSize,
                 pageNum: params.pageNumber,
                 repairmUserName: $("#s_repairmUser").val(),
@@ -254,7 +254,7 @@
 
         var serchaData = {};
         $("#search").click(function() {
-            $.show_overall_loding();
+            //$.show_overall_loding();
             $('#myTable').bootstrapTable('refresh');
         });
 
@@ -284,15 +284,15 @@
 		var conlayer = layer.confirm("确定删除？", {
 			btn: ['确定', '取消']
 		}, function() {
-			$.show_overall_loding();
+			//$.show_overall_loding();
 			$.deleteJSON(addToUrlToken(deviceServiceUrl + "/devicerepairm")+"&id="+ id, {}, function(data) {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				if(data.code == 0) {
 					layer.close(conlayer);
 					layer.msg("成功", {
 						icon: 1
 					});
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					$('#myTable').bootstrapTable('refresh');
 					return true;
 				}
@@ -458,18 +458,18 @@
             messages: {
             },
             submitHandler: function (form) {
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 var data = $("#repairForm").serializeJson()
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 if (isAdd) {
                     $.postJSON(deviceServiceUrl + "/devicerepairm", data, function (data) {
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                         if (data.code == 0) {
                             layer.close(myLayer);
                             layer.msg("成功", {
                                 icon: 1
                             });
-                            $.show_overall_loding();
+                            //$.show_overall_loding();
                             $('#myTable').bootstrapTable('refresh');
                             return true;
                         }
@@ -479,13 +479,13 @@
                     });
                 } else {
                     $.putJSON(deviceServiceUrl + "/devicerepairm", data, function (data) {
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                         if (data.code == 0) {
                             layer.close(myLayer);
                             layer.msg("成功", {
                                 icon: 1
                             });
-                            $.show_overall_loding();
+                            //$.show_overall_loding();
                             $('#myTable').bootstrapTable('refresh');
                             return true;
                         }
@@ -503,7 +503,7 @@
 			return {
 				node: $("#devicemodeTable"), //渲染节点
 				init: function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					var that = this;
 					this.node.bootstrapTable({
 						url: deviceServiceUrl + "/devicemanger/list", //请求后台的URL（*）
@@ -552,7 +552,7 @@
 							dModeId = row.id;
 						},
 						onLoadSuccess: function() {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 						},
 						columns: [{
 							checkbox: true,
@@ -587,16 +587,16 @@
 
 				},
 				queryParams: function(params) {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					return {
-						token: $.getToken(),
+						// token: $.getToken(),
 						pageSize: params.pageSize,
 						pageNum: params.pageNumber,
                         deviceAlias: $("#s_deviceAlias").val()
 					}
 				},
 				refresh: function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					this.node.bootstrapTable('refresh')
 				},
 				bindCreate: function() {
@@ -613,7 +613,7 @@
 			return {
 				node: $("#usermodeTable"), //渲染节点
 				init: function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					var that = this;
 					this.node.bootstrapTable({
 						url: userServiceUrl + "/user/list", //请求后台的URL（*）
@@ -662,7 +662,7 @@
 							uModeId = row.id;
 						},
 						onLoadSuccess: function() {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 						},
 						columns: [{
 							checkbox: true,
@@ -697,16 +697,16 @@
 
 				},
 				queryParams: function(params) {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					return {
-						token: $.getToken(),
+						// token: $.getToken(),
 						pageSize: params.pageSize,
 						pageNum: params.pageNumber,
 						userName: $("#s_userName").val()
 					}
 				},
 				refresh: function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					this.node.bootstrapTable('refresh')
 				},
 				bindCreate: function() {

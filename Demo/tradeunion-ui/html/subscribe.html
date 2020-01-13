@@ -105,11 +105,11 @@
 	<script type="text/javascript">
 		var html;
 		var url = "";
-		// $("#loadDiv").html(loadHtml);
-		// $.show_overall_loding();
+		// // $("#loadDiv").html(loadHtml);
+		// //$.show_overall_loding();
 		$(function() {
 			// $("#search").click(function() {
-			// 	$.show_overall_loding();
+			// 	//$.show_overall_loding();
 			// 	$('#subscribe').bootstrapTable('refresh');
 			// });
 
@@ -153,7 +153,7 @@
 					return res[0];
 				},
 				onLoadSuccess: function() {
-					//$.hide_overall_loding();
+					////$.hide_overall_loding();
 				},
 				onDblClickRow: function(row) {},
 				columns: [{
@@ -227,9 +227,9 @@
 			});
 
 			function queryParams(params) {
-				// $.show_overall_loding();
+				// //$.show_overall_loding();
 				return {
-					// token: $.getToken(),
+					// // token: $.getToken(),
 					pageSize: params.pageSize,
 					pageNum: params.pageNumber,
 					subscriberNumber: $('#subscriberNumber1').val(),
@@ -246,9 +246,9 @@
 		// 	var conlayer = layer.confirm("确定更新设备？", {
 		// 		btn: ['确定', '取消']
 		// 	}, function() {
-		// 		$.show_overall_loding();
+		// 		//$.show_overall_loding();
 		// 		$.sanjiGetJSON(deviceServiceUrl + "/device/importApcosDervice?account=" + subscriberNumber, {}, function(data) {
-		// 			//$.hide_overall_loding();
+		// 			////$.hide_overall_loding();
 		// 			if(data.code == 0) {
 		// 				layer.close(conlayer);
 		// 				layer.msg("更新成功", {
@@ -283,9 +283,9 @@
 		// 	var conlayer = layer.confirm("确定订阅？", {
 		// 		btn: ['确定', '取消']
 		// 	}, function() {
-		// 		$.show_overall_loding();
+		// 		//$.show_overall_loding();
 		// 		$.sanjiGetJSON(deviceServiceUrl + "/subscribertable/subscriber?subscriberNumber=" + subscriberNumber, {}, function(data) {
-		// 			//$.hide_overall_loding();
+		// 			////$.hide_overall_loding();
 		// 			if(data.code == 0) {
 		// 				layer.close(conlayer);
 		// 				layer.msg("订阅成功", {
@@ -320,9 +320,9 @@
 		// 	var conlayer = layer.confirm("确定删除？", {
 		// 		btn: ['确定', '取消']
 		// 	}, function() {
-		// 		$.show_overall_loding();
+		// 		//$.show_overall_loding();
 		// 		$.deleteJSON(deviceServiceUrl + "/subscribertable?id=" + id, {}, function(data) {
-		// 			//$.hide_overall_loding();
+		// 			////$.hide_overall_loding();
 		// 			if(data.code == 0) {
 		// 				layer.close(conlayer);
 		// 				layer.msg("删除成功", {
@@ -412,9 +412,9 @@
 		// 	var data = {};
 		// 	data.levelNo = levelNo;
 		// 	data.parentId = parentId;
-		// 	$.show_overall_loding();
+		// 	//$.show_overall_loding();
 		// 	$.sanjiGetJSON(deviceServiceUrl + "/sysarea/list", data, function(data) {
-		// 		//$.hide_overall_loding();
+		// 		////$.hide_overall_loding();
 		// 		if(data.code == 0) {
 		// 			var list = data.data;
 		// 			for(var i = 0; i < list.length; i++) {
@@ -509,9 +509,9 @@
 		// 		submitHandler: function(form) {
 		// 			var data = $("#accountForm").serializeJson()
 		// 			if(isAdd) {
-		// 				$.show_overall_loding();
+		// 				//$.show_overall_loding();
 		// 				$.postJSON(deviceServiceUrl + "/subscribertable", data, function(data) {
-		// 					//$.hide_overall_loding();
+		// 					////$.hide_overall_loding();
 		// 					if(data.code == 0) {
 		// 						layer.close(myLayer);
 		// 						layer.msg("新增成功", {
@@ -536,9 +536,9 @@
 		// 					}
 		// 				});
 		// 			} else {
-		// 				$.show_overall_loding();
+		// 				//$.show_overall_loding();
 		// 				$.putJSON(deviceServiceUrl + "/subscribertable", data, function(data) {
-		// 					//$.hide_overall_loding();
+		// 					////$.hide_overall_loding();
 		// 					if(data.code == 0) {
 		// 						layer.close(myLayer);
 		// 						layer.msg("修改成功", {
@@ -618,9 +618,9 @@
 		// 		},
 		// 		submitHandler: function(form) {
 		// 			var data = $("#bindDeviceForm").serializeJson()
-		// 			$.show_overall_loding();
+		// 			//$.show_overall_loding();
 		// 			$.postJSON(deviceServiceUrl + "/subscribertable/bindDevice", data, function(data) {
-		// 				//$.hide_overall_loding();
+		// 				////$.hide_overall_loding();
 		// 				if(data.code == 0) {
 		// 					layer.close(myLayer);
 		// 					layer.msg("绑定成功", {
@@ -691,9 +691,9 @@
 		// 		},
 		// 		submitHandler: function(form) {
 		// 			var data = $("#unbindDeviceForm").serializeJson()
-		// 			$.show_overall_loding();
+		// 			//$.show_overall_loding();
 		// 			$.postJSON(deviceServiceUrl + "/subscribertable/unbindDevice", data, function(data) {
-		// 				//$.hide_overall_loding();
+		// 				////$.hide_overall_loding();
 		// 				if(data.code == 0) {
 		// 					layer.close(myLayer);
 		// 					layer.msg("解绑成功", {

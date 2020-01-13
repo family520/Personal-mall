@@ -314,7 +314,7 @@
 
 			function queryParams(params) {
 				return {
-					// token: $.getToken(),
+					// // token: $.getToken(),
 					isScreenOrganization: 1,
 					deviceAlias: $("#s_deviceAlias").val(),
 					deviceSubscriberNumber: $("#s_deviceSubscriberNumber").val(),
@@ -356,12 +356,12 @@
 			// 				ids.push(one.id);
 			// 			}
 			// 			var organizationId = $("#organizationId").val();
-			// 			$.show_overall_loding();
+			// 			//$.show_overall_loding();
 			// 			$.putJSON(deviceServiceUrl + "/device/batch_up_organization", {
 			// 				'id': organizationId,
 			// 				'deviceIds': ids
 			// 			}, function(data) {
-			// 				$.hide_overall_loding();
+			// 				//$.hide_overall_loding();
 			// 				if(data.code == 0) {
 			// 					layer.close(myLayer);
 			// 					layer.msg("成功", {
@@ -406,12 +406,12 @@
 			// 				ids.push(one.id);
 			// 			}
 			// 			var positionId = $("#positionId").val();
-			// 			$.show_overall_loding();
+			// 			//$.show_overall_loding();
 			// 			$.putJSON(deviceServiceUrl + "/device/batch_up_position", {
 			// 				'id': positionId,
 			// 				'deviceIds': ids
 			// 			}, function(data) {
-			// 				$.hide_overall_loding();
+			// 				//$.hide_overall_loding();
 			// 				if(data.code == 0) {
 			// 					layer.close(myLayer);
 			// 					layer.msg("成功", {
@@ -457,12 +457,12 @@
 			// 				ids.push(one.id);
 			// 			}
 			// 			var roomId = $("#roomId").val();
-			// 			$.show_overall_loding();
+			// 			//$.show_overall_loding();
 			// 			$.putJSON(deviceServiceUrl + "/device/batch_up_room", {
 			// 				'id': roomId,
 			// 				'deviceIds': ids
 			// 			}, function(data) {
-			// 				$.hide_overall_loding();
+			// 				//$.hide_overall_loding();
 			// 				if(data.code == 0) {
 			// 					layer.close(myLayer);
 			// 					layer.msg("成功", {
@@ -514,7 +514,7 @@
 		}
 
 		$("#search").click(function() {
-			$.show_overall_loding();
+			//$.show_overall_loding();
 			$('#myTable').bootstrapTable('refresh');
 		});
 
@@ -569,10 +569,10 @@
 				typeId: one.productCode
 			}
 
-			$.show_overall_loding();
+			//$.show_overall_loding();
 			$.sanjiGetJSON(deviceServiceUrl + "/typeTemplate/getDefaultTemp", pdata, function(data) {
 				if(!data.data) {
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 					layer.msg("没有对应的控制模版，需要去分类管理去设置模版！", {
 						icon: 2
 					});
@@ -580,13 +580,13 @@
 				}
 				document.getElementById("Example2").srcdoc = data.data.templateCode;
 				$("#Example2").load(function() {
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 					$("#Example2").contents().find(".sendControlBtn").unbind();
 					$("#Example2").contents().find(".sendControlBtn").on("click", function() {
-						$.show_overall_loding();
+						//$.show_overall_loding();
 						var datas = $("#Example2")[0].contentWindow.getCmdParams($(this));
 						if(!datas) {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 							layer.msg("操作失败", {
 								icon: 2
 							});
@@ -596,7 +596,7 @@
 							datas.controlParams = JSON.stringify(datas.controlParams);
 						}
 						if(!datas.operation) {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 							layer.msg("操作失败", {
 								icon: 2
 							});
@@ -608,7 +608,7 @@
 							productId: one.productCode
 						})
 						$.postJSON(deviceServiceUrl + "/device/controlDervice", datas, function(data) {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 							if(data.code == 0) {
 								layer.msg("成功", {
 									icon: 1
@@ -785,9 +785,9 @@
 				messages: {},
 				submitHandler: function(form) {
 					var data = $("#deviceForm").serializeJson();
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					$.putJSON(deviceServiceUrl + "/device", data, function(data) {
-						$.hide_overall_loding();
+						//$.hide_overall_loding();
 						if(data.code == 0) {
 							layer.close(myLayer);
 							layer.msg("成功", {
@@ -958,7 +958,7 @@
 			return {
 				node: $("#tableRoom"), //渲染节点
 				init: function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					var that = this;
 					this.node.bootstrapTable({
 						url: deviceServiceUrl + "/officeRoom/list", //请求后台的URL（*）
@@ -1001,7 +1001,7 @@
 							console.info(row);
 						},
 						onLoadSuccess: function() {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 						},
 						columns: [{
 							width: 50,
@@ -1056,9 +1056,9 @@
 
 				},
 				queryParams: function(params) {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					return {
-						token: $.getToken(),
+						// token: $.getToken(),
 						pageSize: params.pageSize,
 						pageNum: params.pageNumber,
 						roomName: $("#s_roomName").val(),
@@ -1066,7 +1066,7 @@
 					}
 				},
 				refresh: function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					this.node.bootstrapTable('refresh')
 				},
 				bindCreate: function() {

@@ -176,7 +176,7 @@
     var html;
 </script>
 <script>
-    $("#loadDiv").html(loadHtml);
+    // $("#loadDiv").html(loadHtml);
 
 	function typeList() {
 		$.ajax({
@@ -346,9 +346,9 @@
                         var conlayer = layer.confirm("确定删除？", {
                             btn: ['确定', '取消']
                         }, function () {
-                            $.show_overall_loding();
+                            //$.show_overall_loding();
                             $.deleteJSON(userServiceUrl + "/organization?id=" + data[0].id, {}, function (data) {
-                                $.hide_overall_loding();
+                                //$.hide_overall_loding();
                                 if (data.code == 0) {
                                     layer.close(conlayer);
                                     layer.msg("成功", {
@@ -475,7 +475,7 @@
                                     url: userServiceUrl + "/organizationFloorBooth/list",
                                     async: false,
                                     data: {
-                                        token: $.getToken(),
+                                        // token: $.getToken(),
                                         enterpriseId: data[0].id
                                     },
                                     success: function (resData) {
@@ -640,10 +640,10 @@
                                 });
                             }
                         }
-                        $.show_overall_loding();
+                        //$.show_overall_loding();
                         if (isAdd) {
                             $.postJSON(userServiceUrl + "/organization", data, function (data) {
-                                $.hide_overall_loding();
+                                //$.hide_overall_loding();
                                 if (data.code == 0) {
                                     layer.close(myLayer);
                                     layer.msg("成功", {
@@ -658,7 +658,7 @@
                             });
                         } else {
                             $.putJSON(userServiceUrl + "/organization", data, function (data) {
-                                $.hide_overall_loding();
+                                //$.hide_overall_loding();
                                 if (data.code == 0) {
                                     layer.close(myLayer);
                                     layer.msg("成功", {
@@ -891,7 +891,7 @@
         return {
             node: $('#myFloorTable'),
             init: function () {
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 var that = this;
                 this.node.bootstrapTable({
                     url: userServiceUrl + "/organizationFloor/list",
@@ -933,7 +933,7 @@
                     },
                     onLoadSuccess: function () {
 
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                     },
                     onDblClickRow: function (row) {
                         console.info(row);
@@ -958,9 +958,9 @@
                 });
             },
             queryParams: function (params) {
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 var data = {
-                    token: $.getToken(),
+                    // token: $.getToken(),
                     pageSize: params.pageSize,
                     pageNum: params.pageNumber
                 }
@@ -977,7 +977,7 @@
                 return data;
             },
             refresh: function () {
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 this.node.bootstrapTable('refresh')
             },
             getSelectVal: function () {
@@ -993,9 +993,9 @@
                         var conlayer = layer.confirm("确定删除？", {
                             btn: ['确定', '取消']
                         }, function () {
-                            $.show_overall_loding();
+                            //$.show_overall_loding();
                             $.deleteJSON(userServiceUrl + "/organizationFloor?id=" + data[0].id, {}, function (data) {
-                                $.hide_overall_loding();
+                                //$.hide_overall_loding();
                                 if (data.code == 0) {
                                     layer.close(conlayer);
                                     layer.msg("成功", {
@@ -1105,7 +1105,7 @@
                         let id = $("#floorId").val();
                         let organizationId = $("#organizationId").val();
 
-                        $.show_overall_loding();
+                        //$.show_overall_loding();
                         if (isAdd) {
                             $.postJSON(userServiceUrl + "/organizationFloor/addFloor", {
                                 organizationId: organizationId,
@@ -1119,7 +1119,7 @@
                                     return true;
                                 } else {
                                     layer.msg("操作失败", {icon: 2});
-                                    $.hide_overall_loding();
+                                    //$.hide_overall_loding();
                                 }
                             })
                         } else {
@@ -1135,7 +1135,7 @@
                                     return true;
                                 } else {
                                     layer.msg("操作失败", {icon: 2});
-                                    $.hide_overall_loding();
+                                    //$.hide_overall_loding();
                                 }
                             })
                         }
@@ -1174,7 +1174,7 @@
         return {
             node: $('#myBoothTable'),
             init: function () {
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 var that = this;
                 this.node.bootstrapTable({
                     url: userServiceUrl + "/organizationFloorBooth/list",
@@ -1216,7 +1216,7 @@
                     },
                     onLoadSuccess: function () {
 
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                     },
                     onDblClickRow: function (row) {
                         console.info(row);
@@ -1247,9 +1247,9 @@
             queryParams: function (params) {
 
                 //console.log(params);
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 var data = {
-                    token: $.getToken(),
+                    // token: $.getToken(),
                     pageSize: params.pageSize,
                     pageNum: params.pageNumber,
                     floorId: floorId
@@ -1257,7 +1257,7 @@
                 return data;
             },
             refresh: function () {
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 this.node.bootstrapTable('refresh')
             },
             getSelectVal: function () {
@@ -1273,9 +1273,9 @@
                         var conlayer = layer.confirm("确定删除？", {
                             btn: ['确定', '取消']
                         }, function () {
-                            $.show_overall_loding();
+                            //$.show_overall_loding();
                             $.deleteJSON(userServiceUrl + "/organizationFloorBooth?id=" + data[0].id, {}, function (data) {
-                                $.hide_overall_loding();
+                                //$.hide_overall_loding();
                                 if (data.code == 0) {
                                     layer.close(conlayer);
                                     layer.msg("成功", {
@@ -1375,7 +1375,7 @@
                                         url: userServiceUrl + "/organizationFloorBooth/list",
                                         async: false,
                                         data: {
-                                            token: $.getToken(),
+                                            // token: $.getToken(),
                                             floorId: floorData[0].id
                                         },
                                         success: function (resData) {
@@ -1466,7 +1466,7 @@
                             return;
                         }
 
-                        $.show_overall_loding();
+                        //$.show_overall_loding();
                         if (isAdd) {
                             $.postJSON(userServiceUrl + "/organizationFloorBooth", {
                                 floorId: floorId,
@@ -1513,7 +1513,7 @@
         return {
             node: $("#boothTable"), //渲染节点
             init: function () {
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 var that = this;
                 this.node.bootstrapTable({
                     url: userServiceUrl + "/organizationFloorBooth/list", //请求后台的URL（*）
@@ -1562,7 +1562,7 @@
                         uModeId = row.id;
                     },
                     onLoadSuccess: function () {
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                     },
                     columns: [{
                         checkbox: true,
@@ -1613,9 +1613,9 @@
 
             },
             queryParams: function (params) {
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 return {
-                    token: $.getToken(),
+                    // token: $.getToken(),
                     pageSize: params.pageSize,
                     pageNum: params.pageNumber,
                     floorId: floorId,
@@ -1623,7 +1623,7 @@
                 }
             },
             refresh: function () {
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 this.node.bootstrapTable('refresh')
             },
             bindCreate: function () {
@@ -1636,7 +1636,7 @@
         return {
             node: $('#myTable'),
             init: function () {
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 var that = this;
                 this.node.bootstrapTable({
                     url: userServiceUrl + "/role/list",
@@ -1681,7 +1681,7 @@
                         //						// $('.dropdown-toggle').parent().toggleClass("open");
                         //					});
 
-                        $.hide_overall_loding();
+                        //$.hide_overall_loding();
                     },
                     onDblClickRow: function (row) {
                         console.info(row);
@@ -1711,9 +1711,9 @@
             },
             queryParams: function (params) {
                 //console.log(params);
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 var data = {
-                    token: $.getToken(),
+                    // token: $.getToken(),
                     pageSize: params.pageSize,
                     pageNum: params.pageNumber
                 }
@@ -1732,7 +1732,7 @@
                 return data;
             },
             refresh: function () {
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 this.node.bootstrapTable('refresh')
             },
             getSelectVal: function () {
@@ -1781,9 +1781,9 @@
                         var conlayer = layer.confirm("确定删除？", {
                             btn: ['确定', '取消']
                         }, function () {
-                            $.show_overall_loding();
+                            //$.show_overall_loding();
                             $.deleteJSON(userServiceUrl + "/role?id=" + data[0].id, {}, function (data) {
-                                $.hide_overall_loding();
+                                //$.hide_overall_loding();
                                 if (data.code == 0) {
                                     layer.close(conlayer);
                                     layer.msg("成功", {
@@ -1865,10 +1865,10 @@
                             });
                         }
                         //console.log(isAdd);
-                        $.show_overall_loding();
+                        //$.show_overall_loding();
                         if (isAdd) {
                             $.postJSON(userServiceUrl + "/role", data, function (data) {
-                                $.hide_overall_loding();
+                                //$.hide_overall_loding();
                                 if (data.code == 0) {
                                     layer.close(myLayer);
                                     layer.msg("成功", {
@@ -1883,7 +1883,7 @@
                             });
                         } else {
                             $.putJSON(userServiceUrl + "/role", data, function (data) {
-                                $.hide_overall_loding();
+                                //$.hide_overall_loding();
                                 if (data.code == 0) {
                                     layer.close(myLayer);
                                     layer.msg("成功", {
@@ -1956,9 +1956,9 @@
                 });
 
                 var role = roleTable.getSelectVal();
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 $.sanjiGetJSON(userServiceUrl + "/role/getAuthority?roleId=" + role.id, {}, function (data) {
-                    $.hide_overall_loding();
+                    //$.hide_overall_loding();
                     if (data.code == 0) {
                         var list = data.data;
                         var thatNode = that.node.treeview("getUnselected");
@@ -2043,9 +2043,9 @@
                         var data = {};
                         data.authorityIds = authids;
                         data.roleId = role.id;
-                        $.show_overall_loding();
+                        //$.show_overall_loding();
                         $.postJSON(userServiceUrl + "/role/addAuthority", data, function (data) {
-                            $.hide_overall_loding();
+                            //$.hide_overall_loding();
                             if (data.code == 0) {
                                 layer.close(authlayer);
                                 layer.msg("成功", {
@@ -2147,7 +2147,7 @@
             type: "get",
             url: userServiceUrl + "/organizationFloor/list",
             data: {
-                token: $.getToken(),
+                // token: $.getToken(),
                 organizationId: organizationId
             },
             success: function (resData) {
@@ -2183,7 +2183,7 @@
             type: "get",
             url: userServiceUrl + "/organizationFloorBooth/list",
             data: {
-                token: $.getToken(),
+                // token: $.getToken(),
                 floorId: floorId
             },
             success: function (resData) {
@@ -2595,7 +2595,7 @@
                 contentType: false,
                 processData: false,
                 success: function (res) {
-                    $.hide_overall_loding();
+                    //$.hide_overall_loding();
                     if (res.code == 0) {
                     	var image = new Image();
 						image.src = res.data.filePath;

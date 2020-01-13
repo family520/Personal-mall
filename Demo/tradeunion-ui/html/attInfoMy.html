@@ -167,9 +167,9 @@
     var html;
     var userIdd = $.getCookie("userId");
     var url = "";
-    $("#loadDiv").html(loadHtml);
+    // $("#loadDiv").html(loadHtml);
     $(function() {
-        $.show_overall_loding();
+        //$.show_overall_loding();
         $('#myTable').bootstrapTable({
             url: deviceServiceUrl + "/attInfo/list", //请求后台的URL（*）
             //data: data1,                            //本地数据
@@ -213,7 +213,7 @@
                 console.info(row);
             },
             onLoadSuccess: function() {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
             },
             columns: [{
                 checkbox: true
@@ -310,9 +310,9 @@
         });
 
         function queryParams(params) {
-            $.show_overall_loding();
+            //$.show_overall_loding();
             return {
-                token: $.getToken(),
+                // token: $.getToken(),
                 pageSize: params.pageSize,
                 pageNum: params.pageNumber,
                 loginUserId: userIdd,
@@ -329,7 +329,7 @@
         }
 
         $("#search").click(function() {
-            $.show_overall_loding();
+            //$.show_overall_loding();
             $('#myTable').bootstrapTable('refresh');
         });
 
@@ -390,16 +390,16 @@
         var conlayer = layer.confirm("确认打卡?", {
             btn: ['确定', '取消']
         }, function() {
-            $.show_overall_loding();
+            //$.show_overall_loding();
             $.putJSON(deviceServiceUrl + "/attInfo/attInfoDk?userId=" + data[obj].userId, {
             }, function(data) {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
                 if(data.code == 0) {
                     layer.close(conlayer);
                     layer.msg("成功", {
                         icon: 1
                     });
-                    $.show_overall_loding();
+                    //$.show_overall_loding();
                     $('#myTable').bootstrapTable('refresh');
                     return true;
                 }

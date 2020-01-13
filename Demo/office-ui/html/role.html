@@ -127,7 +127,7 @@
 			};
 		</script>
 		<script>
-			// $("#loadDiv").html(loadHtml);
+			// // $("#loadDiv").html(loadHtml);
 			var organization_option = function() {
 				return {
 					node: $("#myTree"), //渲染节点
@@ -246,9 +246,9 @@
 								var conlayer = layer.confirm("确定删除？", {
 									btn: ['确定', '取消']
 								}, function() {
-									$.show_overall_loding();
+									//$.show_overall_loding();
 									$.deleteJSON(userServiceUrl + "/organization?id=" + data[0].id, {}, function(data) {
-										$.hide_overall_loding();
+										//$.hide_overall_loding();
 										if(data.code == 0) {
 											layer.close(conlayer);
 											layer.msg("成功", {
@@ -354,10 +354,10 @@
 										});
 									}
 								}
-								$.show_overall_loding();
+								//$.show_overall_loding();
 								if(isAdd) {
 									$.postJSON("../../json/ztqyManager.json", data, function(data) {
-										$.hide_overall_loding();
+										//$.hide_overall_loding();
 										if(data.code == 0) {
 											layer.close(myLayer);
 											layer.msg("成功", {
@@ -383,7 +383,7 @@
 									});
 								} else {
 									$.putJSON(userServiceUrl + "/organization", data, function(data) {
-										$.hide_overall_loding();
+										//$.hide_overall_loding();
 										if(data.code == 0) {
 											layer.close(myLayer);
 											layer.msg("成功", {
@@ -422,7 +422,7 @@
 				return {
 					node: $('#myTable'),
 					init: function() {
-						// $.show_overall_loding();
+						// //$.show_overall_loding();
 						var that = this;
 						this.node.bootstrapTable({
 							url: "../../json/roleList.json",
@@ -467,7 +467,7 @@
 								//						// $('.dropdown-toggle').parent().toggleClass("open");
 								//					});
 
-								// $.hide_overall_loding();
+								// //$.hide_overall_loding();
 							},
 							onDblClickRow: function(row) {
 								console.info(row);
@@ -497,9 +497,9 @@
 					},
 					queryParams: function(params) {
 						//console.log(params);
-						// $.show_overall_loding();
+						// //$.show_overall_loding();
 						var data = {
-							// token: $.getToken(),
+							// // token: $.getToken(),
 							pageSize: params.pageSize,
 							pageNum: params.pageNumber
 						}
@@ -518,7 +518,7 @@
 						return data;
 					},
 					refresh: function() {
-						// $.show_overall_loding();
+						// //$.show_overall_loding();
 						this.node.bootstrapTable('refresh')
 					},
 					getSelectVal: function() {
@@ -567,9 +567,9 @@
 								var conlayer = layer.confirm("确定删除？", {
 									btn: ['确定', '取消']
 								}, function() {
-									// $.show_overall_loding();
+									// //$.show_overall_loding();
 									$.deleteJSON(userServiceUrl + "/role?id=" + data[0].id, {}, function(data) {
-										$.hide_overall_loding();
+										//$.hide_overall_loding();
 										if(data.code == 0) {
 											layer.close(conlayer);
 											layer.msg("成功", {
@@ -651,10 +651,10 @@
 									});
 								}
 								//console.log(isAdd);
-								$.show_overall_loding();
+								//$.show_overall_loding();
 								if(isAdd) {
 									$.postJSON(userServiceUrl + "/role", data, function(data) {
-										$.hide_overall_loding();
+										//$.hide_overall_loding();
 										if(data.code == 0) {
 											layer.close(myLayer);
 											layer.msg("成功", {
@@ -669,7 +669,7 @@
 									});
 								} else {
 									$.putJSON(userServiceUrl + "/role", data, function(data) {
-										$.hide_overall_loding();
+										//$.hide_overall_loding();
 										if(data.code == 0) {
 											layer.close(myLayer);
 											layer.msg("成功", {
@@ -744,9 +744,9 @@
 						});
 
 						var role = roleTable.getSelectVal();
-						$.show_overall_loding();
+						//$.show_overall_loding();
 						$.sanjiGetJSON(userServiceUrl + "/role/getAuthority?roleId=" + role.id, {}, function(data) {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 							if(data.code == 0) {
 								var list = data.data;
 								var thatNode = that.node.treeview("getUnselected");
@@ -831,9 +831,9 @@
 								var data = {};
 								data.authorityIds = authids;
 								data.roleId = role.id;
-								$.show_overall_loding();
+								//$.show_overall_loding();
 								$.postJSON(userServiceUrl + "/role/addAuthority", data, function(data) {
-									$.hide_overall_loding();
+									//$.hide_overall_loding();
 									if(data.code == 0) {
 										layer.close(authlayer);
 										layer.msg("成功", {

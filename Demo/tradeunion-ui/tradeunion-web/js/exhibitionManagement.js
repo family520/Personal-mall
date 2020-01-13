@@ -246,7 +246,7 @@ $(function() {
 			url: deviceServiceUrl + "/devicemanger/list",
 			async: false,
 			data: {
-				token: $.getToken(),
+				// token: $.getToken(),
 				productCode: "0004ab01",
 				deviceFloor: floorId
 			},
@@ -348,7 +348,7 @@ function ope(id) {
 		btn: ['确定', '取消']
 	}, function() {
 		$.postJSON(deviceServiceUrl + "/mode/controlMode?id=" + id, {}, function(data) {
-			$.hide_overall_loding();
+			//$.hide_overall_loding();
 			if(data.code == 0) {
 				layer.close(conlayer);
 				layer.msg("成功", {
@@ -465,7 +465,7 @@ $(function() {
 			type: "get",
 			url: userServiceUrl + "/deviceAir/getPMListByDeviceId",
 			data: {
-				token: $.getToken(),
+				// token: $.getToken(),
 				deviceId: deviceId
 			},
 			success: function(res) {
@@ -496,7 +496,7 @@ $(function() {
 						//							type: "get",
 						//							url: deviceServiceUrl + "/airQuality/list",
 						//							data: {
-						//								token: $.getToken(),
+						//								// token: $.getToken(),
 						//								organizationId: organizationId
 						//							},
 						//							success: function(res) {
@@ -2020,7 +2020,7 @@ function upLoadImgFile(ele) {
 	} else {
 		let formData = new FormData();
 		formData.append("file", $(ele)[0].files[0]);
-		//				$.show_overall_loding();
+		//				//$.show_overall_loding();
 		$.ajax({
 			type: "post",
 			url: "http://39.98.137.198:7788/api/file/upload?appId=168254",
@@ -2037,7 +2037,7 @@ function upLoadImgFile(ele) {
 				return myXhr; //xhr对象返回给jQuery使用
 			},
 			success: function(res) {
-				//						$.hide_overall_loding();
+				//						//$.hide_overall_loding();
 				if(res.code == 0) {
 					let virePath = res.data.filePath;
 					$(ele).parent().parent().find('.upfile-box img').attr('src', virePath);
@@ -2067,7 +2067,7 @@ function upLoadVideoFile(ele) {
 	} else {
 		let formData = new FormData();
 		formData.append("file", $(ele)[0].files[0]);
-		//				$.show_overall_loding();
+		//				//$.show_overall_loding();
 		$.ajax({
 			type: "post",
 			url: "http://39.98.137.198:7788/api/file/upload?appId=168254",
@@ -2084,7 +2084,7 @@ function upLoadVideoFile(ele) {
 				return myXhr; //xhr对象返回给jQuery使用
 			},
 			success: function(res) {
-				//						$.hide_overall_loding();
+				//						//$.hide_overall_loding();
 				if(res.code == 0) {
 					let virePath = res.data.filePath;
 					$(ele).parent().parent().find('.videolist').attr('ipath', virePath);
@@ -2105,7 +2105,7 @@ function upLoadVideoFile(ele) {
 
 function upLoadFileAll(data, ele) {
 	$.postJSON(deviceServiceUrl + "/videoRe", data, function(data) {
-		$.hide_overall_loding();
+		//$.hide_overall_loding();
 		layer.close(ele);
 		if(data.code == 0) {
 			layer.msg("成功", {

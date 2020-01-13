@@ -105,8 +105,8 @@
 <script>
     var html;
     var UserName = $.getCookie("userName");
-    $("#loadDiv").html(loadHtml);
-    $.show_overall_loding();
+    // $("#loadDiv").html(loadHtml);
+    //$.show_overall_loding();
     $('#myTable').bootstrapTable({
         url: deviceServiceUrl + "/vdVtr/staticDevlist", //请求后台的URL（*）
         //data: data1, //本地数据
@@ -144,7 +144,7 @@
             console.info(row);
         },
         onLoadSuccess: function() {
-            $.hide_overall_loding();
+            //$.hide_overall_loding();
         },
         columns: [{
             checkbox: true
@@ -208,9 +208,9 @@
 
     });
     function queryParams(params) {
-        $.show_overall_loding();
+        //$.show_overall_loding();
         return {
-            token: $.getToken(),
+            // token: $.getToken(),
             pageSize: params.pageSize,
             pageNum: params.pageNumber,
             deviceAlias: $("#s_deviceName").val()
@@ -218,7 +218,7 @@
     }
     var serchaData = {};
     $("#search").click(function() {
-        $.show_overall_loding();
+        //$.show_overall_loding();
         $('#myTable').bootstrapTable('refresh');
     });
 
@@ -252,7 +252,7 @@
     }
 
     function getVideoResource(deviceId) {
-        $.show_overall_loding();
+        //$.show_overall_loding();
         $('#deviceVideoResource').bootstrapTable({
             url: deviceServiceUrl + "/vdVtr/byDevIdlist", //请求后台的URL（*）
             method: 'get',                         //请求方式（*）
@@ -295,7 +295,7 @@
                 console.info(row);
             },
             onLoadSuccess: function() {
-                $.hide_overall_loding();
+                //$.hide_overall_loding();
             },
             columns: [
                 {
@@ -346,7 +346,7 @@
 
         function queryParams(params) {
             return {
-                token: $.getToken(),
+                // token: $.getToken(),
                 pageSize: params.pageSize,
                 pageNum: params.pageNumber,
                 deviceId: deviceId,
@@ -359,7 +359,7 @@
 
         var serchaData = {};
         $("#search2").click(function() {
-            $.show_overall_loding();
+            //$.show_overall_loding();
             $('#deviceVideoResource').bootstrapTable('refresh');
         });
 
@@ -387,14 +387,14 @@
                     yes: function (index, layero) {
                         var vireType = $("#vireType").val();
                         var vdNum = $("#vdNum").val();
-                        $.show_overall_loding();
+                        //$.show_overall_loding();
                         $.putJSON(deviceServiceUrl + "/vdVtr", {
                             "id": data[0].id,
                             'vireType': vireType,
                             'deviceId': data[0].deviceId,
                             'vdNum': vdNum
                         }, function(data) {
-                            $.hide_overall_loding();
+                            //$.hide_overall_loding();
                             if(data.code == 0) {
                                 layer.close(myEditLayer);
                                 layer.msg("成功", {
@@ -450,9 +450,9 @@
             var conlayer = layer.confirm("确定删除选中数据？", {
                 btn: ['确定', '取消']
             }, function () {
-                $.show_overall_loding();
+                //$.show_overall_loding();
                 $.deleteJSON(deviceServiceUrl + "/vdVtr?videoDevIds=" + ids, {}, function (data) {
-                    $.hide_overall_loding();
+                    //$.hide_overall_loding();
                     if (data.code == 0) {
                         layer.close(conlayer);
                         layer.msg("成功", {

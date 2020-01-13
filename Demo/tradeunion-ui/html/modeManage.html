@@ -192,7 +192,7 @@
 		var defaultModeIcon = "http://39.98.137.198:7788/file/168254/2019/1221/f0dca65d5c8046f38991e8c2045c4d2c.png"
 		var html;
 		var url = "";
-		$("#loadDiv").html(loadHtml);
+		// $("#loadDiv").html(loadHtml);
 
 		//		var map = {}; // Map map = new HashMap();
 		//		map[key] = value; // map.put(key, value);
@@ -205,7 +205,7 @@
 			return {
 				node: $("#myTable"), //渲染节点
 				init: function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					var that = this;
 					this.node.bootstrapTable({
 						url: deviceServiceUrl + "/mode/list", //请求后台的URL（*）
@@ -248,7 +248,7 @@
 							console.info(row);
 						},
 						onLoadSuccess: function() {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 						},
 						columns: [{
 							width: 50,
@@ -307,9 +307,9 @@
 
 				},
 				queryParams: function(params) {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					return {
-						token: $.getToken(),
+						// token: $.getToken(),
 						pageSize: params.pageSize,
 						pageNum: params.pageNumber,
 						modeName: $("#s_modeName").val(),
@@ -318,7 +318,7 @@
 					};
 				},
 				refresh: function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					this.node.bootstrapTable('refresh')
 				},
 				bindCreate: function() {
@@ -423,10 +423,10 @@
 							}else{
 								data.modeIcon = $("#modeIconUrl").val()
 							}
-							$.show_overall_loding();
+							//$.show_overall_loding();
 							if(isAdd) {
 								$.postJSON(deviceServiceUrl + "/mode", data, function(data) {
-									$.hide_overall_loding();
+									//$.hide_overall_loding();
 									if(data.code == 0) {
 										layer.close(myLayer);
 										layer.msg("成功", {
@@ -441,7 +441,7 @@
 								});
 							} else {
 								$.putJSON(deviceServiceUrl + "/mode", data, function(data) {
-									$.hide_overall_loding();
+									//$.hide_overall_loding();
 									if(data.code == 0) {
 										layer.close(myLayer);
 										layer.msg("成功", {
@@ -501,13 +501,13 @@
 						});
 						return;
 					}
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					$.postJSON(deviceServiceUrl + "/mode/setMode", {
 						id: mode.id,
 						deviceList: pdatas
 					}, function(data) {
 //						console.log(data);
-						$.hide_overall_loding();
+						//$.hide_overall_loding();
 						if(data.code == 0) {
 							layer.close(myLayer);
 							layer.msg("成功", {
@@ -593,9 +593,9 @@
 			var conlayer = layer.confirm("是否确认发送控制？", {
 				btn: ['确定', '取消']
 			}, function() {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				$.postJSON(deviceServiceUrl + "/mode/controlMode?id=" + id, {}, function(data) {
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 					if(data.code == 0) {
 						layer.close(conlayer);
 						layer.msg("成功", {icon: 1});
@@ -617,9 +617,9 @@
 			var conlayer = layer.confirm("确定删除？", {
 				btn: ['确定', '取消']
 			}, function() {
-				$.show_overall_loding();
+				//$.show_overall_loding();
 				$.deleteJSON(deviceServiceUrl + "/mode?id=" + id, {}, function(data) {
-					$.hide_overall_loding();
+					//$.hide_overall_loding();
 					if(data.code == 0) {
 						layer.close(conlayer);
 						layer.msg("成功", {
@@ -648,7 +648,7 @@
 			return {
 				node: $("#deviceTable"), //渲染节点
 				init: function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					var that = this;
 					this.node.bootstrapTable({
 						url: deviceServiceUrl + "/devicemanger/switchAndPCList", //请求后台的URL（*）
@@ -691,7 +691,7 @@
 							console.info(row);
 						},
 						onLoadSuccess: function() {
-							$.hide_overall_loding();
+							//$.hide_overall_loding();
 						},
 						columns: [{
 							width: 50,
@@ -737,9 +737,9 @@
 
 				},
 				queryParams: function(params) {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					return {
-						token: $.getToken(),
+						// token: $.getToken(),
 						pageSize: params.pageSize,
 						pageNum: params.pageNumber,
 //						productCode:"00000a01",
@@ -749,7 +749,7 @@
 					}
 				},
 				refresh: function() {
-					$.show_overall_loding();
+					//$.show_overall_loding();
 					this.node.bootstrapTable('refresh')
 				},
 				bindCreate: function() {
@@ -772,10 +772,10 @@
             }
             var templateCode;
         	var templateId;
-            $.show_overall_loding();
+            //$.show_overall_loding();
             $.sanjiGetJSON(deviceServiceUrl + "/typeTemplate/getDefaultTemp", tdata, function(data) {
                 if(!data.data) {
-                    $.hide_overall_loding();
+                    //$.hide_overall_loding();
                     layer.msg("没有对应的控制模版，需要去分类管理去设置模版！", {
                         icon: 2
                     });
@@ -814,7 +814,7 @@
 						
 					},
 					error: function() {
-						$.hide_overall_loding();
+						//$.hide_overall_loding();
 					}
 				});
 				
@@ -836,7 +836,7 @@
 					}
                 	
                 	$("#Example2")[0].contentWindow.getField("",array,json);
-                    $.hide_overall_loding();
+                    //$.hide_overall_loding();
                     $("#Example2").contents().find(".sendControlBtn").unbind();
                     $("#Example2").contents().find("body").off(".sendControlBtn");
                     $("#Example2").contents().find("body").on("click",".sendControlBtn", function() {
@@ -853,7 +853,7 @@
                             datas.controlParams = JSON.stringify(datas.controlParams);
                         }
                         if(!datas.operation) {
-                            //$.hide_overall_loding();
+                            ////$.hide_overall_loding();
                             layer.msg("操作失败", {
                                 icon: 2
                             });
@@ -1167,7 +1167,7 @@
                 contentType:false,
                 processData:false,
                 success:function (res) {
-                    $.hide_overall_loding();
+                    //$.hide_overall_loding();
                     if(res.code == 0){
 //                  	console.info(res.data.filePath)
                     	
