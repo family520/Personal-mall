@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<title>【光大银行】智慧综合管理系统</title>
+		<link href="../css/bootstrap.min.css" rel="stylesheet">
+		<link href="../css/font-awesome.min.css" rel="stylesheet">
+		<link href="../css/materialdesignicons.min.css" rel="stylesheet">
+		<link href="../css/style.min.css" rel="stylesheet">
+		<link href="../plus/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+		<!--<link href="../css/bootstrap-treeview.css" rel="stylesheet">-->
+		<link href="../css/commonStyle.css" rel="stylesheet">
+
+		<link rel="stylesheet" href="../css/bootstrap-select.css" />
+
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+		<!--<script src="../js/bootstrap-select.js"></script>-->
+		<script src="../plus/bootstrap-table/bootstrap-table.min.js"></script>
+		<script src="../plus/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+		<script src="../plus/layer/layer.js"></script>
+		<!--<script src="../js/template-web.js"></script>-->
+		<!--<script src="../plus/validate/jquery.validate.min.js"></script>-->
+		<!--<script src="../plus/validate/messages_zh.min.js"></script>-->
+		<!--<script src="../js/bootstrap-treeview.js"></script>-->
+
+		<script src="../js/httpUtils.js"></script>
+		<!--<script src="../js/Md5.js"></script>-->
+
+
+		<script src="../js/bootstrap-tableExport/tableExport.min.js"></script>
+		<script src="../js/bootstrap-tableExport/xlsx.core.min.js"></script>
+
+		<style type="text/css">
+			#DemoBox {
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				left: 50%;
+				top: 50%;
+				z-index: 9999;
+				transform: translate(-50%, -50%);
+				overflow: hidden;
+				background: rgba(0, 0, 0, 0.2);
+			}
+
+			.ss_cont {
+				background-color: white;
+				width: 700px;
+				height: 600px;
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				z-index: 9999;
+				transform: translate(-50%, -50%);
+				overflow: hidden;
+				box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.3);
+			}
+
+			#Example2 {
+				/*border: 1px solid red;*/
+				width: 700px;
+				height: 600px;
+			}
+
+			.goOut {
+				position: relative;
+				/*border: 1px solid red;*/
+				height: 40px;
+				line-height: 40px;
+				border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+				background: #f8f8f8;
+			}
+
+			.goOut i {
+				height: 20px;
+				width: 20px;
+				/*border: 1px solid red;*/
+				position: absolute;
+				top: 0;
+				right: 35px;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="lyear-layout-web">
+			<div class="lyear-layout-container">
+
+				<!--加载头部和菜单栏-->
+				<div id="hander">
+					<script>
+						$(function() {
+							$("#hander").load("handMenu.html");
+						});
+					</script>
+				</div>
+
+				<!--页面主要内容-->
+				<main class="lyear-layout-content">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="card">
+									<div class="card-header">
+										<h4>BCCA设备能耗统计</h4>
+									</div>
+									<div class="card-body">
+										<div class="ibox-content row">
+											<div class="col-lg-3">
+												<div class="form-group">
+													<label class="form-label">所属机构：</label>
+													<input class="form-control" name="s_organizationName" id="s_organizationName" placeholder="所属机构" type="text">
+												</div>
+											</div>
+											<div class="col-lg-3">
+												<div class="form-group">
+													<label class="form-label">设备名称：</label>
+													<input class="form-control" name="s_deviceAlias" id="s_deviceAlias" placeholder="设备名称" type="text">
+												</div>
+											</div>
+
+											<div class="col-lg-1">
+												<div class="form-group">
+													<div id="buttons" style="margin-top: 24px;">
+														<button type="button" class="btn btn-purple" id="clean"><i class="fa fa-eraser"></i> 清空</button>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-1">
+												<div class="form-group">
+													<div id="buttons1" style="margin-top: 24px;">
+														<button type="button" class="btn btn-success" id="search"><i class="fa fa-search"></i> 查询</button>
+													</div>
+												</div>
+											</div>
+										</div>
+										<!--Start-->
+										<!--平台设备位置列表-->
+										<div class="ibox-content">
+											<div id="buttons2">
+												<button type="button" class="btn btn-info" id="exportExcel"><i class="fa fa-mail-forward"></i> 导出excel</button>
+												<!--<button type="button" class="btn btn-info" id="pi_office"><i class="fa fa-plus"></i> 配置机构</button>-->
+												<!--<button type="button" class="btn btn-info" id="pi_weizhi"><i class="fa fa-plus"></i> 配置位置</button>-->
+											</div>
+											<div id="myTable"></div>
+										</div>
+									</div>
+								</div>
+								<br />
+								<div class="card">
+									<div class="card-header">
+										<h4>LORA设备能耗统计</h4>
+									</div>
+									<div class="card-body">
+										<div class="ibox-content row">
+											<div class="col-lg-3">
+												<div class="form-group">
+													<label class="form-label">所属机构：</label>
+													<input class="form-control" name="s_organizationName" id="l_organizationName" placeholder="所属机构" type="text">
+												</div>
+											</div>
+											<div class="col-lg-3">
+												<div class="form-group">
+													<label class="form-label">设备名称：</label>
+													<input class="form-control" name="s_deviceAlias" id="l_deviceAlias" placeholder="设备名称" type="text">
+												</div>
+											</div>
+
+											<div class="col-lg-1">
+												<div class="form-group">
+													<div id="buttonsL" style="margin-top: 24px;">
+														<button type="button" class="btn btn-purple" id="cleanL"><i class="fa fa-eraser"></i> 清空</button>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-1">
+												<div class="form-group">
+													<div id="buttons1L" style="margin-top: 24px;">
+														<button type="button" class="btn btn-success" id="searchL"><i class="fa fa-search"></i> 查询</button>
+													</div>
+												</div>
+											</div>
+										</div>
+										<!--Start-->
+										<!--平台设备位置列表-->
+										<div class="ibox-content">
+											<div id="buttons2L">
+												<button type="button" class="btn btn-info" id="exportExcelL"><i class="fa fa-mail-forward"></i> 导出excel</button>
+												<!--<button type="button" class="btn btn-info" id="pi_office"><i class="fa fa-plus"></i> 配置机构</button>-->
+												<!--<button type="button" class="btn btn-info" id="pi_weizhi"><i class="fa fa-plus"></i> 配置位置</button>-->
+											</div>
+											<div id="myTableL"></div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</main>
+				<!--End 页面主要内容-->
+				<div id="DemoBox" style="display: none" class="card">
+					<div class="ss_cont">
+						<div class="row goOut" style="text-align: left;padding-left:30px">
+							控制
+							<i class="goOff" aria-hidden="true">
+						<img src="../images/remove.png" alt="">
+					</i>
+						</div>
+						<iframe id="Example2" class="card" title="Example2" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" srcdoc=''>
+				</iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="loadDiv"></div>
+	</body>
+	<script type="text/javascript">
+		$("#loadDiv").html(loadHtml);
+		$(function() {
+
+			$(".goOff").on("click", function () {
+				// alert("你点击了关闭按钮");
+				$("#DemoBox").css({
+					display: "none"
+				});
+			});
+
+			initBootstrapTable('#myTable')
+			function initBootstrapTable(id) {
+				$.show_overall_loding();
+				$(id).bootstrapTable({
+					url: deviceServiceUrl + "/device/listBCCADeviceConsume", //请求后台的URL（*）
+					method: 'get', //请求方式（*）
+					contentType: "application/x-www-form-urlencoded",
+					toolbar: '', //工具按钮用哪个容器
+					striped: true, //是否显示行间隔色
+					cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+					pagination: true, //是否显示分页（*）
+					sortable: false, //是否启用排序
+					sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
+					pageNumber: 1, //初始化加载第一页，默认第一页
+					pageSize: 10, //每页的记录行数（*）
+					pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
+					queryParamsType: '',
+					queryParams: queryParams, //传递参数（*）
+					strictSearch: true,
+					uniqueId: "id", //每一行的唯一标识，一般为主键列
+					cardView: false, //是否显示详细视图
+					detailView: false, //是否显示父子表
+					clickToSelect: true, //点击行是否选中
+					// showFooter:true,
+
+					showExport: true,                     //是否显示导出
+					exportDataType: "basic",
+					responseHandler: function (data) {
+						var result = data.data;
+						rdata = result.list;
+						var res = [];
+						res.push({
+							total: result.total,
+							rows: result.list
+						});
+						return res[0];
+					},
+					onDblClickRow: function (row) {
+						console.info(row);
+					},
+					onLoadSuccess: function () {
+						$.hide_overall_loding();
+					},
+					columns: [{
+						checkbox: true,
+						footerFormatter: function(){
+							return '汇总'
+						}
+
+					}, {
+						width: 50,
+						title: '序号',
+						formatter: function (value, row, index) {
+							var pageSize = $(id).bootstrapTable('getOptions').pageSize;//通过表的#id 可以得到每页多少条
+							var pageNumber = $(id).bootstrapTable('getOptions').pageNumber;//通过表的#id 可以得到当前第几页
+							return pageSize * (pageNumber - 1) + index + 1;
+						}
+					}, {
+						field: 'organizationName',
+						title: '所属机构',
+						width: 200
+					}, {
+						field: 'deviceAlias',
+						title: '设备名称',
+						width: 200
+					}, {
+						field: 'isLora',
+						title: '是否lora设备',
+						width: 150,
+						formatter: function (value, row, index) {
+							var state = "";
+							if (value === 1) {
+								state = '<span>是</span>'
+							} else {
+								state = '<span>否</span>'
+							}
+							return state;
+						}
+					}, {
+						field: 'deviceAddress',
+						title: '开关地址',
+						width: 150
+					}, {
+						field: 'relateType',
+						title: '设备关联类型',
+						width: 150,
+						formatter: function (value, row, index) {
+							var state = "";
+							if (value === 1) {
+								state = '<span>空调</span>'
+							} else if (value === 2) {
+								state = '<span>照明</span>'
+							} else if (value === 3) {
+								state = '<span>招牌</span>'
+							} else if (value === 4) {
+								state = '<span>插座</span>'
+							} else {
+								state = '<span>其它</span>'
+							}
+							return state;
+						}
+					}, {
+						field: 'consumeNum',
+						title: '消耗电量',
+						width: 150,
+						footerFormatter: function(value){
+							var count = 0;
+							for (var i in value) {
+								count += value[i].consumeNum;
+							}
+							return count;
+						}
+
+					}, {
+						field: 'consumeSum',
+						title: '总能耗',
+						width: 150,
+						footerFormatter: function(value){
+							//总能耗
+							var count = 0;
+							for (var i in value) {
+								count += value[i].consumeSum;
+							}
+							return count;
+						}
+					}, {
+						field: 'createDate',
+						title: '时间',
+						width: 200
+					}
+
+					]
+				});
+
+				function queryParams(params) {
+					$.show_overall_loding();
+					return {
+						token: $.getToken(),
+						deviceAlias: $("#s_deviceAlias").val(),
+						organizationName: $("#s_organizationName").val(),
+
+						pageSize: params.pageSize,
+						pageNum: params.pageNumber
+					};
+				}
+			}
+
+			$("#search").on("click", function () {
+				$('#myTable').bootstrapTable('refresh');
+			});
+
+			$("#clean").click(function () {
+				$("#s_deviceAlias").val("");
+				$("#s_organizationName").val("");
+				$("#search").trigger("click");
+			});
+
+			$('#exportExcel').click(function () {
+				$('#myTable').tableExport({type:'excel',fileName: 'BCCA设备能源统计表'},);
+			})
+
+			/**----------------- */
+
+			$('#myTableL').bootstrapTable({
+				url: deviceServiceUrl + "/device/listLORADeviceConsume", //请求后台的URL（*）
+				method: 'get', //请求方式（*）
+				contentType: "application/x-www-form-urlencoded",
+				toolbar: '', //工具按钮用哪个容器
+				striped: true, //是否显示行间隔色
+				cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+				pagination: true, //是否显示分页（*）
+				sortable: false, //是否启用排序
+				sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
+				pageNumber: 1, //初始化加载第一页，默认第一页
+				pageSize: 10, //每页的记录行数（*）
+				pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
+				queryParamsType: '',
+				queryParams: queryParamsL, //传递参数（*）
+				strictSearch: true,
+				uniqueId: "id", //每一行的唯一标识，一般为主键列
+				cardView: false, //是否显示详细视图
+				detailView: false, //是否显示父子表
+				clickToSelect: true, //点击行是否选中
+				// showFooter:true,
+
+				showExport: true,                     //是否显示导出
+				exportDataType: "basic",
+
+				responseHandler: function (data) {
+					var result = data.data;
+					rdata = result.list;
+					var res = [];
+					res.push({
+						total: result.total,
+						rows: result.list
+					});
+					return res[0];
+				},
+				onDblClickRow: function (row) {
+					console.info(row);
+				},
+				onLoadSuccess: function () {
+					$.hide_overall_loding();
+				},
+				columns: [{
+					checkbox: true,
+					footerFormatter: function(){
+						return '汇总'
+					}
+				}, {
+					width: 50,
+					title: '序号',
+					formatter: function (value, row, index) {
+						var pageSize = $('#myTable').bootstrapTable('getOptions').pageSize;//通过表的#id 可以得到每页多少条
+						var pageNumber = $('#myTable').bootstrapTable('getOptions').pageNumber;//通过表的#id 可以得到当前第几页
+						return pageSize * (pageNumber - 1) + index + 1;
+					}
+				}, {
+					field: 'organizationName',
+					title: '所属机构',
+					width: 200
+				}, {
+					field: 'deviceAlias',
+					title: '设备名称',
+					width: 200
+				}, {
+					field: 'isLora',
+					title: '是否lora设备',
+					width: 150,
+					formatter: function (value, row, index) {
+						var state = "";
+						if (value === 1) {
+							state = '<span>是</span>'
+						} else {
+							state = '<span>否</span>'
+						}
+						return state;
+					}
+				}, {
+					field: 'deviceAddress',
+					title: '开关地址',
+					width: 150
+				}, {
+					field: 'relateType',
+					title: '设备关联类型',
+					width: 150,
+					formatter: function (value, row, index) {
+						var state = "";
+						if (value === 1) {
+							state = '<span>空调</span>'
+						} else if (value === 2) {
+							state = '<span>照明</span>'
+						} else if (value === 3) {
+							state = '<span>招牌</span>'
+						} else if (value === 4) {
+							state = '<span>插座</span>'
+						} else {
+							state = '<span>其它</span>'
+						}
+						return state;
+					}
+				}, {
+					field: 'consumeNum',
+					title: '消耗电量',
+					width: 150,
+					footerFormatter: function(value){
+						//总能耗
+						var count = 0;
+						for (var i in value) {
+							count += value[i].consumeNum;
+						}
+						return count;
+					}
+				}, {
+					field: 'consumeSum',
+					title: '总能耗',
+					width: 150,
+					footerFormatter: function(value){
+						//总能耗
+						var count = 0;
+						for (var i in value) {
+							count += value[i].consumeSum;
+						}
+						return count;
+					}
+				}, {
+					field: 'createDate',
+					title: '时间',
+					width: 200
+				}
+				]
+			});
+
+			function queryParamsL(params) {
+				$.show_overall_loding();
+				return {
+					token: $.getToken(),
+					deviceAlias: $("#l_deviceAlias").val(),
+					organizationName: $("#l_organizationName").val(),
+
+					pageSize: params.pageSize,
+					pageNum: params.pageNumber
+				};
+			}
+
+			$("#searchL").on("click", function () {
+				$('#myTableL').bootstrapTable('refresh');
+			});
+
+			$("#cleanL").click(function () {
+				$("#l_deviceAlias").val("");
+				$("#l_organizationName").val("");
+				$("#searchL").trigger("click");
+			});
+
+			$('#exportExcelL').click(function () {
+				$('#myTableL').tableExport({type:'excel',fileName: 'LORA设备能源统计表'},);
+			})
+
+		})
+
+
+	</script>
+
+	<!--增看改模板-->
+	<script type="text/html" id="modelWin">
+		<section class="openDetail" style="width: 95%; margin-top: 20px;">
+			<div class="panel-body">
+				<form id="deviceForm">
+					<div class="layui-row layui-col-space10 layui-form-item">
+						<input type="hidden" name="id" id="id" />
+						<div class="col-lg-6 MarginPx">
+							<label class="layui-form-label">设备名称:</label>
+							<div class="layui-input-block">
+								<input class="form-control" id="deviceAlias" name="deviceAlias" type="text">
+							</div>
+						</div>
+						<div class="col-lg-6 MarginPx">
+							<label class="layui-form-label">关联设备:</label>
+							<div class="layui-input-block">
+								<button style="width: 180px;" type="button" class="btn btn-success isShows" id="showDevice"><i class="fa fa-suitcase"></i> 关联设备 </button>
+								<input type="text" class="form-control isShow" id="showMac">
+								<input type="hidden" id="deviceId2" name="deviceId">
+								<input type="hidden" id="mac" name="mac">
+								<input type="hidden" id="num" name="num">
+								<!--<input type="hidden" id="deviceSubscriberNumber" name="deviceSubscriberNumber">-->
+								<input type="hidden" id="deviceCode" name="deviceCode">
+								<input type="hidden" id="organizationId" name="organizationId">
+							</div>
+						</div>
+						<div class="col-lg-6 MarginPx">
+							<label class="layui-form-label">设备序列:</label>
+							<div class="layui-input-block">
+								<input class="form-control" id="serialNum" name="serialNum" type="text">
+							</div>
+						</div>
+						<div class="col-lg-6 MarginPx">
+							<label class="layui-form-label">设备MAC:</label>
+							<div class="layui-input-block">
+								<input class="form-control" id="deviceMac" name="deviceMac" type="text">
+							</div>
+						</div>
+						<div class="col-lg-6 MarginPx">
+							<label class="layui-form-label">类型Code:</label>
+							<div class="layui-input-block">
+								<input class="form-control" id="productCode" name="productCode" type="text">
+							</div>
+						</div>
+						<div class="col-lg-6 MarginPx">
+							<label class="layui-form-label">防区:</label>
+							<div class="layui-input-block">
+								<input class="form-control" id="houseCode" name="houseCode" type="text">
+							</div>
+						</div>
+						<!--<div class="col-lg-6 MarginPx isShow">-->
+							<!--<label class="layui-form-label">类型名称:</label>-->
+							<!--<div class="layui-input-block">-->
+								<!--<input class="form-control" id="productCodeName" name="productCodeName" type="text">-->
+							<!--</div>-->
+						<!--</div>-->
+
+						<!--<div class="col-lg-6 MarginPx">-->
+							<!--<label class="layui-form-label">所属订阅:</label>-->
+							<!--<div class="layui-input-block">-->
+								<!--<input class="form-control" id="deviceSubscriberNumber" name="deviceSubscriberNumber" type="text">-->
+							<!--</div>-->
+						<!--</div>-->
+
+						<div class="col-lg-6 MarginPx isShow">
+							<label class="layui-form-label">组织机构:</label>
+							<div class="layui-input-block">
+								<input class="form-control" id="organizationNameShow" type="text">
+							</div>
+						</div>
+						<div class="col-lg-6 MarginPx isShow">
+							<label class="layui-form-label">设备位置:</label>
+							<div class="layui-input-block">
+								<input class="form-control" id="positionNameShow" type="text">
+							</div>
+						</div>
+						<!--<div class="col-lg-6 MarginPx isShows">-->
+							<!--<label class="layui-form-label">组织机构:</label>-->
+							<!--<div class="layui-input-block">-->
+								<!--<input class="form-control organizationInput" id="organization" name="organization" type="text" onclick="$('#organizationTree').show();" readonly="readonly" style="cursor: pointer">-->
+								<!--<input type="hidden" id="organizationId" name="organizationId" value="">-->
+							<!--</div>-->
+							<!--<div id="organizationTree" style="display: none; width: 250px;margin-left: 110px; position: absolute;z-index: 999;background-color: #FFF;"></div>-->
+						<!--</div>-->
+
+						<div class="col-lg-6 MarginPx isShows">
+							<label class="layui-form-label">设备位置:</label>
+							<div class="layui-input-block">
+								<input class="form-control organizationInput" id="positionName" name="positionName" type="text" onclick="$('#positionTree').show();" readonly="readonly" style="cursor: pointer">
+								<input type="hidden" id="positionId" name="positionId" value="">
+							</div>
+							<div id="positionTree" style="display: none; width: 250px;margin-left: 110px; position: absolute;z-index: 999;background-color: #FFF;"></div>
+						</div>
+
+						<div class="col-lg-6 MarginPx isShows">
+							<label class="layui-form-label">设备楼层:</label>
+							<div class="layui-input-block">
+								<select class="form-control selectpickers" style="max-height: 50px;" name="deviceFloor" id="deviceFloorId" data-live-search="true">
+									<option value="">请选择楼层</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="col-lg-6 MarginPx isShows">
+							<label class="layui-form-label">地图定点:</label>
+							<div class="layui-input-block">
+								<button style="width: 180px;" type="button" class="btn btn-success" id="showMap"><i class="fa fa-map"></i> 选择经纬度</button>
+							</div>
+						</div>
+						<div class="col-lg-6 MarginPx isShow">
+							<label class="layui-form-label">设备经度:</label>
+							<div class="layui-input-block">
+								<input class="form-control" id="deviceLongitude" name="deviceLongitude" type="text">
+							</div>
+						</div>
+						<div class="col-lg-6 MarginPx isShow">
+							<label class="layui-form-label">设备纬度:</label>
+							<div class="layui-input-block">
+								<input class="form-control" id="deviceLatitude" name="deviceLatitude" type="text">
+							</div>
+						</div>
+						<div class="col-lg-6 MarginPx isShows">
+							<label class="layui-form-label">设备定位:</label>
+							<div class="layui-input-block">
+								<button style="width: 170px;" type="button" class="btn btn-success" id="devicePosition"><i class="fa fa-anchor"></i> 设备定位</button>
+							</div>
+						</div>
+						<div class="col-lg-6 MarginPx isShow">
+							<label class="layui-form-label">X坐标:</label>
+							<div class="layui-input-block">
+								<input class="form-control" id="deviceXPosition" name="deviceX" type="text">
+							</div>
+						</div>
+						<div class="col-lg-6 MarginPx isShow">
+							<label class="layui-form-label">Y坐标:</label>
+							<div class="layui-input-block">
+								<input class="form-control" id="deviceYPositon" name="deviceY" type="text">
+							</div>
+						</div>
+
+						<div class="col-lg-6 MarginPx deviceState" style="display: none;">
+							<label class="layui-form-label">设备状态:</label>
+							<div class="layui-input-block">
+								<select class="form-control selectpickers" style="max-height: 50px;" name="deviceState" id="deviceState">
+									<option value=1>正常</option>
+									<option value=2>离线</option>
+									<option value=3>报警</option>
+									<option value=4>故障</option>
+									<option value=5>过流</option>
+									<option value=6>过压</option>
+								</select>
+							</div>
+						</div>
+
+					</div>
+				</form>
+			</div>
+		</section>
+	</script>
+
+
+</html>

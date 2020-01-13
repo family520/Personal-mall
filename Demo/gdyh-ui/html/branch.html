@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<link href="../css/bootstrap.min.css" rel="stylesheet">
+		<link rel="shortcut icon" href="../images/logoIcon.png" type="image/icon" />
+		<title>【光大银行】智慧综合管理系统</title>
+		<link rel="stylesheet" href="../plus/layui/css/layui.css">
+		<link rel="stylesheet" href="../css/front-common.css" />
+		<link rel="stylesheet" href="../css/header.css" />
+		<link rel="stylesheet" href="../css/selectStyle.css" />
+		<link rel="stylesheet" href="../css/branch.css" />
+		<link href="../css/font-awesome.min.css" rel="stylesheet">
+
+		<script type="text/javascript" src='http://api.map.baidu.com/api?v=2.0&ak=1pSTowk3vMReXCQA08ypPGfGoOaZI0qk'></script>
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/httpUtils.js"></script>
+		<script src="../js/Md5.js"></script>
+
+		<script src="../js/bootstrap.min.js"></script>
+		<script src="../plus/bootstrap-table/bootstrap-table.min.js"></script>
+		<script src="../plus/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+	</head>
+
+	<body>
+
+		<style>
+			.info_alert {
+				display: none;
+				width: 19.6rem;
+				height: 2.3rem;
+				position: fixed;
+				top: 50%;
+				margin-top: -1.25rem;
+				z-index: 99999;
+			}
+			
+			.info_messages {
+				width: 19.6rem;
+				height: 1.8rem;
+				background: url(../images/info_bg.png);
+				text-align: center;
+				font-size: 0.5rem;
+				line-height: 1.8rem;
+			}
+			
+			.info_op {
+				position: fixed;
+				height: 0.5rem;
+				min-width: 2.5rem;
+				left: 50%;
+				margin-left: -1.2rem;
+				margin-top: 0.1rem;
+			}
+			
+			.info_op .info_button {
+				text-align: center;
+				cursor: pointer;
+				font-size: 0.12rem;
+				float: left;
+				border-radius: 0.15rem;
+				height: 0.4rem;
+				line-height: 0.4rem;
+				padding: 0 0.15rem;
+				background-color: #C30D23;
+			}
+		</style>
+		<div class="info_alert">
+			<div class="info_messages">
+				发生异常报警！！
+			</div>
+			<div class="info_op">
+				<div class="info_button">请立即通知相关人员处理事件(<span id="seconds">30</span>)</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			var nodeData = []; //渲染的node数据集合
+			$(function() {
+				let carouselImg;
+				layui.use('carousel', function(){
+					var carousel = layui.carousel;
+					//建造实例
+					carouselImg = carousel.render({
+						elem: '#imgDiv'
+						,width: '100%' //设置容器宽度
+						,arrow: 'always' //始终显示箭头
+						//,anim: 'updown' //切换动画方式
+					});
+				});
+				var socket;
+				if(typeof(WebSocket) == "undefined") {
+					console.log("您的浏览器不支持WebSocket");
+				} else {
+					var oid = organizationId;
+					console.log("您的浏览器支持WebSocket");
+					if(oid == null || oid.length < 1) {
+						oid = $.getCookie("organizationId");
+					}
+					//实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
+					socket = new WebSocket(webSocketUrl + "/" + oid.replace("http", "ws"));
+					//打开事件
+					socket.onopen = function() {
+						console.log("Socket 已打开");
+						//socket.send("这是来自客户端的消息" + location.href + new Date());
+					};
+					//获得消息事件
+					socket.onmessage = function(msg) {
+						if(msg.data == '连接成功') {
+							return true;
+						}
+						console.log(msg.data);
+						let socketData = JSON.parse(msg.data);
+						if(socketData.isImgUrl) {
+							console.log("filePath:   " + socketData.filePath);
+							if(socketData.filePath == undefined) {} else {
+								var imgHtml='<div>' +
+											'<img src="' + socketData.filePath + '" style="width: 100%;height: 100%;">' +
+											'</div>';
+								$("#imgBox").append(imgHtml);
+								carouselImg.reload({
+									elem: '#imgDiv'
+									,width: '100%' //设置容器宽度
+									,arrow: 'always' //始终显示箭头
+									//,anim: 'updown' //切换动画方式
+								});
+							}
+							return;
+						}
+						msgData.push(msg.data);
+						if(msgData.length == 1) {
+							showMessage();
+						}
+						//showMessage();
+						//发现消息进入    开始处理前端触发逻辑
+					};
+					//关闭事件
+					socket.onclose = function() {
+						console.log("Socket已关闭");
+					};
+					//发生了错误事件
+					socket.onerror = function() {
+						console.log("Socket发生了错误");
+						//此时可以尝试刷新页面
+					}
+					//jquery1.8中已经被废弃，3.0中已经移除
+					$(window).unload(function() {
+						socket.close();
+					});
+
+				}
+				//$(".info_alert").show();
+				$(".info_button").click(function(msg) {
+					msgData.splice(0, 1);
+					clearInterval(seconds);
+					$(".info_alert").hide();
+					showMessage();
+				});
+				var msgData = [];
+				var seconds = "" //setInterval(rmvSeconds, 1000);
+				var rmvSeconds = function() {
+					if(parseInt($("#seconds").html()) == 0) {
+						$(".info_alert").hide();
+						clearInterval(seconds);
+						msgData.splice(0, 1);
+						showMessage();
+					} else {
+						$("#seconds").html(parseInt($("#seconds").html()) - 1);
+					}
+				}
+
+				function showMessage() {
+					console.log(msgData[0]);
+					if(msgData.length > 0) {
+						var msgNode = JSON.parse(msgData[0]);
+						$(".info_messages").html(msgNode.msgJson);
+						$(".info_alert").show();
+						$("#seconds").html(60);
+						seconds = setInterval(rmvSeconds, 1000);
+					}
+				}
+
+			});
+		</script>
+
+		<div id="main">
+			<div id="header" style="height: 0.62rem;">
+				<script type="text/javascript">
+					$("#header").load("header.html");
+				</script>
+			</div>
+			<div class="section" id="vueMain">
+				<div id="left">
+					<div class="left-one">
+						<div class="content-box">
+							<p id="zhihang"></p>
+							<div class="content-item">
+								<span class="icon-branch icon-position"></span>
+								<span>地址：</span>
+								<span id="dizhi"></span>
+							</div>
+							<div class="content-item">
+								<span class="icon-branch icon-position"></span>
+								<span>联系人：</span>
+								<span id="lianxiren"></span>
+							</div>
+							<div class="content-item">
+								<span class="icon-branch icon-tel"></span>
+								<span>电话：</span>
+								<span id="dianhua"></span>
+							</div>
+						</div>
+						<div class="box-foot">
+							<a href="user.html" style="display: none;width: 100%;height: 100%;" class="showA"></a>
+							<div style="width: 100%;height: 100%;background: rgb(0,0,33)" class="showDiv"></div>
+						</div>
+					</div>
+					<div class="left-two">
+						<div class="echart-box">
+							<div class="item">
+								<div id="echarts5"></div>
+								<span>在线</span>
+							</div>
+							<div class="item">
+								<div id="echarts6"></div>
+								<span>离线</span>
+							</div>
+							<div class="item">
+								<div id="echarts7"></div>
+								<span>正常</span>
+							</div>
+							<div class="item">
+								<div id="echarts8"></div>
+								<span>报警</span>
+							</div>
+							<div class="item">
+								<div id="echarts9"></div>
+								<span>故障</span>
+							</div>
+						</div>
+						<div class="box-foot">
+							<a href="home.html" style="display: none;width: 15%;height: 100%;" class="showA"></a>
+							<div style="width: 16%;height: 100%;background: rgb(0,0,33)" class="showDiv"></div>
+						</div>
+					</div>
+					<div class="left-three" style="position: relative;">
+						<div style="width: 100%;margin-top: -0.1rem;" class="airClass">
+							<select style="float: right" id="airDevice">
+								<option v-for="item in airQualityDevice" v-text="item.deviceAlias" :value="item.id + ',' + item.isLora"></option>
+							</select>
+						</div>
+						<div class="box-body">
+							<div class="box-item">
+								<div class="item">
+									<div class="item-text">
+										<span>E-CO2</span>
+										<span id="co2"></span>
+									</div>
+									<span class="bac-green-linear"></span>
+								</div>
+								<div class="item">
+									<div class="item-text">
+										<span>PM2.5</span>
+										<span id="pm25"></span>
+									</div>
+									<span class="bac-green-light"></span>
+								</div>
+								<div class="item">
+									<div class="item-text">
+										<span>TVOC</span>
+										<span id="voc"></span>
+									</div>
+									<span class="bac-blue-light"></span>
+								</div>
+								<div class="item">
+									<div class="item-text">
+										<span>温度</span>
+										<span id="temperature"></span>
+									</div>
+									<span class="bac-blue-dark"></span>
+								</div>
+							</div>
+							<div class="box-item">
+								<div class="item">
+									<div class="item-text">
+										<span>甲醛</span>
+										<span id="formaldehyde"></span>
+									</div>
+									<span class="bac-green-light"></span>
+								</div>
+								<div class="item">
+									<div class="item-text">
+										<span>PM10</span>
+										<span id="pm10"></span>
+									</div>
+									<span class="bac-blue-dark"></span>
+								</div>
+								<div class="item">
+									<div class="item-text">
+										<span>PM1.0</span>
+										<span id="pmOnePointZero"></span>
+									</div>
+									<span class="bac-blue-dark"></span>
+								</div>
+								<div class="item">
+									<div class="item-text">
+										<span>湿度</span>
+										<span id="humidity"></span>
+									</div>
+									<span class="bac-blue-dark"></span>
+								</div>
+							</div>
+						</div>
+						<div class="box-foot">
+							<div style="width: 16%;height: 100%;background: rgb(0,0,33)"></div>
+						</div>
+					</div>
+					<div class="left-four">
+						<div class="echart-box">
+							<div class="item">
+								<div id="echarts3"></div>
+								<div class="item-value value-temp">
+									<span id="wendu"></span>
+								</div>
+							</div>
+							<div class="item">
+								<div id="echarts4"></div>
+								<div class="item-value value-humidity">
+									<span id="shidu"></span>
+								</div>
+							</div>
+						</div>
+						<div class="box-foot">
+							<div style="width: 16%;height: 100%;background: rgb(0,0,33)"></div>
+						</div>
+					</div>
+				</div>
+				<div id="center">
+					<div class="select-box">
+						<div class="select-bar">
+							<select id="cd-dropdown" name="cd-dropdown" class="cd-select">
+								<option value="0" class="icon-small-sprite" data-bac-uri="background: url(../images/front_page/branch/icon_small_sprite.png) no-repeat;"> 全部</option>
+							</select>
+						</div>
+						<div class="floor-select">
+							<select id="dropdown2" name="cd-dropdown2" class="cd-select">
+								<option value="../images/front_page/branch/bj1.png"> 无楼层选择</option>
+							</select>
+						</div>
+					</div>
+					<div class="floor-box">
+						<div id="floorDiv" style="position: relative;display: none">
+							<img src="" id="floorPic" />
+						</div>
+					</div>
+					<div class="center-one">
+						<div class="device-box">
+							<div class="device-list-box device-list-box1">
+								<ul class="device-list" id="deviceList">
+									<li v-for="item in controlDevice" @click="showdeviceInfo(item)">
+										<template v-if="item.productCode=='00009b01'">
+											<div class="icon-device icon-air-big"></div>
+											<span v-text="item.deviceAlias" :title="item.deviceAlias"></span>
+										</template>
+										<template v-else-if="item.productCode=='00000a04'||item.productCode=='KQKG'">
+											<div class="icon-device icon-switch-big"></div>
+											<span v-text="item.relateTypeName" :title="item.relateTypeName"></span>
+										</template>
+										<!--<template v-else-if="item.productCode=='SXT111'">
+											<div class="icon-device icon-camera-big"></div>
+											<span>招牌</span>
+										</template>-->
+									</li>
+								</ul>
+							</div>
+							<span class="icon-branch left-btn"></span>
+							<span class="icon-branch right-btn"></span>
+						</div>
+						<div class="box-foot">
+							<a href="equipmentInfo.html" style="display: none;width: 15%;height: 100%;" class="showA"></a>
+							<div style="width: 9%;height: 100%;background: rgb(0,0,33)" class="showDiv"></div>
+						</div>
+					</div>
+				</div>
+				<div id="right">
+					<div class="right-one">
+						<div class="box-head">
+							<div class="box-head-item">
+								<span class="icon-alert"></span>
+								<div class="text-content">
+									<span>今日报警</span>
+									<span class="font-red" v-text="totalEvents.deviceTypeThree"></span>
+								</div>
+							</div>
+							<div class="box-head-item">
+								<span class="icon-error"></span>
+								<div class="text-content">
+									<span>故障</span>
+									<span class="font-yellow" v-text="totalEvents.deviceTypeFour"></span>
+								</div>
+							</div>
+						</div>
+						<div class="box-list">
+							<div class="list-title">
+								<span>bcca设备名称</span>
+								<span>状态</span>
+								<span>时间</span>
+								<span>操作</span>
+							</div>
+							<div class="list-box">
+								<div class="item" v-for="(item,i) in deviceEvent">
+									<span v-text="item.deviceName"></span>
+									<template v-if="item.deviceType">
+										<span v-if="item.deviceType == 2" class="font-red">离线</span>
+										<span v-if="item.deviceType == 3" class="font-red">报警</span>
+										<span v-if="item.deviceType == 4" class="font-yellow">故障</span>
+										<span v-if="item.deviceType == 5" class="font-red">过流</span>
+										<span v-if="item.deviceType == 6" class="font-red">过压</span>
+									</template>
+									<span v-text="item.createDate"></span>
+									<div>
+										<span class="detail" @click="deviceInfo(i)"></span>
+										<!--<span class="position"></span>-->
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="box-foot">
+							<a href="deviceEvent.html" style="width: 15%;height: 100%;"></a>
+							<!--<div style="width: 16%;height: 100%;background: rgb(0,0,33)" class="showDiv"></div>-->
+						</div>
+					</div>
+					<!--<div class="right-two">
+						<div class="device-box">
+							<div class="device-list-box device-list-box2">
+								<ul class="device-list" id="planList">
+								</ul>
+							</div>
+							<span class="icon-branch left-btn"></span>
+							<span class="icon-branch right-btn"></span>
+						</div>
+						<div class="box-foot">
+							<a href="modeManage.html" style="display: none;width: 15%;height: 100%;" class="showA"></a>
+							<div style="width: 16%;height: 100%;background: rgb(0,0,33)" class="showDiv"></div>
+						</div>
+					</div>-->
+					<div class="right-three">
+						<div class="Switch">
+							<form class="layui-form">
+								<input type="checkbox" id="energySwitch" name="energySwitch" lay-filter="energySwitch" lay-skin="switch" lay-text="月|天">
+							</form>
+						</div>
+						<div class="box-head">
+							<div class="box-item-coloum">
+								<div class="text-content">
+									<span :title="consumeTotal" v-text="consumeTotal.toFixed(2)"><!--<sup>↓19.8%</sup>--></span>
+								</div>
+								<span>用电量（kW·h）</span>
+							</div>
+						</div>
+						<div class="box-body">
+							<div class="echart-box">
+								<div id="echarts2"></div>
+							</div>
+							<!--<div class="right-box">
+								<ul class="energy-detail">
+									<li class="detail-item">
+										<span></span>
+										<span>空调</span>
+										<span v-text="consumeByDevice[0]"></span>
+									</li>
+									<li class="detail-item">
+										<span></span>
+										<span>照明</span>
+										<span v-text="consumeByDevice[1]"></span>
+									</li>
+									<li class="detail-item">
+										<span></span>
+										<span>应急</span>
+										<span v-text="consumeByDevice[2]"></span>
+									</li>
+									<li class="detail-item">
+										<span></span>
+										<span>风机</span>
+										<span v-text="consumeByDevice[3]"></span>
+									</li>
+									<li class="detail-item">
+										<span></span>
+										<span>灯箱</span>
+										<span v-text="consumeByDevice[4]"></span>
+									</li>
+									<li class="detail-item">
+										<span></span>
+										<span>UPS电源</span>
+										<span v-text="consumeByDevice[5]"></span>
+									</li>
+
+									<li class="detail-item">
+										<span></span>
+										<span>其它</span>
+										<span v-text="consumeByDevice[6]"></span>
+									</li>
+								</ul>
+							</div>-->
+						</div>
+						<div class="box-foot">
+							<a href="home.html" style="display: none;width: 15%;height: 100%;" class="showA"></a>
+							<div style="width: 16%;height: 100%;background: rgb(0,0,33)" class="showDiv"></div>
+						</div>
+					</div>
+					<div class="right-four">
+						<div class="layui-carousel video-box" id="imgDiv" >
+							<div carousel-item id="imgBox">
+							</div>
+						</div>
+						<div class="box-foot">
+							<span id="imgList" onclick="imageList()"></span>
+						</div>
+					</div>
+				</div>
+
+				<template v-if="showdeviceinfo">
+					<div class="device-info-box">
+						<span class="close-info-box" @click="closeinfoBox"></span>
+						<p class="device-name" v-text="deviceName"></p>
+						<div class="device-info-body">
+							<div class="device-info-content">
+								<div class="info-list-box">
+									<div style="width: 100%;">
+										<div class="info-list-content" v-for="(item,i) in switchMenuInfoList">
+											<div class="info-list-item">
+												<span class="info-list-item-value" style="width: 1.2rem" :title="item.menuName"  v-text="item.menuName"></span>
+												<span style="color: #00A2FF;">按键名</span>
+											</div>
+											<div class="info-list-item">
+												<span class="info-list-item-value"  v-text="item.lineV" :class="item.lineVTopStandard&&(parseFloat(item.lineV)>parseFloat(item.lineVTopStandard))?'font-red':''"
+													  :class="item.lineVBottomStandard&&(parseFloat(item.lineV)>parseFloat(item.lineVBottomStandard))?'font-red':''"
+												></span>
+												<span style="color: #00A2FF;">电压(V)</span>
+											</div>
+											<div class="info-list-item">
+												<span class="info-list-item-value"  v-text="item.lineI" :class="item.lineIStandard&&(parseFloat(item.lineI)>parseFloat(item.lineIStandard))?'font-red':''"></span>
+												<span style="color: #00A2FF;">电流(A)</span>
+											</div>
+											<div  class="info-list-item">
+												<span class="info-list-item-value" v-text="item.leakageI" :class="item.leakageIStandard&&(parseFloat(item.leakageI)>parseFloat(item.leakageIStandard))?'font-red':''"></span>
+												<span  style="color: #00A2FF;">漏电流(mA)</span>
+											</div>
+											<div class="info-list-item">
+												<span class="info-list-item-value" v-text="item.lineP" :class="item.linePStandard&&(parseInt(item.lineP)>parseInt(item.linePStandard))?'font-red':''"></span>
+												<span  style="color: #00A2FF;">功率(W)</span>
+											</div>
+											<div  class="info-list-item">
+												<span class="info-list-item-value" v-text="item.temperature" :class="item.tempStandard&&(parseFloat(item.temperature)>parseFloat(item.tempStandard))?'font-red':''"></span>
+												<span  style="color: #00A2FF;">温度(℃)</span>
+											</div>
+											<div  class="info-list-item">
+												<span class="info-list-item-value" v-text="item.electricity"></span>
+												<span  style="color: #00A2FF;">用电量(kW·h)</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</template>
+			</div>
+		</div>
+	</body>
+
+
+	<script type="text/html" id="deviceInfo">
+		<div class="info-box">
+			<ul class="info-list">
+				<li>
+					{{if loraDeviceName=="undefined"}}
+						<span>设备名称：</span>
+						<span>{{deviceName}}</span>
+					{{else if deviceName=="undefined"}}
+						<span>lora设备名称：</span>
+						<span>{{loraDeviceName}}</span>
+					{{/if}}
+				</li>
+				<li>
+					<span>设备类型：</span>
+					<span>{{typeName}}</span>
+				</li>
+				<li>
+					<span>设备状态：</span> {{if deviceState==1}}
+					<span class="font-green">正常</span> {{else if deviceState==2}}
+					<span class="font-green">在线</span> {{else if deviceState==3}}
+					<span class="font-yellow">离线</span> {{else if deviceState==4}}
+					<span class="font-red">报警</span> {{else if deviceState==5}}
+					<span class="font-red">故障</span> {{else if deviceState==6}}
+					<span class="font-red">过流</span> {{else if deviceState==7}}
+					<span class="font-yellow">过压</span> {{/if}}
+				</li>
+				<li>
+					<span>设备MAC：</span>
+					<span>{{deviceMac}}</span>
+				</li>
+			</ul>
+		</div>
+	</script>
+	<!--安防通知详情弹框-->
+	<script type="text/html" id="device_info_box">
+		<div class="info-box">
+			<ul class="info-list">
+				<li>
+					<span>bcca设备名称：</span>
+					<span>{{deviceName}}</span>
+				</li>
+				<li>
+					<span>事件名称：</span>
+					<span>{{eventName}}</span>
+				</li>
+				<li>
+					<span>事件状态：</span> {{if eventState==1}}
+					<span class="font-red">待处理</span> {{else if eventState==2}}
+					<span class="font-green">已处理</span> {{else if eventState==3}}
+					<span class="font-yellow">误报警</span> {{/if}}
+				</li>
+				<li>
+					<span>处理人：</span>
+					<span>{{processingUserName}}</span>
+				</li>
+				<li>
+					<span>电话：</span>
+					<span>{{processingUserPhone}}</span>
+				</li>
+				<li>
+					<span>设备位置：</span>
+					<span>{{devicePositionName}}</span>
+				</li>
+			</ul>
+		</div>
+	</script>
+	<!--安防通知详情弹框-->
+	<script type="text/html" id="videoList">
+		<div class="info-box">
+			<ul class="info-list">
+				<li>
+					<span>设备名称：</span>
+					<span>{{deviceName}}</span>
+				</li>
+				<li>
+					<span>事件名称：</span>
+					<span>{{eventName}}</span>
+				</li>
+				<li>
+					<span>事件状态：</span> {{if eventState==1}}
+					<span class="font-red">待处理</span> {{else if eventState==2}}
+					<span class="font-green">已处理</span> {{else if eventState==3}}
+					<span class="font-yellow">误报警</span> {{/if}}
+				</li>
+				<li>
+					<span>处理人：</span>
+					<span>{{processingUserName}}</span>
+				</li>
+				<li>
+					<span>电话：</span>
+					<span>{{processingUserPhone}}</span>
+				</li>
+			</ul>
+		</div>
+	</script>
+
+	<script type="text/html" id="cameraImageList">
+		<section class="">
+			<div class="image-list-form">
+				<form id="cameraImageForm">
+					<div class="form-head">
+						<div style="margin-right: 0.2rem">
+							<label>摄像头名:</label>
+							<div>
+								<input class="input-css" id="s_cameraName" name="cameraName" type="text">
+							</div>
+						</div>
+						<div style="margin-right: 0.2rem">
+							<label>组织机构:</label>
+							<div>
+								<input class="input-css" id="s_organizationName" name="organizationName" type="text">
+							</div>
+						</div>
+						<div style="display: flex;flex-direction: row;align-items: flex-end">
+							<button type="button" class="btn btn-primary" id="s_clean">
+								<i class="fa fa-eraser"></i> 清空
+							</button>
+							<button type="button" class="btn btn-success" id="s_search" style="margin-left: 0.1rem">
+								<i class="fa fa-search"></i> 查询
+							</button>
+						</div>
+					</div>
+				</form>
+				<table id="imageListTable" class="image-list-table"></table>
+			</div>
+		</section>
+	</script>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+	<script>
+		var organizationId = "";
+		var temperatureNum;
+		var humidityNum;
+		//获取参数  organizationId
+		GetRequest()
+
+		function GetRequest() {
+			var url = location.search; //获取url中"?"符后的字串
+			if(url.indexOf("?") != -1) { //判断是否有参数
+				var str = url.substr(1); //从第一个字符开始 因为第0个是?号 获取所有除问号的所有符串
+				strs = str.split("="); //用等号进行分隔 （因为知道只有一个参数 所以直接用等号进分隔 如果有多个参数 要用&号分隔 再用等号进行分隔）
+				organizationId = strs[1];
+			}
+		}
+
+		if(organizationId == "" || organizationId == null) {
+			$(".showA").css("display", "block")
+			$(".showDiv").css("display", "none")
+		} else {
+			$(".showA").css("display", "none")
+			$(".showDiv").css("display", "block")
+		}
+
+		function openTip(parm) {
+			var data1 = parm.split("|")
+			var infoData = {
+				deviceName: data1[0],
+				loraDeviceName: data1[1],
+				typeName: data1[2],
+				deviceState: data1[3],
+				deviceMac: data1[4]
+			};
+
+			var infoHtml = template("deviceInfo", infoData);
+			var infoLayer = layer.open({
+				type: 1,
+				title: '详情',
+				area: ['6.5rem', 'auto'],
+				resize: false,
+				offset: 'auto',
+				content: infoHtml
+			});
+		}
+
+
+		showDeviceType()
+
+		function showDeviceType() {
+			$.ajax({
+				type: "GET", //提交方式
+				url: deviceServiceUrl + "/device/getTypeList",
+				async: false,
+				data: {
+					token: $.getToken(),
+					organizationId: organizationId
+				},
+				success: function(result) {
+					var data = result.data.list
+					if(result.data.total > 0) {
+						for(var k = 0; k < data.length; k++) {
+							if(data[k].typeIcon == null) {
+								data[k].typeIcon = "../images/front_page/branch/icon_small_sprite.png"
+							}
+							//				      	'<option value="'+data[k].typeNO+'" class="icon-small-sprite" data-bac-uri="background: url('+data[k].typeIcon +') no-repeat;">'+ data[k].typeName+'</option>'
+							$('<option value="a' + data[k].id + '" class="icon-small-sprite" data-bac-uri="background: url(' + data[k].typeIcon + ') no-repeat;">' + data[k].deviceAlias + '</option>').appendTo("#cd-dropdown");
+						}
+					}
+				}
+			})
+		}
+
+
+		showInfo()
+
+		function showInfo() {
+			$.ajax({
+				type: "get",
+				url: userServiceUrl + "/organization/getListById",
+				data: {
+					token: $.getToken(),
+					organizationId: organizationId
+				},
+				success: function(res) {
+					var data = res.data.list[0]
+
+					if(res.code == 0) {
+						var geoc = new BMap.Geocoder(); //地址解析对象
+						var point = new BMap.Point(data.organizationLongitude, data.organizationLatitude);
+
+						geoc.getLocation(point, function(rs) {
+							var addComp = rs.addressComponents;
+							var address = addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber;
+							document.getElementById("dizhi").innerHTML = address;
+
+						});
+						document.getElementById("lianxiren").innerHTML = data.organizationDuty;
+						document.getElementById("dianhua").innerHTML = data.organizationDutycell;
+						document.getElementById("zhihang").innerHTML = data.organizationName;
+						$('#zhihang').attr('title', data.organizationName);
+					}
+				}
+			})
+		}
+
+
+		showFloorPic()
+
+		function showFloorPic() {
+			$.ajax({
+				type: "GET", //提交方式
+				url: userServiceUrl + "/floor/getList",
+				async: false,
+				data: {
+					token: $.getToken(),
+					organizationId: organizationId
+				},
+				success: function(result) {
+					var data = result.data.list
+					if(result.data.total > 0) {
+						var obj = document.getElementById("dropdown2");
+						for(var k = 0; k < data.length; k++) {
+							//						$('<option value='data[k].imgUrl+"|"+data[k].id '>'+data[k].name+'</option>').appendTo("#dropdown2");
+							//						$('<option value="1">1</option>').appendTo("#dropdown2");
+							obj.options[k] = new Option(data[k].name, data[k].imgUrl + "|" + data[k].id);
+						}
+						$("#floorDiv").show();
+						$('#floorPic').attr("src", data[0].imgUrl);
+						$.ajax({
+							type: "GET", //提交方式
+							url: deviceServiceUrl + "/device/list",
+							data: {
+								token: $.getToken(),
+								deviceFloor: data[0].id
+							},
+							success: function(result) {
+								var data = result.data.list
+
+								if(result.data.total > 0) {
+									for(var k = 0; k < data.length; k++) {
+										if(data[k].typeIcon == null) {
+											data[k].typeIcon = "../images/front_page/branch/switch_on.png"
+										}
+
+										var typeClass = "controlShowa" + data[k].id
+										let parm = data[k].deviceAlias + "|" + data[k].loraDeviceName + "|" + data[k].typeName + "|" + data[k].deviceState + "|" + data[k].deviceMac
+										//						$('<img class="controlNone '+ typeClass +'"  style="width: 0.22rem;position: absolute;color: red;left: 50px;top: 50px" onclick="openTip('+infoData1.deviceName+","+infoData1.typeName+","+infoData1.deviceState+","+infoData1.deviceMac +')" src="../images/front_page/branch/switch_on.png"/>').appendTo("#floorPic");
+										$('<img class="controlNone ' + typeClass + '"  style="width: 0.22rem;height: 0.22rem;position: absolute;color: red;left: ' + data[k].deviceX/100 + 'rem;top: ' + data[k].deviceY/100 + 'rem" src="' + data[k].typeIcon + '"' + "onclick='openTip(\"" + parm + "\")'/>").appendTo("#floorDiv");
+									}
+								}
+							}
+						})
+					}
+				}
+			})
+		}
+
+		//查询设备状态
+		function getDeviceStatus(params) {
+			let loadLayer = layer.load();
+			let formData = {};
+			formData.account = vm.item.deviceSubscriberNumber;
+			formData.operation = params.operation;
+			formData.controlParams = params.controlParams;
+			formData.productId = vm.item.productCode;
+			formData.serial_num = vm.item.serialNum;
+			$.postJSON(deviceServiceUrl + "/device/controlDervice_s", formData, function(conRes) {
+				layer.close(loadLayer);
+				if (conRes.code != 0) {
+					layer.msg("获取不到设备状态", {
+						icon: 2
+					});
+					return
+				}
+				let dataRes = conRes.data;
+				if (dataRes == null || dataRes == "") {
+					layer.msg("获取不到设备状态", {
+						icon: 2
+					});
+					return;
+				}
+				let contentRes = dataRes.resultContent;
+				if(contentRes == null || contentRes == "") {
+					layer.msg("获取不到设备状态", {
+						icon: 2
+					});
+					return;
+				}
+
+				if(contentRes.code == 0) {
+					$(".layui-layer-iframe iframe")[0].contentWindow.menuStatus(contentRes);
+				} else {
+					layer.msg("获取不到设备状态", {
+						icon: 2
+					});
+				}
+			})
+		}
+		//控制设备结束
+
+		function imageList() {
+			let listHtml = template("cameraImageList",{title:"截图历史 "});
+			let myLayer = layer.open({
+				skin: 'card',
+				type: 1,
+				title: "截图历史",
+				area: ['8rem','6rem'],	        //宽高
+				resize: false,				//是否拉升
+				offset: 'top',				//居中
+				content: listHtml,
+				btn: ['取消'],
+				yes: function (index, layero) {
+					layer.close(myLayer);
+				},
+				success: function (layero) {
+					//表格渲染开始
+					$('#imageListTable').bootstrapTable({
+						url: deviceServiceUrl + "/cameraImage/getCameraImageList", //请求后台的URL（*）
+						//data: data1,                            //本地数据
+						method: 'get', //请求方式（*）
+						contentType: "application/x-www-form-urlencoded",
+						toolbar: '', //工具按钮用哪个容器
+						striped: true, //是否显示行间隔色
+						cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+						pagination: true, //是否显示分页（*）
+						sortable: false, //是否启用排序
+						sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
+						pageNumber: 1, //初始化加载第一页，默认第一页
+						pageSize: 5, //每页的记录行数（*）
+						pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
+						queryParamsType: '',
+						queryParams: select_queryParams, //传递参数（*）
+						strictSearch: true,
+						// height: 500,                            //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+						uniqueId: "id", //每一行的唯一标识，一般为主键列
+						cardView: false, //是否显示详细视图
+						detailView: false, //是否显示父子表
+						clickToSelect: true, //点击行是否选中
+						responseHandler: function (data) {
+							let res = [];
+							if (data.code == 0) {
+								let result = data.data;
+								rdata = result.list;
+								res.push({
+									total: result.total,
+									rows: result.list
+								});
+								$.hide_overall_loding();
+								return res[0];
+							} else {
+								res.push({
+									total: 0,
+									rows: []
+								});
+								layer.msg("获取数据失败！", {icon: 2});
+								$.hide_overall_loding();
+								return res[0];
+							}
+						},
+						onLoadSuccess: function () {
+						},
+						onDblClickRow: function (row) {
+							console.info(row);
+						},
+						columns: [{
+							checkbox: true
+						}, {
+							width: 50,
+							title: '序号',
+							formatter: function (value, row, index) {
+								let pageSize = $('#imageListTable').bootstrapTable('getOptions').pageSize;//通过表的#id 可以得到每页多少条
+								let pageNumber = $('#imageListTable').bootstrapTable('getOptions').pageNumber;//通过表的#id 可以得到当前第几页
+								return pageSize * (pageNumber - 1) + index + 1;
+							}
+						}, {
+							field: 'cameraName',
+							title: '摄像头名',
+							width: 100
+						}, {
+							field: 'organizationName',
+							title: '组织机构',
+							width: 100
+						}, {
+							field: 'createDate',
+							title: '截图时间',
+							width: 100
+						},{
+							field: 'imgUrl',
+							title: '截图历史',
+							width: 100,
+							formatter: function (value, row, index) {
+								return '<img src="'+value+'" style="width: 1rem;height: 1rem;">'
+							}
+						}]
+					});
+					//表格渲染结束
+					//查询参数
+					function select_queryParams(params) {
+						return {
+							token: $.getToken(),
+							pageSize: params.pageSize,
+							pageNum: params.pageNumber,
+							cameraName: $("#s_cameraName").val(),
+							organizationName:$("#s_organizationName").val(),
+							organizationId:organizationId
+						};
+					}
+					$("#s_search").on("click", function () {
+						$('#imageListTable').bootstrapTable('refresh');
+					});
+
+					$("#s_clean").click(function () {
+						$("#s_cameraName").val("");
+						$("#s_organizationName").val("");
+						$("#s_search").trigger("click");
+					});
+				}
+			});
+		}
+	</script>
+
+	<script>
+		/*** vue开始》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》*/
+		$(function() {
+			vueBegin();
+			setInterval(function () {
+				vm.getAllEvents();
+			},1000*60*2)
+		})
+		/*** vue开始》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》*/
+		var vm;
+
+		function vueBegin() {
+			vm = new Vue({
+				el: "#vueMain",
+				data: {
+					deviceEvent: [],
+					consumeTotal: 0,
+					consumeByDevice: [0, 0, 0, 0, 0],
+					totalEvents: {
+						deviceTypeTwo: 0,
+						deviceTypeThree: 0,
+						deviceTypeFour: 0,
+						deviceTypeFive: 0,
+						deviceTypeSix: 0,
+						total: 0
+					},
+					controlDevice: [],
+					item: {},
+					airQualityDevice: [],
+					imgUrl: "",
+					showdeviceinfo: false,
+					switchMenuNameList:[],
+					switchMenuInfoList:[],
+					deviceName: '',
+					deviceData: [],
+					deviceStandard: []
+				},
+				methods: {
+					getAllEvents: function() {
+						$.get(deviceServiceUrl + "/deviceEvent/listByOrganization?token=" + $.getToken() + "&organizationId=" + organizationId, function(eventRes) {
+							if(eventRes.code == 0) {
+								if(eventRes.data.total >= 4) { //只获取当前最新4个事件
+									for(let i = 0; i < 4; i++) {
+										vm.deviceEvent.push(eventRes.data.list[i]);
+									}
+								} else {
+									vm.deviceEvent = eventRes.data.list;
+								}
+							}
+						});
+					},
+					//安防通知详情
+					deviceInfo: function(index) {
+						var data = this.deviceEvent[index];
+						var infoData = {
+							deviceName: data.deviceName,
+							loraDeviceName: data.loraDeviceName,
+							eventName: data.eventName,
+							eventState: data.eventState,
+							processingUserName: data.processingUserName,
+							organizationName: data.organizationName,
+							floorName: data.floorName,
+							devicePositionName: data.devicePositionName,
+							loraDevicePositionName: data.loraDevicePositionName,
+							processingUserPhone: data.processingUserPhone
+						};
+						var infoHtml = template("device_info_box", infoData);
+						var infoLayer = layer.open({
+							type: 1,
+							title: '详情',
+							area: ['6.5rem', 'auto'],
+							resize: false,
+							offset: 'auto',
+							content: infoHtml
+						});
+					},
+					//获取当日各类事件总数
+					getTotal: function() {
+						$.get(deviceServiceUrl + "/deviceEvent/getEventTypeTotal?token=" + $.getToken() + "&organizationId=" + organizationId, function(totalRes) {
+							if(totalRes.code == 0) {
+								//vm.totalEvents = totalRes.data;
+								for(let i = 0; i < totalRes.data.length; i++) {
+									if(totalRes.data[i].deviceType == 2) {
+										vm.totalEvents.deviceTypeTwo = totalRes.data[i].count;
+									} else if(totalRes.data[i].deviceType == 3) {
+										vm.totalEvents.deviceTypeThree = totalRes.data[i].count;
+									} else if(totalRes.data[i].deviceType == 4) {
+										vm.totalEvents.deviceTypeFour = totalRes.data[i].count;
+									} else if(totalRes.data[i].deviceType == 5) {
+										vm.totalEvents.deviceTypeFive = totalRes.data[i].count;
+									} else if(totalRes.data[i].deviceType == 6) {
+										vm.totalEvents.deviceTypeSix = totalRes.data[i].count;
+									}
+								}
+							}
+						});
+					},
+					//设备信息相关
+					showdeviceInfo: function(item) {
+						if(item.productCode == "00009b01") {
+							let loadLayer = layer.load();
+							let formData = {};
+							vm.item = item;
+							formData.deviceId = item.id;
+							formData.pageNum = 0;
+							formData.pageSize = 1000;
+							$.getJSON(deviceServiceUrl + "/device/getAirConditioningMenu", formData, function(getRes) {
+								$.hide_overall_loding();
+								if (getRes.code != 0) {
+									layer.msg("没有获取到该设备添加的按键信息", {
+										icon: 2
+									});
+									layer.close(loadLayer);
+									return
+								}
+								let getResData = getRes.data;
+								if (getResData == null || getResData == "") {
+									layer.msg("没有获取到该设备添加的按键信息", {
+										icon: 2
+									});
+									layer.close(loadLayer);
+									return
+								}
+								if (getResData.list.length == 0) {
+									layer.msg("没有获取到该设备添加的按键信息", {
+										icon: 2
+									});
+									layer.close(loadLayer);
+									return
+								}
+								let controlLayer = layer.open({
+									type: 2,
+									title: '中弘空调信息面板',
+									area: ['9rem', "6rem"],
+									content: ["airConditioningTemplate2.html", 'no'],
+									success: function() {
+										layer.close(loadLayer);
+										$(".layui-layer-iframe iframe")[0].contentWindow.init(getRes.data.list); //多路多键初始化
+									},
+									cancel: function() {
+										layer.close(loadLayer);
+									}
+								});
+							});
+							return;
+						} else if(item.productCode == '00000a04' || item.productCode == 'KQKG') {
+							vm.showdeviceinfo = true;
+							let loadLayer = layer.load();
+							$.ajax({
+								type: "GET", //提交方式
+								url: deviceServiceUrl + "/airMenuInfo/getAirSwitchInfo",
+								data: {
+									token: $.getToken(),
+									organizationId: item.organizationId,
+									relateType:item.relateType
+								},
+								success: function(res) {
+									/*vm.switchMenuNameList = [];
+									layer.close(loadLayer);
+									for (let i = 0; i < res.length; i++) {
+										if (i === 0) {
+											vm.switchMenuNameList.push(res[i].switchMenuName);
+										}else {
+											if (vm.switchMenuNameList.indexOf(res[i].switchMenuName) < 0) {
+												vm.switchMenuNameList.push(res[i].switchMenuName);
+											}
+										}
+									}
+									vm.deviceName = item.relateTypeName;
+									vm.deviceData = res;*/
+									layer.close(loadLayer);
+									vm.deviceName = item.relateTypeName;
+									vm.switchMenuInfoList = res;
+								}
+							});
+						} else if(item.productCode == 'SXT') {
+						}
+					},
+					closeinfoBox: function() {
+						vm.showdeviceinfo = false;
+						vm.deviceName = '';
+						vm.deviceData = [];
+						vm.deviceStandard = [];
+					},
+					//执行计划
+					planExcute: function() {
+						var conlayer = layer.confirm("确定执行此操作吗？", {
+							btn: ['确定', '取消']
+						}, function() {
+
+						}, function() {
+							layer.close(conlayer);
+						});
+					},
+
+					//获取可控制设备
+					getControlList: function() {
+						$.ajax({
+							type: "GET", //提交方式
+							url: deviceServiceUrl + "/device/getDeviceList",
+							data: {
+								token: $.getToken(),
+								organizationId: organizationId
+							},
+							success: function(result) {
+								vm.controlDevice = result;
+							}
+						})
+					},
+					//获取空气质量检测仪设备
+					getAirQualityDevice: function() {
+						$.get(deviceServiceUrl + "/device/getTHList?token=" + $.getToken() + "&organizationId=" + organizationId, function(resData) {
+							if(resData.code == 0) {
+								if(resData.data != null) {
+									vm.airQualityDevice = resData.data;
+									showPMByDeviceId(resData.data[0].id, resData.data[0].isLora);
+								}
+							}
+						});
+					},
+					//获取当前组织机构的摄像头列表
+					videoList: function() {
+						let loadLayer = layer.load();
+						$.getJSON(deviceServiceUrl + "/camera/list", {
+							organizationId: organizationId
+						}, function(res) {
+							if(res.code != 0) {
+								layer.msg("没有获取到摄像头信息", {
+									icon: 2
+								});
+								layer.close(loadLayer);
+								return;
+							}
+							if(res.data == null) {
+								layer.msg("没有获取到摄像头信息", {
+									icon: 2
+								});
+								layer.close(loadLayer);
+								return;
+							}
+							if(res.data.list == null || res.data.list.length == 0) {
+								layer.msg("没有获取到摄像头信息", {
+									icon: 2
+								});
+								layer.close(loadLayer);
+								return;
+							}
+							let areaHeigth = '6rem';
+							if(res.data.list.length <= 2) {
+								areaHeigth = '3.6rem';
+							}
+							let controlLayer = layer.open({
+								type: 2,
+								title: '视频列表',
+								area: ['9rem', areaHeigth],
+								content: ['videoList.html', 'no'],
+								success: function() {
+									layer.close(loadLayer);
+									$(".layui-layer-iframe iframe")[0].contentWindow.init(res.data.list);
+								},
+								cancel: function() {
+									layer.close(loadLayer);
+								}
+							});
+						})
+					}
+				},
+				mounted: function() {
+					this.getAllEvents();
+					this.getTotal();
+					this.getControlList();
+					//this.getAirQualityDevice();
+				}
+			});
+		}
+		/*** vue结束》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》*/
+	</script>
+	<script src="../plus/layui/layui.js"></script>
+	<script src="../js/echarts.min.js"></script>
+	<script src="../js/template-web.js"></script>
+	<script src="../js/modernizr.custom.63321.js"></script>
+	<script src="../js/myjquery.dropdown.js"></script>
+	<script src="../js/front_page/common.js"></script>
+	<script src="../js/front_page/branch.js"></script>
+
+</html>

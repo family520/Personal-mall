@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<title>【光大银行】智慧综合管理系统</title>
+		<link href="../css/bootstrap.min.css" rel="stylesheet">
+		<link href="../css/font-awesome.min.css" rel="stylesheet">
+		<link href="../css/materialdesignicons.min.css" rel="stylesheet">
+		<link href="../css/style.min.css" rel="stylesheet">
+		<link href="../plus/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+		<!--<link href="../css/bootstrap-treeview.css" rel="stylesheet">-->
+		<link href="../css/commonStyle.css" rel="stylesheet">
+
+		<link rel="stylesheet" href="../css/bootstrap-select.css" />
+
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+		<!--<script src="../js/bootstrap-select.js"></script>-->
+		<script src="../plus/bootstrap-table/bootstrap-table.min.js"></script>
+		<script src="../plus/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+		<script src="../plus/layer/layer.js"></script>
+		<script src="../js/template-web.js"></script>
+		<!--<script src="../plus/validate/jquery.validate.min.js"></script>-->
+		<!--<script src="../plus/validate/messages_zh.min.js"></script>-->
+		<script src="../js/bootstrap-treeview.js"></script>
+
+		<script src="../js/httpUtils.js"></script>
+		<!--<script src="../js/Md5.js"></script>-->
+
+		<script src="../js/bootstrap-tableExport/tableExport.min.js"></script>
+		<script src="../js/bootstrap-tableExport/xlsx.core.min.js"></script>
+
+		<!--时间选择插件-->
+		<link href="../plus/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+		<script src="../plus/bootstrap-datetimepicker/moment.min.js"></script>
+		<script src="../plus/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
+		<script src="../plus/bootstrap-datetimepicker/locale/zh-cn.js"></script>
+		<!--日期选择插件-->
+		<link href="../plus/bootstrap-datepicker/bootstrap-datepicker3.min.css" rel="stylesheet">
+		<script src="../plus/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+		<script src="../plus/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+
+		<style type="text/css">
+			#DemoBox {
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				left: 50%;
+				top: 50%;
+				z-index: 9999;
+				transform: translate(-50%, -50%);
+				overflow: hidden;
+				background: rgba(0, 0, 0, 0.2);
+			}
+			
+			.ss_cont {
+				background-color: white;
+				width: 700px;
+				height: 600px;
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				z-index: 9999;
+				transform: translate(-50%, -50%);
+				overflow: hidden;
+				box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.3);
+			}
+			
+			#Example2 {
+				/*border: 1px solid red;*/
+				width: 700px;
+				height: 600px;
+			}
+			
+			.goOut {
+				position: relative;
+				/*border: 1px solid red;*/
+				height: 40px;
+				line-height: 40px;
+				border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+				background: #f8f8f8;
+			}
+			
+			.goOut i {
+				height: 20px;
+				width: 20px;
+				/*border: 1px solid red;*/
+				position: absolute;
+				top: 0;
+				right: 35px;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="lyear-layout-web">
+			<div class="lyear-layout-container">
+
+				<!--加载头部和菜单栏-->
+				<div id="hander">
+					<script>
+						$(function() {
+							$("#hander").load("handMenu.html");
+						});
+					</script>
+				</div>
+
+				<!--页面主要内容-->
+				<main class="lyear-layout-content">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="card">
+									<div class="card-header">
+										<h4>BCCA设备能耗统计</h4>
+									</div>
+									<div class="card-body">
+										<div class="ibox-content row">
+											<div class="col-lg-3">
+												<div class="form-group">
+													<label class="form-label">所属机构：</label>
+													<input class="form-control organizationInput" id="s_organization" name="s_organization" type="text" onclick="$('#s_organizationTree').show();" placeholder="所属机构" readonly="readonly" style="cursor: pointer">
+													<input type="hidden" id="s_organizationId" name="s_organizationId" value="">
+													<div id="s_organizationTree" style="display: none; width: 250px;position: absolute;z-index: 999;background-color: #FFF;"></div>
+												</div>
+											</div>
+											<div class="col-lg-1">
+												<div class="form-group">
+													<div id="buttons" style="margin-top: 24px;">
+														<button type="button" class="btn btn-purple" id="clean"><i class="fa fa-eraser"></i> 清空</button>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-1">
+												<div class="form-group">
+													<div id="buttons1" style="margin-top: 24px;">
+														<button type="button" class="btn btn-success" id="search"><i class="fa fa-search"></i> 查询</button>
+													</div>
+												</div>
+											</div>
+										</div>
+										<!--Start-->
+										<!--平台设备位置列表-->
+										<div class="ibox-content">
+											<div id="buttons2">
+												<button type="button" class="btn btn-info" id="exportExcel"><i class="fa fa-mail-forward"></i> 导出excel</button>
+											</div>
+											<div id="myTable"></div>
+										</div>
+									</div>
+								</div>
+								<!--<br />
+								<div class="card">
+									<div class="card-header">
+										<h4>LORA设备能耗统计</h4>
+									</div>
+									<div class="card-body">
+										<div class="ibox-content row">
+											<div class="col-lg-3">
+												<div class="form-group">
+													<label class="form-label">所属机构：</label>
+													<input class="form-control organizationInputL" id="s_organizationL" name="s_organizationL" type="text" onclick="$('#s_organizationTreeL').show();" placeholder="所属机构" readonly="readonly" style="cursor: pointer">
+													<input type="hidden" id="s_organizationIdL" name="s_organizationIdL" value="">
+													<div id="s_organizationTreeL" style="display: none; width: 250px;position: absolute;z-index: 999;background-color: #FFF;"></div>
+
+												</div>
+											</div>
+											<div class="col-lg-1">
+												<div class="form-group">
+													<div id="buttonsL" style="margin-top: 24px;">
+														<button type="button" class="btn btn-purple" id="cleanL"><i class="fa fa-eraser"></i> 清空</button>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-1">
+												<div class="form-group">
+													<div id="buttons1L" style="margin-top: 24px;">
+														<button type="button" class="btn btn-success" id="searchL"><i class="fa fa-search"></i> 查询</button>
+													</div>
+												</div>
+											</div>
+										</div>
+										&lt;!&ndash;Start&ndash;&gt;
+										&lt;!&ndash;平台设备位置列表&ndash;&gt;
+										<div class="ibox-content">
+											<div id="buttons2L">
+												<button type="button" class="btn btn-info" id="exportExcelL"><i class="fa fa-mail-forward"></i> 导出excel</button>
+											</div>
+											<div id="myTableL"></div>
+										</div>
+									</div>
+								</div>-->
+
+							</div>
+						</div>
+					</div>
+				</main>
+				<!--End 页面主要内容-->
+				<div id="DemoBox" style="display: none" class="card">
+					<div class="ss_cont">
+						<div class="row goOut" style="text-align: left;padding-left:30px">
+							控制
+							<i class="goOff" aria-hidden="true">
+						<img src="../images/remove.png" alt="">
+					</i>
+						</div>
+						<iframe id="Example2" class="card" title="Example2" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" srcdoc=''>
+				</iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="loadDiv"></div>
+	</body>
+
+	<script type="text/html" id="mothDetiels">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="card">
+					<div class="card-body">
+						<div class="ibox-content row">
+							<div class="col-lg-3">
+								<div class="form-group">
+									<label class="form-label">开始时间：</label>
+									<input class="form-control js-datetimepicker1 " type="text" id="stateData" name="stateData" placeholder="" value="" data-side-by-side="true" data-locale="zh-cn" data-format="YYYY-MM-DD" />
+								</div>
+
+							</div>
+							<div class="col-lg-3">
+								<div class="form-group">
+									<label class="form-label">结束时间：</label>
+									<input class="form-control js-datetimepicker2 " type="text" id="endData" name="endData" placeholder="" value="" data-side-by-side="true" data-locale="zh-cn" data-format="YYYY-MM-DD" />
+								</div>
+							</div>
+							<div class="col-lg-2">
+								<div class="form-group">
+									<div id="buttons" style="margin-top: 24px;">
+										<button type="button" class="btn btn-purple" id="clean_mothDetiels"><i class="fa fa-eraser"></i> 清空</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-2">
+								<div class="form-group">
+									<div id="buttons1" style="margin-top: 24px;">
+										<button type="button" class="btn btn-success" id="search_mothDetiels"><i class="fa fa-search"></i> 查询</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--Start-->
+						<!--平台设备位置列表-->
+						<div class="ibox-content">
+							<div id="buttons2">
+								<button type="button" class="btn btn-info" id="exportExcel_mothDetiels"><i class="fa fa-mail-forward"></i> 导出excel</button>
+							</div>
+							<div id="myTable_mothDetiels"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>
+	<script type="text/html" id="mothDetiels_detiels">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="card">
+					<div class="card-body">
+						<div class="ibox-content row">
+									<div class="col-lg-3">
+								<div class="form-group">
+									<label class="form-label">类型名称：</label>
+									<input class="form-control" name="relateTypeName" id="relateTypeName" placeholder="类型名称" type="text">
+								</div>
+							</div>
+							<div class="col-lg-2">
+								<div class="form-group">
+									<div id="buttons1" style="margin-top: 24px;">
+										<button type="button" class="btn btn-success" id="search_mothDetiels_detiels"><i class="fa fa-search"></i> 查询</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--Start-->
+						<!--平台设备位置列表-->
+						<div class="ibox-content">
+							<div id="buttons2">
+								<button type="button" class="btn btn-info" id="exportExcel_mothDetiels_detiels"><i class="fa fa-mail-forward"></i> 导出excel</button>
+							</div>
+							<div id="myTable_mothDetiels_detiels"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>
+
+	<script type="text/html" id="mothDetielsL">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="card">
+					<div class="card-body">
+						<div class="ibox-content row">
+								<div class="col-lg-3">
+								<div class="form-group">
+									<label class="form-label">开始时间：</label>
+									<input class="form-control js-datetimepicker1 " type="text" id="stateDataL" name="stateDataL" placeholder="" value="" data-side-by-side="true" data-locale="zh-cn" data-format="YYYY-MM-DD" />
+								</div>
+
+							</div>
+							<div class="col-lg-3">
+								<div class="form-group">
+									<label class="form-label">结束时间：</label>
+									<input class="form-control js-datetimepicker2 " type="text" id="endDataL" name="endDataL" placeholder="" value="" data-side-by-side="true" data-locale="zh-cn" data-format="YYYY-MM-DD" />
+								</div>
+							</div>
+							<div class="col-lg-2">
+								<div class="form-group">
+									<div id="buttons" style="margin-top: 24px;">
+										<button type="button" class="btn btn-purple" id="clean_mothDetielsL"><i class="fa fa-eraser"></i> 清空</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-2">
+								<div class="form-group">
+									<div id="buttons1" style="margin-top: 24px;">
+										<button type="button" class="btn btn-success" id="search_mothDetielsL"><i class="fa fa-search"></i> 查询</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--Start-->
+						<!--平台设备位置列表-->
+						<div class="ibox-content">
+							<div id="buttons2">
+								<button type="button" class="btn btn-info" id="exportExcel_mothDetielsL"><i class="fa fa-mail-forward"></i> 导出excel</button>
+							</div>
+							<div id="myTable_mothDetielsL"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>
+	<script type="text/html" id="mothDetiels_detielsL">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="card">
+					<div class="card-body">
+						<div class="ibox-content row">
+											<div class="col-lg-3">
+								<div class="form-group">
+									<label class="form-label">类型名称：</label>
+									<input class="form-control" name="relateTypeNameL" id="relateTypeNameL" placeholder="类型名称" type="text">
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<div class="form-group">
+									<label class="form-label">开关地址：</label>
+									<input class="form-control" name="deviceAddressL" id="deviceAddressL" placeholder="开关地址" type="text">
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<div class="form-group">
+									<label class="form-label">开关名称：</label>
+									<input class="form-control" name="switchMenuNameL" id="switchMenuNameL" placeholder="开关名称" type="text">
+								</div>
+							</div>
+							<div class="col-lg-2">
+								<div class="form-group">
+									<div id="buttons1" style="margin-top: 24px;">
+										<button type="button" class="btn btn-success" id="search_mothDetiels_detielsL"><i class="fa fa-search"></i> 查询</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--Start-->
+						<!--平台设备位置列表-->
+						<div class="ibox-content">
+							<div id="buttons2">
+								<button type="button" class="btn btn-info" id="exportExcel_mothDetiels_detielsL"><i class="fa fa-mail-forward"></i> 导出excel</button>
+							</div>
+							<div id="myTable_mothDetiels_detielsL"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>
+
+	<script type="text/javascript">
+		var organizationData = "";
+
+		function get_o_TreeData(data) {
+			var rdata = [];
+			for(var i = 0; i < data.length; i++) {
+				var node = data[i];
+				var one = {};
+				one.text = node.organizationName;
+				one.id = node.id;
+				if(node.childrens != undefined && node.childrens != null && node.childrens != '') {
+					one.nodes = get_o_TreeData(node.childrens);
+				}
+				rdata.push(one);
+			}
+			return rdata;
+		}
+
+		function s_init_o_Tree() {
+			if(organizationData == "") {
+				$.sanjiGetJSON(userServiceUrl + "/organization/treeList", {}, function(data) {
+					organizationData = get_o_TreeData(data.data);
+					s_initTreeData();
+					s_initTreeDataL();
+				});
+				return;
+			}
+			s_initTreeData();
+			s_initTreeDataL();
+		}
+
+		function s_initTreeData() {
+			var options = {
+				checkedIcon: "glyphicon glyphicon-check",
+				nodeIcon: "none", //所有节点的默认图标
+				levels: 1,
+				data: organizationData,
+				// onhoverColor: "rgba(255,255,255,0.9)",
+				onhoverColor: "rgba(0,0,0,0.1)",
+				onNodeSelected: function(event, data) {
+
+					$("#s_organization").val(data.text);
+					$("#s_organizationId").val(data.id);
+					$("#s_organizationTree").hide();
+				}
+			};
+			$('#s_organizationTree').treeview(options);
+		}
+
+		function s_initTreeDataL() {
+			var options = {
+				checkedIcon: "glyphicon glyphicon-check",
+				nodeIcon: "none", //所有节点的默认图标
+				levels: 1,
+				data: organizationData,
+				// onhoverColor: "rgba(255,255,255,0.9)",
+				onhoverColor: "rgba(0,0,0,0.1)",
+				onNodeSelected: function(event, data) {
+
+					$("#s_organizationL").val(data.text);
+					$("#s_organizationIdL").val(data.id);
+					$("#s_organizationTreeL").hide();
+				}
+			};
+			$('#s_organizationTreeL').treeview(options);
+		}
+		s_init_o_Tree();
+
+		var html;
+		$("#loadDiv").html(loadHtml);
+		var btn = ['确认', '取消'];
+
+		//BCCA月详情
+		function detail(obj) {
+			var data = $("#myTable").bootstrapTable('getData')[obj];
+			html = template("mothDetiels", {
+				title: "123"
+			});
+			var myLayer = layer.open({
+				skin: 'card',
+				type: 1,
+				title: "能耗月统计",
+				area: ['750px', '475px'], //宽高
+				resize: true, //是否拉升
+				offset: 'auto', //居中
+				content: html,
+				btn: btn,
+				yes: function(index, layero) {
+					layer.close(myLayer);
+				},
+				success: function(layero) {
+					initDatepicker('.js-datetimepicker1', '.js-datepicker1');
+					initDatepicker('.js-datetimepicker2', '.js-datepicker2');
+					
+					$("#myTable_mothDetiels").bootstrapTable({
+						url: deviceServiceUrl + "/device/countBccaDeviceConsume", //请求后台的URL（*）
+						method: 'get', //请求方式（*）
+						contentType: "application/x-www-form-urlencoded",
+						toolbar: '', //工具按钮用哪个容器
+						striped: true, //是否显示行间隔色
+						cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+						pagination: true, //是否显示分页（*）
+						sortable: false, //是否启用排序
+						sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
+						pageNumber: 1, //初始化加载第一页，默认第一页
+						pageSize: 10, //每页的记录行数（*）
+						pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
+						queryParamsType: '',
+						queryParams: queryParams_mothDetiels, //传递参数（*）
+						strictSearch: true,
+						uniqueId: "id", //每一行的唯一标识，一般为主键列
+						cardView: false, //是否显示详细视图
+						detailView: false, //是否显示父子表
+						clickToSelect: true, //点击行是否选中
+						showExport: true, //是否显示导出
+						exportDataType: "basic",
+						responseHandler: function(data) {
+							var result = data.data;
+							rdata = result.list;
+							var res = [];
+							res.push({
+								total: result.total,
+								rows: result.list
+							});
+							return res[0];
+						},
+						onDblClickRow: function(row) {
+							console.info(row);
+						},
+						onLoadSuccess: function() {
+							$.hide_overall_loding();
+							$('.bootstrap-table > .fixed-table-pagination span').removeAttr('style');
+
+							console.log($('.bootstrap-table > .fixed-table-pagination span'))
+						},
+						columns: [{
+								checkbox: true
+							}, {
+								width: 50,
+								title: '序号',
+								formatter: function(value, row, index) {
+									return index + 1;
+								}
+							}, {
+								field: 'organizationName',
+								title: '机构名称',
+								width: 800
+							}, {
+								field: 'dataMonth',
+								title: '统计时间',
+								width: 800
+							}, {
+								field: 'consumesum',
+								title: '消耗总能耗',
+								width: 800,
+								formatter:function (i1, i2, i3) {
+									return parseInt(i1)/1000.0;
+								}
+							},
+							{
+								title: "操作",
+								width: 80,
+								clickToSelect: false,
+								formatter: function(i1, i2, i3) {
+									var str =
+										'<button data-toggle="tooltip" title="详情" type="button" onclick="detail_mothDetiels(' + i3 + ');" class="btn btn-info tableButton"><i class="fa fa-info-circle"></i></button>';
+									return str;
+								},
+
+								cellStyle: function() {
+									return {
+										classes: "",
+										css: {
+											"text-align": "center"
+										}
+									}
+								}
+							}
+						]
+					});
+
+					function queryParams_mothDetiels(params) {
+						$.show_overall_loding();
+						return {
+							token: $.getToken(),
+							type: 2,
+							sorganizationId: data.organizationId,
+							pageSize: params.pageSize,
+							pageNum: params.pageNumber,
+							stateData:$("#stateData").val(),
+							endData:$("#endData").val(),
+						};
+					}
+
+					$("#search_mothDetiels").on("click", function() {
+						$('#myTable_mothDetiels').bootstrapTable('refresh');
+					});
+
+					$("#clean_mothDetiels").click(function() {
+						$("#s_deviceAlias").val("");
+						$("#s_organizationName").val("");
+						$("#search").trigger("click");
+					});
+
+					$('#exportExcel_mothDetiels').click(function() {
+						$('#myTable_mothDetiels').tableExport({
+							type: 'excel',
+							fileName: 'BCCA设备能源月统计表'
+						}, );
+					})
+				}
+			});
+		}
+
+		function detail_mothDetiels(obj) {
+			var data = $("#myTable_mothDetiels").bootstrapTable('getData')[obj];
+			html = template("mothDetiels_detiels", {
+				title: "123"
+			});
+			var myLayer = layer.open({
+				skin: 'card',
+				type: 1,
+				title: "能耗月统计详情",
+				area: ['750px', '475px'], //宽高
+				resize: true, //是否拉升
+				offset: 'auto', //居中
+				content: html,
+				btn: btn,
+				yes: function(index, layero) {
+					layer.close(myLayer);
+				},
+				success: function(layero) {
+					
+					$("#myTable_mothDetiels_detiels").bootstrapTable({
+						url: deviceServiceUrl + "/device/countBccaDeviceConsume", //请求后台的URL（*）
+						method: 'get', //请求方式（*）
+						contentType: "application/x-www-form-urlencoded",
+						toolbar: '', //工具按钮用哪个容器
+						striped: true, //是否显示行间隔色
+						cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+						pagination: true, //是否显示分页（*）
+						sortable: false, //是否启用排序
+						sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
+						pageNumber: 1, //初始化加载第一页，默认第一页
+						pageSize: 10, //每页的记录行数（*）
+						pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
+						queryParamsType: '',
+						queryParams: queryParams_mothDetiels_detiels, //传递参数（*）
+						strictSearch: true,
+						uniqueId: "id", //每一行的唯一标识，一般为主键列
+						cardView: false, //是否显示详细视图
+						detailView: false, //是否显示父子表
+						clickToSelect: true, //点击行是否选中
+						showExport: true, //是否显示导出
+						exportDataType: "basic",
+						responseHandler: function(data) {
+							var result = data.data;
+							rdata = result.list;
+							var res = [];
+							res.push({
+								total: result.total,
+								rows: result.list
+							});
+							return res[0];
+						},
+						onDblClickRow: function(row) {
+							console.info(row);
+						},
+						onLoadSuccess: function() {
+							$.hide_overall_loding();
+							$('.bootstrap-table > .fixed-table-pagination span').removeAttr('style');
+
+							console.log($('.bootstrap-table > .fixed-table-pagination span'))
+						},
+						columns: [{
+								checkbox: true
+							}, {
+								width: 50,
+								title: '序号',
+								formatter: function(value, row, index) {
+									return index + 1;
+								}
+							}, {
+								field: 'organizationName',
+								title: '机构名称',
+								width: 800
+							}, {
+								title: '统计时间',
+								width: 800,
+								formatter: function(value, row, index) {
+									return data.dataMonth;
+								}
+							}, {
+								field: 'relateTypeName',
+								title: '类型名称',
+								width: 800
+							}, {
+								field: 'switchMenuName',
+								title: '按键名称',
+								width: 800
+							}, {
+								field: 'consumesum',
+								title: '消耗总能耗',
+								width: 800,
+								formatter:function (i1, i2, i3) {
+									return parseInt(i1)/1000.0;
+								}
+							}
+							//							{
+							//								title: "操作",
+							//								width: 80,
+							//								clickToSelect: false,
+							//								formatter: function(i1, i2, i3) {
+							//									var str =
+							//										'<button data-toggle="tooltip" title="详情" type="button" onclick="detail_mothDetiels(' + i3 + ');" class="btn btn-info tableButton"><i class="fa fa-info-circle"></i></button>';
+							//									return str;
+							//								},
+							//
+							//								cellStyle: function() {
+							//									return {
+							//										classes: "",
+							//										css: {
+							//											"text-align": "center"
+							//										}
+							//									}
+							//								}
+							//							}
+						]
+					});
+
+					function queryParams_mothDetiels_detiels(params) {
+						$.show_overall_loding();
+						return {
+							token: $.getToken(),
+							type: 3,
+							dataMonth: data.dataMonth,
+							sorganizationId: data.organizationId,
+							pageSize: params.pageSize,
+							relateTypeName:$("#relateTypeName").val(),
+							deviceAddress:$("#deviceAddress").val(),
+							switchMenuName:$("#switchMenuName").val(),
+							pageNum: params.pageNumber
+						};
+					}
+
+					$("#search_mothDetiels_detiels").on("click", function() {
+						$('#myTable_mothDetiels_detiels').bootstrapTable('refresh');
+					});
+
+					$("#clean_mothDetiels_detiels").click(function() {
+						$("#s_deviceAlias").val("");
+						$("#s_organizationName").val("");
+						$("#search").trigger("click");
+					});
+
+					$('#exportExcel_mothDetiels_detiels').click(function() {
+						$('#myTable_mothDetiels_detiels').tableExport({
+							type: 'excel',
+							fileName: 'BCCA设备能源月统计详情表'
+						}, );
+					})
+				}
+			});
+		}
+
+		function detailL(obj) {
+			var data = $("#myTableL").bootstrapTable('getData')[obj];
+			html = template("mothDetielsL", {
+				title: "123"
+			});
+			var myLayer = layer.open({
+				skin: 'card',
+				type: 1,
+				title: "能耗月统计",
+				area: ['750px', '475px'], //宽高
+				resize: true, //是否拉升
+				offset: 'auto', //居中
+				content: html,
+				btn: btn,
+				yes: function(index, layero) {
+					layer.close(myLayer);
+				},
+				success: function(layero) {
+							initDatepicker('.js-datetimepicker1', '.js-datepicker1');
+					initDatepicker('.js-datetimepicker2', '.js-datepicker2');
+					$("#myTable_mothDetielsL").bootstrapTable({
+						url: deviceServiceUrl + "/device/countLORADeviceConsume", //请求后台的URL（*）
+						method: 'get', //请求方式（*）
+						contentType: "application/x-www-form-urlencoded",
+						toolbar: '', //工具按钮用哪个容器
+						striped: true, //是否显示行间隔色
+						cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+						pagination: true, //是否显示分页（*）
+						sortable: false, //是否启用排序
+						sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
+						pageNumber: 1, //初始化加载第一页，默认第一页
+						pageSize: 10, //每页的记录行数（*）
+						pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
+						queryParamsType: '',
+						queryParams: queryParams_mothDetielsL, //传递参数（*）
+						strictSearch: true,
+						uniqueId: "id", //每一行的唯一标识，一般为主键列
+						cardView: false, //是否显示详细视图
+						detailView: false, //是否显示父子表
+						clickToSelect: true, //点击行是否选中
+						showExport: true, //是否显示导出
+						exportDataType: "basic",
+						responseHandler: function(data) {
+							var result = data.data;
+							rdata = result.list;
+							var res = [];
+							res.push({
+								total: result.total,
+								rows: result.list
+							});
+							return res[0];
+						},
+						onDblClickRow: function(row) {
+							console.info(row);
+						},
+						onLoadSuccess: function() {
+							$.hide_overall_loding();
+							$('.bootstrap-table > .fixed-table-pagination span').removeAttr('style');
+
+							console.log($('.bootstrap-table > .fixed-table-pagination span'))
+						},
+						columns: [{
+								checkbox: true
+							}, {
+								width: 50,
+								title: '序号',
+								formatter: function(value, row, index) {
+									return index + 1;
+								}
+							}, {
+								field: 'organizationName',
+								title: '机构名称',
+								width: 800
+							}, {
+								field: 'dataMonth',
+								title: '统计时间',
+								width: 800
+							}, {
+								field: 'consumesum',
+								title: '消耗总能耗',
+								width: 800
+							},
+							{
+								title: "操作",
+								width: 80,
+								clickToSelect: false,
+								formatter: function(i1, i2, i3) {
+									var str =
+										'<button data-toggle="tooltip" title="详情" type="button" onclick="detail_mothDetielsL(' + i3 + ');" class="btn btn-info tableButton"><i class="fa fa-info-circle"></i></button>';
+									return str;
+								},
+
+								cellStyle: function() {
+									return {
+										classes: "",
+										css: {
+											"text-align": "center"
+										}
+									}
+								}
+							}
+						]
+					});
+
+					function queryParams_mothDetielsL(params) {
+						$.show_overall_loding();
+						return {
+							token: $.getToken(),
+							type: 2,
+							sorganizationId: data.organizationId,
+							stateData:$("#stateDataL").val(),
+							endData:$("#endDataL").val(),
+							pageSize: params.pageSize,
+							pageNum: params.pageNumber
+						};
+					}
+
+					$("#search_mothDetielsL").on("click", function() {
+						$('#myTable_mothDetielsL').bootstrapTable('refresh');
+					});
+
+					$("#clean_mothDetielsL").click(function() {
+						$("#s_deviceAlias").val("");
+						$("#s_organizationName").val("");
+						$("#search").trigger("click");
+					});
+
+					$('#exportExcel_mothDetielsL').click(function() {
+						$('#myTable_mothDetielsL').tableExport({
+							type: 'excel',
+							fileName: 'lora设备能源月统计表'
+						}, );
+					})
+				}
+			});
+		}
+
+		function detail_mothDetielsL(obj) {
+			var data = $("#myTable_mothDetielsL").bootstrapTable('getData')[obj];
+			html = template("mothDetiels_detielsL", {
+				title: "123"
+			});
+			var myLayer = layer.open({
+				skin: 'card',
+				type: 1,
+				title: "能耗月统计详情",
+				area: ['750px', '475px'], //宽高
+				resize: true, //是否拉升
+				offset: 'auto', //居中
+				content: html,
+				btn: btn,
+				yes: function(index, layero) {
+					layer.close(myLayer);
+				},
+				success: function(layero) {
+					$("#myTable_mothDetiels_detielsL").bootstrapTable({
+						url: deviceServiceUrl + "/device/countLORADeviceConsume", //请求后台的URL（*）
+						method: 'get', //请求方式（*）
+						contentType: "application/x-www-form-urlencoded",
+						toolbar: '', //工具按钮用哪个容器
+						striped: true, //是否显示行间隔色
+						cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+						pagination: true, //是否显示分页（*）
+						sortable: false, //是否启用排序
+						sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
+						pageNumber: 1, //初始化加载第一页，默认第一页
+						pageSize: 10, //每页的记录行数（*）
+						pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
+						queryParamsType: '',
+						queryParams: queryParams_mothDetiels_detielsL, //传递参数（*）
+						strictSearch: true,
+						uniqueId: "id", //每一行的唯一标识，一般为主键列
+						cardView: false, //是否显示详细视图
+						detailView: false, //是否显示父子表
+						clickToSelect: true, //点击行是否选中
+						showExport: true, //是否显示导出
+						exportDataType: "basic",
+						responseHandler: function(data) {
+							var result = data.data;
+							rdata = result.list;
+							var res = [];
+							res.push({
+								total: result.total,
+								rows: result.list
+							});
+							return res[0];
+						},
+						onDblClickRow: function(row) {
+							console.info(row);
+						},
+						onLoadSuccess: function() {
+							$.hide_overall_loding();
+							$('.bootstrap-table > .fixed-table-pagination span').removeAttr('style');
+							console.log($('.bootstrap-table > .fixed-table-pagination span'))
+						},
+						columns: [{
+							checkbox: true
+						}, {
+							width: 50,
+							title: '序号',
+							formatter: function(value, row, index) {
+								return index + 1;
+							}
+						}, {
+							field: 'organizationName',
+							title: '机构名称',
+							width: 800
+						}, {
+							title: '统计时间',
+							width: 800,
+							formatter: function(value, row, index) {
+								return data.dataMonth;
+							}
+						}, {
+							field: 'relateTypeName',
+							title: '类型名称',
+							width: 800
+						}, {
+							field: 'deviceAddress',
+							title: '开关地址',
+							width: 800
+						}, {
+							field: 'switchMenuName',
+							title: '开关名称',
+							width: 800
+						}, {
+							field: 'consumesum',
+							title: '消耗总能耗',
+							width: 800
+						}]
+					});
+
+					function queryParams_mothDetiels_detielsL(params) {
+						$.show_overall_loding();
+						return {
+							token: $.getToken(),
+							type: 3,
+							dataMonth: data.dataMonth,
+							sorganizationId: data.organizationId,
+							pageSize: params.pageSize,
+							relateTypeName:$("#relateTypeNameL").val(),
+							deviceAddress:$("#deviceAddressL").val(),
+							switchMenuName:$("#switchMenuNameL").val(),
+							pageNum: params.pageNumber
+						};
+					}
+
+					$("#search_mothDetiels_detielsL").on("click", function() {
+						$('#myTable_mothDetiels_detielsL').bootstrapTable('refresh');
+					});
+
+					$("#clean_mothDetiels_detielsL").click(function() {
+						$("#s_deviceAlias").val("");
+						$("#s_organizationName").val("");
+						$("#search").trigger("click");
+					});
+
+					$('#exportExcel_mothDetiels_detielsL').click(function() {
+						$('#myTable_mothDetiels_detielsL').tableExport({
+							type: 'excel',
+							fileName: 'BCCA设备能源月统计详情表'
+						}, );
+					})
+				}
+			});
+		}
+
+		$(function() {
+
+			$(".goOff").on("click", function() {
+				// alert("你点击了关闭按钮");
+				$("#DemoBox").css({
+					display: "none"
+				});
+			});
+
+			$("#myTable").bootstrapTable({
+				url: deviceServiceUrl + "/device/countBccaDeviceConsume", //请求后台的URL（*）
+				method: 'get', //请求方式（*）
+				contentType: "application/x-www-form-urlencoded",
+				toolbar: '', //工具按钮用哪个容器
+				striped: true, //是否显示行间隔色
+				cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+				pagination: true, //是否显示分页（*）
+				sortable: false, //是否启用排序
+				sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
+				pageNumber: 1, //初始化加载第一页，默认第一页
+				pageSize: 10, //每页的记录行数（*）
+				pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
+				queryParamsType: '',
+				queryParams: queryParams, //传递参数（*）
+				strictSearch: true,
+				uniqueId: "id", //每一行的唯一标识，一般为主键列
+				cardView: false, //是否显示详细视图
+				detailView: false, //是否显示父子表
+				clickToSelect: true, //点击行是否选中
+
+				showExport: true, //是否显示导出
+				exportDataType: "basic",
+
+				responseHandler: function(data) {
+					var result = data.data;
+					rdata = result.list;
+					var res = [];
+					res.push({
+						total: result.total,
+						rows: result.list
+					});
+					return res[0];
+				},
+				onDblClickRow: function(row) {
+					console.info(row);
+				},
+				onLoadSuccess: function() {
+					$.hide_overall_loding();
+					$('.bootstrap-table > .fixed-table-pagination span').removeAttr('style');
+
+					console.log($('.bootstrap-table > .fixed-table-pagination span'))
+				},
+				columns: [{
+						checkbox: true
+					}, {
+						width: 50,
+						title: '序号',
+						formatter: function(value, row, index) {
+							return index + 1;
+						}
+					}, {
+						field: 'organizationName',
+						title: '机构名称',
+						width: 800
+					}, {
+						field: 'consumesum',
+						title: '消耗总能耗',
+						width: 800,
+						formatter:function (i1, i2, i3) {
+							return parseInt(i1)/1000.0
+						}
+					},
+					{
+						title: "操作",
+						width: 80,
+						clickToSelect: false,
+						formatter: function(i1, i2, i3) {
+							var str =
+								'<button data-toggle="tooltip" title="详情" type="button" onclick="detail(' + i3 + ');" class="btn btn-info tableButton"><i class="fa fa-info-circle"></i></button>';
+							return str;
+						},
+
+						cellStyle: function() {
+							return {
+								classes: "",
+								css: {
+									"text-align": "center"
+								}
+							}
+						}
+					}
+				]
+			});
+
+			function queryParams(params) {
+				$.show_overall_loding();
+				return {
+					token: $.getToken(),
+					sorganizationId: $("#s_organizationId").val(),
+					pageSize: params.pageSize,
+					pageNum: params.pageNumber
+				};
+			}
+
+			$("#search").on("click", function() {
+				$('#myTable').bootstrapTable('refresh');
+			});
+
+			$("#clean").click(function() {
+				$("#s_organization").val("");
+				$("#s_organizationId").val("");
+				$("#search").trigger("click");
+			});
+
+			$('#exportExcel').click(function() {
+				$('#myTable').tableExport({
+					type: 'excel',
+					fileName: 'BCCA设备能源统计表'
+				}, );
+			})
+
+			/**----------------- */
+
+			$('#myTableL').bootstrapTable({
+				url: deviceServiceUrl + "/device/countLORADeviceConsume", //请求后台的URL（*）
+				method: 'get', //请求方式（*）
+				contentType: "application/x-www-form-urlencoded",
+				toolbar: '', //工具按钮用哪个容器
+				striped: true, //是否显示行间隔色
+				cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+				pagination: true, //是否显示分页（*）
+				sortable: false, //是否启用排序
+				sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
+				pageNumber: 1, //初始化加载第一页，默认第一页
+				pageSize: 10, //每页的记录行数（*）
+				pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
+				queryParamsType: '',
+				queryParams: queryParamsL, //传递参数（*）
+				strictSearch: true,
+				uniqueId: "id", //每一行的唯一标识，一般为主键列
+				cardView: false, //是否显示详细视图
+				detailView: false, //是否显示父子表
+				clickToSelect: true, //点击行是否选中
+
+				showExport: true, //是否显示导出
+				exportDataType: "basic",
+
+				responseHandler: function(data) {
+					var result = data.data;
+					rdata = result.list;
+					var res = [];
+					res.push({
+						total: result.total,
+						rows: result.list
+					});
+					return res[0];
+				},
+				onDblClickRow: function(row) {
+					console.info(row);
+				},
+				onLoadSuccess: function() {
+					$.hide_overall_loding();
+				},
+				columns: [{
+						checkbox: true
+					}, {
+						width: 50,
+						title: '序号',
+						formatter: function(value, row, index) {
+							return index + 1;
+						}
+					}, {
+						field: 'organizationName',
+						title: '机构名称',
+						width: 800
+					}, {
+						field: 'consumesum',
+						title: '消耗总能耗',
+						width: 800
+					},
+					{
+						title: "操作",
+						width: 80,
+						clickToSelect: false,
+						formatter: function(i1, i2, i3) {
+							var str =
+								'<button data-toggle="tooltip" title="详情" type="button" onclick="detailL(' + i3 + ');" class="btn btn-info tableButton"><i class="fa fa-info-circle"></i></button>';
+							return str;
+						},
+
+						cellStyle: function() {
+							return {
+								classes: "",
+								css: {
+									"text-align": "center"
+								}
+							}
+						}
+					}
+				]
+			});
+
+			function queryParamsL(params) {
+				$.show_overall_loding();
+				return {
+					token: $.getToken(),
+					sorganizationId: $("#s_organizationIdL").val(),
+					pageSize: params.pageSize,
+					pageNum: params.pageNumber
+				};
+			}
+
+			$("#searchL").on("click", function() {
+				$('#myTableL').bootstrapTable('refresh');
+			});
+
+			$("#cleanL").click(function() {
+				$("#s_organizationL").val("");
+				$("#s_organizationIdL").val("");
+				$("#searchL").trigger("click");
+			});
+
+			$('#exportExcelL').click(function() {
+				$('#myTableL').tableExport({
+					type: 'excel',
+					fileName: 'LORA设备能源统计表'
+				}, );
+			})
+
+		})
+
+		function initDatepicker(time, date) {
+			// 时间选择
+			jQuery(time).each(function() {
+				var $input = jQuery(this);
+				$input.datetimepicker({
+					format: $input.data('format') ? $input.data('format') : false,
+					useCurrent: $input.data('use-current') ? $input.data('use-current') : false,
+					locale: moment.locale('' + ($input.data('locale') ? $input.data('locale') : '') + ''),
+					showTodayButton: $input.data('show-today-button') ? $input.data('show-today-button') : false,
+					showClear: $input.data('show-clear') ? $input.data('show-clear') : false,
+					showClose: $input.data('show-close') ? $input.data('show-close') : false,
+					sideBySide: $input.data('side-by-side') ? $input.data('side-by-side') : false,
+					inline: $input.data('inline') ? $input.data('inline') : false,
+				});
+			});
+
+			// 日期选择
+			jQuery(date).each(function() {
+				var $input = jQuery(this);
+				$input.datepicker({
+					weekStart: 1,
+					autoclose: true,
+					todayHighlight: true,
+					language: 'zh-CN',
+				});
+			});
+		}
+
+		//隐藏选择框
+		const minCss = "icon expand-icon glyphicon glyphicon-minus";
+		const plusCss = "icon expand-icon glyphicon glyphicon-plus";
+		//隐藏选择框
+		$(document).bind("click",function(e){
+			let con_one=$("#s_organization");//设置目标区域
+			let eventCss = $(e.target).attr("class");
+			if(!con_one.is(e.target) && eventCss != minCss && eventCss != plusCss){
+				$("#s_organizationTree").hide();//需要隐藏的元素
+			}
+		});
+	</script>
+
+	<!--增看改模板-->
+	<script type="text/html" id="modelWin">
+		<section class="openDetail" style="width: 95%; margin-top: 20px;">
+			<div class="panel-body">
+				<form id="deviceForm">
+					<div class="layui-row layui-col-space10 layui-form-item">
+						<input type="hidden" name="id" id="id" />
+						<div class="col-lg-6 MarginPx">
+							<label class="layui-form-label">设备名称:</label>
+							<div class="layui-input-block">
+								<input class="form-control" id="deviceAlias" name="deviceAlias" type="text">
+							</div>
+						</div>
+						<div class="col-lg-6 MarginPx">
+							<label class="layui-form-label">关联设备:</label>
+							<div class="layui-input-block">
+								<button style="width: 180px;" type="button" class="btn btn-success isShows" id="showDevice"><i class="fa fa-suitcase"></i> 关联设备 </button>
+								<input type="text" class="form-control isShow" id="showMac">
+								<input type="hidden" id="deviceId2" name="deviceId">
+								<input type="hidden" id="mac" name="mac">
+								<input type="hidden" id="num" name="num">
+								<!--<input type="hidden" id="deviceSubscriberNumber" name="deviceSubscriberNumber">-->
+								<input type="hidden" id="deviceCode" name="deviceCode">
+								<input type="hidden" id="organizationId" name="organizationId">
+							</div>
+						</div>
+						<div class="col-lg-6 MarginPx">
+							<label class="layui-form-label">设备序列:</label>
+							<div class="layui-input-block">
+								<input class="form-control" id="serialNum" name="serialNum" type="text">
+							</div>
+						</div>
+						<div class="col-lg-6 MarginPx">
+							<label class="layui-form-label">设备MAC:</label>
+							<div class="layui-input-block">
+								<input class="form-control" id="deviceMac" name="deviceMac" type="text">
+							</div>
+						</div>
+						<div class="col-lg-6 MarginPx">
+							<label class="layui-form-label">类型Code:</label>
+							<div class="layui-input-block">
+								<input class="form-control" id="productCode" name="productCode" type="text">
+							</div>
+						</div>
+						<div class="col-lg-6 MarginPx">
+							<label class="layui-form-label">防区:</label>
+							<div class="layui-input-block">
+								<input class="form-control" id="houseCode" name="houseCode" type="text">
+							</div>
+						</div>
+						<!--<div class="col-lg-6 MarginPx isShow">-->
+						<!--<label class="layui-form-label">类型名称:</label>-->
+						<!--<div class="layui-input-block">-->
+						<!--<input class="form-control" id="productCodeName" name="productCodeName" type="text">-->
+						<!--</div>-->
+						<!--</div>-->
+
+						<!--<div class="col-lg-6 MarginPx">-->
+						<!--<label class="layui-form-label">所属订阅:</label>-->
+						<!--<div class="layui-input-block">-->
+						<!--<input class="form-control" id="deviceSubscriberNumber" name="deviceSubscriberNumber" type="text">-->
+						<!--</div>-->
+						<!--</div>-->
+
+						<div class="col-lg-6 MarginPx isShow">
+							<label class="layui-form-label">组织机构:</label>
+							<div class="layui-input-block">
+								<input class="form-control" id="organizationNameShow" type="text">
+							</div>
+						</div>
+						<div class="col-lg-6 MarginPx isShow">
+							<label class="layui-form-label">设备位置:</label>
+							<div class="layui-input-block">
+								<input class="form-control" id="positionNameShow" type="text">
+							</div>
+						</div>
+						<!--<div class="col-lg-6 MarginPx isShows">-->
+						<!--<label class="layui-form-label">组织机构:</label>-->
+						<!--<div class="layui-input-block">-->
+						<!--<input class="form-control organizationInput" id="organization" name="organization" type="text" onclick="$('#organizationTree').show();" readonly="readonly" style="cursor: pointer">-->
+						<!--<input type="hidden" id="organizationId" name="organizationId" value="">-->
+						<!--</div>-->
+						<!--<div id="organizationTree" style="display: none; width: 250px;margin-left: 110px; position: absolute;z-index: 999;background-color: #FFF;"></div>-->
+						<!--</div>-->
+
+						<div class="col-lg-6 MarginPx isShows">
+							<label class="layui-form-label">设备位置:</label>
+							<div class="layui-input-block">
+								<input class="form-control organizationInput" id="positionName" name="positionName" type="text" onclick="$('#positionTree').show();" readonly="readonly" style="cursor: pointer">
+								<input type="hidden" id="positionId" name="positionId" value="">
+							</div>
+							<div id="positionTree" style="display: none; width: 250px;margin-left: 110px; position: absolute;z-index: 999;background-color: #FFF;"></div>
+						</div>
+
+						<div class="col-lg-6 MarginPx isShows">
+							<label class="layui-form-label">设备楼层:</label>
+							<div class="layui-input-block">
+								<select class="form-control selectpickers" style="max-height: 50px;" name="deviceFloor" id="deviceFloorId" data-live-search="true">
+									<option value="">请选择楼层</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="col-lg-6 MarginPx isShows">
+							<label class="layui-form-label">地图定点:</label>
+							<div class="layui-input-block">
+								<button style="width: 180px;" type="button" class="btn btn-success" id="showMap"><i class="fa fa-map"></i> 选择经纬度</button>
+							</div>
+						</div>
+						<div class="col-lg-6 MarginPx isShow">
+							<label class="layui-form-label">设备经度:</label>
+							<div class="layui-input-block">
+								<input class="form-control" id="deviceLongitude" name="deviceLongitude" type="text">
+							</div>
+						</div>
+						<div class="col-lg-6 MarginPx isShow">
+							<label class="layui-form-label">设备纬度:</label>
+							<div class="layui-input-block">
+								<input class="form-control" id="deviceLatitude" name="deviceLatitude" type="text">
+							</div>
+						</div>
+						<div class="col-lg-6 MarginPx isShows">
+							<label class="layui-form-label">设备定位:</label>
+							<div class="layui-input-block">
+								<button style="width: 170px;" type="button" class="btn btn-success" id="devicePosition"><i class="fa fa-anchor"></i> 设备定位</button>
+							</div>
+						</div>
+						<div class="col-lg-6 MarginPx isShow">
+							<label class="layui-form-label">X坐标:</label>
+							<div class="layui-input-block">
+								<input class="form-control" id="deviceXPosition" name="deviceX" type="text">
+							</div>
+						</div>
+						<div class="col-lg-6 MarginPx isShow">
+							<label class="layui-form-label">Y坐标:</label>
+							<div class="layui-input-block">
+								<input class="form-control" id="deviceYPositon" name="deviceY" type="text">
+							</div>
+						</div>
+
+						<div class="col-lg-6 MarginPx deviceState" style="display: none;">
+							<label class="layui-form-label">设备状态:</label>
+							<div class="layui-input-block">
+								<select class="form-control selectpickers" style="max-height: 50px;" name="deviceState" id="deviceState">
+									<option value=1>正常</option>
+									<option value=2>离线</option>
+									<option value=3>报警</option>
+									<option value=4>故障</option>
+									<option value=5>过流</option>
+									<option value=6>过压</option>
+								</select>
+							</div>
+						</div>
+
+					</div>
+				</form>
+			</div>
+		</section>
+	</script>
+
+</html>

@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <link rel="shortcut icon" href="../images/logoIcon.png" type="image/icon"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+  <title>【光大银行】智慧综合管理系统</title>
+  <link href="../css/bootstrap.min.css" rel="stylesheet">
+  <link href="../css/font-awesome.min.css" rel="stylesheet">
+  <link href="../css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="../css/style.min.css" rel="stylesheet">
+  <link href="../plus/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+  <link href="../css/bootstrap-treeview.css" rel="stylesheet">
+  <link href="../css/commonStyle.css" rel="stylesheet">
+
+  <script src="../js/jquery.min.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script src="../plus/bootstrap-table/bootstrap-table.min.js"></script>
+  <script src="../plus/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+  <script src="../plus/layer/layer.js"></script>
+  <script src="../js/template-web.js"></script>
+  <script src="../plus/validate/jquery.validate.min.js"></script>
+  <script src="../plus/validate/messages_zh.min.js"></script>
+  <script src="../js/bootstrap-treeview.js"></script>
+
+  <script src="../js/httpUtils.js"></script>
+  <script src="../js/Md5.js"></script>
+  <style>
+    .bootstrap-table .fixed-table-container .fixed-table-body .fixed-table-loading {
+      display: none;
+    }
+
+    .userFooter {
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+      left: 0;
+      /*z-index: 9999;*/
+    }
+
+    #modelWin {
+      width: 60%;
+    }
+
+    .MarginPx {
+      margin: 15px 0;
+    }
+  </style>
+</head>
+
+<body>
+<div class="lyear-layout-web">
+  <div class="lyear-layout-container">
+
+    <!--加载头部和菜单栏-->
+    <div id="hander">
+      <script>
+        $(function () {
+          $("#hander").load("handMenu.html");
+        })
+        ;
+      </script>
+    </div>
+
+    <!--页面主要内容-->
+    <main class="lyear-layout-content" style="display: none">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h4>空开模式管理</h4>
+              </div>
+              <div class="card-body">
+
+                <div class="ibox float-e-margins">
+                  <div class="ibox-content row">
+                    <div class="col-lg-3">
+                      <div class="form-group">
+                        <label class="form-label" for="s_organizationName">组织机构名称：</label>
+                        <input class="form-control" name="s_organizationName" id="s_organizationName"
+                               placeholder="组织机构名称" type="text">
+                      </div>
+                    </div>
+
+                    <div class="col-lg-1">
+                      <div class="form-group">
+                        <div id="buttons1" style="margin-top: 24px;">
+                          <button type="button" class="btn btn-purple" id="clean"><i class="fa fa-eraser"></i> 清空</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-1">
+                      <div class="form-group">
+                        <div id="buttons2" style="margin-top: 24px;">
+                          <button type="button" class="btn btn-success" id="search"><i class="fa fa-search"></i> 查询</button>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="ibox-content">
+                    <!--页面内容部分-->
+                    <!-- 这里写内容 -->
+                    <div id="buttons">
+                      <button type="button" class="btn btn-primary" id="addSlibings"><i class="fa fa-plus"></i> 新增配置
+                      </button>
+                      <!--<button type="button" class="btn btn-success" id="search" style="float: right;margin-left: 10px">-->
+                        <!--<i class="fa fa-search"></i> 查询-->
+                      <!--</button>-->
+                      <!--<button type="button" class="btn btn-purple" id="clean" style="float: right;"><i-->
+                          <!--class="fa fa-eraser"></i> 清空-->
+                      <!--</button>-->
+                    </div>
+
+                    <div id="myTable">
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!--End 页面主要内容-->
+  </div>
+</div>
+<!--加载底部-->
+<div id="footer" class="userFooter">
+  <script type="text/javascript">
+    $(function () {
+      $("#footer").load("footer.html");
+    });
+  </script>
+</div>
+<div id="loadDiv"></div>
+
+
+</body>
+
+
+<script>
+  var html;
+  var rdata = {};
+  $("#loadDiv").html(loadHtml);
+  $(function () {
+    $.show_overall_loding();
+    $('#myTable').bootstrapTable({
+      url: deviceServiceUrl + "/airQualityTrigger/list", //请求后台的URL（*）
+      //data: data1, //本地数据
+      method: 'get', //请求方式（*）
+      contentType: "application/x-www-form-urlencoded",
+      toolbar: '', //工具按钮用哪个容器
+      striped: true, //是否显示行间隔色
+      cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+      pagination: true, //是否显示分页（*）
+      sortable: false, //是否启用排序
+      //          data-side-pagination="server"
+      sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
+      pageNumber: 1, //初始化加载第一页，默认第一页
+      pageSize: 10, //每页的记录行数（*）
+      pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
+      queryParamsType: '',
+      queryParams: queryParams, //传递参数（*）
+      strictSearch: true,
+      //          height: 500,                            //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+      uniqueId: "id", //每一行的唯一标识，一般为主键列
+      cardView: false, //是否显示详细视图
+      detailView: false, //是否显示父子表
+      clickToSelect: true, //点击行是否选中
+      responseHandler: function (data) {
+        // console.log(data);
+        var res = [];
+        if (data.code == 0) {
+          var result = data.data;
+          res.push({
+            total: result.total,
+            rows: result.list
+          });
+          return res[0];
+        } else {
+          res.push({
+            total: 0,
+            rows: null
+          });
+          return res[0];
+        }
+      },
+      onDblClickRow: function (row) {
+        console.info(row);
+      },
+      onLoadSuccess: function () {
+        //					$('.dropdown-toggle').on("click", function() {
+        //						// $('.dropdown-toggle').parent().toggleClass("open");
+        //					});
+
+        $.hide_overall_loding();
+      },
+      columns: [{
+        width: 50,
+        title: '序号',
+        formatter: function (value, row, index) {
+          return index + 1;
+        }
+      }, {
+        field: 'organizationName',
+        title: '组织机构名称',
+        width: 200
+      }, {
+        field: 'temperatureLow',
+        title: '温度低值',
+        width: 300
+      }, {
+        field: 'temperatureHigh',
+        title: '温度高值',
+        width: 200
+      }, {
+        field: 'humidityLow',
+        title: '湿度低值',
+        width: 300
+      }, {
+        field: 'humidityHigh',
+        title: '湿度高值',
+        width: 200
+      }, {
+        field: 'hchoStandard',
+        title: '甲醛指标',
+        width: 200
+      }, {
+        title: "操作",
+        width: 300,
+        clickToSelect: false,
+        formatter: function (i1, i2, i3) {
+          var str =
+            '<button data-toggle="tooltip" title="编辑" type="button" onclick="tabEidt(' + i3 + ');" class="btn btn-warning tableButton"><i class="fa fa-pencil-square"></i></button>'
+            + '<button data-toggle="tooltip" title="详情" type="button" onclick="detail(' + i3 + ');" class="btn btn-info tableButton"><i class="fa fa-info-circle"></i></button>'
+            + '<button data-toggle="tooltip" title="删除" type="button" onclick="tabRemove(' + i3 + ');" class="btn btn-danger tableButton"><i class="fa fa-trash-o"></i></button>';
+          return str;
+        },
+        cellStyle: function () {
+          return {
+            classes: "",
+            css: {
+              "text-align": "center"
+            }
+          }
+        }
+      }]
+    });
+
+    function queryParams(params) {
+      $.show_overall_loding();
+      return {
+        token: $.getToken(),
+        pageSize: params.pageSize,
+        pageNum: params.pageNumber,
+        isScreenOrganization: 1,
+        organizationName: $("#s_organizationName").val()
+      };
+    }
+
+    $("#addSlibings").on("click", function () {
+      url = "";
+      showModel("添加空开配置", 1);
+    });
+
+    var serchaData = {};
+    $("#search").click(function () {
+      $.show_overall_loding();
+      $('#myTable').bootstrapTable('refresh');
+    });
+
+    $("#clean").click(function () {
+      $("#s_organizationName").val("");
+      $("#search").trigger("click");
+    });
+
+
+  });
+
+  function tabEidt(obj) {
+    url = "";
+    showModel("修改空开配置", 3, obj);
+  }
+
+  function detail(obj) {
+    url = "";
+    showDetailModel("查看详情", obj);
+  };
+
+  function showDetailModel(title, index) {
+    html = template("modelDetailWin", {
+      title: "123"
+    });
+    var myLayer = layer.open({
+      skin: 'card',
+      type: 1,
+      title: title,
+      area: ['800px', '350px'],	//宽高
+      resize: true,				//是否拉升
+      offset: 'auto',				//居中
+      content: html,
+      btn: ['确认'],
+      yes: function (index, layero) {
+        layer.close(myLayer);
+        return;
+      },
+      success: function (layero) {
+        var data = $("#myTable").bootstrapTable('getData')[index];
+        $("#organizationName").val(data.organizationName);
+        $("#organizationId").val(data.organizationId);
+        $("#temperatureLow").val(data.temperatureLow);
+        $("#modeIdTl").val(data.modeTlName);
+        $("#temperatureHigh").val(data.temperatureHigh);
+        $("#modeIdTh").val(data.modeThName);
+        $("#humidityLow").val(data.humidityLow);
+        $("#modeIdHl").val(data.modeHlName);
+        $("#humidityHigh").val(data.humidityHigh);
+        $("#modeIdHh").val(data.modeHhName);
+        $("#hchoStandard").val(data.hchoStandard);
+        $("#modeIdHs").val(data.modeHsName);
+        $("#coTwoStandard").val(data.coTwoStandard);
+        $("#modeIdCts").val(data.modeCtsName);
+        $("#pmTwoFiveStandard").val(data.pmTwoFiveStandard);
+        $("#modeIdPtfs").val(data.modePtfsName);
+        $("#pmTenStandard").val(data.pmTenStandard);
+        $("#modeIdPts").val(data.modePtsName);
+        $("#pmOnePointZeroStandard").val(data.pmOnePointZeroStandard);
+        $("#modeIdPopz").val(data.modePopzName);
+      }
+    });
+  }
+
+  function tabRemove(obj) {
+    var data = $("#myTable").bootstrapTable('getData');
+    var id = data[obj].id;
+    var conlayer = layer.confirm("确定删除？", {
+      btn: ['确定', '取消']
+    }, function () {
+      $.show_overall_loding();
+      $.deleteJSON(deviceServiceUrl + "/airQualityTrigger?id=" + id, {}, function (data) {
+        $.show_overall_loding();
+        if (data.code == 0) {
+          layer.close(conlayer);
+          layer.msg("成功", {
+            icon: 1
+          });
+          $.show_overall_loding();
+          $('#myTable').bootstrapTable('refresh');
+          return true;
+        }
+        layer.msg("操作失败", {
+          icon: 2
+        });
+      })
+    }, function () {
+      layer.close(conlayer);
+    });
+  }
+
+  //取消模式绑定
+  function cancelMode(index) {
+      if (index === 1) {
+          //$("#temperatureLow1").val("");
+          $("#n_selectModeIdTl").html("选择模式");
+          $("#modeTlName1").val("");
+          $("#modeIdTl1").val("");
+      }else if (index === 2) {
+         // $("#temperatureHigh1").val("");
+          $("#n_selectModeIdTh").html("选择模式")
+          $("#modeThName1").val("");
+          $("#modeIdTh1").val("");
+      }else if (index === 3) {
+        //  $("#humidityLow1").val("");
+          $("#n_selectModeIdHl").html("选择模式")
+          $("#modeHlName1").val("");
+          $("#modeIdHl1").val("");
+      }else if (index === 4) {
+        //  $("#humidityHigh1").val("");
+          $("#n_selectModeIdHh").html("选择模式")
+          $("#modeHhName1").val("");
+          $("#modeIdHh1").val("");
+      }else if (index === 5) {
+       //   $("#hchoStandard1").val("");
+          $("#n_selectModeIdHs").html("选择模式");
+          $("#modeHsName1").val("");
+          $("#modeIdHs1").val("");
+      }else if (index === 6) {
+       //   $("#coTwoStandard1").val("");
+          $("#n_selectModeIdCts").html("选择模式");
+          $("#modeCtsName1").val("");
+          $("#modeIdCts1").val("");
+      }else if (index === 7) {
+        //  $("#coOneStandard1").val("");
+          $("#n_selectModeIdCos").html("选择模式");
+          $("#modeCosName1").val("");
+          $("#modeIdCos1").val("");
+      }else if (index === 8) {
+        //  $("#pmTwoFiveStandard1").val("");
+          $("#n_selectModeIdPtfs").html("选择模式")
+          $("#modePtfsName1").val("");
+          $("#modeIdPtfs1").val("");
+      }else if (index === 9) {
+         // $("#pmTenStandard1").val("");
+          $("#n_selectModeIdPts").html("选择模式")
+          $("#modePtsName1").val("");
+          $("#modeIdPts1").val("");
+      }else if (index === 10) {
+        //  $("#pmOnePointZeroStandard1").val("");
+          $("#n_selectModeIdPopz").html("选择模式")
+          $("#modePopzName1").val("");
+          $("#modeIdPopz1").val("");
+      }
+  }
+
+  var isAdd = true;
+
+  function showModel(title, flag, index) {
+    html = template("modelWin", {
+      title: "123"
+    });
+    if (flag == 1) {
+      isAdd = true;
+    } else {
+      isAdd = false;
+    }
+    var myLayer = layer.open({
+      skin: 'card', //自定义样式winning-class
+      type: 1,
+      title: [title, ""],
+      area: ['850px', '420px'], //宽高
+      resize: true, //是否拉升
+      offset: 'auto', //居中
+      content: html,
+      btn: ['提交', '取消'],
+      yes: function (index, layero) {
+        $("#airQualityTriggerForm").submit();
+      },
+      success: function (layero) {
+
+        $(".layui-layer-title").addClass("card-header");
+        initTree();
+        var data = null;
+        if (flag == 2) {
+          data = $("#myTable").bootstrapTable('getSelections')[0];
+        } else if (flag == 3) {
+          data = $("#myTable").bootstrapTable('getData')[index];
+          $("#organizationName1").attr("disabled", "disabled");
+          $("#organizationName1").css("cursor", "not-allowed");
+
+
+          console.log(data)
+
+        }
+
+        if (data != null) {
+
+          $("#airQualityId").val(data.id);
+          $("#organizationName1").val(data.organizationName);
+          $("#organizationId1").val(data.organizationId);
+          $("#temperatureLow1").val(data.temperatureLow);
+          $("#n_selectModeIdTl").html(data.modeTlName == '' ? "选择模式" : data.modeTlName );
+          $("#modeTlName1").val(data.modeTlName);
+          $("#modeIdTl1").val(data.modeIdTl);
+          $("#temperatureHigh1").val(data.temperatureHigh);
+          $("#n_selectModeIdTh").html(data.modeThName  == '' ? "选择模式" : data.modeThName )
+          $("#modeThName1").val(data.modeThName);
+          $("#modeIdTh1").val(data.modeIdTh);
+          $("#humidityLow1").val(data.humidityLow);
+          $("#n_selectModeIdHl").html(data.modeHlName  == '' ? "选择模式" : data.modeHlName )
+          $("#modeHlName1").val(data.modeHlName);
+          $("#modeIdHl1").val(data.modeIdHl);
+          $("#humidityHigh1").val(data.humidityHigh);
+          $("#n_selectModeIdHh").html(data.modeHhName  == '' ? "选择模式" : data.modeHhName )
+          $("#modeHhName1").val(data.modeHhName);
+          $("#modeIdHh1").val(data.modeIdHh);
+          $("#hchoStandard1").val(data.hchoStandard);
+          $("#n_selectModeIdHs").html(data.modeHsName  == '' ? "选择模式" : data.modeHsName )
+          $("#modeHsName1").val(data.modeHsName);
+          $("#modeIdHs1").val(data.modeIdHs);
+          $("#coTwoStandard1").val(data.coTwoStandard);
+          $("#n_selectModeIdCts").html(data.modeCtsName  == '' ? "选择模式" : data.modeCtsName )
+          $("#modeCtsName1").val(data.modeCtsName);
+          $("#modeIdCts1").val(data.modeIdCts);
+          $("#pmTwoFiveStandard1").val(data.pmTwoFiveStandard);
+          $("#n_selectModeIdPtfs").html(data.modePtfsName  == '' ? "选择模式" : data.modePtfsName )
+          $("#modePtfsName1").val(data.modePtfsName);
+          $("#modeIdPtfs1").val(data.modeIdPtfs);
+          $("#pmTenStandard1").val(data.pmTenStandard);
+          $("#n_selectModeIdPts").html(data.modePtsName  == '' ? "选择模式" : data.modePtsName )
+          $("#modePtsName1").val(data.modePtsName);
+          $("#modeIdPts1").val(data.modeIdPts);
+
+          $("#pmOnePointZeroStandard1").val(data.pmOnePointZeroStandard);
+          $("#n_selectModeIdPopz").html(data.modePopzName  == '' ? "选择模式" : data.modePopzName )
+          $("#modePopzName1").val(data.modePopzName);
+          $("#modeIdPopz1").val(data.modeIdPopz);
+        }
+
+        html = template("selectDeviceWindow", {title: "事件编辑 "});
+        $("#n_selectModeIdTl").click(function () {
+
+          if ($("#organizationId1").val() == "" || $("#organizationId1").val() == null) {
+            layer.msg("请先选择组织机构", {icon: 2});
+          } else {
+            var myLayer = layer.open({
+              skin: 'card',
+              type: 1,
+              title: "选择模式",
+              area: ['700px', '500px'],	        //宽高
+              resize: false,				//是否拉升
+              offset: 'auto',				//居中
+              content: html,
+              btn: ['确定', '取消'],
+              yes: function (index, layero) {
+                let rows = $("#select_table").bootstrapTable("getSelections");
+                $("#n_selectModeIdTl").html(rows[0].modeName)
+                if (rows.length == 1) {
+                  $("#modeTlName1").val(rows[0].modeName);
+                  $("#modeIdTl1").val(rows[0].id);
+                  layer.close(myLayer);
+                } else {
+                  layer.msg("请选择单条数据", {icon: 2});
+                }
+              },
+              success: function (layero) {
+                selectMode()
+              }
+            });
+          }
+        });
+        $("#n_selectModeIdTh").click(function () {
+          if ($("#organizationId1").val() == "" || $("#organizationId1").val() == null) {
+            layer.msg("请先选择组织机构", {icon: 2});
+          } else {
+
+            let myLayer = layer.open({
+              skin: 'card',
+              type: 1,
+              title: "选择模式",
+              area: ['700px', '500px'],	        //宽高
+              resize: false,				//是否拉升
+              offset: 'auto',				//居中
+              content: html,
+              btn: ['确定', '取消'],
+              yes: function (index, layero) {
+                let rows = $("#select_table").bootstrapTable("getSelections");
+                $("#n_selectModeIdTh").html(rows[0].modeName)
+                if (rows.length == 1) {
+                  $("#modeThName1").val(rows[0].modeName);
+                  $("#modeIdTh1").val(rows[0].id);
+                  layer.close(myLayer);
+                } else {
+                  layer.msg("请选择单条数据", {icon: 2});
+                }
+              },
+              success: function (layero) {
+                selectMode()
+              }
+            });
+          }
+        });
+        $("#n_selectModeIdHl").click(function () {
+          if ($("#organizationId1").val() == "" || $("#organizationId1").val() == null) {
+            layer.msg("请先选择组织机构", {icon: 2});
+          } else {
+            let myLayer = layer.open({
+              skin: 'card',
+              type: 1,
+              title: "选择模式",
+              area: ['700px', '500px'],	        //宽高
+              resize: false,				//是否拉升
+              offset: 'auto',				//居中
+              content: html,
+              btn: ['确定', '取消'],
+              yes: function (index, layero) {
+                let rows = $("#select_table").bootstrapTable("getSelections");
+                $("#n_selectModeIdHl").html(rows[0].modeName)
+                if (rows.length == 1) {
+                  $("#modeHlName1").val(rows[0].modeName);
+                  $("#modeIdHl1").val(rows[0].id);
+                  layer.close(myLayer);
+                } else {
+                  layer.msg("请选择单条数据", {icon: 2});
+                }
+              },
+              success: function (layero) {
+                selectMode()
+              }
+            });
+          }
+        });
+        $("#n_selectModeIdHh").click(function () {
+          if ($("#organizationId1").val() == "" || $("#organizationId1").val() == null) {
+            layer.msg("请先选择组织机构", {icon: 2});
+          } else {
+            let myLayer = layer.open({
+              skin: 'card',
+              type: 1,
+              title: "选择模式",
+              area: ['700px', '500px'],	        //宽高
+              resize: false,				//是否拉升
+              offset: 'auto',				//居中
+              content: html,
+              btn: ['确定', '取消'],
+              yes: function (index, layero) {
+                let rows = $("#select_table").bootstrapTable("getSelections");
+                $("#n_selectModeIdHh").html(rows[0].modeName)
+                if (rows.length == 1) {
+                  $("#modeHhName1").val(rows[0].modeName);
+                  $("#modeIdHh1").val(rows[0].id);
+                  layer.close(myLayer);
+                } else {
+                  layer.msg("请选择单条数据", {icon: 2});
+                }
+              },
+              success: function (layero) {
+                selectMode()
+              }
+            });
+          }
+        });
+        $("#n_selectModeIdHs").click(function () {
+          if ($("#organizationId1").val() == "" || $("#organizationId1").val() == null) {
+            layer.msg("请先选择组织机构", {icon: 2});
+          } else {
+            let myLayer = layer.open({
+              skin: 'card',
+              type: 1,
+              title: "选择模式",
+              area: ['700px', '500px'],	        //宽高
+              resize: false,				//是否拉升
+              offset: 'auto',				//居中
+              content: html,
+              btn: ['确定', '取消'],
+              yes: function (index, layero) {
+                let rows = $("#select_table").bootstrapTable("getSelections");
+                $("#n_selectModeIdHs").html(rows[0].modeName)
+                if (rows.length == 1) {
+                  $("#modeHsName1").val(rows[0].modeName);
+                  $("#modeIdHs1").val(rows[0].id);
+                  layer.close(myLayer);
+                } else {
+                  layer.msg("请选择单条数据", {icon: 2});
+                }
+              },
+              success: function (layero) {
+                selectMode()
+              }
+            });
+          }
+        });
+        $("#n_selectModeIdCts").click(function () {
+          if ($("#organizationId1").val() == "" || $("#organizationId1").val() == null) {
+            layer.msg("请先选择组织机构", {icon: 2});
+          } else {
+            let myLayer = layer.open({
+              skin: 'card',
+              type: 1,
+              title: "选择模式",
+              area: ['700px', '500px'],	        //宽高
+              resize: false,				//是否拉升
+              offset: 'auto',				//居中
+              content: html,
+              btn: ['确定', '取消'],
+              yes: function (index, layero) {
+                let rows = $("#select_table").bootstrapTable("getSelections");
+                $("#n_selectModeIdCts").html(rows[0].modeName)
+                if (rows.length == 1) {
+                  $("#modeCtsName1").val(rows[0].modeName);
+                  $("#modeIdCts1").val(rows[0].id);
+                  layer.close(myLayer);
+                } else {
+                  layer.msg("请选择单条数据", {icon: 2});
+                }
+              },
+              success: function (layero) {
+                selectMode()
+              }
+            });
+          }
+        });
+        $("#n_selectModeIdCos").click(function () {
+          if ($("#organizationId1").val() == "" || $("#organizationId1").val() == null) {
+            layer.msg("请先选择组织机构", {icon: 2});
+          } else {
+            let myLayer = layer.open({
+              skin: 'card',
+              type: 1,
+              title: "选择模式",
+              area: ['700px', '500px'],	        //宽高
+              resize: false,				//是否拉升
+              offset: 'auto',				//居中
+              content: html,
+              btn: ['确定', '取消'],
+              yes: function (index, layero) {
+                let rows = $("#select_table").bootstrapTable("getSelections");
+                $("#n_selectModeIdCos").html(rows[0].modeName)
+                if (rows.length == 1) {
+                  $("#modeCosName1").val(rows[0].modeName);
+                  $("#modeIdCos1").val(rows[0].id);
+                  layer.close(myLayer);
+                } else {
+                  layer.msg("请选择单条数据", {icon: 2});
+                }
+              },
+              success: function (layero) {
+                selectMode()
+              }
+            });
+          }
+        });
+        $("#n_selectModeIdPtfs").click(function () {
+          if ($("#organizationId1").val() == "" || $("#organizationId1").val() == null) {
+            layer.msg("请先选择组织机构", {icon: 2});
+          } else {
+            let myLayer = layer.open({
+              skin: 'card',
+              type: 1,
+              title: "选择模式",
+              area: ['700px', '500px'],	        //宽高
+              resize: false,				//是否拉升
+              offset: 'auto',				//居中
+              content: html,
+              btn: ['确定', '取消'],
+              yes: function (index, layero) {
+                let rows = $("#select_table").bootstrapTable("getSelections");
+                $("#n_selectModeIdPtfs").html(rows[0].modeName)
+                if (rows.length == 1) {
+                  $("#modePtfsName1").val(rows[0].modeName);
+                  $("#modeIdPtfs1").val(rows[0].id);
+                  layer.close(myLayer);
+                } else {
+                  layer.msg("请选择单条数据", {icon: 2});
+                }
+              },
+              success: function (layero) {
+                selectMode()
+              }
+            });
+          }
+        });
+        $("#n_selectModeIdPts").click(function () {
+          if ($("#organizationId1").val() == "" || $("#organizationId1").val() == null) {
+            layer.msg("请先选择组织机构", {icon: 2});
+          } else {
+            let myLayer = layer.open({
+              skin: 'card',
+              type: 1,
+              title: "选择模式",
+              area: ['700px', '500px'],	        //宽高
+              resize: false,				//是否拉升
+              offset: 'auto',				//居中
+              content: html,
+              btn: ['确定', '取消'],
+              yes: function (index, layero) {
+                let rows = $("#select_table").bootstrapTable("getSelections");
+                $("#n_selectModeIdPts").html(rows[0].modeName)
+                if (rows.length == 1) {
+                  $("#modePtsName1").val(rows[0].modeName);
+                  $("#modeIdPts1").val(rows[0].id);
+                  layer.close(myLayer);
+                } else {
+                  layer.msg("请选择单条数据", {icon: 2});
+                }
+              },
+              success: function (layero) {
+                selectMode()
+              }
+            });
+          }
+        });
+        $("#n_selectModeIdPopz").click(function () {
+          if ($("#organizationId1").val() == "" || $("#organizationId1").val() == null) {
+            layer.msg("请先选择组织机构", {icon: 2});
+          } else {
+            let myLayer = layer.open({
+              skin: 'card',
+              type: 1,
+              title: "选择模式",
+              area: ['700px', '500px'],	        //宽高
+              resize: false,				//是否拉升
+              offset: 'auto',				//居中
+              content: html,
+              btn: ['确定', '取消'],
+              yes: function (index, layero) {
+                let rows = $("#select_table").bootstrapTable("getSelections");
+                $("#n_selectModeIdPopz").html(rows[0].modeName)
+                if (rows.length == 1) {
+                  $("#modePopzName1").val(rows[0].modeName);
+                  $("#modeIdPopz1").val(rows[0].id);
+                  layer.close(myLayer);
+                } else {
+                  layer.msg("请选择单条数据", {icon: 2});
+                }
+              },
+              success: function (layero) {
+                selectMode()
+              }
+            });
+          }
+        });
+        $("#n_selectModeIdCft").click(function () {
+          if ($("#organizationId1").val() == "" || $("#organizationId1").val() == null) {
+            layer.msg("请先选择组织机构", {icon: 2});
+          } else {
+            let myLayer = layer.open({
+              skin: 'card',
+              type: 1,
+              title: "选择模式",
+              area: ['700px', '500px'],	        //宽高
+              resize: false,				//是否拉升
+              offset: 'auto',				//居中
+              content: html,
+              btn: ['确定', '取消'],
+              yes: function (index, layero) {
+                let rows = $("#select_table").bootstrapTable("getSelections");
+                $("#n_selectModeIdCft").html(rows[0].modeName)
+                if (rows.length == 1) {
+                  $("#modeCftName1").val(rows[0].modeName);
+                  $("#modeIdCft1").val(rows[0].id);
+                  layer.close(myLayer);
+                } else {
+                  layer.msg("请选择单条数据", {icon: 2});
+                }
+              },
+              success: function (layero) {
+                selectMode()
+              }
+            });
+          }
+        });
+      }
+    });
+    var validate = $("#airQualityTriggerForm").validate({
+      rules: {
+        organizationName: {
+          required: true
+        },
+        temperatureLow: {
+          number: true
+        },
+        temperatureHigh: {
+          number: true
+        },
+        humidityLow: {
+          number: true
+        },
+        humidityHigh: {
+          number: true
+        },
+        hchoStandard: {
+          number: true
+        },
+        coTwoStandard: {
+          number: true
+        },
+        coOneStandard: {
+          number: true
+        },
+        pmTwoFiveStandard: {
+          number: true
+        },
+        pmTenStandard: {
+          number: true
+        },
+        chFourStandard: {
+          number: true
+        }
+      },
+      messages: {
+        organizationName: {
+          required: "组织机构不能为空！"
+        },
+        temperatureLow: {
+          number: "只能填写数字！"
+        },
+        temperatureHigh: {
+          number: "只能填写数字！"
+        },
+        humidityLow: {
+          number: "只能填写数字！"
+        },
+        humidityHigh: {
+          number: "只能填写数字！"
+        },
+        hchoStandard: {
+          number: "只能填写数字！"
+        },
+        coTwoStandard: {
+          number: "只能填写数字！"
+        },
+        coOneStandard: {
+          number: "只能填写数字！"
+        },
+        pmTwoFiveStandard: {
+          number: "只能填写数字！"
+        },
+        pmTenStandard: {
+          number: "只能填写数字！"
+        },
+        chFourStandard: {
+          number: "只能填写数字！"
+        }
+      },
+      submitHandler: function (form) {
+        var data = $("#airQualityTriggerForm").serializeJson();
+
+        console.log(data)
+
+        $.show_overall_loding();
+        if (isAdd) {
+          $.postJSON(deviceServiceUrl + "/airQualityTrigger/save", data, function (data) {
+            $.hide_overall_loding();
+            if (data.code == 0) {
+              layer.close(myLayer);
+              layer.msg("成功", {
+                icon: 1
+              });
+              $.show_overall_loding();
+              $('#myTable').bootstrapTable('refresh');
+              return true;
+            }
+            if (data.code === 400002) {
+              layer.msg(data.message, {
+                icon: 2
+              });
+            } else {
+              layer.msg("操作失败", {
+                icon: 2
+              });
+            }
+
+          });
+        } else {
+          $.postJSON(deviceServiceUrl + "/airQualityTrigger/update", data, function (data) {
+            $.hide_overall_loding();
+            if (data.code == 0) {
+              layer.close(myLayer);
+              layer.msg("成功", {
+                icon: 1
+              });
+              $.show_overall_loding();
+              $('#myTable').bootstrapTable('refresh');
+              return true;
+            }
+            layer.msg("操作失败", {
+              icon: 2
+            });
+          });
+        }
+      }
+    });
+  }
+
+
+  function selectMode() {
+    //表格渲染开始
+    $('#select_table').bootstrapTable({
+      url: deviceServiceUrl + "/mode/list", //请求后台的URL（*）
+      //data: data1,                            //本地数据
+      method: 'get', //请求方式（*）
+      contentType: "application/x-www-form-urlencoded",
+      toolbar: '', //工具按钮用哪个容器
+      striped: true, //是否显示行间隔色
+      cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+      pagination: true, //是否显示分页（*）
+      sortable: false, //是否启用排序
+      sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
+      pageNumber: 1, //初始化加载第一页，默认第一页
+      pageSize: 10, //每页的记录行数（*）
+      pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
+      queryParamsType: '',
+      queryParams: select_queryParams, //传递参数（*）
+      strictSearch: true,
+      // height: 500,                            //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+      uniqueId: "id", //每一行的唯一标识，一般为主键列
+      cardView: false, //是否显示详细视图
+      detailView: false, //是否显示父子表
+      clickToSelect: true, //点击行是否选中
+      responseHandler: function (data) {
+        let res = [];
+        if (data.code == 0) {
+          let result = data.data;
+          rdata = result.list;
+          res.push({
+            total: result.total,
+            rows: result.list
+          });
+          $.hide_overall_loding();
+          return res[0];
+        } else {
+          res.push({
+            total: 0,
+            rows: []
+          });
+          layer.msg("获取数据失败！", {icon: 2});
+          $.hide_overall_loding();
+          return res[0];
+        }
+      },
+      onLoadSuccess: function () {
+        $.hide_overall_loding();
+      },
+      onDblClickRow: function (row) {
+        console.info(row);
+      },
+      columns: [{
+        checkbox: true
+      }, {
+        width: 50,
+        title: '序号',
+        formatter: function (value, row, index) {
+          let pageSize = $('#select_table').bootstrapTable('getOptions').pageSize;//通过表的#id 可以得到每页多少条
+          let pageNumber = $('#select_table').bootstrapTable('getOptions').pageNumber;//通过表的#id 可以得到当前第几页
+          return pageSize * (pageNumber - 1) + index + 1;
+        }
+      }, {
+        field: 'modeName',
+        title: '模式名称',
+        width: 100
+      }, {
+        field: 'modeReadme',
+        title: '模式说明',
+        width: 100
+      }]
+    });
+    //表格渲染结束
+    //查询参数
+    function select_queryParams(params) {
+      return {
+        token: $.getToken(),
+        pageSize: params.pageSize,
+        pageNum: params.pageNumber,
+        organizationId: $("#organizationId1").val()
+      };
+    }
+  }
+
+  var organizationData = "";
+
+  function getTreeData(data) {
+    var rdata = [];
+    for (var i = 0; i < data.length; i++) {
+      var node = data[i];
+      var one = {};
+      one.text = node.organizationName;
+      one.id = node.id;
+      if (node.childrens != undefined && node.childrens != null && node.childrens != '') {
+        one.nodes = getTreeData(node.childrens);
+      }
+      rdata.push(one);
+    }
+    return rdata;
+  }
+
+  function initTree() {
+    if (organizationData == "") {
+      $.sanjiGetJSON(userServiceUrl + "/organization/treeList", {isScreenOrganization: 1}, function (data) {
+        organizationData = getTreeData(data.data);
+        initTreeData();
+      });
+      return;
+    }
+    initTreeData();
+  }
+
+  function initTreeData() {
+    var options = {
+      checkedIcon: "glyphicon glyphicon-check",
+      nodeIcon: "none", //所有节点的默认图标
+      levels: 1,
+      data: organizationData,
+      // onhoverColor: "rgba(255,255,255,0.9)",
+      onhoverColor: "rgba(0,0,0,0.1)",
+      onNodeSelected: function (event, data) {
+        $("#organizationName1").val(data.text);
+        $("#organizationId1").val(data.id);
+        $("#myTree").hide();
+//					initRoleSelect(data.id, null);
+      }
+    };
+
+    $('#myTree').treeview(options);
+  }
+
+  function initRoleSelect(id, ckid) {
+    $("#userToRole").html("");
+    hmtl = '<option value="">请选择角色</option>'
+    $.sanjiGetJSON(userServiceUrl + "/role/list", {
+      "organizationId": id,
+      "pageSize": 999
+    }, function (data) {
+      var nodes = data.data.list;
+      for (var i = 0; i < nodes.length; i++) {
+        var node = nodes[i];
+        if (ckid != null && node.id == ckid) {
+          hmtl += '<option  selected = "selected" value="' + node.id + '">' + node.roleName + '</option>'
+          continue;
+        }
+        hmtl += '<option value="' + node.id + '">' + node.roleName + '</option>'
+      }
+      $("#userToRole").html(hmtl);
+    });
+  }
+
+  //隐藏选择框
+  const minCss = "icon expand-icon glyphicon glyphicon-minus";
+  const plusCss = "icon expand-icon glyphicon glyphicon-plus";
+  //隐藏选择框
+  $(document).bind("click",function(e){
+    let con_one=$("#organizationName1");//设置目标区域
+    let eventCss = $(e.target).attr("class");
+    if(!con_one.is(e.target) && eventCss != minCss && eventCss != plusCss){
+      $("#myTree").hide();//需要隐藏的元素
+    }
+  });
+</script>
+
+<!--选择设备弹框开始-->
+<script type="text/html" id="selectDeviceWindow">
+  <section class="openDetail" style="width: 95%; margin-top: 20px;">
+    <div class="panel-body">
+      <table id="select_table"></table>
+    </div>
+  </section>
+</script>
+<!--选择设备弹框结束-->
+
+<!--新增修改模板-->
+<script type="text/html" id="modelWin">
+  <section class="openDetail" style="width: 95%;">
+    <div class="panel-body">
+      <form id="airQualityTriggerForm">
+        <input type="hidden" name="id" id="airQualityId"/>
+        <div class="layui-row" style="width: 100%">
+          <div class="col-lg-6 MarginPx" id="organizationDiv" style="margin-left: 25%">
+            <label class="layui-form-label" >组织机构:</label>
+            <div class="layui-input-block" >
+              <input class="form-control organizationInput" id="organizationName1" name="organizationName" type="text"
+                     onclick="$('#myTree').show();" readonly="readonly" style="cursor: pointer">
+              <input type="hidden" id="organizationId1" name="organizationId" value="">
+            </div>
+            <div id="myTree"
+                 style="display: none; width: 250px;margin-left: 110px; position: absolute;z-index: 999;background-color: #FFF;"></div>
+          </div>
+        </div>
+        <div class="layui-row layui-col-space10 layui-form-item">
+          <div class="col-lg-12 MarginPx">
+            <div class="col-lg-6 MarginPx">
+              <label class="layui-form-label" style="width: 44%;">温度低指标:</label>
+              <div class="layui-input-block" style="margin-left: 45%;">
+                <input class="form-control" id="temperatureLow1" name="temperatureLow" type="text">
+              </div>
+            </div>
+            <div class="col-lg-4 MarginPx" id="selectModeIdTlBtn">
+              <label class="layui-form-label" style="width: 44%;">选择低温模式:</label>
+              <div class="layui-input-block" style="margin-left: 45%;">
+                <button style="width: 100%;" type="button" class="btn btn-success" id="n_selectModeIdTl">选择模式</button>
+              </div>
+            </div>
+
+            <div class="col-lg-6 MarginPx" id="selectModeIdTlIn" style="display: none;">
+              <label class="layui-form-label" style="width: 44%;">低温模式名:</label>
+              <div class="layui-input-block" style="margin-left: 45%;">
+                <input class="form-control" id="modeTlName1" name="modeTlName" readonly="readonly" type="text">
+                <input type="hidden" id="modeIdTl1" name="modeIdTl" value="">
+              </div>
+            </div>
+              <div class="col-lg-2 MarginPx">
+                  <button style="width: 100%;" type="button" class="btn btn-cyan" onclick="cancelMode(1)">取消模式</button>
+              </div>
+          </div>
+          <div class="col-lg-12 MarginPx">
+            <div class="col-lg-6 MarginPx">
+              <label class="layui-form-label" style="width: 44%;">温度高指标:</label>
+              <div class="layui-input-block" style="margin-left: 45%;">
+                <input class="form-control" id="temperatureHigh1" name="temperatureHigh" type="text">
+              </div>
+            </div>
+            <div class="col-lg-4 MarginPx" id="selectModeIdThBtn">
+              <label class="layui-form-label" style="width: 44%;">选择高温模式:</label>
+              <div class="layui-input-block" style="margin-left: 45%;">
+                <button style="width: 100%;" type="button" class="btn btn-success" id="n_selectModeIdTh"> 选择模式</button>
+              </div>
+            </div>
+            <div class="col-lg-6 MarginPx" id="selectModeIdThIn" style="display: none;">
+              <label class="layui-form-label" style="width: 44%;">高温模式名:</label>
+              <div class="layui-input-block" style="margin-left: 45%;">
+                <input class="form-control" id="modeThName1" name="modeThName" readonly="readonly" type="text">
+                <input type="hidden" id="modeIdTh1" name="modeIdTh">
+              </div>
+            </div>
+              <div class="col-lg-2 MarginPx">
+                  <button style="width: 100%;" type="button" class="btn btn-cyan" onclick="cancelMode(2)">取消模式</button>
+              </div>
+          </div>
+          <div class="col-lg-12 MarginPx">
+            <div class="col-lg-6 MarginPx">
+              <label class="layui-form-label" style="width: 44%;">湿度低指标:</label>
+              <div class="layui-input-block" style="margin-left: 45%;">
+                <input class="form-control" id="humidityLow1" name="humidityLow" type="text" value="20" placeholder="湿度百分比">
+              </div>
+            </div>
+            <div class="col-lg-4 MarginPx" id="selectModeIdHlBtn">
+              <label class="layui-form-label" style="width: 44%;">选择低湿模式:</label>
+              <div class="layui-input-block" style="margin-left: 45%;">
+                <button style="width: 100%;" type="button" class="btn btn-success" id="n_selectModeIdHl"> 选择模式</button>
+              </div>
+            </div>
+              <div class="col-lg-2 MarginPx">
+                  <button style="width: 100%;" type="button" class="btn btn-cyan" onclick="cancelMode(3)">取消模式</button>
+              </div>
+            <div class="col-lg-6 MarginPx" id="selectModeIdHlIn" style="display: none;">
+              <label class="layui-form-label" style="width: 44%;">低湿模式名:</label>
+              <div class="layui-input-block" style="margin-left: 45%;">
+                <input class="form-control" id="modeHlName1" name="modeHlName" readonly="readonly" type="text">
+                <input type="hidden" id="modeIdHl1" name="modeIdHl">
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12 MarginPx">
+            <div class="col-lg-6 MarginPx">
+              <label class="layui-form-label" style="width: 44%;">湿度高指标:</label>
+              <div class="layui-input-block" style="margin-left: 45%;">
+                <input class="form-control" id="humidityHigh1" name="humidityHigh" type="text" value="100" placeholder="湿度百分比">
+              </div>
+            </div>
+            <div class="col-lg-4 MarginPx" id="selectModeIdHhBtn">
+              <label class="layui-form-label" style="width: 44%;">选择高湿模式:</label>
+              <div class="layui-input-block" style="margin-left: 45%;">
+                <button style="width: 100%;" type="button" class="btn btn-success" id="n_selectModeIdHh"> 选择模式</button>
+              </div>
+            </div>
+              <div class="col-lg-2 MarginPx">
+                  <button style="width: 100%;" type="button" class="btn btn-cyan" onclick="cancelMode(4)">取消模式</button>
+              </div>
+            <div class="col-lg-6 MarginPx" id="selectModeIdHhIn" style="display: none;">
+              <label class="layui-form-label" style="width: 44%;">高湿模式名:</label>
+              <div class="layui-input-block" style="margin-left: 45%;">
+                <input class="form-control" id="modeHhName1" name="modeHhName" readonly="readonly" type="text">
+                <input type="hidden" id="modeIdHh1" name="modeIdHh">
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12 MarginPx">
+            <div class="col-lg-6 MarginPx">
+              <label class="layui-form-label" style="width: 44%;">甲醛指标:</label>
+              <div class="layui-input-block" style="margin-left: 45%;">
+                <input class="form-control" id="hchoStandard1" name="hchoStandard" type="text" value="200" placeholder="单位ppb">
+              </div>
+            </div>
+            <div class="col-lg-4 MarginPx" id="selectModeIdHsBtn">
+              <label class="layui-form-label" style="width: 44%;">选择甲醛模式:</label>
+              <div class="layui-input-block" style="margin-left: 45%;">
+                <button style="width: 100%;" type="button" class="btn btn-success" id="n_selectModeIdHs"> 选择模式</button>
+              </div>
+            </div>
+              <div class="col-lg-2 MarginPx">
+                  <button style="width: 100%;" type="button" class="btn btn-cyan" onclick="cancelMode(5)">取消模式</button>
+              </div>
+            <div class="col-lg-6 MarginPx" id="selectModeIdHsIn" style="display: none;">
+              <label class="layui-form-label" style="width: 44%;">甲醛模式名:</label>
+              <div class="layui-input-block" style="margin-left: 45%;">
+                <input class="form-control" id="modeHsName1" name="modeHsName" readonly="readonly" type="text">
+                <input type="hidden" id="modeIdHs1" name="modeIdHs" >
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12 MarginPx">
+            <div class="col-lg-6 MarginPx">
+              <label class="layui-form-label" style="width: 44%;">二氧化碳指标:</label>
+              <div class="layui-input-block" style="margin-left: 45%;">
+                <input class="form-control" id="coTwoStandard1" name="coTwoStandard" type="text" value="2000" placeholder="单位ppm">
+              </div>
+            </div>
+            <div class="col-lg-4 MarginPx" id="selectModeIdCtsBtn">
+              <label class="layui-form-label" style="width: 44%;">选择二氧化碳模式:</label>
+              <div class="layui-input-block" style="margin-left: 45%;">
+                <button style="width: 100%;" type="button" class="btn btn-success" id="n_selectModeIdCts"> 选择模式</button>
+              </div>
+            </div>
+              <div class="col-lg-2 MarginPx">
+                  <button style="width: 100%;" type="button" class="btn btn-cyan" onclick="cancelMode(6)">取消模式</button>
+              </div>
+            <div class="col-lg-6 MarginPx" id="selectModeIdCtsIn" style="display: none;">
+              <label class="layui-form-label" style="width: 44%;">二氧化碳模式名:</label>
+              <div class="layui-input-block" style="margin-left: 45%;">
+                <input class="form-control" id="modeCtsName1" name="modeCtsName" readonly="readonly" type="text">
+                <input type="hidden" id="modeIdCts1" name="modeIdCts">
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12 MarginPx">
+            <div class="col-lg-6 MarginPx">
+              <label class="layui-form-label" style="width: 44%;">PM2.5指标:</label>
+              <div class="layui-input-block" style="margin-left: 45%;">
+                <input class="form-control" id="pmTwoFiveStandard1" name="pmTwoFiveStandard" type="text" value="100" placeholder="单位ug/m3">
+              </div>
+            </div>
+            <div class="col-lg-4 MarginPx" id="selectModeIdPtfsBtn">
+              <label class="layui-form-label" style="width: 44%;">选择PM2.5模式:</label>
+              <div class="layui-input-block" style="margin-left: 45%;">
+                <button style="width: 100%;" type="button" class="btn btn-success" id="n_selectModeIdPtfs"> 选择模式
+                </button>
+              </div>
+            </div>
+              <div class="col-lg-2 MarginPx">
+                  <button style="width: 100%;" type="button" class="btn btn-cyan" onclick="cancelMode(8)">取消模式</button>
+              </div>
+            <div class="col-lg-6 MarginPx" id="selectModeIdPtfsIn" style="display: none;">
+              <label class="layui-form-label" style="width: 44%;">PM2.5模式名:</label>
+              <div class="layui-input-block" style="margin-left: 45%;">
+                <input class="form-control" id="modePtfsName1" name="modePtfsName" readonly="readonly" type="text">
+                <input type="hidden" id="modeIdPtfs1" name="modeIdPtfs">
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12 MarginPx">
+            <div class="col-lg-6 MarginPx">
+              <label class="layui-form-label" style="width: 44%;">PM10指标:</label>
+              <div class="layui-input-block" style="margin-left: 45%;">
+                <input class="form-control" id="pmTenStandard1" name="pmTenStandard" type="text" value="150" placeholder="单位ug/m3">
+              </div>
+            </div>
+            <div class="col-lg-4 MarginPx" id="selectModeIdPtsBtn">
+              <label class="layui-form-label" style="width: 44%;">选择PM10模式:</label>
+              <div class="layui-input-block" style="margin-left: 45%;">
+                <button style="width: 100%;" type="button" class="btn btn-success" id="n_selectModeIdPts"> 选择模式</button>
+              </div>
+            </div>
+              <div class="col-lg-2 MarginPx">
+                  <button style="width: 100%;" type="button" class="btn btn-cyan" onclick="cancelMode(9)">取消模式</button>
+              </div>
+            <div class="col-lg-6 MarginPx" id="selectModeIdPtsIn" style="display: none;">
+              <label class="layui-form-label" style="width: 44%;">PM10模式名:</label>
+              <div class="layui-input-block" style="margin-left: 45%;">
+                <input class="form-control" id="modePtsName1" name="modePtsName" readonly="readonly" type="text">
+                <input type="hidden" id="modeIdPts1" name="modeIdPts">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-12 MarginPx">
+            <div class="col-lg-6 MarginPx">
+              <label class="layui-form-label" style="width: 44%;">PM1.0指标:</label>
+              <div class="layui-input-block" style="margin-left: 45%;">
+                <input class="form-control" id="pmOnePointZeroStandard1" name="pmOnePointZeroStandard" type="text" value="150" placeholder="单位ug/m3">
+              </div>
+            </div>
+            <div class="col-lg-4 MarginPx" id="selectModeIdPopzBtn">
+              <label class="layui-form-label" style="width: 44%;">选择PM1.0模式:</label>
+              <div class="layui-input-block" style="margin-left: 45%;">
+                <button style="width: 100%;" type="button" class="btn btn-success" id="n_selectModeIdPopz"> 选择模式</button>
+              </div>
+            </div>
+            <div class="col-lg-2 MarginPx">
+              <button style="width: 100%;" type="button" class="btn btn-cyan" onclick="cancelMode(10)">取消模式</button>
+            </div>
+            <div class="col-lg-6 MarginPx" id="selectModeIdPopzIn" style="display: none;">
+              <label class="layui-form-label" style="width: 44%;">PM1.0模式名:</label>
+              <div class="layui-input-block" style="margin-left: 45%;">
+                <input class="form-control" id="modePopzName1" name="modePopzName" readonly="readonly" type="text">
+                <input type="hidden" id="modeIdPopz1" name="modeIdPopz">
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </section>
+</script>
+
+<!-- 查看详情模板-->
+<script type="text/html" id="modelDetailWin">
+  <section class="openDetail" style="width: 100%;">
+    <div class="panel-body">
+      <div class="layui-row layui-col-space10 layui-form-item">
+        <div class="col-lg-6 MarginPx">
+          <label class="layui-form-label" style="width: 34%;">温度低指标:</label>
+          <div class="layui-input-block" style="margin-left: 35%;">
+            <input class="form-control" id="temperatureLow" type="text" disabled="disabled">
+          </div>
+        </div>
+        <div class="col-lg-6 MarginPx">
+          <label class="layui-form-label" style="width: 34%;">温度低指标模式:</label>
+          <div class="layui-input-block" style="margin-left: 35%;">
+            <input class="form-control" id="modeIdTl" type="text" disabled="disabled">
+          </div>
+        </div>
+        <div class="col-lg-6 MarginPx">
+          <label class="layui-form-label" style="width: 34%;">温度高指标:</label>
+          <div class="layui-input-block" style="margin-left: 35%;">
+            <input class="form-control" id="temperatureHigh" type="text" disabled="disabled">
+          </div>
+        </div>
+        <div class="col-lg-6 MarginPx">
+          <label class="layui-form-label" style="width: 34%;">温度高指标模式:</label>
+          <div class="layui-input-block" style="margin-left: 35%;">
+            <input class="form-control" id="modeIdTh" type="text" disabled="disabled">
+          </div>
+        </div>
+        <div class="col-lg-6 MarginPx">
+          <label class="layui-form-label" style="width: 34%;">湿度低指标:</label>
+          <div class="layui-input-block" style="margin-left: 35%;">
+            <input class="form-control" id="humidityLow" type="text" disabled="disabled">
+          </div>
+        </div>
+        <div class="col-lg-6 MarginPx">
+          <label class="layui-form-label" style="width: 34%;">湿度低指标模式:</label>
+          <div class="layui-input-block" style="margin-left: 35%;">
+            <input class="form-control" id="modeIdHl" type="text" disabled="disabled">
+          </div>
+        </div>
+        <div class="col-lg-6 MarginPx">
+          <label class="layui-form-label" style="width: 34%;">湿度高指标:</label>
+          <div class="layui-input-block" style="margin-left: 35%;">
+            <input class="form-control" id="humidityHigh" type="text" disabled="disabled">
+          </div>
+        </div>
+        <div class="col-lg-6 MarginPx">
+          <label class="layui-form-label" style="width: 34%;">湿度高指标模式:</label>
+          <div class="layui-input-block" style="margin-left: 35%;">
+            <input class="form-control" id="modeIdHh" type="text" disabled="disabled">
+          </div>
+        </div>
+
+        <div class="col-lg-6 MarginPx">
+          <label class="layui-form-label" style="width: 34%;">甲醛指标:</label>
+          <div class="layui-input-block" style="margin-left: 35%;">
+            <input class="form-control" id="hchoStandard" type="text" disabled="disabled">
+          </div>
+        </div>
+        <div class="col-lg-6 MarginPx">
+          <label class="layui-form-label" style="width: 34%;">甲醛指标模式:</label>
+          <div class="layui-input-block" style="margin-left: 35%;">
+            <input class="form-control" id="modeIdHs" type="text" disabled="disabled">
+          </div>
+        </div>
+        <div class="col-lg-6 MarginPx">
+          <label class="layui-form-label" style="width: 34%;">二氧化碳指标:</label>
+          <div class="layui-input-block" style="margin-left: 35%;">
+            <input class="form-control" id="coTwoStandard" type="text" disabled="disabled">
+          </div>
+        </div>
+        <div class="col-lg-6 MarginPx">
+          <label class="layui-form-label" style="width: 34%;">二氧化碳指标模式:</label>
+          <div class="layui-input-block" style="margin-left: 35%;">
+            <input class="form-control" id="modeIdCts" type="text" disabled="disabled">
+          </div>
+        </div>
+        <div class="col-lg-6 MarginPx">
+          <label class="layui-form-label" style="width: 34%;">PM2.5指标:</label>
+          <div class="layui-input-block" style="margin-left: 35%;">
+            <input class="form-control" id="pmTwoFiveStandard" type="text" disabled="disabled">
+          </div>
+        </div>
+        <div class="col-lg-6 MarginPx">
+          <label class="layui-form-label" style="width: 34%;">PM2.5指标模式:</label>
+          <div class="layui-input-block" style="margin-left: 35%;">
+            <input class="form-control" id="modeIdPtfs" type="text" disabled="disabled">
+          </div>
+        </div>
+        <div class="col-lg-6 MarginPx">
+          <label class="layui-form-label" style="width: 34%;">PM10指标:</label>
+          <div class="layui-input-block" style="margin-left: 35%;">
+            <input class="form-control" id="pmTenStandard" type="text" disabled="disabled">
+          </div>
+        </div>
+        <div class="col-lg-6 MarginPx">
+          <label class="layui-form-label" style="width: 34%;">PM10指标模式:</label>
+          <div class="layui-input-block" style="margin-left: 35%;">
+            <input class="form-control" id="modeIdPts" type="text" disabled="disabled">
+          </div>
+        </div>
+        <div class="col-lg-6 MarginPx">
+          <label class="layui-form-label" style="width: 34%;">PM1.0指标:</label>
+          <div class="layui-input-block" style="margin-left: 35%;">
+            <input class="form-control" id="pmOnePointZeroStandard" type="text" disabled="disabled">
+          </div>
+        </div>
+        <div class="col-lg-6 MarginPx">
+          <label class="layui-form-label" style="width: 34%;">PM1.0指标模式:</label>
+          <div class="layui-input-block" style="margin-left: 35%;">
+            <input class="form-control" id="modeIdPopz" type="text" disabled="disabled">
+          </div>
+        </div>
+        <div class="col-lg-6 MarginPx">
+          <label class="layui-form-label" style="width: 34%;">组织机构名:</label>
+          <div class="layui-input-block" style="margin-left: 35%;">
+            <input class="form-control" id="organizationName" type="text" disabled="disabled">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</script>
+
+</html>

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="../images/logoIcon.png" type="image/icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <title>【光大银行】智慧综合管理系统</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="../css/style.min.css" rel="stylesheet">
+    <link href="../plus/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-treeview.css" rel="stylesheet">
+    <link href="../css/commonStyle.css" rel="stylesheet">
+
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../plus/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="../plus/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="../plus/layer/layer.js"></script>
+    <script src="../js/template-web.js"></script>
+    <script src="../plus/validate/jquery.validate.min.js"></script>
+    <script src="../plus/validate/messages_zh.min.js"></script>
+    <script src="../js/bootstrap-treeview.js"></script>
+
+    <script src="../js/httpUtils.js"></script>
+    <script src="../js/Md5.js"></script>
+    <script src="../plus/iview/vue.min.js"></script>
+</head>
+
+<body>
+<div class="lyear-layout-web">
+    <div class="lyear-layout-container">
+        <!--加载头部和菜单栏-->
+        <div id="hander">
+            <script>
+                $(function () {
+                    $("#hander").load("handMenu.html");
+                });
+            </script>
+        </div>
+        <!--页面主要内容-->
+        <main class="lyear-layout-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>曼顿空开信息</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="ibox-content row">
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label class="form-label" for="s_deviceMac">设备名称：</label>
+                                            <input class="form-control" name="s_deviceMac" id="s_deviceMac" placeholder="设备名称" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label class="form-label" for="s_deviceName">所属机构：</label>
+                                            <input class="form-control" name="s_deviceName" id="s_deviceName" placeholder="所属机构" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <div style="margin-top: 24px;">
+                                                <button type="button" class="btn btn-purple" id="clean"><i
+                                                        class="fa fa-eraser"></i> 清空
+                                                </button>
+                                                <button type="button" class="btn btn-success" id="search"
+                                                        style="margin-left: 10px"><i class="fa fa-search"></i> 查询
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Start-->
+                                <!-- <div class="ibox-content">
+                                     &lt;!&ndash;页面内容部分&ndash;&gt;
+                                     &lt;!&ndash; 这里写内容 &ndash;&gt;
+                                     <div id="buttons">
+                                         <button type="button" class="btn btn-primary" id="addSlibings" onclick="newEvent()"><i class="fa fa-plus"></i>
+                                             录入
+                                         </button>
+                                     </div>
+
+                                     <div id="myTable">
+
+                                     </div>
+                                 </div>-->
+                                <table id="deviceEventList"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!--End 页面主要内容-->
+
+    </div>
+</div>
+<!--加载底部-->
+<div id="footer" class="classifyFooter">
+    <script type="text/javascript">
+        $(function () {
+            $("#footer").load("footer.html");
+        });
+    </script>
+</div>
+<div id="loadDiv"></div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+    $("#loadDiv").html(loadHtml);
+    $(function () {
+        $('#deviceEventList').bootstrapTable({
+            url: deviceServiceUrl + "/airMenuInfo/listMenus", //请求后台的URL（*）
+            //data: data1,                            //本地数据
+            method: 'get', //请求方式（*）
+            contentType: "application/x-www-form-urlencoded",
+            toolbar: '', //工具按钮用哪个容器
+            striped: true, //是否显示行间隔色
+            cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            pagination: true, //是否显示分页（*）
+            sortable: false, //是否启用排序
+            sidePagination: "client", //分页方式：client客户端分页，server服务端分页（*）
+            pageNumber: 1, //初始化加载第一页，默认第一页
+            pageSize: 10, //每页的记录行数（*）
+            pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
+            queryParamsType: '',
+            queryParams: queryParams, //传递参数（*）
+            strictSearch: true,
+            // height: 500,                            //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+            uniqueId: "id", //每一行的唯一标识，一般为主键列
+            cardView: false, //是否显示详细视图
+            detailView: false, //是否显示父子表
+            clickToSelect: true, //点击行是否选中
+            responseHandler: function (data) {
+                var res = [];
+                if (data.code === 0) {
+                    var result = data.data;
+                    rdata = result.list;
+                    res.push({
+                        total: result.total,
+                        rows: result.list
+                    });
+                    $.hide_overall_loding();
+                    return res[0];
+                } else {
+                    res.push({
+                        total: 0,
+                        rows: []
+                    });
+                    layer.msg("获取数据失败！", {icon: 2});
+                    $.hide_overall_loding();
+                    return res[0];
+                }
+            },
+            onLoadSuccess: function () {
+                $.hide_overall_loding();
+            },
+            onDblClickRow: function (row) {
+                console.info(row);
+            },
+            columns: [{
+                checkbox: true
+            }, {
+                width: 50,
+                title: '序号',
+                formatter: function (value, row, index) {
+                    let pageSize = $('#deviceEventList').bootstrapTable('getOptions').pageSize;//通过表的#id 可以得到每页多少条
+                    let pageNumber = $('#deviceEventList').bootstrapTable('getOptions').pageNumber;//通过表的#id 可以得到当前第几页
+                    return index + 1;
+                }
+            }, {
+                field: 'organizationName',
+                title: '所属机构',
+                width: 150
+            },{
+                field: 'deviceAlias',
+                title: '设备名称',
+                width: 150
+            },{
+                field: 'relateType',
+                title: '设备关联类型',
+                width: 100,
+                formatter: function(value, row, index) {
+                    var state = "";
+                    if(value === 1) {
+                        state = '<span>空调</span>'
+                    } else if(value === 2) {
+                        state = '<span>照明</span>'
+                    } else if(value === 3) {
+                        state = '<span>招牌</span>'
+                    } else if(value === 4) {
+                        state = '<span>插座</span>'
+                    } else {
+                        state = '<span>其它</span>'
+                    }
+                    return state;
+                }
+            },{
+                field: 'deviceAddress',
+                title: '按键地址',
+                width: 80
+            }, {
+                field: 'isLora',
+                title: 'lora设备',
+                width: 80,
+                formatter: function(value, row, index) {
+                    var state = "";
+                    if(value === 1) {
+                        state = '<span>是</span>'
+                    } else {
+                        state = '<span>否</span>'
+                    }
+                    return state;
+                }
+            },{
+                field: 'createDate',
+                title: '创建时间',
+                width: 150
+            },{
+                title: "操作",
+                width: 70,
+                clickToSelect: false,
+                formatter: function (i1, i2, i3) {
+                    var str = '' +
+                        '<button data-toggle="tooltip" title="查看信息" type="button" onclick="detail(' + i3 +
+                        ');" class="btn btn-info tableButton"><i class="fa fa-info-circle"> </i></button>'
+                    return str;
+                },
+                cellStyle: function () {
+                    return {
+                        classes: "",
+                        css: {
+                            "text-align": "center"
+                        }
+                    }
+                }
+            }]
+        });
+
+        function queryParams(params) {
+            $.show_overall_loding();
+            return {
+                token: $.getToken(),
+                pageSize: params.pageSize,
+                pageNum: params.pageNumber,
+                organizationName:$("#s_deviceName").val(),
+                deviceAlias:$("#s_deviceMac").val(),
+            };
+        }
+
+        $("#search").on("click", function () {
+            $.show_overall_loding();
+            $('#deviceEventList').bootstrapTable('refresh');
+        });
+
+        $("#clean").click(function () {
+            $("#s_deviceName").val("");
+            $("#s_deviceMac").val("");
+            $("#search").trigger("click");
+        });
+    });
+
+    //查看信息开始
+    function detail(id){
+        $.show_overall_loding();
+        let dataList = $("#deviceEventList").bootstrapTable("getData");
+        let formData = {};
+        formData.menuId = dataList[id].id;
+        $.getJSON(deviceServiceUrl +"/airMenuInfo/listSwitchInfo",formData,function (res) {
+            $.hide_overall_loding();
+            let selectRes = res.data
+            if(selectRes){
+                var area = ['650px', '440px'];
+                var btn = ['确认'];
+                var myLayer = layer.open({
+                    skin: 'card', //自定义样式winning-class
+                    type: 1,
+                    title: ["详情", ""],
+                    area: area, //宽高
+                    resize: true, //是否拉升
+                    offset: 'auto', //居中
+                    content: template("modelWin", {
+                        title: "123"
+                    }),
+                    btn: btn,
+                    yes: function(index, layero) {
+                        layer.close(myLayer)
+                    },
+                    success: function(layero) {
+                        $(".layui-layer-title").addClass("card-header");
+                        $("#deviceForm input").attr("disabled", "disabled");
+                        const data = dataList[id]
+                        if(data != null) {
+                            $("#organizationName").val(data.organizationName);
+                            $("#deviceAlias").val(data.deviceAlias);
+                            $("#createDate").val(selectRes.createDate);
+                            $("#lineV").val(selectRes.lineV);
+                            $("#leakageI").val(selectRes.leakageI);
+                            $("#lineP").val(selectRes.lineP);
+                            if (selectRes.isLora == 1) {
+                                $("#temperature").val(selectRes.temperature/10);
+                            }else {
+                                $("#temperature").val(selectRes.temperature);
+                            }
+                            $("#lineI").val(selectRes.lineI);
+                            $("#warnPos").val(selectRes.warnPos);
+                            $("#electricity").val(selectRes.electricity);
+
+                        }
+
+                    }
+                });
+            } else {
+                layer.msg("暂无信息",{icon:2});
+            }
+        });
+    }
+
+
+</script>
+
+<!--查看模板-->
+<script type="text/html" id="modelWin">
+    <section class="openDetail" style="width: 95%; margin-top: 20px;">
+        <div class="panel-body">
+            <form id="deviceForm">
+                <div class="layui-row layui-col-space10 layui-form-item">
+                    <div class="col-lg-6 MarginPx">
+                        <label class="layui-form-label">设备名称:</label>
+                        <div class="layui-input-block">
+                            <input class="form-control" id="deviceAlias" name="deviceAlias" type="text">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 MarginPx">
+                        <label class="layui-form-label">组织机构:</label>
+                        <div class="layui-input-block">
+                            <input class="form-control" id="organizationName" name="organizationName" type="text">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 MarginPx">
+                        <label class="layui-form-label">上报时间:</label>
+                        <div class="layui-input-block">
+                            <input class="form-control" id="createDate" name="createDate" type="text">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 MarginPx">
+                        <label class="layui-form-label">线路电压:</label>
+                        <div class="layui-input-block">
+                            <input class="form-control" id="lineV" name="lineV" type="text">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 MarginPx">
+                        <label class="layui-form-label">漏电电流:</label>
+                        <div class="layui-input-block">
+                            <input class="form-control" id="leakageI" name="leakageI" type="text">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 MarginPx">
+                        <label class="layui-form-label">线路功率:</label>
+                        <div class="layui-input-block">
+                            <input class="form-control" id="lineP" name="lineP" type="text">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 MarginPx">
+                        <label class="layui-form-label">温度:</label>
+                        <div class="layui-input-block">
+                            <input class="form-control" id="temperature" name="temperature" type="text">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 MarginPx">
+                        <label class="layui-form-label">线路电流:</label>
+                        <div class="layui-input-block">
+                            <input class="form-control" id="lineI" name="lineI" type="text">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 MarginPx">
+                        <label class="layui-form-label">警告位:</label>
+                        <div class="layui-input-block">
+                            <input class="form-control" id="warnPos" name="warnPos" type="text">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 MarginPx">
+                        <label class="layui-form-label">电量:</label>
+                        <div class="layui-input-block">
+                            <input class="form-control" id="electricity" name="electricity" type="text">
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </section>
+</script>
+
+
+</html>

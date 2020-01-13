@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>摄像头视频列表</title>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <link href="../js/video-js/video-js.css" rel="stylesheet">
+    <script src="../js/video-js/video.js"></script>
+    <script src="../js/video-js/videojs-contrib-hls.min.js"></script>
+    <script>
+        videojs.options.flash.swf = "video-js/video-js.swf"
+    </script>
+
+</head>
+<body>
+<div id="app" >
+    <video id="live-stream" class="video-js vjs-default-skin vjs-big-play-centered"
+           preload="auto"
+           controls="controls"
+           data-setup='{"example_option":true}'>
+        <source src="http://222.182.202.118:7086/live/cameraid/1000021%240/substream/2.m3u8"
+                type="application/x-mpegURL">
+    </video>
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var delayTime = 10000
+    // 公司展厅视频
+    var playerC = videojs('live-stream');
+  /*  setTimeout(() => {
+        videojs("live-stream").ready(function(){
+            playerC.play();
+        });
+    }, delayTime)*/
+    playerC.on(['loadstart', 'play', 'playing', 'firstplay', 'pause', 'ended', 'adplay', 'adplaying', 'adfirstplay', 'adpause', 'adended', 'contentplay', 'contentplaying', 'contentfirstplay', 'contentpause', 'contentended', 'contentupdate'], function (e) {
+        console.warn('VIDEOJS player event: ', e.type);
+    });
+</script>
+</html>

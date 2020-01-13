@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8">
+		<link rel="shortcut icon" href="../images/logoIcon.png" type="image/icon" />
+		<title>【光大银行】智慧综合管理系统</title>
+		<link rel="stylesheet" href="../plus/layui/css/layui.css">
+		<link rel="stylesheet" href="../css/front-common.css" />
+		<link rel="stylesheet" href="../css/header.css" />
+		<link rel="stylesheet" href="../css/selectStyle.css" />
+		<link rel="stylesheet" href="../css/head-office.css" />
+		<link href="../css/font-awesome.min.css" rel="stylesheet">
+
+		<script type="text/javascript"
+            src='http://api.map.baidu.com/api?v=2.0&ak=1pSTowk3vMReXCQA08ypPGfGoOaZI0qk'></script>
+		<script src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+		<script src="../js/echarts.min.js"></script>
+		<script src="../js/Md5.js"></script>
+	</head>
+
+	<body>
+		<div id="main">
+			<div id="header" style="height: 0.62rem;">
+				<script type="text/javascript">
+					$("#header").load("header.html");
+				</script>
+			</div>
+			<div class="section" id="vueMain">
+				<div id="left">
+					<div class="left-one">
+						<div class="echart-box">
+							<div class="item">
+								<div id="echarts1"></div>
+								<span>在线</span>
+							</div>
+							<div class="item">
+								<div id="echarts2"></div>
+								<span>离线</span>
+							</div>
+							<div class="item">
+								<div id="echarts3"></div>
+								<span>正常</span>
+							</div>
+							<div class="item">
+								<div id="echarts4"></div>
+								<span>报警</span>
+							</div>
+							<div class="item">
+								<div id="echarts5"></div>
+								<span>故障</span>
+							</div>
+						</div>
+						<div class="box-foot">
+								<a href="home.html" style="display: inline-block;width: 15%;height: 100%;"></a>
+						</div>
+					</div>
+					<div class="left-two">
+						<div class="Switch">
+							<form class="layui-form">
+								<input type="checkbox" id="alertSwitch" name="alertSwitch" lay-filter="alertSwitch" lay-skin="switch" lay-text="月|天">
+							</form>
+						</div>
+						<div class="echart-box">
+							<div id="echarts6"></div>
+						</div>
+						<div class="box-foot">
+							<a href="home.html" style="display: inline-block;width: 15%;height: 100%;"></a>
+						</div>
+					</div>
+					<div class="left-three">
+						<div class="Switch">
+							<form class="layui-form">
+								<input type="checkbox" id="errorSwitch" name="errorSwitch" lay-filter="errorSwitch" lay-skin="switch" lay-text="月|天">
+							</form>
+						</div>
+						<div class="box-head">
+							<div class="box-item-coloum">
+								<div class="text-content">
+									<span v-text="errorTotal.total"><!-- <sup>↓0.5%</sup>--></span>
+								</div>
+								<span v-text="errorTotal.name"></span>
+							</div>
+						</div>
+						<div class="echart-box">
+							<div id="echarts7"></div>
+						</div>
+						<div class="box-foot">
+							<a href="home.html" style="display: inline-block;width: 15%;height: 100%;"></a>
+						</div>
+					</div>
+					<div class="left-four">
+						<div class="Switch">
+							<form class="layui-form">
+								<input type="checkbox" id="energySwitch" name="energySwitch" lay-filter="energySwitch" lay-skin="switch" lay-text="月|天">
+							</form>
+						</div>
+						<div class="echart-box">
+							<div id="echarts8"></div>
+						</div>
+						<div class="box-foot">
+							<a href="home.html" style="display: inline-block;width: 15%;height: 100%;"></a>
+						</div>
+					</div>
+				</div>
+				<div id="center">
+					<div class="select-bar">
+						<select id="cd-dropdown" name="cd-dropdown" class="cd-select">
+							<option value="-1">全部</option>
+							<option value="0"> 全部</option>
+							<option value="1"> 华东地区</option>
+							<option value="2"> 华南地区</option>
+							<option value="3"> 华中地区</option>
+							<option value="4"> 华北地区</option>
+							<option value="5"> 西南地区</option>
+							<option value="6"> 东北地区</option>
+							<option value="7"> 西北地区</option>
+							<option value="8"> 台港澳地区</option>
+						</select>
+					</div>
+					<div id="ec_map"></div>
+				</div>
+				<div id="right">
+					<div class="right-one">
+						<div class="box-head">
+							<div class="box-head-item">
+								<span class="icon-alert"></span>
+								<div class="text-content">
+									<span>今日报警</span>
+									<span class="font-red" v-text="totalEvents.deviceTypeThree"></span>
+								</div>
+							</div>
+							<div class="box-head-item">
+								<span class="icon-error"></span>
+								<div class="text-content">
+									<span>故障</span>
+									<span class="font-yellow" v-text="totalEvents.deviceTypeFour"></span>
+								</div>
+							</div>
+						</div>
+						<div class="box-list">
+							<div class="list-title">
+								<span>bcca设备名称</span>
+								<span>状态</span>
+								<span>时间</span>
+								<span>操作</span>
+							</div>
+							<div class="list-box">
+								<div class="item" v-for="(item,i) in deviceEvent">
+									<span v-text="item.deviceName"></span>
+									<template v-if="item.deviceType">
+										<span v-if="item.deviceType == 2" class="font-red">离线</span>
+										<span v-if="item.deviceType == 3" class="font-red">报警</span>
+										<span v-if="item.deviceType == 4" class="font-yellow">故障</span>
+										<span v-if="item.deviceType == 5" class="font-red">过流</span>
+										<span v-if="item.deviceType == 6" class="font-red">过压</span>
+									</template>
+									<span v-text="item.createDate"></span>
+									<div>
+										<span class="detail" @click="deviceInfo(i)"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="box-foot">
+							<a href="deviceEvent.html" style="display: inline-block;width: 15%;height: 100%;"></a>
+						</div>
+					</div>
+					<div class="right-two">
+						<div class="text-title">
+							<ul class="news-box">
+								<li v-for="(item,i) in topMessage" @click="messageInfo(i,topMessage)"><span v-text="item.title"></span></li>
+							</ul>
+						</div>
+						<div class="news-list">
+							<div class="news-item" v-for="(item,i) in message" @click="messageInfo(i,message)">
+								<span v-text="item.title"></span>
+								<span v-text="item.createTime"></span>
+							</div>
+						</div>
+						<div class="box-foot">
+							<a href="message.html" style="display: inline-block;width: 15%;height: 100%;"></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<style>
+			.info_alert {
+				display: none;
+				width: 19.6rem;
+				height: 2.3rem;
+				position: fixed;
+				top: 50%;
+				margin-top: -1.25rem;
+				z-index: 99999;
+			}
+
+			.info_messages {
+				width: 19.6rem;
+				height: 1.8rem;
+				background: url(../images/info_bg.png);
+				text-align: center;
+				font-size: 0.5rem;
+				line-height: 1.8rem;
+			}
+
+			.info_op {
+				position: fixed;
+				height: 0.5rem;
+				min-width: 2.5rem;
+				left: 50%;
+				margin-left: -1.2rem;
+				margin-top: 0.1rem;
+			}
+
+			.info_op .info_button {
+				text-align: center;
+				cursor: pointer;
+				font-size: 0.12rem;
+				float: left;
+				border-radius: 0.15rem;
+				height: 0.4rem;
+				line-height: 0.4rem;
+				padding: 0 0.15rem;
+				background-color: #C30D23;
+			}
+		</style>
+		<div class="info_alert">
+			<div class="info_messages">
+				发生异常报警！！
+			</div>
+			<div class="info_op">
+				<div class="info_button">请立即通知相关人员处理事件(<span id="seconds">30</span>)</div>
+			</div>
+		</div>
+
+
+		<script type="text/javascript">
+			var nodeData = []; //渲染的node数据集合
+			$(function() {
+				var socket;
+				var socket2;
+				if(typeof(WebSocket) == "undefined") {
+					console.log("您的浏览器不支持WebSocket");
+				} else {
+					console.log("您的浏览器支持WebSocket");
+					//实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
+                    socket = new WebSocket(webSocketUrl + "/99999999".replace("http", "ws"));
+					socket2 = new WebSocket(webSocketUrl2 + "/99999999".replace("http", "ws"));
+                    console.log("url:   " + socket.url);
+                    console.log("url:   " + socket2.url);
+					//打开事件
+					socket.onopen = function() {
+						console.log("Socket 已打开");
+						//socket.send("这是来自客户端的消息" + location.href + new Date());
+					};
+					socket2.onopen = function() {
+					};
+					//获得消息事件
+					socket.onmessage = function(msg) {
+						console.log(msg.data);
+						if(msg.data === '连接成功') {
+							return true;
+						}
+						msgData.push(msg.data);
+						if(msgData.length === 1) {
+							showMessage();
+						}
+						//showMessage();
+						//发现消息进入    开始处理前端触发逻辑
+					};
+					socket2.onmessage = function(msg) {
+						console.log(msg.data);
+						if(msg.data === '连接成功') {
+							return true;
+						}
+						msgData.push(msg.data);
+						if(msgData.length === 1) {
+							showMessage();
+						}
+						//showMessage();
+						//发现消息进入    开始处理前端触发逻辑
+					};
+					//关闭事件
+					socket.onclose = function() {
+						console.log("Socket已关闭");
+					};
+					//发生了错误事件
+					socket.onerror = function() {
+						console.log("Socket发生了错误");
+						//此时可以尝试刷新页面
+					}
+					//jquery1.8中已经被废弃，3.0中已经移除
+					$(window).unload(function() {
+						socket.close();
+						socket2.close();
+					});
+
+				}
+				//$(".info_alert").show();
+				$(".info_button").click(function(msg) {
+					msgData.splice(0, 1);
+					clearInterval(seconds);
+					$(".info_alert").hide();
+					showMessage();
+				});
+				var msgData = [];
+				var seconds = "" //setInterval(rmvSeconds, 1000);
+				var rmvSeconds = function() {
+					if(parseInt($("#seconds").html()) == 0) {
+						$(".info_alert").hide();
+						clearInterval(seconds);
+						msgData.splice(0, 1);
+						showMessage();
+					} else {
+						$("#seconds").html(parseInt($("#seconds").html()) - 1);
+					}
+				}
+
+				function showMessage() {
+					console.log(msgData);
+					if(msgData.length > 0) {
+						var msgNode = JSON.parse(msgData[0]);
+						$(".info_messages").html(msgNode.msgJson);
+						$(".info_alert").show();
+						$("#seconds").html(60);
+						seconds = setInterval(rmvSeconds, 1000);
+					}
+				}
+
+			});
+		</script>
+	</body>
+	<!--支行信息弹框-->
+	<script type="text/html" id="tip_box">
+		<div class="content-box">
+			<a class="branch-url" href="{{localhost}}branch.html?organizationId={{organizationId}}"  id="toBranch"></a>
+			<input type="hidden" id="organizationId" value={{organizationId}}>
+			 <p><a  href="{{localhost}}branch.html?organizationId={{organizationId}}">{{name}}</a></p>
+			<div class="content-item">
+				<span class="icon-branch icon-position"></span>
+				<span>地址：</span>
+				<span title="{{addr}}">{{addr}}</span>
+			</div>
+			<div class="content-item">
+				<span class="icon-branch icon-position"></span>
+				<span>联系人：</span>
+				<span title="{{duty}}">{{duty}}</span>
+			</div>
+			<div class="content-item">
+				<span class="icon-branch icon-tel"></span>
+				<span>电话：</span>
+				<span title="{{tel}}">{{tel}}</span>
+			</div>
+		</div>
+	</script>
+	<!--安防通知详情弹框-->
+	<script type="text/html" id="device_info_box">
+		<div class="info-box">
+			<ul class="info-list">
+				<li>
+					<span>bcca设备名称：</span>
+					<span>{{deviceName}}</span>
+				</li>
+				<li>
+					<span>事件名称：</span>
+					<span>{{eventName}}</span>
+				</li>
+				<li>
+					<span>事件状态：</span> {{if eventState==1}}
+					<span class="font-red">待处理</span> {{else if eventState==2}}
+					<span class="font-green">已处理</span> {{else if eventState==3}}
+					<span class="font-yellow">误报警</span> {{/if}}
+				</li>
+				<li>
+					<span>处理人：</span>
+					<span>{{processingUserName}}</span>
+				</li>
+				<li>
+					<span>电话：</span>
+					<span>{{processingUserPhone}}</span>
+				</li>
+				<li>
+					<span>设备位置：</span>
+					<span>{{devicePositionName}}</span>
+				</li>
+			</ul>
+		</div>
+	</script>
+	<!--消息通知详情弹框-->
+	<script type="text/html" id="message_info_box">
+		<div class="message-box">
+			<p class="message-title">{{title}}</p>
+			<p class="message-content">{{content}}</p>
+		</div>
+	</script>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script>
+
+		$(function() {
+			vueBegin();
+			setInterval(function () {
+				vm.getAllEvents();
+			},1000*60*2)
+		})
+		/*** vue开始》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》*/
+		let vm;
+
+		function vueBegin() {
+			vm = new Vue({
+				el: "#vueMain",
+				data: {
+					errorTotal:{name:"本月故障",total:0},
+					topMessage: [],
+					message: [],
+					deviceEvent: [],
+					totalEvents: {
+						deviceTypeTwo: 0,
+						deviceTypeThree: 0,
+						deviceTypeFour: 0,
+						deviceTypeFive: 0,
+						deviceTypeSix: 0,
+						total: 0
+					}
+				},
+				methods: {
+					//获取信息
+					getAllMessage: function() {
+						$.get(deviceServiceUrl + "/message/list?token=" + $.getToken(), function(msgRes) {
+							if(msgRes.code == 0) {
+								for(let i = 0; i < msgRes.data.list.length; i++) {
+									if(msgRes.data.list[i].top == 1) {
+										//获取置顶信息
+										vm.topMessage.push(msgRes.data.list[i]);
+									} else {
+										//非置顶信息
+										vm.message.push(msgRes.data.list[i]);
+									}
+								}
+							}
+						});
+					},
+					getAllEvents: function() {
+						$.get(deviceServiceUrl + "/deviceEvent/list?token=" + $.getToken(), function(eventRes) {
+							if(eventRes.code == 0) {
+								if(eventRes.data.total >= 4) { //只获取当前最新4个事件
+									for(let i = 0; i < 4; i++) {
+										vm.deviceEvent.push(eventRes.data.list[i]);
+									}
+								} else {
+									vm.deviceEvent = eventRes.data.list;
+								}
+							}
+						});
+					},
+					//获取当日各类事件总数
+					getTotal: function() {
+						$.get(deviceServiceUrl + "/deviceEvent/getEventTypeTotal?token=" + $.getToken(), function(totalRes) {
+							if(totalRes.code == 0) {
+								//vm.totalEvents = totalRes.data;
+								for (let i = 0; i < totalRes.data.length; i++) {
+									if(totalRes.data[i].deviceType == 2){
+										vm.totalEvents.deviceTypeTwo = totalRes.data[i].count;
+									}else if (totalRes.data[i].deviceType == 3) {
+										vm.totalEvents.deviceTypeThree = totalRes.data[i].count;
+									}else if (totalRes.data[i].deviceType == 4) {
+										vm.totalEvents.deviceTypeFour = totalRes.data[i].count;
+									}else if (totalRes.data[i].deviceType == 5) {
+										vm.totalEvents.deviceTypeFive = totalRes.data[i].count;
+									}else if (totalRes.data[i].deviceType == 6) {
+										vm.totalEvents.deviceTypeSix = totalRes.data[i].count;
+									}
+								}
+							}
+						});
+					},
+					//安防通知详情
+					deviceInfo: function(index) {
+						var data = this.deviceEvent[index];
+						var infoData = {
+							deviceName: data.deviceName,
+							loraDeviceName: data.loraDeviceName,
+							eventName: data.eventName,
+							eventState: data.eventState,
+							processingUserName: data.processingUserName,
+							organizationName: data.organizationName,
+							floorName: data.floorName,
+							devicePositionName: data.devicePositionName,
+							loraDevicePositionName: data.loraDevicePositionName,
+							processingUserPhone: data.processingUserPhone
+						};
+						var infoHtml = template("device_info_box", infoData);
+						var infoLayer = layer.open({
+							type: 1,
+							title: '详情',
+							area: ['6.5rem', 'auto'],
+							resize: false,
+							offset: 'auto',
+							content: infoHtml
+						});
+					},
+					//新闻通知详情
+					messageInfo: function(index,msg) {
+						var data = msg[index];
+						var messageData = {
+							title: data.title,
+							content: data.content
+						};
+						var messageHtml = template("message_info_box", messageData);
+						var messageLayer = layer.open({
+							type: 1,
+							title: '通知详情',
+							area: ['6.5rem', 'auto'],
+							resize: false,
+							offset: 'auto',
+							content: messageHtml
+						});
+					}
+				},
+				mounted: function() {
+					this.getAllMessage();
+					this.getAllEvents();
+					this.getTotal();
+				}
+			});
+		}
+		/*** vue结束》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》*/
+	</script>
+
+    <script src="../plus/layui/layui.js"></script>
+    <script src="../js/template-web.js"></script>
+    <script src="../js/modernizr.custom.63321.js"></script>
+    <script src="../js/jquery.dropdown.js"></script>
+    <script src="../js/httpUtils.js"></script>
+    <script src="../js/front_page/common.js"></script>
+    <script src="../js/front_page/head-office.js"></script>
+
+</html>

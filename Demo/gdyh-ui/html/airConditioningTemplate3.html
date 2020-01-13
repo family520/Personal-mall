@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>中弘空调集中控制器</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+</head>
+<style>
+    *{
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+    body,html{
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        padding: 21px 20px;
+        background-color: #F5F5F5;
+        /*min-width: 700px !important;*/
+    }
+    /* KEYFRAMES */
+    @keyframes pulse {
+        from {
+            opacity: 1;
+            transform: scale(1);
+        }
+        to {
+            opacity: .25;
+            transform: scale(.75);
+        }
+    }
+
+    .pulse-container {
+        width: 100px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-left: 10px;
+    }
+
+    .pulse-bubble {
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background-color: #3ff9dc;
+    }
+    .pulse-bubble-1 {
+        animation: pulse .8s ease 0s infinite alternate;
+    }
+    .pulse-bubble-2 {
+        animation: pulse .8s ease .2s infinite alternate;
+    }
+    .pulse-bubble-3 {
+        animation: pulse .8s ease .4s infinite alternate;
+    }
+    /*
+        头部样式
+    */
+    .header{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        position: relative;
+    }
+    .header .titleName{
+        font-size:24px;
+        font-weight:400;
+        color:rgba(51,51,51,1);
+    }
+    .header .outInter{
+        width:80px;
+        height:30px;
+        line-height: 30px;
+        background:rgba(153,153,153,1);
+        border-radius:15px;
+        text-align: center;
+        color: white;
+        font-weight: bold;
+        position: absolute;
+        top:0;
+        right: 0;
+        letter-spacing: 2px;
+    }
+
+    /*开关按钮样式*/
+    .checkBox{
+        margin: auto;
+        width:80px;
+        height:30px;
+        background:rgba(220,220,220,1);
+        border-radius:4px;
+        display: flex;
+        padding: 2px 3px;
+        box-sizing: border-box;
+        justify-content: space-between;
+        line-height: 30px;
+        margin-top: 0.1rem;
+        margin-bottom: 0.1rem;
+    }
+    .checkBox span{
+        width: 48%;
+        height: 26px;
+        line-height: 26px;
+        display: inline-block;
+        background-color: white;
+        font-size: 14px;
+        cursor: pointer;
+        font-weight: bold;
+        color:rgba(153,153,153,1);
+    }
+    .checkBox span.active{
+        background-color: #0099FF;
+        color: white;
+    }
+    .checkBox .on {
+        border-radius: 4px 0 0 4px;
+    }
+    .checkBox .off {
+        border-radius: 0 4px 4px 0;
+    }
+    /*
+        内容盒子
+    */
+    .contentBox{
+        width: 350px;
+        /*height: 400px;*/
+        height: 280px;
+        background-color: white;
+        overflow: hidden;
+        position: relative;
+        padding: 10px 0;
+        box-sizing: border-box;
+        margin: auto;
+        margin-top: 2rem;
+        text-align: center;
+    }
+    .contentBox .imgBox{
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+        position: relative;
+    }
+    .contentBox .imgBox .shuaxin{
+        position: absolute;
+        top:0;
+        right:20px;
+        width:23px;
+        height:23px;
+        cursor:pointer;
+    }
+    .contentBox .title{
+        margin: 10px 0;
+        font-size:18px;
+        font-weight:400;
+        color:rgba(51,51,51,1);
+    }
+    .settingBox{
+        margin-top: 10px;
+        width: 100%;
+    }
+    .settingBox .oneBox{
+        display: flex;
+        justify-content: center;
+    }
+    .settingBox .oneBox .oneItem{
+        padding: 0 10px;
+        box-sizing: border-box;
+        border-left:1px solid #ccc;
+        border-right:1px solid #ccc;
+    }
+    .settingBox .oneBox .oneItem span{
+        font-weight: bold;
+        font-size: 16px;
+    }
+    .blueColor{
+        color: #0099FF;
+    }
+
+
+    /*批量控制模板样式*/
+    .allControlTemplate{
+        position: absolute;
+        top:0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.2);
+        display: none;
+    }
+    .allControlTemplate .allControlBox{
+        position: absolute;
+        top:50%;
+        left: 50%;
+        transform: translate(-180px,-180px);
+        width:360px;
+        height:360px;
+        background:rgba(255,255,255,1);
+        margin-left: auto;
+    }
+    .allControlTemplate .allControlBox .headerBox{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 50px;
+        line-height: 50px;
+        width: 100%;
+        padding:0 30px;
+        border-bottom: 1px solid #CCC;
+    }
+    .allControlTemplate .allControlBox .headerBox span{
+        font-size:14px;
+        font-weight:400;
+        color:rgba(51,51,51,1);
+    }
+    .allControlTemplate .allControlBox .headerBox img{
+        width: 18px;
+        height: 18px;
+    }
+    .allControlTemplate .allControlBox .allControl{
+        padding: 15px;
+        box-sizing: border-box;
+    }
+    .allControlTemplate .allControlBox .allControl p{
+        display: flex;
+        align-items: center;
+        padding: 5px 0;
+        box-sizing: border-box;
+    }
+    .allControlTemplate .allControlBox .allControl p .titleName{
+        width: 30px;
+        margin-right: 20px;
+        font-size:14px;
+        font-weight:400;
+        color:rgba(51,51,51,1);
+    }
+    .allControlTemplate .allControlBox .allControl p .imgBox1{
+        width:40px;
+        height:52px;
+        background:rgba(255,255,255,1);
+        border-radius:3px;
+        text-align: center;
+        font-size:12px;
+        font-weight:400;
+        color:rgba(51,51,51,1);
+        cursor: pointer;
+        margin-right: 30px;
+    }
+    .allControlTemplate .allControlBox .allControl p .imgBox1.active{
+        border:1px solid rgba(230,230,230,1);
+    }
+    .allControlTemplate .allControlBox .allControl p .imgBox1 img{
+        margin-top: 5px;
+    }
+    .btns{
+        margin-top: 20px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    .btns button{
+        width:80px;
+        height:30px;
+        border-radius:15px;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        margin: 0 10px;
+        font-size:14px;
+        font-weight:400;
+        color:rgba(255,255,255,1);
+        letter-spacing: 2px;
+    }
+    .btns .saveBtn{
+        background:rgba(0,102,255,1);
+    }
+    .btns .cancelBtn{
+        background:rgba(181,181,181,1);
+    }
+    /*单个控制模板样式*/
+    .singleControlTemplate{
+        position: absolute;
+        top:0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.2);
+        display: none;
+    }
+    .singleControlTemplate .singleControlBox{
+        position: absolute;
+        top:50%;
+        left: 50%;
+        transform: translate(-180px,-180px);
+        width:360px;
+        height:360px;
+        background:rgba(255,255,255,1);
+        margin-left: auto;
+    }
+    .singleControlTemplate .singleControlBox .headerBox{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 50px;
+        line-height: 50px;
+        width: 100%;
+        padding:0 30px;
+        border-bottom: 1px solid #CCC;
+    }
+    .singleControlTemplate .singleControlBox .headerBox span{
+        font-size:14px;
+        font-weight:400;
+        color:rgba(51,51,51,1);
+    }
+    .singleControlTemplate .singleControlBox .headerBox img{
+        width: 18px;
+        height: 18px;
+    }
+    .singleControlTemplate .singleControlBox .singleControl{
+        padding: 15px;
+        box-sizing: border-box;
+    }
+    .singleControlTemplate .singleControlBox .singleControl p{
+        display: flex;
+        align-items: center;
+        padding: 5px 0;
+        box-sizing: border-box;
+    }
+    .singleControlTemplate .singleControlBox .singleControl p .titleName{
+        width: 30px;
+        margin-right: 20px;
+        font-size:14px;
+        font-weight:400;
+        color:rgba(51,51,51,1);
+    }
+    .singleControlTemplate .singleControlBox .singleControl p input{
+        width:120px;
+        height:25px;
+        line-height: 25px;
+        margin-right: 10px;
+        background:rgba(255,255,255,1);
+        border:1px solid rgba(204,204,204,1);
+        border-radius:3px;
+        padding-left: 5px;
+        box-sizing: border-box;
+    }
+    .singleControlTemplate .singleControlBox .singleControl p select{
+        width:120px;
+        height:25px;
+        line-height: 25px;
+        margin-right: 10px;
+        background:rgba(255,255,255,1);
+        border:1px solid rgba(204,204,204,1);
+        border-radius:3px;
+        padding-left: 5px;
+        box-sizing: border-box;
+    }
+    .singleControlTemplate .singleControlBox .singleControl p .imgBox1{
+        width:40px;
+        height:52px;
+        background:rgba(255,255,255,1);
+        border-radius:3px;
+        text-align: center;
+        font-size:12px;
+        font-weight:400;
+        color:rgba(51,51,51,1);
+        cursor: pointer;
+        margin-right: 30px;
+    }
+    .singleControlTemplate .singleControlBox .singleControl p .imgBox1.active{
+        border:1px solid rgba(230,230,230,1);
+    }
+    .singleControlTemplate .singleControlBox .singleControl p .imgBox1 img{
+        margin-top: 5px;
+    }
+    .btns{
+        margin-top: 20px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    .btns button{
+        width:80px;
+        height:30px;
+        border-radius:15px;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        margin: 0 10px;
+        font-size:14px;
+        font-weight:400;
+        color:rgba(255,255,255,1);
+        letter-spacing: 2px;
+    }
+    .btns .saveBtn{
+        background:rgba(0,102,255,1);
+    }
+    .btns .cancelBtn{
+        background:rgba(181,181,181,1);
+    }
+
+    .controlBox{
+        margin-top: 20px;
+        width: 100%;
+        padding: 0 22px;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+    }
+    .controlBox button{
+        width:94px;
+        height:25px;
+        border-radius:3px;
+        font-size:12px;
+        color: black;
+        font-weight:400;
+        color:rgba(255,255,255,1);
+        border: none;
+        cursor: pointer;
+        letter-spacing: 2px;
+        outline: none;
+    }
+    .controlBox button.active{
+        background:rgba(0,102,255,1);
+        color: white;
+    }
+    .address{
+        margin-top: 20px;
+        text-align: center;
+        font-size:14px;
+        font-weight:400;
+        color:rgba(51,51,51,1);
+    }
+    /*状态查询模板*/
+    .statusSearchTemplate{
+        position: absolute;
+        top:0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.2);
+        display: none;
+    }
+    .statusSearchTemplate .statusSearch{
+        position: absolute;
+        top:50%;
+        left: 50%;
+        transform: translate(-230px,-60px);
+        width:460px;
+        height:120px;
+        background:rgba(255,255,255,1);
+        margin-left: auto;
+    }
+    .statusSearchTemplate .statusSearch .headerBox{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 50px;
+        line-height: 50px;
+        width: 100%;
+        padding:0 30px;
+        border-bottom: 1px solid #CCC;
+    }
+    .statusSearchTemplate .statusSearch .headerBox span{
+        font-size:14px;
+        font-weight:400;
+        color:rgba(51,51,51,1);
+    }
+    .statusSearchTemplate .statusSearch .headerBox img{
+        width: 18px;
+        height: 18px;
+    }
+    .searchBox{
+        margin-top: 10px;
+        padding: 10px 0;
+        box-sizing: border-box;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .searchBox .searchName{
+        font-size:14px;
+        font-weight:400;
+        color:rgba(51,51,51,1);
+    }
+    .searchBox input{
+        height:25px;
+        background:rgba(255,255,255,1);
+        border:1px solid rgba(204,204,204,1);
+        border-radius:3px;
+        font-size:12px;
+        font-weight:400;
+        color:rgba(102,102,102,1);
+        margin-left: 5px;
+        margin-right: 20px;
+        padding-left: 5px;
+        box-sizing: border-box;
+    }
+    .searchBox button{
+        width:80px;
+        height:30px;
+        line-height: 30px;
+        outline: none;
+        border: none;
+        cursor: pointer;
+        background:rgba(0,102,255,1);
+        border-radius:15px;
+        font-size:14px;
+        font-weight:400;
+        color:rgba(255,255,255,1);
+        letter-spacing: 2px;
+    }
+    .tempBtn{
+        width: 75px;
+        height: 25px;
+        border-radius: 15px;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        margin: 0 10px;
+        font-size: 14px;
+        font-weight: 400;
+        color: rgba(255,255,255,1);
+        background: rgba(0,102,255,1);
+        letter-spacing: 2px
+    }
+    .openBtn{
+        width: 33px;
+        height: 20px;
+        border-bottom-left-radius: 15px;
+        border-top-left-radius: 15px;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        font-size: 11px;
+        font-weight: 400;
+        color: black;
+        background: #93D1FF;
+        letter-spacing: 2px
+    }
+    .closeBtn{
+        width: 33px;
+        height: 20px;
+        border-bottom-right-radius: 15px;
+        border-top-right-radius: 15px;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        font-size: 11px;
+        font-weight: 400;
+        color: black;
+        background: gray;
+        letter-spacing: 2px
+    }
+</style>
+<body>
+<!--共用头部盒子-->
+<div class="header">
+    <!--<span class="titleName">中弘空调集中控制器</span>
+    <div class="pulse-container">
+        <div class="pulse-bubble pulse-bubble-1"></div>
+        <div class="pulse-bubble pulse-bubble-2"></div>
+        <div class="pulse-bubble pulse-bubble-3"></div>
+    </div>
+    <span class="outInter">退网</span>-->
+</div>
+<!--内容盒子-->
+<div class="contentBox">
+    <div class="imgBox">
+        <img class="imgIcon" src="http://113.204.9.70:3333/images/2019/09/24/-.png" alt="">
+       <!-- <img class="shuaxin" src="http://113.204.9.70:3333/images/2019/09/09/134561c1e90b03dbe.png" alt="">-->
+    </div>
+    <!--标题-->
+    <h4 class="title">中弘空调集中控制器</h4>
+    <!--总体开关按钮-->
+    <!--<div class="checkBox">
+        <span class="on">开</span>
+        <span class="off">关</span>
+    </div>-->
+    <!--设置-->
+    <!--<div class="settingBox">
+        <div class="oneBox">
+            <div class="oneItem" style="border-left: none">
+                <span><span class="blueColor">1120</span>&nbsp;kw/h</span>
+                <br>
+                <span>功率</span>
+            </div>
+            <div class="oneItem">
+                <span><span class="blueColor">1120</span>&nbsp;V</span>
+                <br>
+                <span>电压</span>
+            </div>
+            <div class="oneItem" style="border-right: none">
+                <span><span class="blueColor">1120</span>&nbsp;A</span>
+                <br>
+                <span>电流</span>
+            </div>
+        </div>
+    </div>-->
+    <!--设备控制-->
+    <div class="controlBox">
+        <button class="plControl" style="margin-right: 10px">批量控制</button>
+        <button class="dgControl">单个控制</button>
+       <!-- <button class="statusSearchBtn">状态查询</button>-->
+    </div>
+    <!--<div class="address">
+        <span>地址:******</span>
+    </div>-->
+</div>
+<!--批量控制模板-->
+<div class="allControlTemplate">
+    <div class="allControlBox">
+        <div class="headerBox">
+            <span>批量控制</span>
+            <img class="outTpl" style="cursor:pointer;" src="http://113.204.9.70:3333/images/2019/09/20/-10.png" alt="">
+        </div>
+        <div class="allControl" id="app">
+            <p>
+                <span class="titleName">状态</span>
+                <!--<el-switch
+                        v-model="value1"
+                        class="switch"
+                        style="margin: 0 10px"
+                        active-color="#409EFF" onclick="getAllParams(0,0)">
+                </el-switch>-->
+                <button class="openBtn" onclick="getAllParams(0,0)">开机</button>
+                <button class="closeBtn" onclick="getAllParams(0,1)">关机</button>
+            </p>
+            <p>
+                <span class="titleName">模式设置</span>
+                <span class="imgBox1"  onclick="getAllParams(1,0)">
+                    <img src="http://113.204.9.70:3333/images/2019/09/24/icon__12d529b955dcc4c8.gif" alt="">
+                    <span>制冷</span>
+                </span>
+                <span class="imgBox1"  onclick="getAllParams(1,1)">
+                    <img src="http://113.204.9.70:3333/images/2019/09/24/icon__51e8953a968cefea.jpg" alt="">
+                    <span>制热</span>
+                </span>
+                <span class="imgBox1"  onclick="getAllParams(1,2)">
+                    <img src="http://113.204.9.70:3333/images/2019/09/24/icon__.jpg" alt="">
+                    <span>除湿</span>
+                </span>
+                <span class="imgBox1"  onclick="getAllParams(1,3)">
+                    <img src="http://113.204.9.70:3333/images/2019/09/24/icon__9bb22fcbad675bb9.jpg" alt="">
+                    <span>新风</span>
+                </span>
+            </p>
+            <p>
+                <span class="titleName">设置温度</span>
+                <img style="margin-left: 5px" class="reduce" src="http://113.204.9.70:3333/images/2019/09/24/-1.png" alt="">
+                <span style="display: inline-block;margin: 0 20px"><span class="tempNumber">17</span><i>℃</i></span>
+                <img class="add" src="http://113.204.9.70:3333/images/2019/09/24/-13866ba2349440f75.png" alt="">
+                <button class="tempBtn" onclick="getAllParams(2,0)">确定</button>
+            </p>
+            <p>
+                <span class="titleName">风速设置</span>
+                <span class="imgBox1" onclick="getAllParams(3,0)">
+                    <img src="http://113.204.9.70:3333/images/2019/09/24/icon__c51e5b2ff498722a.gif" alt="">
+                    <span>高风</span>
+                </span>
+                <span class="imgBox1" onclick="getAllParams(3,1)">
+                    <img src="http://113.204.9.70:3333/images/2019/09/24/icon__40f494d4b8dfa640.jpg" alt="">
+                    <span>中风</span>
+                </span>
+                <span class="imgBox1" onclick="getAllParams(3,2)">
+                    <img src="http://113.204.9.70:3333/images/2019/09/24/icon__beccbf5c875b022b.jpg" alt="">
+                    <span>低风</span>
+                </span>
+            </p>
+           <!-- <div class="btns">
+                <button class="saveBtn">确定</button>
+                <button class="cancelBtn">取消</button>
+            </div>-->
+        </div>
+    </div>
+
+</div>
+<!--单个控制模板singleControlTemplate-->
+<div class="singleControlTemplate">
+    <div class="singleControlBox">
+        <div class="headerBox">
+            <span>单个控制</span>
+            <img class="outTpl" style="cursor:pointer;" src="http://113.204.9.70:3333/images/2019/09/20/-10.png" alt="">
+        </div>
+        <div class="singleControl" id="app1">
+            <p>
+                <span class="titleName">受控地址</span>
+               <!-- <input type="text" placeholder="00 00 - FF FF">-->
+                <select id="menuSelect">
+                    <option v-for="item in menuList" :value="item.menuAddress" v-text="item.controlArea"></option>
+                </select>
+                <span class="titleName" style="margin-left: 20px">状态</span>
+               <!-- <el-switch
+                        v-model="isOn"
+                        class="switch"
+                        style="margin: 0 10px"
+                        active-color="#409EFF" onclick="getParams(0,0)">
+                </el-switch>-->
+                <button class="openBtn" onclick="getParams(0,0)">开机</button>
+                <button class="closeBtn" onclick="getParams(0,1)">关机</button>
+            </p>
+            <p>
+                <span class="titleName">模式设置</span>
+                <span class="imgBox1" :class="{active:isModeOne}" @click="isModeOne=true;isModeTwo=false;isModeThree=false;isModeFour=false" onclick="getParams(1,0)">
+                    <img src="http://113.204.9.70:3333/images/2019/09/24/icon__12d529b955dcc4c8.gif" alt="">
+                    <span>制冷</span>
+                </span>
+                <span class="imgBox1" :class="{active:isModeTwo}" @click="isModeTwo=true;isModeOne=false;isModeThree=false;isModeFour=false" onclick="getParams(1,1)">
+                    <img src="http://113.204.9.70:3333/images/2019/09/24/icon__51e8953a968cefea.jpg" alt="">
+                    <span>制热</span>
+                </span>
+                <span class="imgBox1" :class="{active:isModeThree}" @click="isModeThree=true;isModeOne=false;isModeTwo=false;isModeFour=false" onclick="getParams(1,2)">
+                    <img src="http://113.204.9.70:3333/images/2019/09/24/icon__.jpg" alt="">
+                    <span>除湿</span>
+                </span>
+                <span class="imgBox1" :class="{active:isModeFour}" @click="isModeFour=true;isModeOne=false;isModeThree=false;isModeTwo=false" onclick="getParams(1,3)">
+                    <img src="http://113.204.9.70:3333/images/2019/09/24/icon__9bb22fcbad675bb9.jpg" alt="">
+                    <span>新风</span>
+                </span>
+            </p>
+            <p>
+                <span class="titleName">设置温度</span>
+                <img style="margin-left: 5px" class="reduce1" src="http://113.204.9.70:3333/images/2019/09/24/-1.png" alt="">
+                <span style="display: inline-block;margin: 0 20px"><span class="tempNumber1" v-text="temp"></span><i>℃</i></span>
+                <img class="add1" src="http://113.204.9.70:3333/images/2019/09/24/-13866ba2349440f75.png" alt="">
+                <button class="tempBtn" onclick="getParams(2,0)">确定</button>
+            </p>
+            <p>
+                <span class="titleName">风速设置</span>
+                <span class="imgBox1" :class="{active:isSpeedOne}" @click="isSpeedOne=true;isSpeedTwo=false;isSpeedThree=false" onclick="getParams(3,0)">
+                    <img src="http://113.204.9.70:3333/images/2019/09/24/icon__c51e5b2ff498722a.gif" alt="">
+                    <span>高风</span>
+                </span>
+                <span class="imgBox1" :class="{active:isSpeedTwo}" @click="isSpeedTwo=true;isSpeedOne=false;isSpeedThree=false" onclick="getParams(3,1)">
+                    <img src="http://113.204.9.70:3333/images/2019/09/24/icon__40f494d4b8dfa640.jpg" alt="">
+                    <span>中风</span>
+                </span>
+                <span class="imgBox1" :class="{active:isSpeedThree}" @click="isSpeedThree=true;isSpeedTwo=false;isSpeedOne=false" onclick="getParams(3,2)">
+                    <img src="http://113.204.9.70:3333/images/2019/09/24/icon__beccbf5c875b022b.jpg" alt="">
+                    <span>低风</span>
+                </span>
+            </p>
+           <!-- <div class="btns">
+                <button class="saveBtn">确定</button>
+                <button class="cancelBtn">取消</button>
+            </div>-->
+        </div>
+    </div>
+
+</div>
+<!--状态查询-->
+<div class="statusSearchTemplate">
+    <div id="statusSearch" class="statusSearch">
+        <div class="headerBox">
+            <span>状态查询</span>
+            <img class="outTpl" style="cursor:pointer;" src="http://113.204.9.70:3333/images/2019/09/20/-10.png" alt="">
+        </div>
+        <div class="searchBox">
+            <span class="searchName">单个空调状态查询</span>
+            <input type="text" placeholder="00 00 - FF FF ">
+            <button class="search">查询</button>
+        </div>
+    </div>
+</div>
+</body>
+<!--JQuery-->
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        //页面开关的样式显示切换
+        $('.checkBox').find('span').each(function (n) {
+            $(this).click(function () {
+                $(this).addClass('active').siblings().removeClass('active');
+            })
+        });
+        //模式切换切换
+        $('.allControl p ').find('.imgBox1').each(function () {
+            $(this).click(function () {
+                $(this).addClass('active').siblings().removeClass('active');
+            })
+        });
+        /*$('.singleControl p ').find('.imgBox1').each(function () {
+            $(this).click(function () {
+                $(this).addClass('active').siblings().removeClass('active');
+            })
+        });*/
+        //
+        $('.controlBox').find('button').each(function () {
+            $(this).click(function () {
+                $(this).addClass('active').siblings().removeClass('active');
+            })
+        });
+        $('.on').click(function () {
+            $(".imgIcon").attr('src',"http://113.204.9.70:3333/images/2019/09/24/-.png")
+        });
+        $('.off').click(function () {
+            $(".imgIcon").attr('src',"http://113.204.9.70:3333/images/2019/09/24/6e56f6e70c9525b7699421782a6239cd.png")
+        });
+        //关闭模板
+        $(".outTpl").on('click',function () {
+            $(".allControlTemplate").hide(500);
+            $(".statusSearchTemplate").hide(500);
+            $(".singleControlTemplate").hide(500);
+        });
+        $(".cancelBtn").on('click',function () {
+            $(".allControlTemplate").hide(500);
+            $(".singleControlTemplate").hide(500);
+        });
+        $(".saveBtn").on('click',function () {
+            $(".allControlTemplate").hide(500);
+            $(".singleControlTemplate").hide(500);
+        });
+        $(".statusSearchBtn").on('click',function () {
+            $(".statusSearchTemplate").show(500);
+        });
+        $(".plControl").on('click',function () {
+            $(".allControlTemplate").show(500);
+        });
+        $(".dgControl").on('click',function () {
+            $(".singleControlTemplate").show(500);
+        });
+        let tempCount =$(".tempNumber").text();
+        //控制温度
+        $(".reduce").on("click",function () {
+            if(tempCount > 16){
+                tempCount = tempCount - 1;
+            }
+            $(".tempNumber").text(tempCount);
+        });
+        $(".add").on("click",function () {
+            if(tempCount < 30){
+                tempCount = parseInt(tempCount) + 1;
+            }
+            $(".tempNumber").text(tempCount);
+        });
+
+       // let tempCount1 =$(".tempNumber1").text();
+        //控制温度
+        $(".reduce1").on("click",function () {
+            if(vm1.temp > 16){
+                vm1.temp = vm1.temp - 1;
+            }
+          //  $(".tempNumber1").text(tempCount1);
+        });
+        $(".add1").on("click",function () {
+            if(vm1.temp < 30){
+                vm1.temp = parseInt(vm1.temp) + 1;
+            }
+            //$(".tempNumber1").text(tempCount1);
+        });
+        /*$("#menuSelect").change(function () {
+            getStatus();
+        })*/
+    });
+    function init(dataList){
+        vm1.menuList = dataList;
+    }
+    //单个控制开关，单个控制模式,单个控制温度，单个控制风速，单个查询状态
+    const singleControlOperation = [
+        {
+            operation:"swtich on_off",
+            type:["01","02"]//[{"key":"开机","value":"01"},{"key":"关机","value":"02"}]
+        },
+        {
+            operation:"mode control",
+            type:["01","08","02","04"]//01：表示制冷 ，08：表示送热，02：表示除湿，04：表示送风
+        },
+        {
+            operation:"temperature control"
+        },
+        {
+            operation:"Air speed control",
+            type:["01","02","04"]//[{"key":"高速","value":"01"},{"key":"中速","value":"02"},{"key":"低速","value":"04"}]
+        },
+        {
+            operation:"read status"
+        }];
+    //批量控制开关，批量控制模式,批量控制温度，批量控制风速
+    const allControlOperation = [
+        {
+            operation:"batch switch on-off",
+            type:["01","02"]//[{"key":"开机","value":"01"},{"key":"关机","value":"02"}]
+        },
+        {
+            operation:"batch mode control",
+            type:["01","08","02","04"]//01：表示制冷 ，08：表示送热，02：表示除湿，04：表示送风
+        },
+        {
+            operation:"batch temperature control"
+        },
+        {
+            operation:"batch speed control",
+            type:["01","02","04"]//[{"key":"高速","value":"01"},{"key":"中速","value":"02"},{"key":"低速","value":"04"}]
+        }];
+    const modeNameList = ["制冷","制热","除湿","新风"];
+    const speedNameList = ["高风","中风","低风"];
+    //单个控制参数
+    function getParams(index,typeIndex){
+        let menuAddress = $("#menuSelect").val();
+        let deviceAddress = menuAddress.toString().replace(/\s*/g,"");
+        console.log(deviceAddress);
+        let params = {};
+        params.operation = singleControlOperation[index].operation;
+        if(index == 0){//单个控制开关
+            if(typeIndex == 0){
+               // params.controlParams = "{p1:'01',p2:'"+menuAddress+"'}"//控制开机
+                params.controlParams = {p1:'01',p2:menuAddress}//控制开机
+                params.title = menuAddress + "开机";
+            }else {
+               // params.controlParams = "{p1:'02',p2:'"+menuAddress+"'}"//控制关机
+                params.controlParams = {p1:'02',p2:menuAddress}//控制关机
+                params.title = menuAddress + "关机";
+            }
+        }else if(index == 2){
+            let tempCount1 =parseInt(vm1.temp);
+            let temp = tempCount1.toString(16);
+            if(temp.length == 1){
+                temp = "0"+temp;
+            }
+           // params.controlParams = "{p1:'"+temp+"',p2:'"+menuAddress+"'}"//控制温度
+            params.controlParams = {p1:temp,p2:menuAddress}//控制温度
+            params.title = menuAddress + "温度"+tempCount1;
+        }else if(index == 4){
+            //params.controlParams = "{p1:'"+menuAddress+"'}"//查询状态
+            params.controlParams = {p1:menuAddress}//查询状态
+        } else {
+            if(index == 1){
+                params.title = menuAddress + modeNameList[typeIndex];
+            }else if(index == 3){
+                params.title = menuAddress + speedNameList[typeIndex];
+            }
+           // params.controlParams = "{p1:'"+singleControlOperation[index].type[typeIndex]+"',p2:'"+menuAddress+"'}"
+            params.controlParams = {p1:singleControlOperation[index].type[typeIndex],p2:menuAddress};
+        }
+        params.deviceAddress = deviceAddress + index;
+        window.parent.abdc(params);
+    }
+
+    //查询单个设备状态
+    function getStatus(){
+        vm1.isOn = false;
+        vm1.isModeOne = false;
+        vm1.isModeTwo = false;
+        vm1.isModeThree = false;
+        vm1.isModeFour = false;
+        vm1.isSpeedOne = false;
+        vm1.isSpeedTwo = false;
+        vm1.isSpeedThree = false;
+        console.log("vm1.isSpeedOne:" +vm1.isSpeedOne);
+        console.log("vm1.isSpeedTwo:" +vm1.isSpeedTwo);
+        console.log("vm1.isSpeedThree:" +vm1.isSpeedThree);
+        getParams(4, 0);
+    }
+
+    /**
+     * r1  01：表示开机 ，02：表示关机
+     * r2  设定温度反馈 10-1E ：十六进制对应十进制为（16-30℃）
+     * r3  01：表示制冷 ，08：表示送热，02：表示除湿,04：表示送风
+     * r4  01：表示高速 ，02：表示中速，04：表示低速
+     * r5  室内温度反馈 10-1E：十六进制对应十进制为（16-30℃）
+     * r6  故障代码 00 ：表示没有故障
+     */
+    function menuStatus(contentRes) {
+        console.log(contentRes);
+        if(contentRes.r1 === "01"){
+            vm1.isOn = true;
+        }else {
+            vm1.isOn = false;
+        }
+        vm1.temp = parseInt(contentRes.r2, 16);
+        if(contentRes.r3 === "01"){
+            vm1.isModeOne = true;
+        }else if(contentRes.r3 === "08"){
+            vm1.isModeTwo = true;
+        }else if(contentRes.r3 === "02"){
+            vm1.isModeThree = true;
+        }else if(contentRes.r3 === "04"){
+            vm1.isModeFour = true;
+        }
+        if(contentRes.r4 === "01"){
+            vm1.isSpeedOne = true;
+        }else if(contentRes.r4 === "02"){
+            vm1.isSpeedTwo = true;
+        }else if(contentRes.r4 === "04"){
+            vm1.isSpeedThree = true;
+        }
+    }
+    //获取到批量控制参数
+    function getAllParams(index,typeIndex){
+        let params = {};
+        params.operation = allControlOperation[index].operation;
+        if(index == 0){//批量控制开关机
+            if(typeIndex == 0){
+                //params.controlParams = "{p1:'01'}"//控制开机
+                params.title = "批量开机";
+            }else {
+                //params.controlParams = "{p1:'02'}"//控制关机
+                params.title = "批量关机";
+            }
+            params.controlParams = {p1:allControlOperation[index].type[typeIndex]};
+        }else if(index == 2){//批量控制温度
+            let tempCount =parseInt( $(".tempNumber").text());
+            let temp = tempCount.toString(16);
+            if(temp.length == 1){
+                temp = "0"+temp;
+            }
+           // params.controlParams = "{p1:'"+temp+"'}";//控制温度
+            params.controlParams = {p1:temp};//控制温度
+            params.title = "批量温度"+tempCount;
+        }else {
+            if(index == 1){
+                params.title = "批量" + modeNameList[typeIndex];
+            }else if(index == 3){
+                params.title = "批量" + speedNameList[typeIndex];
+            }
+            //params.controlParams = "{p1:'"+allControlOperation[index].type[typeIndex]+"'}"
+            params.controlParams = {p1:allControlOperation[index].type[typeIndex]};
+        }
+        params.deviceAddress = index;
+        window.parent.abdc(params);
+    }
+</script>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- import JavaScript -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+    //批量控制模板
+    let vm = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                value1:false,
+                menuList:[]
+            }
+        },
+        method:{
+        }
+    });
+    //单个控制模板
+    let vm1 = new Vue({
+        el: '#app1',
+        data: function() {
+            return {
+                value2:false,
+                menuList:[],
+                isOn:false,//是否开机
+                temp:17,//温度
+                isModeOne:false,//是否制冷
+                isModeTwo:false,//是否制热
+                isModeThree:false,//是否除湿
+                isModeFour:false,//是否送风
+                isSpeedOne:false,//是否高速
+                isSpeedTwo:false,//是否中速
+                isSpeedThree:false//是否低速
+            }
+        },
+        method:{
+
+        }
+    });
+</script>
+</html>

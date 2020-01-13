@@ -1,0 +1,85 @@
+{
+  "code": 0,
+  "message": "成功",
+  "currentTimeMillis": 1578889057252,
+  "messages": null,
+  "data": {
+    "total": 4,
+    "list": [
+      {
+        "id": "d6600ec3ec7c4e759c6f98c79225eefc",
+        "userName": "测试",
+        "loginName": "guest",
+        "userMobile": "111",
+        "userEmail": "111@111.com",
+        "disableFlag": 0,
+        "createDate": "2020-01-06 09:47:50",
+        "roleId": "e46d6f892a114cc19b7a514a3f5822db",
+        "roleName": "ceshi ",
+        "organizationId": "a0d15c67dffc4d3c9448918c454d16e8",
+        "organizationName": "常熟支行",
+        "isSendMsg": 0
+      },
+      {
+        "id": "88bcc3e3586c4d0ab642f4b8266eae63",
+        "userName": "苏州管理员",
+        "loginName": "szgly",
+        "userMobile": "18904285777",
+        "userEmail": "2673238@qq.com",
+        "disableFlag": 0,
+        "createDate": "2019-12-26 14:46:43",
+        "roleId": "90f4596e62124883b4ac435bd1f4527a",
+        "roleName": "苏州分行管理员",
+        "organizationId": "c7be2ef4f2dc43cb8510acd3f0fc1c31",
+        "organizationName": "苏州分行",
+        "isSendMsg": 1
+      },
+      {
+        "id": "64a5804e074b4098a9522b377120e12b",
+        "userName": "苏州分行管理员",
+        "loginName": "szfh",
+        "userMobile": "18904285777",
+        "userEmail": "2673238@qq.com",
+        "disableFlag": 0,
+        "createDate": "2019-12-10 09:18:31",
+        "roleId": "90f4596e62124883b4ac435bd1f4527a",
+        "roleName": "苏州分行管理员",
+        "organizationId": "c7be2ef4f2dc43cb8510acd3f0fc1c31",
+        "organizationName": "苏州分行",
+        "isSendMsg": 1
+      },
+      {
+        "id": "3d53bb8fc0cd441b9609a8f609a4c4ff",
+        "userName": "常熟管理员",
+        "loginName": "csgly",
+        "userMobile": "18904285777",
+        "userEmail": "2673238@qq.com",
+        "disableFlag": 0,
+        "createDate": "2019-12-09 15:18:02",
+        "roleId": "df4fe1ca9b6e4f11bc81bcb9c810c2fa",
+        "roleName": "常熟管理员",
+        "organizationId": "a0d15c67dffc4d3c9448918c454d16e8",
+        "organizationName": "常熟支行",
+        "isSendMsg": 1
+      }
+    ],
+    "pageNum": 1,
+    "pageSize": 10,
+    "size": 4,
+    "startRow": 1,
+    "endRow": 4,
+    "pages": 1,
+    "prePage": 0,
+    "nextPage": 0,
+    "isFirstPage": true,
+    "isLastPage": true,
+    "hasPreviousPage": false,
+    "hasNextPage": false,
+    "navigatePages": 8,
+    "navigatepageNums": [
+      1
+    ],
+    "navigateFirstPage": 1,
+    "navigateLastPage": 1
+  }
+}

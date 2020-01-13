@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="utf-8">
+		<link rel="shortcut icon" href="../images/logoIcon.png" type="image/icon" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<title>【光大银行】智慧综合管理系统</title>
+		<link href="../css/bootstrap.min.css" rel="stylesheet">
+		<link href="../css/font-awesome.min.css" rel="stylesheet">
+		<link href="../css/materialdesignicons.min.css" rel="stylesheet">
+		<link href="../css/style.min.css" rel="stylesheet">
+		<link href="../plus/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+		<link href="../css/bootstrap-treeview.css" rel="stylesheet">
+		<link href="../css/commonStyle.css" rel="stylesheet">
+
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+		<script src="../plus/bootstrap-table/bootstrap-table.min.js"></script>
+		<script src="../plus/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+		<script src="../plus/layer/layer.js"></script>
+		<script src="../js/template-web.js"></script>
+		<script src="../plus/validate/jquery.validate.min.js"></script>
+		<script src="../plus/validate/messages_zh.min.js"></script>
+		<script src="../js/bootstrap-treeview.js"></script>
+
+		<script src="../js/httpUtils.js"></script>
+		<script src="../js/Md5.js"></script>
+		<style>
+			.bootstrap-table .fixed-table-container .fixed-table-body .fixed-table-loading {
+				display: none;
+			}
+
+			.userFooter {
+				position: absolute;
+				width: 100%;
+				bottom: 0;
+				left: 0;
+				/*z-index: 9999;*/
+			}
+
+			#modelWin {
+				width: 60%;
+			}
+
+			.MarginPx {
+				margin: 15px 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="lyear-layout-web">
+			<div class="lyear-layout-container">
+
+				<!--加载头部和菜单栏-->
+				<div id="hander">
+					<script>
+						$(function() {
+							$("#hander").load("handMenu.html");
+						})
+					;
+					</script>
+				</div>
+
+				<!--页面主要内容-->
+				<main class="lyear-layout-content" style="display: none">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="card">
+									<div class="card-header">
+										<h4>空开配置管理</h4>
+									</div>
+									<div class="card-body">
+
+										<div class="ibox float-e-margins">
+											<div class="ibox-content row">
+												<div class="col-lg-3">
+													<div class="form-group">
+														<label class="form-label" for="s_deviceMac">设备Mac：</label>
+														<input class="form-control" name="s_deviceMac" id="s_deviceMac" placeholder="设备Mac" type="text">
+													</div>
+												</div>
+												<div class="col-lg-3">
+													<div class="form-group">
+														<label class="form-label" for="s_deviceName">设备名：</label>
+														<input class="form-control" name="s_deviceName" id="s_deviceName" placeholder="设备名" type="text">
+													</div>
+												</div>
+												<div class="col-lg-3">
+													<div class="form-group">
+														<label class="form-label" for="s_menuName">按键名称：</label>
+														<input class="form-control" name="s_menuName" id="s_menuName" placeholder="按键名称" type="text">
+													</div>
+												</div>
+												<div class="col-lg-1">
+													<div class="form-group">
+														<div id="buttons1" style="margin-top: 24px;">
+															<button type="button" class="btn btn-purple" id="clean"><i class="fa fa-eraser"></i> 清空</button>
+														</div>
+													</div>
+												</div>
+												<div class="col-lg-1">
+													<div class="form-group">
+														<div id="buttons2" style="margin-top: 24px;">
+															<button type="button" class="btn btn-success" id="search"><i class="fa fa-search"></i> 查询</button>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="ibox-content">
+												<!--页面内容部分-->
+												<!-- 这里写内容 -->
+												<div id="buttons">
+													<button type="button" class="btn btn-primary" id="batchUpdate"><i class="fa fa-plus"></i> 批量修改</button>
+												</div>
+												<div id="myTable">
+												</div>
+											</div>
+
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</main>
+				<!--End 页面主要内容-->
+			</div>
+		</div>
+		<!--加载底部-->
+		<div id="footer" class="userFooter">
+			<script type="text/javascript">
+				$(function() {
+					$("#footer").load("footer.html");
+				});
+			</script>
+		</div>
+		<div id="loadDiv"></div>
+	</body>
+
+	<script>
+		var html;
+		var rdata = {};
+		$(function() {
+			$.show_overall_loding();
+			initTable();
+			function initTable() {
+				$('#myTable').bootstrapTable({
+					url: deviceServiceUrl + "/device/getAllSwitchMenuList", //请求后台的URL（*）
+					//data: data1,                            //本地数据
+					method: 'get', //请求方式（*）
+					contentType: "application/x-www-form-urlencoded",
+					toolbar: '', //工具按钮用哪个容器
+					striped: true, //是否显示行间隔色
+					cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+					pagination: true, //是否显示分页（*）
+					sortable: false, //是否启用排序
+					sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
+					pageNumber: 1, //初始化加载第一页，默认第一页
+					pageSize: 10, //每页的记录行数（*）
+					pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
+					queryParamsType: '',
+					queryParams: select_queryParams, //传递参数（*）
+					strictSearch: true,
+					// height: 500,                            //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+					uniqueId: "id", //每一行的唯一标识，一般为主键列
+					cardView: false, //是否显示详细视图
+					detailView: false, //是否显示父子表
+					clickToSelect: true, //点击行是否选中
+					responseHandler: function (data) {
+						let res = [];
+						if (data.code == 0) {
+							let result = data.data;
+							rdata = result.list;
+							res.push({
+								total: result.total,
+								rows: result.list
+							});
+							$.hide_overall_loding();
+							return res[0];
+						} else {
+							res.push({
+								total: 0,
+								rows: []
+							});
+							layer.msg("获取数据失败！", {icon: 2});
+							$.hide_overall_loding();
+							return res[0];
+						}
+					},
+					onLoadSuccess: function () {
+						$.hide_overall_loding();
+					},
+					onDblClickRow: function (row) {
+						console.info(row);
+					},
+					columns: [{
+						checkbox: true
+					}, {
+						width: 50,
+						title: '序号',
+						formatter: function(value, row, index) {
+							return index + 1;
+						}
+					}, {
+						field: 'organizationName',
+						title: '组织机构',
+						width: 200
+					}, {
+						field: 'deviceAlias',
+						title: '设备名称',
+						width: 200
+					}, {
+						field: 'deviceMac',
+						title: '设备MAC',
+						width: 250
+					}, {
+						field: 'deviceAddress',
+						title: '按键地址',
+						width: 200
+					}, {
+						field: 'menuName',
+						title: '按键名称',
+						width: 200
+					}, {
+						field: 'lineI',
+						title: '线路电流',
+						width: 200
+					}, {
+						field: 'temperature',
+						title: '线路温度',
+						width: 200
+					}, {
+						field: 'leakageI',
+						title: '漏电电流',
+						width: 200
+					}, {
+						field: 'lineP',
+						title: '线路功率',
+						width: 200
+					}, {
+						field: 'lineVBottom',
+						title: '线路电压低',
+						width: 200
+					}, {
+						field: 'lineVTop',
+						title: '电流电压高',
+						width: 200
+					},{
+						title: "操作",
+						width: 300,
+						clickToSelect: false,
+						formatter: function(i1, i2, i3) {
+							var str =
+									'<button data-toggle="tooltip" title="编辑" type="button" onclick="tabEdit(' + i3 + ');" class="btn btn-warning tableButton"><i class="fa fa-pencil-square"></i></button>'
+									+'<button data-toggle="tooltip" title="删除" type="button" onclick="tabRemove(' + i3 + ');" class="btn btn-danger tableButton"><i class="fa fa-trash-o"></i></button>';
+							return str;
+						},
+						cellStyle: function() {
+							return {
+								classes: "",
+								css: {
+									"text-align": "center"
+								}
+							}
+						}
+					}]
+				});
+			}
+			function select_queryParams(params) {
+				return {
+					token: $.getToken(),
+					pageSize: params.pageSize,
+					pageNum: params.pageNumber,
+					deviceMac:$("#s_deviceMac").val(),
+					deviceName:$("#s_deviceName").val(),
+					menuName:$("#s_menuName").val()
+				};
+			}
+
+			$("#search").click(function() {
+				$.show_overall_loding();
+				//$('#myTable').bootstrapTable('refresh');
+				$("#myTable").bootstrapTable('destroy');
+				initTable();
+			});
+
+			$("#clean").click(function() {
+				$.show_overall_loding();
+				$("#s_deviceMac").val("");
+				$("#s_deviceName").val("");
+				$("#s_menuName").val("");
+				$("#search").trigger("click");
+			});
+		})
+
+		$("#batchUpdate").click(function () {
+			let rows = $("#myTable").bootstrapTable("getSelections");
+			if (rows.length === 0) {
+				layer.msg("请至少选择一条数据", {
+					icon: 2
+				});
+				return;
+			}
+			showModel("批量修改",1,-1);
+		})
+
+		function tabEdit(index) {
+			showModel("单个修改",2,index);
+		}
+
+		function tabRemove(index) {
+			let dangerConfirm = layer.confirm("是否删除该设备设定的标准值？",["确定","取消"],function () {
+				layer.close(dangerConfirm);
+				let selectData = $("#myTable").bootstrapTable("getData")[index];
+				if (!selectData.airSwitchStandardId) {
+					layer.msg("该设备未设置按键标准值",{icon:2});
+					return;
+				}
+				$.show_overall_loding();
+				$.sanjiGetJSON(deviceServiceUrl + "/airSwitchStandard/delete",{id:selectData.airSwitchStandardId},function (res) {
+					$.hide_overall_loding();
+					if(res.code == 0) {
+						layer.msg("成功", {
+							icon: 1
+						});
+						$.show_overall_loding();
+						$('#myTable').bootstrapTable('refresh');
+						return;
+					}
+					layer.msg("操作失败", {
+						icon: 2
+					});
+				});
+			})
+		}
+
+		function showModel(title,flag,index) {
+			html = template("modelWin", {
+				title: title
+			});
+			var myLayer = layer.open({
+				skin: 'card', //自定义样式winning-class
+				type: 1,
+				title: [title, ""],
+				area: ['650px', '420px'], //宽高
+				resize: true, //是否拉升
+				offset: 'auto', //居中
+				content: html,
+				btn: ['提交', '取消'],
+				yes: function(index, layero) {
+					$("#airSwitchStandardForm").submit();
+				},
+				success: function(layero) {
+					if (flag != 1) {//单个修改
+						let selectData = $("#myTable").bootstrapTable("getData")[index];
+						$("#temperature").val(selectData.temperature);
+						$("#lineI").val(selectData.lineI);
+						$("#lineP").val(selectData.lineP);
+						$("#leakageI").val(selectData.leakageI);
+						$("#lineVBottom").val(selectData.lineVBottom);
+						$("#lineVTop").val(selectData.lineVTop);
+					}
+				}
+			});
+			var validate = $("#airSwitchStandardForm").validate({
+				rules: {
+					temperature: {
+						number: true
+					},
+					leakageI: {
+						number: true
+					},
+					lineVBottom: {
+						number: true
+					},
+					lineVTop: {
+						number: true
+					},
+					lineI: {
+						number: true
+					},
+					lineP: {
+						number: true
+					}
+				},
+				messages: {
+					temperature: {
+						number: "温度指标必须填写数字"
+					},
+					leakageI: {
+						number: "漏电电流指标必须填写数字"
+					},
+					lineVBottom: {
+						number: "线路电压指标必须填写数字"
+					},
+					lineVTop: {
+						number: "线路电压指标必须填写数字"
+					},
+					lineI: {
+						number: "线路电流指标必须填写数字"
+					},
+					lineP: {
+						number: "线路功率指标必须填写数字"
+					}
+				},
+				submitHandler: function(form) {
+					let updateData = $("#airSwitchStandardForm").serializeJson();
+					if (flag === 1) {//批量修改或添加
+						batchUpdate(updateData,myLayer)
+					}else{
+						singleUpdate(updateData,myLayer,index);
+					}
+				}
+			});
+		}
+
+		function singleUpdate(updateData,myLayer,index) {
+			updateData.menuList = [];
+			let selectData = $("#myTable").bootstrapTable("getData")[index];
+			let item = {};
+			item.id = selectData.id;
+			item.airSwitchStandardId = selectData.airSwitchStandardId;
+			updateData.menuList.push(item);
+			$.show_overall_loding();
+			$.putJSON(deviceServiceUrl + "/airSwitchStandard/batchUpdate", updateData, function(data) {
+				$.hide_overall_loding();
+				if(data.code == 0) {
+					layer.close(myLayer);
+					layer.msg("成功", {
+						icon: 1
+					});
+					$.show_overall_loding();
+					$('#myTable').bootstrapTable('refresh');
+					return true;
+				}
+				layer.msg("操作失败", {
+					icon: 2
+				});
+			});
+		}
+
+		function batchUpdate(updateData,myLayer) {
+			updateData.menuList = [];
+			let rows = $("#myTable").bootstrapTable("getSelections");
+			for (let i = 0; i < rows.length; i++) {
+				let item = {};
+				item.id = rows[i].id;
+				item.airSwitchStandardId = rows[i].airSwitchStandardId;
+				updateData.menuList.push(item);
+			}
+			$.show_overall_loding();
+			$.putJSON(deviceServiceUrl + "/airSwitchStandard/batchUpdate", updateData, function(data) {
+				$.hide_overall_loding();
+				if(data.code == 0) {
+					layer.close(myLayer);
+					layer.msg("成功", {
+						icon: 1
+					});
+					$.show_overall_loding();
+					$('#myTable').bootstrapTable('refresh');
+					return true;
+				}
+				layer.msg("操作失败", {
+					icon: 2
+				});
+			});
+		}
+	</script>
+
+	<!--新增修改模板-->
+	<script type="text/html" id="modelWin">
+		<section class="openDetail" style="width: 95%;">
+			<div class="panel-body">
+				<form id="airSwitchStandardForm">
+					<input type="hidden" name="id" id="airQualityId" />
+					<div class="layui-row layui-col-space10 layui-form-item">
+						<div class="col-lg-6 MarginPx">
+							<label class="layui-form-label" style="width: 33%;">温度指标:</label>
+							<div class="layui-input-block">
+								<input class="form-control" id="temperature" name="temperature" type="text" value="60" placeholder="温度大于指标变色">
+							</div>
+						</div>
+						<div class="col-lg-6 MarginPx" >
+							<label class="layui-form-label" style="width: 33%;">漏电电流指标:</label>
+							<div class="layui-input-block">
+								<input class="form-control" id="leakageI" name="leakageI" type="text" value="30" placeholder="漏电电流：单位mA">
+							</div>
+						</div>
+						<div class="col-lg-6 MarginPx">
+							<label class="layui-form-label" style="width: 33%;">线路电流指标:</label>
+							<div class="layui-input-block">
+								<input class="form-control" id="lineI" name="lineI" type="text" value="50" placeholder="线路电流指标,单位A">
+							</div>
+						</div>
+						<div class="col-lg-6 MarginPx">
+							<label class="layui-form-label" style="width: 33%;">线路功率指标:</label>
+							<div class="layui-input-block">
+								<input class="form-control" id="lineP" name="lineP" type="text" value="1000" placeholder="线路功率：单位W">
+							</div>
+						</div>
+						<div class="col-lg-6 MarginPx" >
+							<label class="layui-form-label" style="width: 33%;">电压低指标:</label>
+							<div class="layui-input-block">
+								<input class="form-control" id="lineVBottom" name="lineVBottom" type="text" value="220" placeholder="线路电压：单位V">
+							</div>
+						</div>
+						<div class="col-lg-6 MarginPx" >
+							<label class="layui-form-label" style="width: 33%;">电压高指标:</label>
+							<div class="layui-input-block">
+								<input class="form-control" id="lineVTop" name="lineVTop" type="text" value="220" placeholder="线路电压：单位V">
+							</div>
+						</div>
+					</div>
+
+				</form>
+			</div>
+		</section>
+	</script>
+
+
+
+</html>
