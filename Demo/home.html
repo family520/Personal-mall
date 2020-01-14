@@ -15,9 +15,10 @@
 <!--    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
     <!-- 引入组件库 -->
 <!--    <script src="https://unpkg.com/element-ui/lib/index.js"></script>-->
-</head>
+
 <body>
 <header>
+    <span id="btn"></span>
     <img src="img/logo.png" alt="">
     <span>S-API 应用输出</span>
 </header>
@@ -432,6 +433,43 @@
 
 
 </script>
+
+<script>
+
+    $(function () {
+
+        $("#btn").click(function () {
+
+            // console.log(document.documentElement.RequestFullScreen);
+            if (document.documentElement.RequestFullScreen) {
+                document.documentElement.RequestFullScreen();
+            }
+            //兼容火狐
+            // console.log(document.documentElement.mozRequestFullScreen);
+            if (document.documentElement.mozRequestFullScreen) {
+                document.documentElement.mozRequestFullScreen();
+            }
+            //兼容谷歌等可以webkitRequestFullScreen也可以webkitRequestFullscreen
+            // console.log(document.documentElement.webkitRequestFullScreen);
+            if (document.documentElement.webkitRequestFullScreen) {
+                document.documentElement.webkitRequestFullScreen();
+            }
+            //兼容IE,只能写msRequestFullscreen
+            // console.log(document.documentElement.msRequestFullscreen);
+            if (document.documentElement.msRequestFullscreen) {
+                document.documentElement.msRequestFullscreen();
+            }
+        });
+
+        $("#btn").click();
+
+
+    })
+
+
+
+</script>
+</head>
 
 </body>
 
