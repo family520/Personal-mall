@@ -11,6 +11,7 @@ html, body {
     position: relative;
     background-color: rgb(0, 0, 30);
     font-family: "MicrosoftYaHei";
+    height: 100%;
 }
 html {
     font-size: calc(100vw * 100 / 1920);
@@ -360,7 +361,7 @@ header img{
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,255,0.1);
+    background-color: rgba(0,0,0,0.5);
 }
 .template .scMinBox{
     position: absolute;
@@ -402,11 +403,11 @@ header img{
 .template .scContent .scLeft{
     width: 66%;
     height: 100%;
-    padding: 0.5rem 0.1rem;
+    padding:0.1rem;
 }
 .template .scContent .scLeft img{
     width: 100%;
-    height: 100%;
+    /*height: 100%;*/
 }
 .template .scContent .scRight{
     padding-left: 0.05rem;
@@ -425,15 +426,15 @@ header img{
     margin: 0.2rem 0;
     /*font-weight: bold;*/
 }
-.template .scContent .scRight .bofore:before{
-    content: "";
-    position: absolute;
-    top:15%;
-    left: 0;
-    width: 0.02rem;
-    height: 70%;
-    background: #2783FB;
-}
+/*.template .scContent .scRight .bofore:before{*/
+/*    content: "";*/
+/*    position: absolute;*/
+/*    top:15%;*/
+/*    left: 0;*/
+/*    width: 0.02rem;*/
+/*    height: 70%;*/
+/*    background: #2783FB;*/
+/*}*/
 .template .scContent .scRight .smImg{
     width: 0.87rem;
     height: 0.87rem;
@@ -456,4 +457,9 @@ header img{
     border-radius: 0.05rem;
     outline: none;
     cursor: pointer;
+}
+/*项目名称*/
+.scName{
+
+    width: 1.8rem!important;
 }

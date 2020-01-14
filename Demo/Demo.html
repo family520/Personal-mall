@@ -41,7 +41,7 @@
             </div>
             <div style="display: none">
                 <ul class="yycxUl">
-                    <li v-for="(item,index) in sysList" :key="index" @click="imgBtn(index)" >
+                    <li v-for="(item,index) in sysList" :key="index" @click="imgBtn(index),isName(item.name)" >
                         <div class="boxImg">
                             <img :src="item.imgUrl" alt="">
                         </div>
@@ -62,19 +62,19 @@
     <div class="title">页面</div>
     <ul id="app">
         <li v-for="(item,index) in secondData" :key="index" >
-            <input :id="index" :disabled="item.isReadonly" class="checkInput" @click="addNavData(index)" :checked="item.isCheck" type="checkbox">
+            <input :id="index" :disabled="item.isReadonly" class="checkInput" @click="addNavData(index,'',item.isReadonly)" :checked="item.isCheck" type="checkbox">
             <label :for="index" :class="{ sm : item.isReadonly}"></label>
-            <input class="inputBox" readonly type="text" :value="item.name">
+            <input class="inputBox" readonly type="text" :value="item.name" @click="addNavData(index,'',item.isReadonly)">
             <button class="saveBtn" :value="index">保存</button>
             <img  class="updateImg" src="img/303.png" alt="" v-show="!item.isCheck">
         </li>
     </ul>
     <div class="rightBottomBox">
-        <span class="imgBox">
+        <span class="imgBox ylBtn">
             <img src="img/101.png" alt="">
             <span class="imgTitle ylBtn">预览</span>
         </span>
-        <span class="imgBox">
+        <span class="imgBox scBtn">
             <img src="img/202.png" alt="">
             <span class="imgTitle scBtn">输出</span>
         </span>
@@ -100,18 +100,20 @@
                 <img src="img/666.png" alt="">
             </div>
             <div class="scRight">
-                <p>项目名称:<span class="scName">智慧办公</span></p>
+                <p>项目名称：
+                    <input class="scName" type="text" value="智慧办公">
+                </p>
                 <p>
-                    创建时间:<span class="nowTime"  style="margin-left: 0.05rem"></span>
+                    创建时间：<span class="nowTime"  style="margin-left: 0.05rem"></span>
                 </p>
                 <p class="">
-                    <span>账号:<span style="margin-left: 0.05rem">admin</span></span>
-                    <span style="margin-left: 0.12rem">密码:<span style="margin-left: 0.05rem">admin</span></span>
+                    <span>账号：<span style="margin-left: 0.05rem" id="admin">admin</span></span>
+                    <span style="margin-left: 0.12rem">密码：<span style="margin-left: 0.05rem" id="password">admin</span></span>
                 </p>
                 <p class="bofore">链接分享</p>
                 <p>
-                    <input type="text" placeholder="www.demo.com">
-                    <button>复制</button>
+                    <input type="text" value="" id="link">
+                    <button id="copy">复制</button>
                 </p>
                 <button class="ylBtn">预览</button>
             </div>
@@ -164,14 +166,78 @@
                     icon:"img/allIcon/weixiuguanli.png",
                     name:"维修管理",
                     isCheck:false,
-                    iframeUrl:"htmls/weixiuguanli/header.html"
+                    iframeUrl:"htmls/chanpinuanli/header.html"
                 },
+
                 {
                     code:"131",
-                    icon:"img/allIcon/weixiuguanli.png",
+                    icon:"img/allIcon/jichuguanli.png",
                     name:"基础管理",
                     isCheck:false,
                     iframeUrl:"htmls/jichuguanli/header.html"
+                },
+                {
+                    code:"132",
+                    icon:"img/allIcon/wuliaoguanli.png",
+                    name:"物料管理",
+                    isCheck:false,
+                    iframeUrl:"htmls/wuliaoguanli/header.html"
+                },
+                {
+                    code:"133",
+                    icon:"img/allIcon/chanpinguanli.png",
+                    name:"产品管理",
+                    isCheck:false,
+                    iframeUrl:"htmls/wuliaoguanli/header.html"
+                },
+                {
+                    code:"134",
+                    icon:"img/allIcon/gongxuguanli.png",
+                    name:"工序管理",
+                    isCheck:false,
+                    iframeUrl:"htmls/gongxuguanli/header.html"
+                },
+                {
+                    code:"134",
+                    icon:"img/allIcon/zuoyezhidaoshuguanli.png",
+                    name:"作业指导书管理",
+                    isCheck:false,
+                    iframeUrl:"htmls/zuoyezhidaoshuguanli/header.html"
+                },
+                {
+                    code:"134",
+                    icon:"img/allIcon/chejianguanli.png",
+                    name:"车间管理",
+                    isCheck:false,
+                    iframeUrl:"htmls/chejianguanli/header.html"
+                },
+                {
+                    code:"135",
+                    icon:"img/allIcon/shengchanpaichanguanli.png",
+                    name:"生产排产管理",
+                    isCheck:false,
+                    iframeUrl:"htmls/shengchanpaichanguanli/header.html"
+                },
+                {
+                    code:"136",
+                    icon:"img/allIcon/shengchanrenwuguanli.png",
+                    name:"生产任务管理",
+                    isCheck:false,
+                    iframeUrl:"htmls/shengchanrenwuguanli/header.html"
+                },
+                {
+                    code:"137",
+                    icon:"img/allIcon/kucunguanli.png",
+                    name:"库存管理",
+                    isCheck:false,
+                    iframeUrl:"htmls/kucunguanli/header.html"
+                },
+                {
+                    code:"138",
+                    icon:"img/allIcon/chejiankanban.png",
+                    name:"车间看板",
+                    isCheck:false,
+                    iframeUrl:"htmls/chejiankanban/header.html"
                 },
                 {
                     code:"110",
@@ -339,6 +405,112 @@
             ],
             // 系统列表
             sysList:[
+                {
+                    ids:"015",
+                    name:"智慧工厂",
+                    imgUrl:"img/zhimg/zhgc.jpg",
+                    dataList:[
+                        {
+                            code:"131",
+                            icon:"img/allIcon/jichuguanli.png",
+                            name:"基础管理",
+                            isCheck:false,
+                            iframeUrl:"htmls/jichuguanli/header.html"
+                        },
+                        {
+                            code:"132",
+                            icon:"img/allIcon/wuliaoguanli.png",
+                            name:"物料管理",
+                            isCheck:false,
+                            iframeUrl:"htmls/wuliaoguanli/header.html"
+                        },
+                        {
+                            code:"133",
+                            icon:"img/allIcon/chanpinguanli.png",
+                            name:"产品管理",
+                            isCheck:false,
+                            iframeUrl:"htmls/wuliaoguanli/header.html"
+                        },
+                        {
+                            code:"134",
+                            icon:"img/allIcon/gongxuguanli.png",
+                            name:"工序管理",
+                            isCheck:false,
+                            iframeUrl:"htmls/gongxuguanli/header.html"
+                        },
+                        {
+                            code:"134",
+                            icon:"img/allIcon/zuoyezhidaoshuguanli.png",
+                            name:"作业指导书管理",
+                            isCheck:false,
+                            iframeUrl:"htmls/zuoyezhidaoshuguanli/header.html"
+                        },
+                        {
+                            code:"134",
+                            icon:"img/allIcon/chejianguanli.png",
+                            name:"车间管理",
+                            isCheck:false,
+                            iframeUrl:"htmls/chejianguanli/header.html"
+                        },
+                        {
+                            code:"135",
+                            icon:"img/allIcon/shengchanpaichanguanli.png",
+                            name:"生产排产管理",
+                            isCheck:false,
+                            iframeUrl:"htmls/shengchanpaichanguanli/header.html"
+                        },
+                        {
+                            code:"136",
+                            icon:"img/allIcon/shengchanrenwuguanli.png",
+                            name:"生产任务管理",
+                            isCheck:false,
+                            iframeUrl:"htmls/shengchanrenwuguanli/header.html"
+                        },
+                        {
+                            code:"137",
+                            icon:"img/allIcon/kucunguanli.png",
+                            name:"库存管理",
+                            isCheck:false,
+                            iframeUrl:"htmls/kucunguanli/header.html"
+                        },
+                        {
+                            code:"138",
+                            icon:"img/allIcon/chejiankanban.png",
+                            name:"车间看板",
+                            isCheck:false,
+                            iframeUrl:"htmls/chejiankanban/header.html"
+                        },
+                    ],
+                },
+                {
+                    ids:"014",
+                    name:"智慧银行",
+                    imgUrl:"img/zhimg/zhyh.jpg",
+                    dataList:[
+
+                        {
+                            code:"110",
+                            icon:"img/allIcon/peizhiguanli.png",
+                            name:"配置管理",
+                            isCheck:false,
+                            iframeUrl:"htmls/peizhiguanli/header.html"
+                        },
+                        {
+                            code:"111",
+                            icon:"img/allIcon/shebeimoshiguanli.png",
+                            name:"设备模式管理",
+                            isCheck:false,
+                            iframeUrl:"office-ui/html/modeManage.html"
+                        },
+                        {
+                            code:"114",
+                            icon:"img/allIcon/weixiuguanli.png",
+                            name:"维修管理",
+                            isCheck:false,
+                            iframeUrl:"htmls/weixiuguanli/header.html"
+                        }
+                    ],
+                },
                 {
                     ids:"100",
                     name:"智慧办公",
@@ -938,41 +1110,14 @@
                         }
                     ],
                 },
-                {
-                    ids:"014",
-                    name:"智慧银行",
-                    imgUrl:"img/zhimg/zhxy.jpg",
-                    dataList:[
 
-                        {
-                            code:"110",
-                            icon:"img/allIcon/peizhiguanli.png",
-                            name:"配置管理",
-                            isCheck:false,
-                            iframeUrl:"htmls/peizhiguanli/header.html"
-                        },
-                        {
-                            code:"111",
-                            icon:"img/allIcon/shebeimoshiguanli.png",
-                            name:"设备模式管理",
-                            isCheck:false,
-                            iframeUrl:"office-ui/html/modeManage.html"
-                        },
-                        {
-                            code:"114",
-                            icon:"img/allIcon/weixiuguanli.png",
-                            name:"维修管理",
-                            isCheck:false,
-                            iframeUrl:"htmls/weixiuguanli/header.html"
-                        }
-                    ],
-                }
             ],
             //二级数据
             secondData:[],
             //子页面数据包
             number:null,
-            xxData : [] //选中的数据包
+            xxData : [], //选中的数据包
+            isBankOrFactory : "",
         },
         mounted(){
             this.secondData = [
@@ -1080,7 +1225,7 @@
         },
         methods: {
             //点击左侧
-            imgBtn: function (index,container) {
+            imgBtn: function (index,container,name) {
                 //点击系统的时候
                 if(!container){
                     this.value = index;
@@ -1133,11 +1278,23 @@
 
             },
 
+            isName(name){
+                if(name === "智慧银行"){
+                    this.isBankOrFactory = "bank";
+                }else if(name === "智慧工厂"){
+                    this.isBankOrFactory = "factory";
+                }else {
+                    this.isBankOrFactory = "";
+                }
+            },
+
             //点击右侧
-            addNavData(index,changeName){
+            addNavData(index,changeName,isReadonly){
             
 
                 if(!changeName){
+
+                    if(isReadonly) return;
 
                     this.secondData[index].isCheck = !this.secondData[index].isCheck;
 
@@ -1214,10 +1371,18 @@
 <script>
     $(function () {
 
+        //修改项目名称
+        $("body").on("blur",".scName",function () {
+            let storage = window.localStorage;
+            let scName = $(this).val();
+            storage.setItem('projectName',scName);
+        })
+
+
         $("#upload").change(function () {
             let f = document.getElementById('upload').files[0];
             let src = window.URL.createObjectURL(f);
-            console.log(src);
+            // console.log(src);
             one.logoUrl = src;
         });
         //左边table切换
@@ -1283,23 +1448,57 @@
 
         //弹出模板
         $(".scBtn").on("click",function () {
-            console.log($(".scName").text());
-            console.log(localStorage.getItem("projectName"));
-            $(".scName").text(localStorage.getItem("projectName"));
+            // console.log($(".scName").text());
+            // console.log(localStorage.getItem("projectName"));
+            $(".scName").val(localStorage.getItem("projectName"));
+            if(one.isBankOrFactory === "factory"){
+                $("#admin").text('admin');
+                $("#password").text('mess_2019');
+                $("#link").val("http://119.3.172.164/#/login")
+            }else if(one.isBankOrFactory === "bank"){
+                $("#admin").text('hex');
+                $("#password").text('000000');
+                $("#link").val("http://222.182.202.100:6612/html/login.html")
+            }else {
+                $("#admin").text('admin');
+                $("#password").text('admin');
+                // var url=encodeURI('centerHtml.html?name=' + one.name+"&&login=true");
+                let url = document.location.href.replace("Demo.html",'');
+                $("#link").val(url+'centerHtml.html?name=' + one.name+"&&login=true")
+                // window.open(url + 'centerHtml.html?name=' + one.name+"&&login=true");
+                // $("#link").val("www.demo.com")
+
+            }
             $(".scBox").show();
         });
         $(".outImg").on("click",function () {
             $(".scBox").hide();
         });
 
+        // 复制
+        $("#copy").on("click",function(){
+            //获取input对象
+            var obj = document.getElementById("link");
+            //选择当前对象
+            obj.select();
+        });
+
         //预览
         $(".ylBtn").on("click",function () {
             // console.log(one.name);
             // window.location.href="centerHtml.html";
-            var url=encodeURI('centerHtml.html?name=' + one.name+"&&login=true");
-            // window.location.href=url;
-            window.open(url);
+            // console.log(one.isBankOrFactory);
+            if(one.isBankOrFactory === "factory"){
+                window.open("http://119.3.172.164/#/login");
+            }else if(one.isBankOrFactory === "bank"){
+                window.open("http://222.182.202.100:6612/html/login.html")
+            }else {
+                var url=encodeURI('centerHtml.html?name=' + one.name+"&&login=true");
+                window.open(url);
+            }
+
         });
+
         window.onload = function () {
             document.cookie = $("body .name").text();
         }

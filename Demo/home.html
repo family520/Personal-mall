@@ -24,10 +24,10 @@
 <div class="navBox">
     <span class="myProject">我的项目</span>
     <span class="settingsBox">
-        <span class="settItem">
-            <img src="img/updateIcon.png" alt="">
-            <span>编辑</span>
-        </span>
+<!--        <span class="settItem">-->
+<!--            <img src="img/updateIcon.png" alt="">-->
+<!--            <span>编辑</span>-->
+<!--        </span>-->
         <span class="settItem">
             <img src="img/addIcon.png" alt="">
             <span class="addPro">新建</span>
@@ -44,7 +44,7 @@
 </div>
 <div class="contentBox" id="one">
     <div class="listBox">
-        <div class="itemBox" v-for="(item,index) in listData" :key="index" v-show="index < 7">
+        <div class="itemBox" v-for="(item,index) in listData" :key="index">
             <div class="imgBox" @click="show(index)">
                 <img class="showImg" :src="item.imgUrl" alt="">
             </div>
@@ -127,8 +127,10 @@
                 <input class="proName" type="text">
             </p>
             <p>
-                <span>项目logo:</span>
+                <span>所属行业:</span>
                 <select name="" id="sntImg">
+                    <option title="img/zhimg/zhyh.jpg">智慧银行</option>
+                    <option title="img/zhimg/zhgc.jpg">智慧工厂</option>
                     <option title="img/zhimg/zhbg.jpg">智慧办公</option>
                     <option title="img/zhimg/zhyl.jpg">智慧养老</option>
                     <option title="img/zhimg/zhyy.jpg">智慧医院</option>
@@ -148,10 +150,6 @@
             <p>
                 <span>企业名称:</span>
                 <input class="companyName" type="text">
-            </p>
-            <p>
-                <span>所属行业:</span>
-                <input class="sshy" type="text">
             </p>
             <p style="position: relative">
                 <span>事件节点:</span>
@@ -257,10 +255,10 @@
     $(function () {
 
         //跳转页面
-        $(".updateBtn").on("click",function () {
+        $("body").on("click",'.updateBtn',function () {
             let storage = window.localStorage;
             let scName = $(this).parents(".itemBox").find(".sysName").text();
-            console.log(scName);
+            // console.log(scName);
             storage.setItem('projectName',scName);
             window.location.href = "Demo.html"
         });
@@ -299,11 +297,16 @@
         });
 
 
-        $("body .setImg").each(function () {
-            $(this).on("click",function () {
-                $(this).parent().next(".setBox").slideDown(200);
-            });
+        $("body").on("click",".setImg",function () {
+            $(this).parent().next(".setBox").slideDown(200);
         });
+
+
+        // $("body .setImg").each(function () {
+        //     $(this).on("click",function () {
+        //         $(this).parent().next(".setBox").slideDown(200);
+        //     });
+        // });
     });
 </script>
 <script>
@@ -312,6 +315,32 @@
         data(){
             return{
                 listData:[
+                    {
+                        id:6,
+                        name:"智慧银行",
+                        imgUrl:"img/zhimg/zhyh.jpg",
+                        qyName:"重庆金鑫科技",
+                        sshy:'智慧银行',
+                        createTime:"2019-07-06 15:31:30",
+                        updateTime:"2019-07-06 15:31:30",
+                        timeJD:"2019-12-28",
+                        yymk:13,
+                        wnyq:"内网",
+                        message:'智能家居水电科技物联网'
+                    },
+                    {
+                        id:7,
+                        name:"智慧工厂",
+                        imgUrl:"img/zhimg/zhgc.jpg",
+                        qyName:"重庆金鑫科技",
+                        sshy:'智慧工厂',
+                        createTime:"2019-07-06 15:31:30",
+                        updateTime:"2019-07-06 15:31:30",
+                        timeJD:"2019-12-28",
+                        yymk:13,
+                        wnyq:"内网",
+                        message:'智能家居水电科技物联网'
+                    },
                     {
                         id:1,
                         name:"智慧办公",
